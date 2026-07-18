@@ -1,0 +1,17 @@
+{
+  "name": "Lluvia de Bendición .Com",
+  "short_name": "LLDB",
+  "description": "Radio, oración, Palabra y recursos cristianos.",
+  "start_url": "/#radio",
+  "display": "standalone",
+  "background_color": "#06111f",
+  "theme_color": "#06111f",
+  "icons": [
+    {
+      "src": "/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
