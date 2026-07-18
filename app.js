@@ -1,53 +1,17 @@
-const CONFIG=window.LLDB_CONFIG||{};
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const intro=$("#intro"); function closeIntro(){intro.classList.add("hide");document.body.classList.remove("intro-lock")}
-setTimeout(closeIntro,5200); $("#skipIntro").onclick=closeIntro;
-
-const menu=$("#menuButton"), nav=$("#mainNav");
-menu.onclick=()=>{const open=nav.classList.toggle("open");menu.setAttribute("aria-expanded",open)};
-$$("nav a").forEach(a=>a.onclick=()=>nav.classList.remove("open"));
-
-const audio=$("#radioAudio"), play=$("#playButton"), msg=$("#playerMessage");
-audio.src=CONFIG.radioStreamUrl||"";
-$("#volume").oninput=e=>audio.volume=e.target.value;
-play.onclick=async()=>{if(!audio.src||audio.src===location.href){msg.textContent="Añade la URL HTTPS de ZaraRadio o de tu proveedor en config.js.";return}
-try{if(audio.paused){await audio.play();play.textContent="❚❚";msg.textContent="Estás escuchando Lluvia de Bendición .Com."}else{audio.pause();play.textContent="▶";msg.textContent="Transmisión en pausa."}}catch(e){msg.textContent="No fue posible iniciar la transmisión. Verifica la URL HTTPS del stream."}};
-audio.onplaying=()=>setRadioState(CONFIG.isLive?"live":"program");
-audio.onerror=()=>setRadioState("off");
-function setRadioState(state){const light=$("#statusLight"),label=$("#radioStatus");light.className="led "+(state==="live"?"green":state==="program"?"yellow":"off");label.textContent=state==="live"?"EN VIVO":state==="program"?"PROGRAMACIÓN":"FUERA DEL AIRE";$("#nextLabel").textContent=state==="live"?"TRANSMISIÓN":"LO QUE VIENE";if(state==="live")$("#nextPlaying").textContent="En vivo";}
-$("#nowPlaying").textContent=CONFIG.nowPlaying||"Programación de Lluvia de Bendición";
-$("#nextPlaying").textContent=CONFIG.nextPlaying||"Mensaje de esperanza";
-
-const content={
-verse:{title:"Versículo del día",body:"“Este es el día que hizo el Señor; nos gozaremos y alegraremos en él.”",ref:"Salmo 118:24"},
-prayer:{title:"Oración del día",body:"Señor, gracias por este nuevo día. Dirige mis pasos, fortalece mi fe y úsame para bendecir a quienes encuentre. Guarda a mi familia y permite que tu paz gobierne mi corazón. Amén.",ref:""},
-memory:{title:"Versículo para memorizar",body:"“Confía en el Señor con todo tu corazón, y no te apoyes en tu propia prudencia.”",ref:"Proverbios 3:5"},
-devotional:{title:"Devocional de la semana",body:"Dios también trabaja en los procesos que todavía no comprendemos. Esta semana, en lugar de medir su fidelidad por la rapidez de la respuesta, decide caminar en obediencia, oración y confianza. Medita en este mensaje durante toda la semana y toma cada día un paso de fe.",ref:"Santiago 1:2–4"}
-};
-function showContent(key){const c=content[key];$("#dailyContent").innerHTML=`<h3>${c.title}</h3><p>${c.body}</p>${c.ref?`<b>${c.ref}</b>`:""}`;$$(".content-tab").forEach(b=>b.classList.toggle("active",b.dataset.panel===key))}
-$$(".content-tab").forEach(b=>b.onclick=()=>showContent(b.dataset.panel)); showContent("verse");
-
-const sermons={sermon1:["Fe en medio de la prueba","La fe no niega la dificultad; aprende a confiar mientras Dios forma paciencia, carácter y esperanza en nosotros."],sermon2:["La dirección de Dios","Dios dirige mediante su Palabra, la oración, la sabiduría y una obediencia que no depende solamente de emociones."],sermon3:["Una vida que produce fruto","El fruto espiritual se reconoce en el amor, el dominio propio, la paciencia y una vida que refleja el carácter de Cristo."]};
-$$("[data-open]").forEach(b=>b.onclick=()=>{const s=sermons[b.dataset.open];const v=$("#sermonViewer");v.innerHTML=`<h3>${s[0]}</h3><p>${s[1]}</p><button class="secondary" onclick="document.querySelector('#sermonViewer').classList.add('hidden')">Cerrar</button>`;v.classList.remove("hidden");v.scrollIntoView({behavior:"smooth",block:"center"})});
-
-$("#prayerForm").onsubmit=e=>{e.preventDefault();$("#formMessage").textContent="Tu petición quedó preparada. Conecta el endpoint en /api/prayer.js para recibirla.";e.target.reset()};
-
-const testimonies=[["“La radio me acompañó en una noche difícil y me recordó que Dios no me había abandonado.”","— Oyente de la comunidad"],["“El estudio bíblico me ayudó a comprender que la prueba también puede producir crecimiento.”","— Participante del ministerio"],["“Encontré palabras de ánimo justo cuando más las necesitaba.”","— Testimonio recibido"]];
-let ti=0;$("#nextTestimonial").onclick=()=>{ti=(ti+1)%testimonies.length;$("#testimonialText").textContent=testimonies[ti][0];$("#testimonialAuthor").textContent=testimonies[ti][1]};
-
-$$("[data-wallpaper]").forEach(b=>b.onclick=()=>{$("#wallpaperLarge").src=b.dataset.wallpaper;$("#downloadWallpaper").href=b.dataset.wallpaper;$("#wallpaperViewer").classList.remove("hidden")});
-$("#closeWallpaper").onclick=()=>$("#wallpaperViewer").classList.add("hidden");
-
-$$("[data-donation]").forEach(b=>b.onclick=()=>{const m=b.dataset.donation,c=CONFIG.donations?.[m]||{};let html="";
-if(m==="zelle")html="<h3>Donar con Zelle</h3><p>Abre la aplicación de tu banco y utiliza el destinatario configurado de forma privada. No publicamos el correo o teléfono en esta página.</p>";
-else if(c.url)html=`<h3>Donar con ${m==="cashapp"?"Cash App":m==="venmo"?"Venmo":"PayPal"}</h3><p>La plataforma de pago mostrará el destinatario antes de confirmar.</p><a class="primary" target="_blank" rel="noopener" href="${c.url}">Continuar de forma segura</a>`;
-else html="<h3>Método pendiente</h3><p>Añade el enlace aprobado en config.js antes de publicar.</p>";
-$("#donationPanel").innerHTML=html;$("#donationPanel").scrollIntoView({behavior:"smooth",block:"center"})});
-
-$("#videoLink").href=CONFIG.videoChannelUrl||"#";$("#facebookLink").href=CONFIG.facebookUrl||"#";$("#youtubeLink").href=CONFIG.videoChannelUrl||"#";$("#emailLink").href=CONFIG.contactEmail?`mailto:${CONFIG.contactEmail}`:"#";
-$("#year").textContent=new Date().getFullYear();
-
-let taps=0,tapTimer;$("#hiddenAdmin").onclick=()=>{taps++;clearTimeout(tapTimer);tapTimer=setTimeout(()=>taps=0,1800);if(taps>=5){$("#adminDialog").showModal();taps=0}};$("#closeAdmin").onclick=()=>$("#adminDialog").close();
-
-let deferredPrompt;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;$("#installButton").classList.remove("hidden")});$("#installButton").onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$("#installButton").classList.add("hidden")};
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js"));
+const cfg=window.LLDB_CONFIG||{};const $=(s)=>document.querySelector(s);const $$=(s)=>[...document.querySelectorAll(s)];
+const sections=[['🏠','Inicio','inicio'],['🎯','Misión','mision'],['👁','Visión','vision'],['📖','Creencias','creencias'],['📜','Versículo del día','especial'],['🙏','Devocional semanal','especial'],['🕊️','Oración del día','especial'],['🎙️','Sermones','sermones'],['📚','Estudio bíblico','estudio'],['🤲','Peticiones','peticiones'],['👥','Testimonios','testimonios'],['📺','Video','video'],['🖼️','Wallpaper','wallpaper'],['🎁','Donaciones','donaciones'],['✉️','Contacto','contacto']];
+$('#mainGrid').innerHTML=sections.map(([i,n,id])=>`<a class="nav-card" href="#${id}"><b>${i}</b><span>${n.toUpperCase()}</span></a>`).join('');$('#drawerNav').innerHTML=`<a href="#radio">📻 Radio</a>`+sections.map(([i,n,id])=>`<a href="#${id}">${i} ${n}</a>`).join('');
+let audioCtx,rainNode,soundOn=false;function ambient(on){soundOn=on;[$('#soundToggle'),$('#soundToggleHeader')].forEach(b=>{if(b)b.setAttribute('aria-pressed',String(on))});if(on){audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const buffer=audioCtx.createBuffer(1,audioCtx.sampleRate*2,audioCtx.sampleRate);const d=buffer.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*.18;rainNode=audioCtx.createBufferSource();rainNode.buffer=buffer;rainNode.loop=true;const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=900;const gain=audioCtx.createGain();gain.gain.value=.08;rainNode.connect(filter).connect(gain).connect(audioCtx.destination);rainNode.start()}else if(rainNode){rainNode.stop();rainNode=null}}
+[$('#soundToggle'),$('#soundToggleHeader')].forEach(b=>b&&b.addEventListener('click',()=>ambient(!soundOn)));$('#enterButton').addEventListener('click',()=>{$('#intro').classList.add('is-leaving');$('#site').hidden=false;setTimeout(()=>$('#intro').remove(),950)});
+const drawer=$('#drawer'),scrim=$('#scrim');function closeMenu(){drawer.classList.remove('open');scrim.classList.remove('open');drawer.setAttribute('aria-hidden','true');$('#menuButton').setAttribute('aria-expanded','false')}$('#menuButton').onclick=()=>{drawer.classList.add('open');scrim.classList.add('open');drawer.setAttribute('aria-hidden','false');$('#menuButton').setAttribute('aria-expanded','true')};$('#closeMenu').onclick=closeMenu;scrim.onclick=closeMenu;$('#drawerNav').onclick=e=>{if(e.target.closest('a'))closeMenu()};
+$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.remove('active'));$$('.tab-panel').forEach(x=>x.classList.remove('active'));t.classList.add('active');$('#'+t.dataset.panel).classList.add('active')});
+const sermons={sermon1:'<h3>Fe en medio de la prueba</h3><p>La fe no niega la dificultad; decide mirar más alto que la dificultad. Ora, recuerda las promesas de Dios y da hoy el próximo paso posible.</p>',sermon2:'<h3>La paz que guarda el corazón</h3><p>La paz de Dios no siempre cambia primero el escenario; muchas veces cambia primero nuestro interior para que podamos atravesarlo.</p>',sermon3:'<h3>Comenzar de nuevo</h3><p>Tu pasado no tiene la última palabra. Dios puede restaurar, redirigir y abrir una nueva etapa con propósito.</p>'};$$('.inline-open').forEach(b=>b.onclick=()=>{const v=$('#inlineViewer');v.innerHTML=sermons[b.dataset.content];v.hidden=false;v.scrollIntoView({behavior:'smooth',block:'center'})});
+const radio=$('#radioAudio');radio.src=cfg.radioStreamUrl||'';$('#playButton').onclick=async()=>{if(!radio.src){$('#nowPlaying').textContent='Agrega la URL de ZaraRadio/stream en config.js';return}try{if(radio.paused){await radio.play();$('#playButton').textContent='❚❚'}else{radio.pause();$('#playButton').textContent='▶'}}catch(e){$('#nowPlaying').textContent='No se pudo iniciar el stream. Verifica la URL HTTPS.'}};$('#volume').oninput=e=>radio.volume=Number(e.target.value);
+const testimonios=['“Encontré una palabra de ánimo justo cuando más la necesitaba.”','“La oración del día me ayudó a comenzar con paz.”','“La radio se ha convertido en compañía para mi familia.”'];let ti=0;$('#nextTestimonial').onclick=()=>{$('#testimonialText').textContent=testimonios[++ti%testimonios.length]};
+$$('.wallpaper-card').forEach(b=>b.onclick=()=>{const v=$('#wallpaperViewer'),img=v.querySelector('img'),a=v.querySelector('a');img.src=b.dataset.image;a.href=b.dataset.image;v.hidden=false;v.scrollIntoView({behavior:'smooth',block:'center'})});
+$$('[data-donation]').forEach(b=>b.onclick=()=>{const k=b.dataset.donation,u=cfg.donations?.[k],r=$('#donationResult');r.hidden=false;r.innerHTML=u?`<p>Serás dirigido al método seleccionado.</p><a class="inline-open" href="${u}" target="_blank" rel="noopener">Continuar de forma segura</a>`:'<p>Este método todavía no está configurado. Añade el enlace privado correspondiente en <code>config.js</code>.</p>'});
+$('#prayerForm').onsubmit=async e=>{e.preventDefault();const s=$('#formStatus');s.textContent='Enviando…';try{const r=await fetch('/api/prayer',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});if(!r.ok)throw Error();s.textContent='Petición recibida. Estaremos orando contigo.';e.target.reset()}catch{s.textContent='La función está en modo demostración. Conectaremos el almacenamiento seguro en el panel administrativo.'}};
+$('#videoLink').href=cfg.videoChannelUrl||'#';$('#socialLink').href=cfg.socialUrl||'#';
+let deferredPrompt;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('#installButton').hidden=false});$('#installButton').onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}};
+let clicks=0,timer;$('#adminTrigger').onclick=()=>{clicks++;clearTimeout(timer);timer=setTimeout(()=>clicks=0,1800);if(clicks>=5)location.href='/admin/'};
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js'));
