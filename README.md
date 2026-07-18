@@ -12,3 +12,10 @@ Versión visual basada en la referencia aprobada: negro, azul noche, dorado y bl
 
 ## Configuración pendiente
 Edita `config.js` para añadir la URL HTTPS del stream de radio, canal de video, redes y enlaces privados de donación. No publiques correos, teléfonos o identificadores personales directamente en el HTML.
+
+
+## Cambios de la edición definitiva
+- Recursos espirituales agrupados: oración del día, versículo del día, versículo para memorizar y devocional semanal.
+- Media agrupada: Videos + Wallpapers dentro de una sola sección.
+- Afiliados colocado debajo de Contacto como módulo comercial para vender menciones, tiempo al aire, audio, video, flyer y paquetes combinados.
+- Sonido ambiental se activa automáticamente al pulsar “Entrar ahora”, cumpliendo las restricciones de los navegadores.

@@ -91,8 +91,8 @@
         <div class="three-grid"><article class="glass-card"><b>Dios Padre</b><p>Creador, soberano, amoroso y fiel.</p></article><article class="glass-card"><b>Dios Hijo</b><p>Salvador, camino, verdad y vida.</p></article><article class="glass-card"><b>Espíritu Santo</b><p>Consolador, guía y presencia de Dios.</p></article></div>
       </section>
 
-      <section id="especial" class="section-pad content-section">
-        <div class="section-heading"><span>ESPECIALMENTE PARA TI</span><h2>Palabra y oración para esta semana</h2></div>
+      <section id="recursos" class="section-pad content-section">
+        <div class="section-heading"><span>RECURSOS ESPIRITUALES</span><h2>Palabra y oración para cada día</h2><p>Abre cada recurso en esta misma sección, sin salir de la página.</p></div>
         <div class="tab-row" role="tablist">
           <button class="tab active" data-panel="versePanel">Versículo del día</button><button class="tab" data-panel="prayerPanel">Oración del día</button><button class="tab" data-panel="memoryPanel">Para memorizar</button><button class="tab" data-panel="devotionalPanel">Devocional semanal</button>
         </div>
@@ -119,13 +119,44 @@
 
       <section id="testimonios" class="section-pad content-section"><div class="section-heading"><span>TESTIMONIOS</span><h2>Dios sigue obrando</h2></div><div class="testimonial glass-card"><p id="testimonialText">“Encontré una palabra de ánimo justo cuando más la necesitaba.”</p><button id="nextTestimonial">Siguiente testimonio →</button></div></section>
 
-      <section id="video" class="section-pad content-section"><div class="section-heading"><span>VIDEO</span><h2>Contenido seleccionado</h2></div><div class="video-frame glass-card"><div class="video-placeholder">▶<p>Conecta aquí el canal oficial desde <code>config.js</code>.</p><a id="videoLink" href="#">Abrir canal</a></div></div></section>
-
-      <section id="wallpaper" class="section-pad content-section"><div class="section-heading"><span>WALLPAPERS</span><h2>Lleva un mensaje contigo</h2></div><div class="wallpaper-grid"><button class="wallpaper-card" data-image="/assets/wallpaper-hope.svg"><img src="/assets/wallpaper-hope.svg" alt="Wallpaper de esperanza"><span>Esperanza</span></button><button class="wallpaper-card" data-image="/assets/wallpaper-faith.svg"><img src="/assets/wallpaper-faith.svg" alt="Wallpaper de fe"><span>Fe</span></button></div><div id="wallpaperViewer" class="wallpaper-viewer glass-card" hidden><img alt="Wallpaper seleccionado"><a download>Descargar al dispositivo</a></div></section>
+      <section id="media" class="section-pad content-section">
+        <div class="section-heading"><span>MEDIA</span><h2>Videos y wallpapers cristianos</h2><p>Todo el contenido multimedia reunido en un solo lugar.</p></div>
+        <div class="media-choice-grid">
+          <button class="media-choice active" type="button" data-media-panel="videosPanel"><span>🎥</span><b>Videos</b><small>Mensajes y contenido seleccionado</small></button>
+          <button class="media-choice" type="button" data-media-panel="wallpapersPanel"><span>🖼️</span><b>Wallpapers</b><small>Fondos cristianos para tu dispositivo</small></button>
+        </div>
+        <div class="media-hub glass-card">
+          <article id="videosPanel" class="media-panel active">
+            <div class="retro-tv">
+              <div class="tv-screen"><div class="video-placeholder">▶<p>Conecta aquí el canal oficial desde <code>config.js</code>.</p><a id="videoLink" href="#">Abrir canal</a></div></div>
+              <div class="tv-controls"><i></i><i></i><span>LLDB MEDIA</span></div>
+            </div>
+          </article>
+          <article id="wallpapersPanel" class="media-panel">
+            <div class="wallpaper-grid"><button class="wallpaper-card" data-image="/assets/wallpaper-hope.svg"><img src="/assets/wallpaper-hope.svg" alt="Wallpaper de esperanza"><span>Esperanza</span></button><button class="wallpaper-card" data-image="/assets/wallpaper-faith.svg"><img src="/assets/wallpaper-faith.svg" alt="Wallpaper de fe"><span>Fe</span></button></div>
+            <div id="wallpaperViewer" class="wallpaper-viewer" hidden><img alt="Wallpaper seleccionado"><a download>Descargar al dispositivo</a></div>
+          </article>
+        </div>
+      </section>
 
       <section id="donaciones" class="section-pad content-section"><div class="section-heading"><span>DONACIONES</span><h2>Siembra en esta obra</h2><p>Selecciona un método. Ningún dato personal sensible está escrito directamente en esta página.</p></div><div class="donation-grid"><button data-donation="zelle">Zelle</button><button data-donation="cashApp">Cash App</button><button data-donation="venmo">Venmo</button><button data-donation="paypal">PayPal</button></div><div id="donationResult" class="glass-card donation-result" hidden></div></section>
 
-      <section id="contacto" class="section-pad content-section"><div class="section-heading"><span>CONTACTO</span><h2>Estamos para servirte</h2></div><div class="quick-strip glass-card"><a href="#especial">📖<span>Palabra diaria</span></a><a href="#radio">🎧<span>Radio 24/7</span></a><button id="installButton" hidden>📱<span>Instalar app</span></button><a id="socialLink" href="#">↗<span>Síguenos</span></a></div></section>
+      <section id="contacto" class="section-pad content-section"><div class="section-heading"><span>CONTACTO</span><h2>Estamos para servirte</h2></div><div class="quick-strip glass-card"><a href="#recursos">📖<span>Palabra diaria</span></a><a href="#radio">🎧<span>Radio 24/7</span></a><button id="installButton" hidden>📱<span>Instalar app</span></button><a id="socialLink" href="#">↗<span>Síguenos</span></a></div></section>
+
+      <section id="afiliados" class="section-pad content-section affiliates-section">
+        <div class="section-heading"><span>AFILIADOS</span><h2>Promociona tu iglesia, ministerio o negocio</h2><p>Genera presencia mediante tiempo al aire, menciones, comerciales de audio, video, flyer o paquetes combinados.</p></div>
+        <div class="affiliate-packages">
+          <article class="glass-card"><span>🎙️</span><h3>Menciones al aire</h3><p>Promoción breve dentro de la programación de la emisora.</p></article>
+          <article class="glass-card"><span>🔊</span><h3>Comercial de audio</h3><p>Espacio para un anuncio producido o suministrado por el afiliado.</p></article>
+          <article class="glass-card"><span>🎥</span><h3>Video promocional</h3><p>Presentación de video integrada directamente en la plataforma.</p></article>
+          <article class="glass-card"><span>🖼️</span><h3>Flyer publicitario</h3><p>Imagen promocional visible en el directorio público de afiliados.</p></article>
+          <article class="glass-card featured-package"><span>⭐</span><h3>Audio + Video</h3><p>Paquete combinado con comercial de audio, video, flyer y menciones.</p></article>
+        </div>
+        <div class="affiliate-showcase glass-card">
+          <div class="affiliate-empty"><span>🤝</span><div><h3>Directorio de afiliados</h3><p>Aquí aparecerán los flyers y videos de los afiliados activos, con su información pública autorizada.</p></div></div>
+          <a class="affiliate-cta" href="#contacto">Solicitar información comercial →</a>
+        </div>
+      </section>
     </main>
 
     <footer><button id="adminTrigger" aria-label="Acceso administrativo"></button><p>© LluviaDeBendicion.com</p><small>Porque queremos que el Señor llueva en ti.</small></footer>
