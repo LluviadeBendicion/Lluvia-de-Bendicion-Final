@@ -1,0 +1,14 @@
+FORMA RECOMENDADA DESDE LAPTOP
+
+1. Instala y abre GitHub Desktop.
+2. File > Add Local Repository.
+3. Elige esta carpeta: Lluvia-de-Bendicion-Launch-Edition-Final-v2
+4. Si GitHub Desktop indica que no es un repositorio, pulsa "create a repository here".
+5. En Repository name usa: Lluvia-de-Bendicion-Final
+6. Haz el primer commit.
+7. Pulsa Publish repository.
+8. Si el repositorio remoto ya existe, usa Repository > Repository settings > Remote y conecta la URL del repositorio.
+
+IMPORTANTE:
+El cargador web de GitHub puede colocar archivos en la raíz y no conservar carpetas.
+GitHub Desktop sí conserva admin, api, assets, estudio y todas las subcarpetas.

@@ -1,0 +1,1 @@
+Configuración pública de métodos de donación. Mantén datos sensibles en variables del servidor.

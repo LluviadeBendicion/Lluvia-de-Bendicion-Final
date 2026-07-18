@@ -1,0 +1,1 @@
+Wallpapers aprobados para publicación.
