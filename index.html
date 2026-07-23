@@ -2,167 +2,155 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#03080f">
-  <meta name="description" content="Lluvia de Bendición .Com — Radio, oración, Palabra y recursos cristianos.">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="LLDB">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#061426">
   <title>Lluvia de Bendición .Com</title>
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="icon" href="/assets/icons/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="Lluvia de Bendición .Com — Porque queremos que el Señor llueva en ti.">
+  <style>
+    :root{
+      --night:#030812;
+      --blue:#071b35;
+      --gold:#e8bb4c;
+      --warm:#fff8e8;
+      --soft:#d5deea;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif}
+    body{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px 14px;
+      color:var(--warm);
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at 50% 5%,rgba(232,187,76,.25),transparent 32rem),
+        linear-gradient(180deg,#0a2341 0%,#061426 42%,#02060d 100%);
+    }
+    body:before{
+      content:"";
+      position:fixed;
+      inset:-70px 0 0;
+      z-index:0;
+      pointer-events:none;
+      opacity:.12;
+      background-image:repeating-linear-gradient(
+        108deg,
+        transparent 0 15px,
+        rgba(255,255,255,.45) 16px 17px,
+        transparent 18px 32px
+      );
+      animation:rain 2.4s linear infinite;
+    }
+    @keyframes rain{
+      from{transform:translateY(-45px)}
+      to{transform:translateY(45px)}
+    }
+    main{
+      position:relative;
+      z-index:1;
+      width:min(94vw,880px);
+      text-align:center;
+      padding:clamp(22px,5vw,48px);
+      border:1px solid rgba(232,187,76,.42);
+      border-radius:28px;
+      background:rgba(2,9,20,.79);
+      box-shadow:0 25px 80px rgba(0,0,0,.6),inset 0 1px rgba(255,255,255,.05);
+      backdrop-filter:blur(8px);
+    }
+    .logo{
+      display:block;
+      width:min(100%,680px);
+      max-height:430px;
+      margin:0 auto;
+      object-fit:contain;
+      border-radius:22px;
+      box-shadow:0 12px 45px rgba(0,0,0,.5),0 0 45px rgba(232,187,76,.12);
+    }
+    h1{
+      margin:26px 0 10px;
+      font:700 clamp(2rem,5vw,3.5rem)/1.1 Georgia,"Times New Roman",serif;
+      letter-spacing:.01em;
+    }
+    .gold{color:var(--gold)}
+    .tagline{
+      max-width:680px;
+      margin:0 auto;
+      font-size:clamp(1.05rem,2.5vw,1.35rem);
+      line-height:1.55;
+    }
+    .divider{
+      width:105px;
+      height:2px;
+      margin:24px auto;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    }
+    .message{
+      max-width:650px;
+      margin:0 auto;
+      color:var(--soft);
+      font-size:clamp(1rem,2.2vw,1.16rem);
+      line-height:1.7;
+    }
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      margin-top:28px;
+      padding:11px 18px;
+      border:1px solid rgba(232,187,76,.4);
+      border-radius:999px;
+      color:var(--warm);
+      background:rgba(232,187,76,.08);
+      font-size:.98rem;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 14px var(--gold);
+    }
+    footer{
+      margin-top:28px;
+      color:#9aa8bb;
+      font-size:.9rem;
+    }
+    @media(max-width:520px){
+      body{padding:12px}
+      main{padding:18px 15px;border-radius:20px}
+      .logo{border-radius:15px}
+      h1{margin-top:21px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      body:before{animation:none}
+    }
+  </style>
 </head>
 <body>
-  <div id="intro" class="intro" aria-label="Presentación de Lluvia de Bendición">
-    <button id="soundToggle" class="sound-toggle" type="button" aria-pressed="false">🔊 <span>SONIDO</span></button>
-    <div class="heaven-beam"></div><div class="stars"></div>
-    <div class="intro-center">
-      <div class="brand-emblem intro-emblem" aria-hidden="true"><span class="cross">✦</span><span class="drop"></span></div>
-      <div class="water-splash"><i></i><i></i><i></i></div>
-      <h1>Lluvia de <strong>Bendición</strong><small>.COM</small></h1>
-      <p>Porque queremos que el Señor llueva en ti.</p>
-      <button id="enterButton" class="enter-button" type="button">ENTRAR AHORA <span>→</span></button>
-      <span class="loading-note">CARGANDO LA EXPERIENCIA…</span>
+  <main>
+    <img class="logo" src="assets/logo-lldb.jpg" alt="Logo de Lluvia de Bendición .Com">
+
+    <h1>Lluvia de Bendición <span class="gold">.Com</span></h1>
+
+    <p class="tagline">
+      Porque queremos que el Señor <span class="gold">llueva en ti.</span>
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="message">
+      Estamos preparando una experiencia completamente renovada para bendecir tu vida
+      a través de la música, la Palabra de Dios, la oración y contenido que fortalece la fe.
+      Muy pronto estaremos contigo.
+    </p>
+
+    <div class="status">
+      <span class="dot"></span>
+      Nuestra nueva plataforma está en preparación
     </div>
-  </div>
 
-  <div id="site" class="site" hidden>
-    <header class="topbar">
-      <a class="mini-brand" href="#radio" aria-label="Lluvia de Bendición, ir a Radio">
-        <div class="brand-emblem small"><span class="cross">✦</span><span class="drop"></span></div>
-        <div><span>Lluvia de</span><strong>Bendición</strong><small>.COM</small></div>
-      </a>
-      <div class="header-actions">
-        <button class="sound-toggle compact" id="soundToggleHeader" type="button">🔊 <span>SONIDO</span></button>
-        <button class="menu-button" id="menuButton" aria-expanded="false" aria-controls="drawer">☰</button>
-      </div>
-    </header>
-
-    <aside id="drawer" class="drawer" aria-hidden="true">
-      <button id="closeMenu" class="close-menu" type="button">×</button>
-      <nav id="drawerNav"></nav>
-    </aside>
-    <div id="scrim" class="scrim"></div>
-
-    <main>
-      <section id="radio" class="hero section-pad">
-        <div class="rain-layer"></div>
-        <div class="hero-content">
-          <div class="brand-emblem hero-emblem"><span class="cross">✦</span><span class="drop"></span></div>
-          <p class="eyebrow">RADIO · PALABRA · ESPERANZA</p>
-          <h2>Lluvia de <strong>Bendición</strong><small>.COM</small></h2>
-          <p class="ministry-line">UN MINISTERIO DE FE, ESPERANZA Y COMPASIÓN</p>
-          <p class="slogan">Porque queremos que el Señor llueva en ti.</p>
-        </div>
-
-        <div class="radio-console glass-card">
-          <div class="radio-topline">
-            <div><span class="section-kicker">RADIO PRIMERO</span><h3>Radio en Internet</h3></div>
-            <div class="status-legend"><span><i class="led live"></i>En vivo</span><span><i class="led auto"></i>Programación</span><span><i class="led off"></i>Fuera del aire</span></div>
-          </div>
-          <div class="retro-radio">
-            <div class="speaker"><span>LLDB</span></div>
-            <div class="radio-center">
-              <div class="now-playing"><small>AHORA SONANDO</small><strong id="nowPlaying">Programación de Lluvia de Bendición</strong></div>
-              <div class="cassette"><small id="nextLabel">LO QUE VIENE</small><strong id="nextPlaying">Mensaje y música de esperanza</strong></div>
-              <div class="radio-controls">
-                <button id="playButton" class="play-button" type="button">▶</button>
-                <label>Volumen <input id="volume" type="range" min="0" max="1" step="0.05" value="0.8"></label>
-              </div>
-            </div>
-            <div class="speaker"><span>LLDB</span></div>
-          </div>
-          <audio id="radioAudio" preload="none"></audio>
-        </div>
-      </section>
-
-      <section id="inicio" class="section-pad content-section">
-        <div class="section-heading"><span>BIENVENIDO</span><h2>Una plataforma para acompañarte cada día</h2><p>Radio, oración, versículos, devocionales, sermones y estudios bíblicos reunidos en una experiencia sencilla y hermosa.</p></div>
-        <div id="mainGrid" class="icon-grid"></div>
-      </section>
-
-      <section id="mision" class="section-pad split-section">
-        <article class="glass-card"><span class="section-kicker">MISIÓN</span><h2>Compartir el evangelio con amor</h2><p>Alcanzar vidas por medio de la Palabra, la oración, la radio y la tecnología, ofreciendo contenido que inspire fe, esperanza y transformación.</p></article>
-        <article id="vision" class="glass-card"><span class="section-kicker">VISIÓN</span><h2>Un camino que recompensa</h2><p>Dios y el cristianismo no son una carga; son un camino que nos recompensa a corto y largo plazo con el propósito final de obtener la salvación.</p><p>Este proyecto nace dentro de mi corazón y pidiéndole dirección a Dios se ha creado.</p></article>
-      </section>
-
-      <section id="creencias" class="section-pad content-section">
-        <div class="section-heading"><span>NUESTRAS CREENCIAS</span><h2>Fundamento de fe</h2></div>
-        <div class="three-grid"><article class="glass-card"><b>Dios Padre</b><p>Creador, soberano, amoroso y fiel.</p></article><article class="glass-card"><b>Dios Hijo</b><p>Salvador, camino, verdad y vida.</p></article><article class="glass-card"><b>Espíritu Santo</b><p>Consolador, guía y presencia de Dios.</p></article></div>
-      </section>
-
-      <section id="recursos" class="section-pad content-section">
-        <div class="section-heading"><span>RECURSOS ESPIRITUALES</span><h2>Palabra y oración para cada día</h2><p>Abre cada recurso en esta misma sección, sin salir de la página.</p></div>
-        <div class="tab-row" role="tablist">
-          <button class="tab active" data-panel="versePanel">Versículo del día</button><button class="tab" data-panel="prayerPanel">Oración del día</button><button class="tab" data-panel="memoryPanel">Para memorizar</button><button class="tab" data-panel="devotionalPanel">Devocional semanal</button>
-        </div>
-        <div class="tab-panels glass-card">
-          <article id="versePanel" class="tab-panel active"><span>VERSÍCULO DEL DÍA</span><blockquote>“Este es el día que hizo Jehová; nos gozaremos y alegraremos en él.”</blockquote><cite>Salmo 118:24</cite></article>
-          <article id="prayerPanel" class="tab-panel"><span>ORACIÓN DEL DÍA</span><p>Señor, dirige mis pasos, renueva mis fuerzas y permite que hoy pueda reflejar tu amor. Dame sabiduría para decidir y paz para confiar. Amén.</p></article>
-          <article id="memoryPanel" class="tab-panel"><span>VERSÍCULO PARA MEMORIZAR</span><blockquote>“Todo lo puedo en Cristo que me fortalece.”</blockquote><cite>Filipenses 4:13</cite></article>
-          <article id="devotionalPanel" class="tab-panel"><span>DEVOCIONAL DE LA SEMANA</span><h3>Confiar aun cuando no vemos el camino</h3><p>Dios continúa obrando incluso en el silencio. Esta semana medita en su fidelidad, ora antes de reaccionar y recuerda que la espera también puede formar tu carácter.</p></article>
-        </div>
-      </section>
-
-      <section id="sermones" class="section-pad content-section">
-        <div class="section-heading"><span>SERMONES</span><h2>Mensajes para fortalecer tu fe</h2></div>
-        <div class="three-grid"><article class="glass-card media-card"><span>🎙️</span><h3>Fe en medio de la prueba</h3><p>Cómo mantener la confianza cuando las circunstancias cambian.</p><button class="inline-open" data-content="sermon1">Escuchar / leer</button></article><article class="glass-card media-card"><span>🕊️</span><h3>La paz que guarda el corazón</h3><p>Una reflexión sobre la paz de Dios en tiempos difíciles.</p><button class="inline-open" data-content="sermon2">Escuchar / leer</button></article><article class="glass-card media-card"><span>🌅</span><h3>Comenzar de nuevo</h3><p>Dios puede restaurar lo que parecía terminado.</p><button class="inline-open" data-content="sermon3">Escuchar / leer</button></article></div>
-        <div id="inlineViewer" class="inline-viewer glass-card" hidden></div>
-      </section>
-
-      <section id="estudio" class="section-pad content-section">
-        <div class="section-heading"><span>ESTUDIO BÍBLICO</span><h2>Aprende, medita y aplica</h2></div>
-        <div class="two-grid"><a class="glass-card resource-link" href="/estudio/fe-en-la-prueba.html"><b>Fe en la prueba</b><span>Abrir estudio →</span></a><a class="glass-card resource-link" href="/estudio/espiritu-santo.html"><b>El Espíritu Santo</b><span>Abrir estudio →</span></a></div>
-      </section>
-
-      <section id="peticiones" class="section-pad content-section"><div class="section-heading"><span>PETICIONES</span><h2>Permítenos orar contigo</h2></div><form id="prayerForm" class="glass-card form-card"><label>Nombre (opcional)<input name="name" autocomplete="name"></label><label>Petición<textarea name="request" required rows="5"></textarea></label><button type="submit">Enviar petición</button><p id="formStatus" role="status"></p></form></section>
-
-      <section id="testimonios" class="section-pad content-section"><div class="section-heading"><span>TESTIMONIOS</span><h2>Dios sigue obrando</h2></div><div class="testimonial glass-card"><p id="testimonialText">“Encontré una palabra de ánimo justo cuando más la necesitaba.”</p><button id="nextTestimonial">Siguiente testimonio →</button></div></section>
-
-      <section id="media" class="section-pad content-section">
-        <div class="section-heading"><span>MEDIA</span><h2>Videos y wallpapers cristianos</h2><p>Todo el contenido multimedia reunido en un solo lugar.</p></div>
-        <div class="media-choice-grid">
-          <button class="media-choice active" type="button" data-media-panel="videosPanel"><span>🎥</span><b>Videos</b><small>Mensajes y contenido seleccionado</small></button>
-          <button class="media-choice" type="button" data-media-panel="wallpapersPanel"><span>🖼️</span><b>Wallpapers</b><small>Fondos cristianos para tu dispositivo</small></button>
-        </div>
-        <div class="media-hub glass-card">
-          <article id="videosPanel" class="media-panel active">
-            <div class="retro-tv">
-              <div class="tv-screen"><div class="video-placeholder">▶<p>Conecta aquí el canal oficial desde <code>config.js</code>.</p><a id="videoLink" href="#">Abrir canal</a></div></div>
-              <div class="tv-controls"><i></i><i></i><span>LLDB MEDIA</span></div>
-            </div>
-          </article>
-          <article id="wallpapersPanel" class="media-panel">
-            <div class="wallpaper-grid"><button class="wallpaper-card" data-image="/assets/wallpaper-hope.svg"><img src="/assets/wallpaper-hope.svg" alt="Wallpaper de esperanza"><span>Esperanza</span></button><button class="wallpaper-card" data-image="/assets/wallpaper-faith.svg"><img src="/assets/wallpaper-faith.svg" alt="Wallpaper de fe"><span>Fe</span></button></div>
-            <div id="wallpaperViewer" class="wallpaper-viewer" hidden><img alt="Wallpaper seleccionado"><a download>Descargar al dispositivo</a></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="donaciones" class="section-pad content-section"><div class="section-heading"><span>DONACIONES</span><h2>Siembra en esta obra</h2><p>Selecciona un método. Ningún dato personal sensible está escrito directamente en esta página.</p></div><div class="donation-grid"><button data-donation="zelle">Zelle</button><button data-donation="cashApp">Cash App</button><button data-donation="venmo">Venmo</button><button data-donation="paypal">PayPal</button></div><div id="donationResult" class="glass-card donation-result" hidden></div></section>
-
-      <section id="contacto" class="section-pad content-section"><div class="section-heading"><span>CONTACTO</span><h2>Estamos para servirte</h2></div><div class="quick-strip glass-card"><a href="#recursos">📖<span>Palabra diaria</span></a><a href="#radio">🎧<span>Radio 24/7</span></a><button id="installButton" hidden>📱<span>Instalar app</span></button><a id="socialLink" href="#">↗<span>Síguenos</span></a></div></section>
-
-      <section id="afiliados" class="section-pad content-section affiliates-section">
-        <div class="section-heading"><span>AFILIADOS</span><h2>Promociona tu iglesia, ministerio o negocio</h2><p>Genera presencia mediante tiempo al aire, menciones, comerciales de audio, video, flyer o paquetes combinados.</p></div>
-        <div class="affiliate-packages">
-          <article class="glass-card"><span>🎙️</span><h3>Menciones al aire</h3><p>Promoción breve dentro de la programación de la emisora.</p></article>
-          <article class="glass-card"><span>🔊</span><h3>Comercial de audio</h3><p>Espacio para un anuncio producido o suministrado por el afiliado.</p></article>
-          <article class="glass-card"><span>🎥</span><h3>Video promocional</h3><p>Presentación de video integrada directamente en la plataforma.</p></article>
-          <article class="glass-card"><span>🖼️</span><h3>Flyer publicitario</h3><p>Imagen promocional visible en el directorio público de afiliados.</p></article>
-          <article class="glass-card featured-package"><span>⭐</span><h3>Audio + Video</h3><p>Paquete combinado con comercial de audio, video, flyer y menciones.</p></article>
-        </div>
-        <div class="affiliate-showcase glass-card">
-          <div class="affiliate-empty"><span>🤝</span><div><h3>Directorio de afiliados</h3><p>Aquí aparecerán los flyers y videos de los afiliados activos, con su información pública autorizada.</p></div></div>
-          <a class="affiliate-cta" href="#contacto">Solicitar información comercial →</a>
-        </div>
-      </section>
-    </main>
-
-    <footer><button id="adminTrigger" aria-label="Acceso administrativo"></button><p>© LluviaDeBendicion.com</p><small>Porque queremos que el Señor llueva en ti.</small></footer>
-    <nav class="bottom-nav"><a href="#inicio">⌂<span>Inicio</span></a><a href="#radio">▣<span>Radio</span></a><a href="#donaciones">♡<span>Donaciones</span></a><a href="#contacto">✉<span>Contacto</span></a></nav>
-  </div>
-
-  <script src="/config.js"></script><script src="/app.js"></script>
+    <footer>
+      © 2026 Lluvia de Bendición .Com
+    </footer>
+  </main>
 </body>
 </html>
