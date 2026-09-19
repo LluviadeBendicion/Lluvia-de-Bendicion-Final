@@ -6,6 +6,7 @@ window.LLDB_CONFIG = {
     zelle: "",
     cashApp: "",
     venmo: "",
-    paypal: ""
+    paypal: "",
+    card: ""
   }
 };
