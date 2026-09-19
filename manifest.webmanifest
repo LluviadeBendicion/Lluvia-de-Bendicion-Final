@@ -13,5 +13,8 @@
       "type": "image/jpeg",
       "purpose": "any"
     }
-  ]
+  ],
+  "scope": "/",
+  "lang": "es",
+  "orientation": "any"
 }
