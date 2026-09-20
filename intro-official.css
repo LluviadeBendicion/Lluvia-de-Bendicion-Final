@@ -107,3 +107,5 @@
   .logo-reveal .official-intro-logo{animation:none;opacity:1;transform:none;filter:none}
   .musical-transformation{display:none}
 }
+
+.intro.leave{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .9s ease,visibility .9s ease}
