@@ -6,12 +6,17 @@ export default async function handler(req, res) {
   const cleanRequest = String(request).trim();
   if (!cleanRequest) return res.status(400).json({ error: "Prayer request is required" });
   if (cleanRequest.length > 5000) return res.status(400).json({ error: "Prayer request is too long" });
-  const crisis = String(topic).toLowerCase() === "suicidio";
+  const normalizedTopic = String(topic).trim().toLowerCase();
+  const crisis = normalizedTopic === "suicidio";
   return res.status(202).json({
     ok: true,
     status: "pending_approval",
+    moderationRequired: true,
+    publishAutomatically: false,
     persisted: false,
     message: "Formulario validado. El almacenamiento privado del Panel Maestro está pendiente de conexión.",
+    followUp: { assignedTo: null, status: "pending_assignment", notes: [], nextFollowUp: null },
+    audit: { originalPreserved: true, approverRequired: true },
     crisisResources: crisis ? {
       us988: "Llama o envía un mensaje de texto al 988.",
       spanish: "En español: llama al 988 y presiona 2, o envía AYUDA al 988.",
