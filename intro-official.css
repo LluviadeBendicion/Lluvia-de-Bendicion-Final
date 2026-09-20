@@ -109,3 +109,11 @@
 }
 
 .intro.leave{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .9s ease,visibility .9s ease}
+
+/* Secuencia aprobada 0:00–0:20 */
+.intro .intro-rain{opacity:0;transition:opacity 1.4s ease}
+.intro.rain-active .intro-rain{opacity:.42}
+.intro.rain-active .storm-clouds{opacity:.96}
+.intro.logo-stable .official-intro-logo{opacity:1;transform:scale(1);filter:brightness(1) saturate(1) drop-shadow(0 0 24px rgba(233,185,79,.72))}
+.intro.logo-stable .logo-energy-ring{opacity:.42}
+.intro.transition-home{opacity:.92;transition:opacity 1.8s ease}
