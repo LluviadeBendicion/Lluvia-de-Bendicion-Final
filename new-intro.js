@@ -1,0 +1,1 @@
+const i=document.getElementById('cinematicIntro');const at=(ms,c)=>setTimeout(()=>i.classList.add(c),ms);at(1200,'clouds');at(2800,'storm');at(5000,'rain');at(8200,'strike');at(10800,'logo');at(13000,'gold');at(18200,'exit');
