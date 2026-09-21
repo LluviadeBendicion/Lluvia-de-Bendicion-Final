@@ -3,3 +3,7 @@
 .cinematic-intro.stable .final-logo{filter:brightness(1.08) saturate(1.06) drop-shadow(0 0 26px rgba(240,194,82,.58));transform:scale(1)}
 .cinematic-intro.stable .gold-rain{opacity:.72}
 .cinematic-intro.stable .music-drops{opacity:.9}
+
+.impact-flash{position:absolute;left:50%;top:58%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);opacity:0;pointer-events:none;background:#fff9d7;box-shadow:0 0 30px 12px rgba(255,240,166,.9),0 0 100px 42px rgba(222,166,55,.5)}
+.cinematic-intro.logo .impact-flash{animation:impactFlash 1.15s ease-out forwards}
+@keyframes impactFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(28)}}
