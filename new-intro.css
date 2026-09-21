@@ -23,3 +23,12 @@
 .cinematic-intro.impact .impact-flash{animation:impactPulse .55s ease-out both}
 @keyframes impactPulse{0%{opacity:0;transform:scale(.3)}18%{opacity:1;transform:scale(1)}55%{opacity:.38;transform:scale(1.6)}100%{opacity:0;transform:scale(2.15)}}
 .cinematic-intro.stable .final-logo{filter:brightness(1.08) contrast(1.05) drop-shadow(0 0 24px rgba(231,190,88,.34))}
+
+.storm-depth{position:absolute;inset:-12%;opacity:0;pointer-events:none;filter:blur(18px)}
+.depth-back{background:radial-gradient(ellipse at 25% 20%,rgba(45,58,72,.5),transparent 36%),radial-gradient(ellipse at 75% 18%,rgba(36,48,62,.55),transparent 40%)}
+.depth-front{background:radial-gradient(ellipse at 50% 31%,rgba(25,34,45,.74),transparent 42%);filter:blur(28px)}
+.cinematic-intro.clouds .storm-depth{opacity:1;transition:opacity 2.4s ease}
+.gold-strike{clip-path:polygon(50% 0,63% 25%,54% 25%,69% 47%,57% 47%,65% 67%,48% 100%,53% 71%,42% 71%,50% 51%,40% 51%,48% 29%,42% 29%)}
+.gold-strike i,.gold-strike b{position:absolute;inset:0;display:block;background:inherit;filter:blur(7px);opacity:.5}
+.cinematic-intro.strike .gold-strike{animation:boltArrival .48s cubic-bezier(.1,.8,.2,1) both}
+@keyframes boltArrival{0%{opacity:0;transform:translateY(-38%) scaleY(.35)}45%{opacity:1}100%{opacity:1;transform:translateY(0) scaleY(1)}}
