@@ -32,3 +32,14 @@
 .gold-strike i,.gold-strike b{position:absolute;inset:0;display:block;background:inherit;filter:blur(7px);opacity:.5}
 .cinematic-intro.strike .gold-strike{animation:boltArrival .48s cubic-bezier(.1,.8,.2,1) both}
 @keyframes boltArrival{0%{opacity:0;transform:translateY(-38%) scaleY(.35)}45%{opacity:1}100%{opacity:1;transform:translateY(0) scaleY(1)}}
+
+.gold-mist{position:absolute;inset:18% 10% 5%;opacity:0;background:radial-gradient(ellipse at 50% 52%,rgba(235,191,74,.16),transparent 42%);filter:blur(22px);pointer-events:none}
+.cinematic-intro.gold .gold-mist{opacity:1;transition:opacity 2s ease}
+.music-drops span{position:absolute;opacity:0;color:#f2cf6a;text-shadow:0 0 14px rgba(238,192,73,.75)}
+.music-drops span:nth-child(1){left:16%;top:8%}.music-drops span:nth-child(2){left:38%;top:0}.music-drops span:nth-child(3){left:66%;top:12%}.music-drops span:nth-child(4){left:82%;top:2%}
+.cinematic-intro.gold .music-drops span{animation:noteFall 3.4s ease-in infinite}
+.cinematic-intro.gold .music-drops span:nth-child(2){animation-delay:.5s}.cinematic-intro.gold .music-drops span:nth-child(3){animation-delay:1.1s}.cinematic-intro.gold .music-drops span:nth-child(4){animation-delay:1.65s}
+@keyframes noteFall{0%{opacity:0;transform:translateY(-20px) scale(.7)}22%{opacity:.9}75%{opacity:.65}100%{opacity:0;transform:translateY(180px) rotate(14deg) scale(1.08)}}
+.cinematic-intro.exit{background:#02060b}.cinematic-intro.exit .cloud-bank,.cinematic-intro.exit .storm-depth,.cinematic-intro.exit .rain-field,.cinematic-intro.exit .gold-rain,.cinematic-intro.exit .gold-strike,.cinematic-intro.exit .gold-mist{opacity:0!important;transition:opacity 1.8s ease}
+.cinematic-intro.exit .logo-stage{opacity:0;transform:scale(1.025);transition:opacity 1.8s ease,transform 1.8s ease}
+.new-home[aria-hidden="false"]{animation:homeReveal 1.45s ease both}@keyframes homeReveal{from{opacity:0;filter:brightness(.55)}to{opacity:1;filter:brightness(1)}}
