@@ -10,3 +10,10 @@ cue(13000,'gold');        // gotas doradas / notas musicales
 cue(15400,'stable');      // logo estable, lluvia dorada, destellos suaves
 cue(18200,'exit');        // transición suave
 setTimeout(()=>{intro?.classList.add('complete');const home=document.getElementById('home');if(home){home.hidden=false;home.setAttribute('aria-hidden','false')}setTimeout(()=>intro?.remove(),1850)},20000);
+
+let adminClicks=[];
+document.addEventListener('click',e=>{
+ if(e.target?.id!=='adminTrigger') return;
+ const now=Date.now(); adminClicks=adminClicks.filter(t=>now-t<1800); adminClicks.push(now);
+ if(adminClicks.length>=5){ adminClicks=[]; location.href='/admin/'; }
+});
