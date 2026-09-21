@@ -9,4 +9,4 @@ cue(10800,'logo');        // impacto y logo se ilumina
 cue(13000,'gold');        // gotas doradas / notas musicales
 cue(15400,'stable');      // logo estable, lluvia dorada, destellos suaves
 cue(18200,'exit');        // transición suave
-cue(20000,'complete');
+setTimeout(()=>{intro?.classList.add('complete');const home=document.getElementById('home');if(home){home.hidden=false;home.setAttribute('aria-hidden','false')}setTimeout(()=>intro?.remove(),1850)},20000);
