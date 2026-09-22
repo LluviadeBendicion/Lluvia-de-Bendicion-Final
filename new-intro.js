@@ -20,9 +20,13 @@ document.addEventListener('click',e=>{
 });
 
 const approvedLabels={inicio:'Inicio',mision:'Misión',vision:'Visión',creencias:'Creencias',radio:'Radio',especial:'Especialmente para ti',media:'Media',recursos:'Recursos',peticiones:'Peticiones de Oración',testimonios:'Testimonios',donaciones:'Donaciones',afiliados:'Afiliados',contacto:'Contacto'};
-document.addEventListener('click',e=>{
- const b=e.target.closest('[data-section]'); if(!b) return;
- const key=b.dataset.section, panel=document.getElementById('contentPanel'); if(!panel) return;
+function openSection(key){
+ const panel=document.getElementById('contentPanel'); if(!panel) return;
  if(key==='inicio'){panel.innerHTML='<div class="content-default"><img src="/assets/58795.png" alt="Lluvia de Bendición .Com"><p>Porque queremos que el Señor llueva en ti.</p></div>';return;}
+ if(key==='radio'){panel.innerHTML='<div class="section-loading radio-entry" data-current="radio"><h2>Radio Interactiva</h2><p>Experiencia completa del radio aprobada en preparación.</p></div>';return;}
  panel.innerHTML='<div class="section-loading" data-current="'+key+'"><h2>'+approvedLabels[key]+'</h2><p>Contenido aprobado en preparación.</p></div>';
+}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-section]'); if(b){openSection(b.dataset.section);return;}
+ if(e.target.closest('.radio-shortcut')){openSection('radio');}
 });
