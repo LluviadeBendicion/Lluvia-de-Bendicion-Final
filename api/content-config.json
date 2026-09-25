@@ -1,0 +1,28 @@
+{
+  "dailyPrayer": {
+    "enabled": true
+  },
+  "dailyVerse": {
+    "enabled": true,
+    "bible": "Reina-Valera 1960"
+  },
+  "memoryVerse": {
+    "enabled": true
+  },
+  "weeklyDevotional": {
+    "enabled": true,
+    "note": "Meditar en él durante toda la semana."
+  },
+  "weeklySermons": {
+    "enabled": true
+  },
+  "testimonies": {
+    "enabled": true
+  },
+  "studies": {
+    "enabled": true
+  },
+  "wallpapers": {
+    "approvalRequired": true
+  }
+}
