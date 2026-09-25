@@ -30,5 +30,9 @@ jobs:
           assert not re.search(r"rainbow|arcoíris",html,re.I)
           for p in Path("api").glob("*.json"):
               json.loads(p.read_text(encoding="utf-8"))
-          json.loads(Path("manifest.webmanifest").read_text(encoding="utf-8"))
+          manifest=json.loads(Path("manifest.webmanifest").read_text(encoding="utf-8"))
+          assert manifest["short_name"]=="LLDB"
+          assert manifest["start_url"]=="/#inicio"
+          assert manifest["icons"][0]["src"]=="/assets/logo-oficial-lldb.jpg"
+          assert "logo-marketing-redondo" not in json.dumps(manifest)
           print("LLDB launch validation passed")
