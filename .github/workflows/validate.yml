@@ -19,6 +19,10 @@ jobs:
           from pathlib import Path
           import json, re
           html=Path("index.html").read_text(encoding="utf-8")
+          robots=Path("robots.txt").read_text(encoding="utf-8")
+          sitemap=Path("sitemap.xml").read_text(encoding="utf-8")
+          assert "Sitemap: https://lluviadebendicion.com/sitemap.xml" in robots
+          assert "https://lluviadebendicion.com/" in sitemap
           assert html.count("<main")==1 and html.count("</main>")==1
           assert 'name="description"' in html
           assert 'name="application-name" content="LLDB"' in html
