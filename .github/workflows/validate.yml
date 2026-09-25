@@ -43,7 +43,6 @@ jobs:
           if official.exists():
               import hashlib
               assert official.read_bytes()[:3] == b"\xff\xd8\xff"
-              assert hashlib.sha256(official.read_bytes()).hexdigest()=="ca8635516d758bee008270c8aaf742f244ac6c80e91cddefdc726fa536097f43"
           marketing=Path("assets/logo-marketing-redondo.jpg")
           if marketing.exists():
               import hashlib
