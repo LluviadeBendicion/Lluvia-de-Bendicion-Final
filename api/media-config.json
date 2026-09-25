@@ -1,0 +1,24 @@
+{
+  "videos": {
+    "youtubePlaylist": {
+      "enabled": true,
+      "shuffle": true
+    },
+    "facebookServices": {
+      "enabled": true
+    },
+    "lldbOriginals": {
+      "enabled": true
+    }
+  },
+  "wallpapers": {
+    "carousel": "vertical",
+    "actions": [
+      "download",
+      "share",
+      "favorite"
+    ],
+    "approvalRequired": true
+  },
+  "disclaimer": "YouTube y Facebook se reproducen desde sus servidores y los derechos pertenecen a sus respectivos titulares; los originales LLDB mantienen sus derechos propios."
+}
