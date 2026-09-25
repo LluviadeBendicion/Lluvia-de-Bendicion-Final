@@ -85,6 +85,8 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 .privacy-note{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:20px;background:#d7b56d0a;color:#e4d8bd}.qr-slot{aspect-ratio:1;width:120px;margin:auto;display:grid;place-items:center;text-align:center;border:1px dashed #777;border-radius:10px;font-size:11px;padding:10px;background:#fff;color:#222}
 
 .bible-search{border:1px solid var(--line);background:#07131f;border-radius:14px;padding:18px;margin-bottom:18px}.bible-search label{display:block;color:var(--gold);margin-bottom:8px}.bible-search>div{display:flex;gap:8px}.bible-search input{flex:1;min-width:0;background:#02060b;border:1px solid #555;border-radius:8px;color:#fff;padding:10px}.bible-search button{border:1px solid var(--gold);background:#0c1822;color:var(--gold);border-radius:8px;padding:9px 14px}.bible-search small{display:block;margin-top:9px;color:#aaa}
+
+.speaker{border:0;color:#d7b56d55;font:700 12px Georgia;cursor:pointer}.radio-legend small{display:block;margin-top:10px;color:#aaa;max-width:150px}
 </style>
 </head>
 <body><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -135,6 +137,7 @@ const views=[...document.querySelectorAll('.view')];function showView(id,push=tr
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 const tuner=document.getElementById('tuner'),radioStage=document.getElementById('radio-stage');tuner?.addEventListener('click',()=>{radioStage.classList.remove('tuning');void radioStage.offsetWidth;radioStage.classList.add('tuning')});
+document.querySelectorAll('.radio-home').forEach(b=>b.onclick=()=>showView('inicio'));
 document.querySelectorAll('.radio-exit').forEach(x=>x.onclick=()=>showView('inicio'));
 if(location.hash)showView(location.hash.slice(1),false);
 const aboutPanel=document.getElementById('about-panel'),aboutTitle=document.getElementById('about-title'),aboutBody=document.getElementById('about-body');document.querySelectorAll('.about').forEach(b=>b.onclick=()=>{aboutTitle.textContent=b.querySelector('h3').textContent;aboutBody.innerHTML=b.querySelectorAll('p').length?[...b.querySelectorAll('p')].map(p=>'<p>'+p.textContent+'</p>').join(''):'';aboutPanel.classList.remove('hidden')});document.getElementById('about-close').onclick=()=>aboutPanel.classList.add('hidden');
