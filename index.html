@@ -183,12 +183,12 @@ if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.se
 (async()=>{
  try{
   const r=await fetch('/api/radio-config.json',{cache:'no-store'});
-  if(!r.ok)return;
+  if(!r.ok)throw new Error('radio config unavailable');
   const c=await r.json();
-  const np=document.getElementById('now-playing'),st=document.getElementById('radio-status'),nx=document.getElementById('next-up');
+  const np=document.getElementById('now-playing'),st=document.getElementById('radio-state'),nx=document.getElementById('next-up');
   if(np&&c.nowPlaying)np.textContent=c.nowPlaying;
   if(nx&&c.nextUp)nx.textContent=c.nextUp;
   if(st){const map={live:c.states?.live,programacion:c.states?.programming,programming:c.states?.programming,off:c.states?.off};st.textContent=map[c.mode]||c.mode||'Programación';const led=document.getElementById('active-led');if(led){led.className='dot '+(c.mode==='live'?'green':c.mode==='off'?'gray':'yellow')}}
- }catch(e){}
+ }catch(e){const st=document.getElementById('radio-state');if(st)st.textContent='Estado no disponible';const led=document.getElementById('active-led');if(led)led.className='dot gray'}
 })();
 </script></body></html>
