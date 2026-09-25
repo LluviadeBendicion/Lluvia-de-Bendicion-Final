@@ -224,4 +224,5 @@ if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.se
   if(st){const map={live:c.states?.live,programacion:c.states?.programming,programming:c.states?.programming,off:c.states?.off};st.textContent=map[c.mode]||c.mode||'Programación';const led=document.getElementById('active-led');if(led){led.className='dot '+(c.mode==='live'?'green':c.mode==='off'?'gray':'yellow')}}
  }catch(e){const st=document.getElementById('radio-status');if(st)st.textContent='Estado no disponible';const led=document.getElementById('active-led');if(led)led.className='dot gray'}
 })();
-</script></body></html>
+</script><!-- LLDB_DEPLOY_SYNC_20260925_2349 -->
+</body></html>
