@@ -61,6 +61,9 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 .testimony-wall{min-height:430px;padding:32px;border-radius:18px;border:1px solid #555;background:linear-gradient(#0005,#0005),repeating-linear-gradient(0deg,#3a3a3a 0 28px,#252525 29px 31px);display:grid;grid-template-columns:1fr 2fr 1fr;gap:18px;align-items:center;box-shadow:inset 0 0 80px #000}.speech-card{background:#f3f0e9;color:#171717;border-radius:50%;min-height:150px;padding:28px;display:grid;place-items:center;text-align:center;box-shadow:0 8px 30px #0008}.speech-card span{font-size:12px}.projection{min-height:260px;border:5px solid #111;background:#d9d9d9;color:#111;border-radius:8px;padding:28px;display:grid;place-items:center;text-align:center;box-shadow:0 0 40px #fff3}.projection h3{font:32px Georgia;color:#111}@media(max-width:700px){.testimony-wall{grid-template-columns:1fr}.speech-card{min-height:110px;border-radius:40px}}
 
 .affiliate-stage{max-width:850px;margin:auto;padding:25px;background:#2a2119;border-radius:18px}.school-screen{position:relative;background:#eee9dc;color:#151515;border:10px solid #33251b;border-radius:8px;padding:30px;text-align:center;box-shadow:0 18px 35px #000}.school-screen:before{content:"";position:absolute;left:15%;right:15%;top:-18px;height:14px;background:#5b4634;border-radius:8px}.affiliate-carousel{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:25px 0}.affiliate-carousel div{min-height:120px;border:2px dashed #777;display:grid;place-items:center}.admin-note{margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:8px;color:#d8c28d;font-size:12px}@media(max-width:700px){.affiliate-carousel{grid-template-columns:1fr}}
+
+.menu-toggle{display:none;margin:0 12px 10px;border:1px solid var(--line);background:#07131f;color:var(--gold);padding:8px 12px;border-radius:8px}
+@media(max-width:700px){.menu-toggle{display:block}#main-nav{display:none;flex-direction:column;align-items:stretch;max-height:65vh;overflow:auto}#main-nav.menu-open{display:flex}#main-nav button{width:100%;text-align:left}.top{flex-wrap:wrap}.quick{margin-left:auto}}
 </style>
 </head>
 <body><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -83,7 +86,8 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
  <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
   <button class="radio-shortcut" data-go="radio" title="Radio">📻</button><span class="social">Instagram</span><span class="social">Facebook</span><span class="social">YouTube</span><button class="install" id="install">Instalar LLDB</button>
  </div></div>
- <nav>
+ <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
+ <nav id="main-nav">
   <button data-go="inicio">⌂ Inicio</button><button data-go="nosotros">✦ Nosotros</button><button data-go="radio">📻 Radio</button><button data-go="especial">♡ Especialmente para ti</button><button data-go="media">▶ Media</button><button data-go="testimonios">◌ Testimonios</button><button data-go="donaciones">◇ Donaciones</button><button data-go="afiliados">▣ Afiliados</button><button data-go="contacto">✉ Contacto</button>
  </nav>
 </header>
@@ -105,9 +109,10 @@ const intro=document.getElementById('intro'),introScenes=[...document.querySelec
 function enter(){clearInterval(introClock);if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.2s';intro.style.opacity='0';setTimeout(()=>intro.remove(),1250)}
 function runIntro(){introClock=setInterval(()=>{introScenes[introStep]?.classList.remove('on');introStep++;if(introStep>=introScenes.length){enter();return}introScenes[introStep].classList.add('on')},850)}
 document.getElementById('skip').onclick=enter;runIntro();
+const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('nav [data-go]').forEach(b=>b.classList.toggle('nav-active',b.dataset.go===target.id));if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));
-document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>showView(b.dataset.go));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 document.querySelectorAll('.radio-exit').forEach(x=>x.onclick=()=>showView('inicio'));
 if(location.hash)showView(location.hash.slice(1),false);
 const aboutPanel=document.getElementById('about-panel'),aboutTitle=document.getElementById('about-title'),aboutBody=document.getElementById('about-body');document.querySelectorAll('.about').forEach(b=>b.onclick=()=>{aboutTitle.textContent=b.querySelector('h3').textContent;aboutBody.innerHTML=b.querySelectorAll('p').length?[...b.querySelectorAll('p')].map(p=>'<p>'+p.textContent+'</p>').join(''):'';aboutPanel.classList.remove('hidden')});document.getElementById('about-close').onclick=()=>aboutPanel.classList.add('hidden');
