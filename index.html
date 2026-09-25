@@ -113,6 +113,8 @@ footer{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:
 .nav-group{position:relative}.nav-tree{display:none;position:absolute;top:100%;left:0;min-width:210px;padding:7px;background:#07131f;border:1px solid var(--line);border-radius:8px;box-shadow:0 14px 30px #000;z-index:20}.nav-tree button{display:block;width:100%;text-align:left;font-size:11px}.nav-group:hover>.nav-tree,.nav-group:focus-within>.nav-tree{display:block}@media(max-width:700px){#main-nav .nav-group{width:100%}.nav-tree{position:static;display:block;border:0;border-left:1px solid #444;border-radius:0;box-shadow:none;margin-left:14px;padding:2px 0 2px 8px}.nav-tree button{opacity:.85}}
 
 button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px;color:#999;text-align:center}
+
+.brand-logo-slot{display:inline-block;width:28px;height:18px;margin-right:8px;vertical-align:middle;border:1px solid var(--gold);border-radius:3px;opacity:.35}
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -132,7 +134,7 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
  <div class="intro-progress" aria-hidden="true"><span id="intro-progress-bar"></span></div><div class="intro-audio-status" aria-hidden="true">Audio oficial pendiente</div><button class="skip" id="skip">Entrar</button>
 </section>
 <header>
- <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
+ <div class="top"><div class="brand"><span class="brand-logo-slot" data-official-asset="/assets/logo-oficial-lldb.png" aria-hidden="true"></span>Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
   <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram">Instagram</a><a class="social social-link" data-social="facebook">Facebook</a><a class="social social-link" data-social="youtube">YouTube</a><button class="install" id="install" aria-label="Instalar aplicación LLDB">Instalar LLDB</button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
