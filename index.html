@@ -52,7 +52,7 @@ button:focus-visible,[data-resource]:focus-visible{outline:2px solid var(--gold)
  <div class="notes"><span>♪</span><span>♫</span><span>♪</span></div><button class="skip" id="skip">Entrar</button>
 </section>
 <header>
- <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick">
+ <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
   <button class="radio-shortcut" data-go="radio" title="Radio">📻</button><span class="social">Instagram</span><span class="social">Facebook</span><span class="social">YouTube</span><button class="install" id="install">Instalar LLDB</button>
  </div></div>
  <nav>
@@ -62,7 +62,7 @@ button:focus-visible,[data-resource]:focus-visible{outline:2px solid var(--gold)
 <main>
 <section id="inicio" class="view active"><div class="hero"><div><h1>Lluvia de Bendición .Com</h1><p>Porque queremos que el Señor llueva en ti.</p></div></div></section>
 <section id="nosotros" class="view"><h2>Nosotros</h2><p>Conoce el corazón de Lluvia de Bendición .Com.</p><div class="cards"><article class="card about" data-about="Misión"><h3>✦ Misión</h3><p>Compartir el evangelio y contenido cristiano usando la tecnología para alcanzar, acompañar y edificar vidas.</p></article><article class="card about" data-about="Visión"><h3>☀ Visión</h3><p>Dios y el cristianismo no son una carga; son un camino que nos recompensa a corto y largo plazo con el propósito final de obtener la salvación.</p><p>Este proyecto nace dentro de mi corazón y pidiéndole dirección a Dios se ha creado.</p></article><article class="card about" data-about="Creencias"><h3>♢ Creencias</h3><p>Creemos en Dios Padre, Hijo y Espíritu Santo, y en la Biblia como fundamento de nuestra fe.</p></article></div></section>
-<section id="radio" class="view"><button class="exit" data-go="inicio" title="Salir de Radio">×</button><h2 style="text-align:center">Radio</h2><div class="radio-shell"><aside class="radio-legend"><strong>Estado</strong><p><span class="dot green"></span>En vivo<br><span class="dot yellow"></span>Programación / Música<br><span class="dot gray"></span>Fuera del aire</p><p>Para salir usa la X o toca una bocina LLDB.</p></aside><div class="radio-stage"><div class="handle"></div><div class="radio-grid"><div class="speaker radio-exit" title="Lluvia de Bendición">LLDB</div><div><div class="dial"><span class="dot yellow"></span> ♪ <span id="now-playing">Lluvia de Bendición .Com</span></div><div class="cassette"><strong id="radio-status">Programación</strong><br><small id="next-up">Lo que viene</small></div></div><div class="speaker radio-exit" title="Lluvia de Bendición">LLDB</div></div></div></div></section>
+<section id="radio" class="view"><button class="exit" data-go="inicio" title="Salir de Radio">×</button><h2 style="text-align:center">Radio</h2><div class="radio-shell"><aside class="radio-legend"><strong>Estado</strong><p><span class="dot green"></span>En vivo<br><span class="dot yellow"></span>Programación / Música<br><span class="dot gray"></span>Fuera del aire</p><p>Para salir usa la X o toca una bocina LLDB.</p></aside><div class="radio-stage"><div class="handle"></div><div class="radio-grid"><div class="speaker radio-exit" title="Lluvia de Bendición">LLDB</div><div><div class="dial"><span class="dot yellow"></span> ♪ <span id="now-playing" aria-live="polite">Lluvia de Bendición .Com</span></div><div class="cassette" aria-live="polite"><strong id="radio-status">Programación</strong><br><small id="next-up">Lo que viene</small></div></div><div class="speaker radio-exit" title="Lluvia de Bendición">LLDB</div></div></div></div></section>
 <section id="especial" class="view"><h2>Especialmente para ti</h2><p>Selecciona un recurso para abrirlo aquí mismo.</p><div class="cards resource-grid"><article class="card resource" data-resource="oracion"><h3>🙏 Oración del día</h3></article><article class="card resource" data-resource="versiculo"><h3>📖 Versículo del día</h3></article><article class="card resource" data-resource="memorizar"><h3>✦ Versículo para memorizar</h3></article><article class="card resource" data-resource="devocional"><h3>🕊 Devocional de la semana</h3><p>Meditar en él durante toda la semana.</p></article><article class="card resource" data-resource="sermones"><h3>🎙 Sermones de la semana</h3></article></div><div id="resource-panel" class="card hidden" style="margin-top:18px"><button class="exit" id="resource-close">×</button><h3 id="resource-title"></h3><div id="resource-body">Contenido LLDB</div></div></section>
 <section id="media" class="view"><h2>Media</h2><div class="cards"><article class="card"><h3>🎬 Videos</h3><p>Playlist YouTube • Servicios Facebook • Originales LLDB</p><button class="install" data-panel="video-room">Entrar al cine</button></article><article class="card"><h3>▣ Wallpapers</h3><p>Galería para descargar, compartir y guardar favoritos.</p><button class="install" data-panel="wall-room">Abrir wallpapers</button></article></div><div id="video-room" class="card hidden"><h3>Videos · experiencia cine</h3><p>Pantalla central · carruseles verticales · Playlist YouTube · Servicios Facebook · Originales LLDB</p><p>EXIT regresa a Media.</p></div><div id="wall-room" class="card hidden"><h3>Wallpapers</h3><p>Marco tipo celular · carrusel vertical · Descargar · Compartir · Favorito.</p></div></section>
 <section id="testimonios" class="view"><h2>Testimonios</h2><div class="card" style="background:linear-gradient(135deg,#333,#171717);border-width:2px"><h3>Historias de bendición</h3><p>Presentación tipo pared de ladrillos gris iluminada, con títulos, nombre y localidad del testimonio.</p></div></section>
@@ -83,4 +83,16 @@ document.getElementById('admin-close').onclick=()=>document.getElementById('priv
 let deferred;document.querySelectorAll('.resource,.about').forEach(x=>{x.tabIndex=0;x.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();x.click()}})});
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e});document.getElementById('install').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}else alert('Usa la opción “Instalar app” o “Añadir a pantalla principal” de tu navegador cuando esté disponible.')};
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}))}\n</script>
-</body></html>
+<script>
+(async()=>{
+ try{
+  const r=await fetch('/api/radio-config.json',{cache:'no-store'});
+  if(!r.ok)return;
+  const c=await r.json();
+  const np=document.getElementById('now-playing'),st=document.getElementById('radio-status'),nx=document.getElementById('next-up');
+  if(np&&c.nowPlaying)np.textContent=c.nowPlaying;
+  if(nx&&c.nextUp)nx.textContent=c.nextUp;
+  if(st){const map={live:c.states?.live,programacion:c.states?.programming,programming:c.states?.programming,off:c.states?.off};st.textContent=map[c.mode]||c.mode||'Programación';}
+ }catch(e){}
+})();
+</script></body></html>
