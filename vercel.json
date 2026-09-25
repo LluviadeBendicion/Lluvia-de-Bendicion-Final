@@ -58,5 +58,22 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/#inicio",
+      "permanent": true
+    },
+    {
+      "source": "/radio",
+      "destination": "/#radio",
+      "permanent": false
+    },
+    {
+      "source": "/media",
+      "destination": "/#media",
+      "permanent": false
+    }
   ]
 }
