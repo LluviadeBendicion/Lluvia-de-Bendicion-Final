@@ -13,7 +13,11 @@ Este archivo separa lo ya implementado de lo que requiere material oficial. No s
 - Donaciones con capa pública sin datos personales.
 - Contacto y peticiones preparados sin envío falso.
 - PWA LLDB y service worker.
+- Validación automática de lanzamiento en GitHub Actions: activa y aprobada.
 - Panel administrativo visual por acceso oculto; no equivale a autenticación.
+
+## Estado de lanzamiento
+La estructura base pasó la validación automática del repositorio. Los elementos oficiales pendientes pueden conectarse después sin sustituirlos por contenido inventado.
 
 ## Material oficial pendiente
 1. Subir el PNG ya aprobado del logo oficial LLDB a `assets/logo-oficial-lldb.png` (referencia recibida; falta el binario en GitHub).
