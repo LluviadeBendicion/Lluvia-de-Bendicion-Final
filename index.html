@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#02060b">
+<meta name="theme-color" content="#02060b">\n<link rel="manifest" href="/manifest.webmanifest">
 <title>Lluvia de Bendición .Com</title>
 <style>
 :root{--night:#02060b;--night2:#07131f;--gold:#d7b56d;--warm:#f7f1e6;--line:rgba(215,181,109,.35)}
@@ -62,5 +62,5 @@ document.getElementById('skip').onclick=enter;setTimeout(enter,9000);
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const v=document.getElementById(b.dataset.go);if(v){v.classList.add('active');scrollTo({top:0,behavior:'smooth'})}});
 let taps=0,timer;document.getElementById('secret').onclick=()=>{clearTimeout(timer);taps++;timer=setTimeout(()=>taps=0,1800);if(taps===5){taps=0;alert('Acceso privado LLDB: módulo reservado.')}};
 let deferred;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e});document.getElementById('install').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}else alert('Usa la opción “Instalar app” o “Añadir a pantalla principal” de tu navegador cuando esté disponible.')};
-</script>
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}))}\n</script>
 </body></html>
