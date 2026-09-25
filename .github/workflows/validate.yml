@@ -22,6 +22,8 @@ jobs:
           assert html.count("<main")==1 and html.count("</main>")==1
           assert 'name="description"' in html
           assert 'name="application-name" content="LLDB"' in html
+          assert 'rel="canonical" href="https://lluviadebendicion.com/"' in html
+          assert 'property="og:url" content="https://lluviadebendicion.com/"' in html
           assert 'property="og:image" content="/assets/logo-oficial-lldb.jpg"' in html
           assert 'name="twitter:image" content="/assets/logo-oficial-lldb.jpg"' in html
           assert len(re.findall(r"data-scene=",html))==12
