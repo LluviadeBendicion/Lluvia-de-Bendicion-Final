@@ -4,11 +4,11 @@ Este archivo separa lo ya implementado de lo que requiere material oficial. No s
 
 ## Implementado
 - Intro estructurada en 12 escenas.
-- Navegación principal aprobada.
-- Radio Interactiva como sección propia; radio grande fuera de Inicio.
+- Navegación principal aprobada e interacción interna para Nosotros.
+- Radio Interactiva como sección propia; radio grande fuera de Inicio; estado visual conectado a configuración.
 - Acceso rápido pequeño al Radio en el encabezado.
 - Especialmente para ti con presentación de pizarra y recursos inline.
-- Media con experiencia de Videos y Wallpapers.
+- Media con lanzadores centrales y experiencias separadas de Videos y Wallpapers.
 - Testimonios con pared/proyección y carrusel preparado.
 - Donaciones con capa pública sin datos personales.
 - Contacto y peticiones preparados sin envío falso.
