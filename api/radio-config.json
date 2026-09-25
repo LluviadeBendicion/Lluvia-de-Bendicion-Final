@@ -1,0 +1,11 @@
+{
+  "station": "Lluvia de Bendición .Com",
+  "mode": "programacion",
+  "states": {
+    "live": "En vivo",
+    "programming": "Programación / Música",
+    "off": "Fuera del aire"
+  },
+  "nowPlaying": "Lluvia de Bendición .Com",
+  "nextUp": "Lo que viene"
+}
