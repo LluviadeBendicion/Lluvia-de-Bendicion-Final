@@ -132,9 +132,14 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 
 .official-logo-slot img{display:block;max-width:min(680px,88vw);max-height:38vh;width:auto;height:auto;object-fit:contain;margin:auto;filter:drop-shadow(0 0 22px rgba(214,174,79,.32))}
 .brand-logo{width:48px;height:32px;object-fit:cover;border-radius:5px;vertical-align:middle;margin-right:8px}
+
+#skip-link{position:fixed;left:12px;top:-60px;z-index:1000;background:var(--gold);color:#02060b;padding:10px 14px;border-radius:8px;font-weight:700}
+#skip-link:focus{top:12px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 </style>
 </head>
-<body><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
+<body>
+<a id="skip-link" href="#inicio">Saltar al contenido</a><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
 <section id="intro" aria-label="Intro cinematográfica LLDB" data-voice="Estás entrando en sintonía de esta tu emisora Lluvia de Bendición .Com, porque queremos que el Señor llueva en ti.">
  <div class="intro-scene on" data-scene="1"><div class="intro-caption">Lluvia de Bendición .Com</div></div>
  <div class="intro-scene" data-scene="2"><div class="clouds"></div></div>
