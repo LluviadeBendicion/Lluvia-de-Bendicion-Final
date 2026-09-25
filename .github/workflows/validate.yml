@@ -22,6 +22,8 @@ jobs:
           assert html.count("<main")==1 and html.count("</main>")==1
           assert 'name="description"' in html
           assert 'name="application-name" content="LLDB"' in html
+          assert 'property="og:image" content="/assets/logo-oficial-lldb.jpg"' in html
+          assert 'name="twitter:image" content="/assets/logo-oficial-lldb.jpg"' in html
           assert len(re.findall(r"data-scene=",html))==12
           home=html.split('<section id="inicio"',1)[1].split("</section>",1)[0]
           assert "radio-stage" not in home
