@@ -10,10 +10,33 @@
   "orientation": "any",
   "background_color": "#02060b",
   "theme_color": "#02060b",
-  "categories": ["music", "lifestyle"],
+  "categories": [
+    "music",
+    "lifestyle"
+  ],
   "shortcuts": [
-    {"name":"Radio Interactiva","short_name":"Radio","url":"/#radio"},
-    {"name":"Especialmente para ti","short_name":"Recursos","url":"/#especial"},
-    {"name":"Media","short_name":"Media","url":"/#media"}
+    {
+      "name": "Radio Interactiva",
+      "short_name": "Radio",
+      "url": "/#radio"
+    },
+    {
+      "name": "Especialmente para ti",
+      "short_name": "Recursos",
+      "url": "/#especial"
+    },
+    {
+      "name": "Media",
+      "short_name": "Media",
+      "url": "/#media"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/assets/logo-oficial-lldb.jpg",
+      "sizes": "any",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
   ]
 }
