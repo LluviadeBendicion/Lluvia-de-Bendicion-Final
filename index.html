@@ -76,10 +76,11 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 .cinema-room{overflow:hidden;background:#090909}.acoustic-wall{position:absolute;inset:0;pointer-events:none;opacity:.3;background:repeating-linear-gradient(90deg,#222 0 34px,#111 35px 39px);z-index:0}.cinema-room>*:not(.acoustic-wall){position:relative;z-index:1}.cinema-room:before,.cinema-room:after{content:"";position:absolute;top:110px;width:90px;height:90px;border-radius:50%;background:repeating-radial-gradient(circle,#111 0 3px,#444 4px 6px);z-index:1}.cinema-room:before{left:18px}.cinema-room:after{right:18px}.cinema-room.playing{box-shadow:inset 0 0 120px #000}.cinema-room.playing .cinema-screen{box-shadow:0 0 22px #fff5}.exit-sign{width:auto;border-radius:5px;padding:4px 9px;background:#8d0e0e;color:#fff;border-color:#fff;font-weight:bold}
 
 .school-board{background:#17362d;border:12px solid #5b3b22;border-radius:8px;padding:24px;box-shadow:inset 0 0 55px #0008,0 18px 40px #000}.school-board>.cards .card{background:#17362d;border:1px solid #ffffff30;box-shadow:none}.school-board h3{color:#f0e6c9}.school-board p{color:#e8e2d4}
+.intro-audio-status{position:absolute;left:18px;bottom:18px;font-size:10px;color:#ffffff55;letter-spacing:.08em}
 </style>
 </head>
 <body><a href="#main-content" class="skip-link">Saltar al contenido</a>
-<section id="intro" aria-label="Intro cinematográfica LLDB">
+<section id="intro" aria-label="Intro cinematográfica LLDB" data-voice="Estás entrando en sintonía de esta tu emisora Lluvia de Bendición .Com, porque queremos que el Señor llueva en ti.">
  <div class="intro-scene on" data-scene="1"><div class="intro-caption">Lluvia de Bendición .Com</div></div>
  <div class="intro-scene" data-scene="2"><div class="clouds"></div></div>
  <div class="intro-scene" data-scene="3"><div class="clouds"></div><div class="lightning scene-lightning"></div></div>
@@ -92,7 +93,7 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
  <div class="intro-scene" data-scene="10"><div class="official-logo-slot lit">Lluvia de Bendición .Com</div></div>
  <div class="intro-scene" data-scene="11"><div class="gold-rain"></div><div class="official-logo-slot lit">LLDB</div></div>
  <div class="intro-scene" data-scene="12"><div class="final-intro">Porque queremos que el Señor llueva en ti.</div></div>
- <button class="skip" id="skip">Entrar</button>
+ <div class="intro-audio-status" aria-hidden="true">Audio oficial pendiente</div><button class="skip" id="skip">Entrar</button>
 </section>
 <header>
  <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
