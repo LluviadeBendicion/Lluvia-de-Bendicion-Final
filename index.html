@@ -92,6 +92,8 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 .section-tools{display:flex;justify-content:flex-end;margin:0 0 12px}.section-tools button{border:1px solid var(--line);background:#07131f;color:var(--gold);border-radius:8px;padding:8px 12px}
 
 .skip-link{position:fixed;left:12px;top:-60px;z-index:9999;background:#fff;color:#000;padding:8px 12px;border-radius:6px}.skip-link:focus{top:12px}nav button[aria-current="page"]{outline:1px solid var(--gold);outline-offset:2px}
+
+.intro-progress{position:absolute;left:18px;right:18px;bottom:42px;height:2px;background:#ffffff18;overflow:hidden}.intro-progress span{display:block;width:0;height:100%;background:var(--gold);transition:width .7s ease}
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -108,7 +110,7 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
  <div class="intro-scene" data-scene="10"><div class="official-logo-slot lit">Lluvia de Bendición .Com</div></div>
  <div class="intro-scene" data-scene="11"><div class="gold-rain"></div><div class="official-logo-slot lit">LLDB</div></div>
  <div class="intro-scene" data-scene="12"><div class="final-intro">Porque queremos que el Señor llueva en ti.</div></div>
- <div class="intro-audio-status" aria-hidden="true">Audio oficial pendiente</div><button class="skip" id="skip">Entrar</button>
+ <div class="intro-progress" aria-hidden="true"><span id="intro-progress-bar"></span></div><div class="intro-audio-status" aria-hidden="true">Audio oficial pendiente</div><button class="skip" id="skip">Entrar</button>
 </section>
 <header>
  <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
@@ -135,7 +137,7 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 <script>
 const intro=document.getElementById('intro'),introScenes=[...document.querySelectorAll('.intro-scene')];let introStep=0,introClock;
 function enter(){clearInterval(introClock);if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.2s';intro.style.opacity='0';setTimeout(()=>intro.remove(),1250)}
-function runIntro(){introClock=setInterval(()=>{introScenes[introStep]?.classList.remove('on');introStep++;if(introStep>=introScenes.length){enter();return}introScenes[introStep].classList.add('on')},850)}
+const introProgress=document.getElementById('intro-progress-bar');function runIntro(){introClock=setInterval(()=>{introScenes[introStep]?.classList.remove('on');introStep++;if(introStep>=introScenes.length){enter();return}introScenes[introStep].classList.add('on')},850)}
 document.getElementById('skip').onclick=enter;runIntro();
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('nav [data-go]').forEach(b=>b.classList.toggle('nav-active',b.dataset.go===target.id));if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
