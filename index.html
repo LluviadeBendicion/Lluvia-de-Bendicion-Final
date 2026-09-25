@@ -115,6 +115,8 @@ footer{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:
 button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px;color:#999;text-align:center}
 
 .brand-logo-slot{display:inline-block;width:28px;height:18px;margin-right:8px;vertical-align:middle;border:1px solid var(--gold);border-radius:3px;opacity:.35}
+
+@media(max-width:480px){.brand{font-size:16px}.radio-shortcut{width:40px;min-width:40px}.install{font-size:11px;padding:7px}.hero h1{font-size:clamp(30px,11vw,52px)}.cards{grid-template-columns:1fr}.radio-shell{grid-template-columns:1fr}.radio-legend{order:2}.radio-stage{min-width:0}.radio-grid{grid-template-columns:64px 1fr 64px}.speaker{min-width:0}}
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -159,7 +161,7 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 const intro=document.getElementById('intro'),introScenes=[...document.querySelectorAll('.intro-scene')];let introStep=0,introClock;
 function enter(){clearInterval(introClock);if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.2s';intro.style.opacity='0';setTimeout(()=>intro.remove(),1250)}
 const introProgress=document.getElementById('intro-progress-bar');function runIntro(){introClock=setInterval(()=>{introScenes[introStep]?.classList.remove('on');introStep++;if(introStep>=introScenes.length){enter();return}introScenes[introStep].classList.add('on')},850)}
-document.getElementById('skip').onclick=enter;runIntro();
+document.getElementById('skip').onclick=enter;if(sessionStorage.getItem('lldb-intro-seen')==='1'){intro.classList.add('hidden');const initial=(location.hash||'#inicio').slice(1);showView(document.getElementById(initial)?initial:'inicio')}else{sessionStorage.setItem('lldb-intro-seen','1');runIntro();}
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('nav [data-go]').forEach(b=>b.classList.toggle('nav-active',b.dataset.go===target.id));if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
