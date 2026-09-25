@@ -69,6 +69,7 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 .sun-mark{font-size:54px;color:var(--gold);filter:drop-shadow(0 0 20px #d7b56d66)}.home-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px}.home-actions button{border:1px solid var(--line);background:#07131f;color:var(--warm);padding:10px 14px;border-radius:9px}.cinema-layout{display:grid;grid-template-columns:1fr 80px;gap:12px}.source-rail{display:flex;gap:8px;overflow:auto}.source-rail button{min-width:150px}.cinema-speaker{border-radius:50%;aspect-ratio:1;background:repeating-radial-gradient(circle,#111 0 2px,#333 3px 5px);display:grid;place-items:center;color:#d7b56d66}.wall-layout{display:flex;justify-content:center;align-items:center;gap:15px}.wall-rail{display:flex;flex-direction:column;gap:8px}.wall-rail button{border:1px solid var(--line);background:#07131f;color:#fff;border-radius:8px;padding:9px}
 
 .radio-stage.tuning .dial{animation:tuneDial 1.1s ease}.radio-stage.tuning .cassette{animation:radioWake 1.1s ease}@keyframes tuneDial{0%{filter:brightness(.45)}35%{transform:translateX(-4px);filter:brightness(1.6)}70%{transform:translateX(3px)}100%{transform:none;filter:none}}@keyframes radioWake{0%,35%{opacity:.35}100%{opacity:1}}
+.install-ready{border-color:var(--gold);box-shadow:0 0 18px #d7b56d33}
 </style>
 </head>
 <body><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -89,7 +90,7 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 </section>
 <header>
  <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
-  <button class="radio-shortcut" data-go="radio" title="Radio">📻</button><a class="social social-link" data-social="instagram">Instagram</a><a class="social social-link" data-social="facebook">Facebook</a><a class="social social-link" data-social="youtube">YouTube</a><button class="install" id="install">Instalar LLDB</button>
+  <button class="radio-shortcut" data-go="radio" title="Radio">📻</button><a class="social social-link" data-social="instagram">Instagram</a><a class="social social-link" data-social="facebook">Facebook</a><a class="social social-link" data-social="youtube">YouTube</a><button class="install" id="install" aria-label="Instalar aplicación LLDB">Instalar LLDB</button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
  <nav id="main-nav">
@@ -134,7 +135,7 @@ document.querySelectorAll('.lldb-form').forEach(form=>form.addEventListener('sub
 fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer'}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
 fetch('/api/donations-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.donation-link').forEach(b=>{const m=c.methods?.[b.dataset.method];if(m?.enabled&&m.url){b.disabled=false;b.textContent='Abrir';b.onclick=()=>window.open(m.url,'_blank','noopener')}})}).catch(()=>{});
 let deferred;document.querySelectorAll('.resource,.about').forEach(x=>{x.tabIndex=0;x.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();x.click()}})});
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e});document.getElementById('install').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}else alert('Usa la opción “Instalar app” o “Añadir a pantalla principal” de tu navegador cuando esté disponible.')};
+const installBtn=document.getElementById('install');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;installBtn.classList.add('install-ready')});window.addEventListener('appinstalled',()=>{installBtn.textContent='LLDB instalada';installBtn.disabled=true});installBtn.onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;installBtn.classList.remove('install-ready')}else alert('En Android/Chrome abre el menú del navegador y busca “Instalar app” o “Añadir a pantalla principal”.')};
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}))}
 </script>
 <script>
