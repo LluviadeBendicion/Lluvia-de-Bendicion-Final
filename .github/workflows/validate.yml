@@ -27,6 +27,7 @@ jobs:
           assert 'name="description"' in html
           assert 'id="skip-link"' in html
           assert ':focus-visible' in html
+          assert 'prefers-reduced-motion' in html
           assert 'name="application-name" content="LLDB"' in html
           assert 'rel="canonical" href="https://lluviadebendicion.com/"' in html
           assert 'property="og:url" content="https://lluviadebendicion.com/"' in html
