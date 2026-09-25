@@ -17,7 +17,7 @@ Este archivo separa lo ya implementado de lo que requiere material oficial. No s
 - Panel administrativo visual por acceso oculto; no equivale a autenticación.
 
 ## Estado de lanzamiento
-La estructura base pasó la validación automática del repositorio. Los elementos oficiales pendientes pueden conectarse después sin sustituirlos por contenido inventado.
+La estructura base pasó la validación automática del repositorio. La entrega web también fuerza revalidación de `index.html` y configuraciones para evitar mostrar una versión vieja tras publicar. Los elementos oficiales pendientes pueden conectarse después sin sustituirlos por contenido inventado.
 
 ## Material oficial pendiente
 1. Subir el PNG ya aprobado del logo oficial LLDB a `assets/logo-oficial-lldb.png` (referencia recibida; falta el binario en GitHub).
