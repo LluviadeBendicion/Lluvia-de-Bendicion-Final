@@ -117,6 +117,9 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 .brand-logo-slot{display:inline-block;width:28px;height:18px;margin-right:8px;vertical-align:middle;border:1px solid var(--gold);border-radius:3px;opacity:.35}
 
 @media(max-width:480px){.brand{font-size:16px}.radio-shortcut{width:40px;min-width:40px}.install{font-size:11px;padding:7px}.hero h1{font-size:clamp(30px,11vw,52px)}.cards{grid-template-columns:1fr}.radio-shell{grid-template-columns:1fr}.radio-legend{order:2}.radio-stage{min-width:0}.radio-grid{grid-template-columns:64px 1fr 64px}.speaker{min-width:0}}
+
+.official-logo-slot img{display:block;max-width:min(680px,88vw);max-height:38vh;width:auto;height:auto;object-fit:contain;margin:auto;filter:drop-shadow(0 0 22px rgba(214,174,79,.32))}
+.brand-logo{width:48px;height:32px;object-fit:cover;border-radius:5px;vertical-align:middle;margin-right:8px}
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
@@ -136,7 +139,7 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
  <div class="intro-progress" aria-hidden="true"><span id="intro-progress-bar"></span></div><div class="intro-audio-status" aria-hidden="true">Audio oficial pendiente</div><button class="skip" id="skip">Entrar</button>
 </section>
 <header>
- <div class="top"><div class="brand"><span class="brand-logo-slot" data-official-asset="/assets/logo-oficial-lldb.jpg" aria-hidden="true"></span>Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
+ <div class="top"><div class="brand"><img class="brand-logo" src="/assets/logo-oficial-lldb.jpg" alt="" aria-hidden="true" decoding="async" onerror="this.hidden=true">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
   <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram">Instagram</a><a class="social social-link" data-social="facebook">Facebook</a><a class="social social-link" data-social="youtube">YouTube</a><button class="install" id="install" aria-label="Instalar aplicación LLDB">Instalar LLDB</button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
