@@ -36,6 +36,9 @@ jobs:
           assert not re.search(r"rainbow|arcoíris",html,re.I)
           for p in Path("api").glob("*.json"):
               json.loads(p.read_text(encoding="utf-8"))
+          vercel=json.loads(Path("vercel.json").read_text(encoding="utf-8"))
+          assert vercel["cleanUrls"] is True
+          assert any(x.get("source")=="/sw.js" for x in vercel["headers"])
           manifest=json.loads(Path("manifest.webmanifest").read_text(encoding="utf-8"))
           assert manifest["short_name"]=="LLDB"
           assert manifest["start_url"]=="/#inicio"
