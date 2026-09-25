@@ -90,9 +90,11 @@ nav button.nav-active{background:#d7b56d18;color:var(--gold);box-shadow:inset 0 
 .rights-note{display:block;color:#aaa;line-height:1.5;margin-top:8px}
 .form-note{display:block;margin-bottom:12px;color:#aaa}
 .section-tools{display:flex;justify-content:flex-end;margin:0 0 12px}.section-tools button{border:1px solid var(--line);background:#07131f;color:var(--gold);border-radius:8px;padding:8px 12px}
+
+.skip-link{position:fixed;left:12px;top:-60px;z-index:9999;background:#fff;color:#000;padding:8px 12px;border-radius:6px}.skip-link:focus{top:12px}nav button[aria-current="page"]{outline:1px solid var(--gold);outline-offset:2px}
 </style>
 </head>
-<body><a href="#main-content" class="skip-link">Saltar al contenido</a>
+<body><a class="skip-link" href="#main-content">Saltar al contenido</a><a href="#main-content" class="skip-link">Saltar al contenido</a>
 <section id="intro" aria-label="Intro cinematográfica LLDB" data-voice="Estás entrando en sintonía de esta tu emisora Lluvia de Bendición .Com, porque queremos que el Señor llueva en ti.">
  <div class="intro-scene on" data-scene="1"><div class="intro-caption">Lluvia de Bendición .Com</div></div>
  <div class="intro-scene" data-scene="2"><div class="clouds"></div></div>
@@ -137,7 +139,7 @@ function runIntro(){introClock=setInterval(()=>{introScenes[introStep]?.classLis
 document.getElementById('skip').onclick=enter;runIntro();
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));document.querySelectorAll('nav [data-go]').forEach(b=>b.classList.toggle('nav-active',b.dataset.go===target.id));if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
-window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));
+window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 const tuner=document.getElementById('tuner'),radioStage=document.getElementById('radio-stage');tuner?.addEventListener('click',()=>{radioStage.classList.remove('tuning');void radioStage.offsetWidth;radioStage.classList.add('tuning')});
 document.querySelectorAll('.radio-home').forEach(b=>b.onclick=()=>showView('inicio'));
