@@ -1,5 +1,5 @@
-const CACHE='lldb-v9';
-const CORE=['/','/index.html','/manifest.webmanifest','/assets/logo-oficial-lldb.jpg','/api/radio-config.json','/api/content-config.json','/api/media-config.json','/api/social-config.json','/api/donations-config.json','/api/forms-config.json'];
+const CACHE='lldb-v10';
+const CORE=['/','/index.html','/manifest.webmanifest','/api/radio-config.json','/api/content-config.json','/api/media-config.json','/api/social-config.json','/api/donations-config.json','/api/forms-config.json'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
