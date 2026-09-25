@@ -43,9 +43,10 @@ button:focus-visible,[data-resource]:focus-visible{outline:2px solid var(--gold)
 .intro-scene{position:absolute;inset:0;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .7s ease}
 .intro-scene.on{opacity:1}.intro-mark{width:min(330px,68vw);aspect-ratio:1;border:2px solid #d5aa52;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 45px #d5aa5266;font-size:clamp(26px,6vw,54px);text-align:center;padding:24px}
 .intro-caption{position:absolute;bottom:9%;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#e9d39b}
+.skip-link{position:fixed;left:10px;top:-60px;z-index:100;background:#fff;color:#000;padding:10px;border-radius:8px}.skip-link:focus{top:10px}
 </style>
 </head>
-<body>
+<body><a href="#main-content" class="skip-link">Saltar al contenido</a>
 <section id="intro" aria-label="Intro cinematográfica">
  <div class="clouds"></div><div class="rain"></div><div class="lightning"></div>
  <div class="intro-mark"><div class="drop">💧</div><h1>Lluvia de Bendición .Com</h1><p>PORQUE QUEREMOS QUE EL SEÑOR LLUEVA EN TI</p></div>
@@ -60,7 +61,7 @@ button:focus-visible,[data-resource]:focus-visible{outline:2px solid var(--gold)
  </nav>
 </header>
 <main>
-<section id="inicio" class="view active"><div class="hero"><div><h1>Lluvia de Bendición .Com</h1><p>Porque queremos que el Señor llueva en ti.</p></div></div></section>
+<main id="main-content"><section id="inicio" class="view active"><div class="hero"><div><h1>Lluvia de Bendición .Com</h1><p>Porque queremos que el Señor llueva en ti.</p></div></div></section>
 <section id="nosotros" class="view"><h2>Nosotros</h2><p>Conoce el corazón de Lluvia de Bendición .Com.</p><div class="cards"><article class="card about" data-about="Misión"><h3>✦ Misión</h3><p>Compartir el evangelio y contenido cristiano usando la tecnología para alcanzar, acompañar y edificar vidas.</p></article><article class="card about" data-about="Visión"><h3>☀ Visión</h3><p>Dios y el cristianismo no son una carga; son un camino que nos recompensa a corto y largo plazo con el propósito final de obtener la salvación.</p><p>Este proyecto nace dentro de mi corazón y pidiéndole dirección a Dios se ha creado.</p></article><article class="card about" data-about="Creencias"><h3>♢ Creencias</h3><p>Creemos en Dios Padre, Hijo y Espíritu Santo, y en la Biblia como fundamento de nuestra fe.</p></article></div></section>
 <section id="radio" class="view"><button class="exit" data-go="inicio" title="Salir de Radio">×</button><h2 style="text-align:center">Radio</h2><div class="radio-shell"><aside class="radio-legend"><strong>Estado</strong><p><span class="dot green"></span>En vivo<br><span class="dot yellow"></span>Programación / Música<br><span class="dot gray"></span>Fuera del aire</p><p>Para salir usa la X o toca una bocina LLDB.</p></aside><div class="radio-stage"><div class="handle"></div><div class="radio-grid"><div class="speaker radio-exit" title="Lluvia de Bendición">LLDB</div><div><div class="dial"><span class="dot yellow"></span> ♪ <span id="now-playing" aria-live="polite">Lluvia de Bendición .Com</span></div><div class="cassette" aria-live="polite"><strong id="radio-status">Programación</strong><br><small id="next-up">Lo que viene</small></div></div><div class="speaker radio-exit" title="Lluvia de Bendición">LLDB</div></div></div></div></section>
 <section id="especial" class="view"><h2>Especialmente para ti</h2><p>Selecciona un recurso para abrirlo aquí mismo.</p><div class="cards resource-grid"><article class="card resource" data-resource="oracion"><h3>🙏 Oración del día</h3></article><article class="card resource" data-resource="versiculo"><h3>📖 Versículo del día</h3></article><article class="card resource" data-resource="memorizar"><h3>✦ Versículo para memorizar</h3></article><article class="card resource" data-resource="devocional"><h3>🕊 Devocional de la semana</h3><p>Meditar en él durante toda la semana.</p></article><article class="card resource" data-resource="sermones"><h3>🎙 Sermones de la semana</h3></article></div><div id="resource-panel" class="card hidden" style="margin-top:18px"><button class="exit" id="resource-close">×</button><h3 id="resource-title"></h3><div id="resource-body">Contenido LLDB</div></div></section>
@@ -75,8 +76,11 @@ button:focus-visible,[data-resource]:focus-visible{outline:2px solid var(--gold)
 <script>
 const intro=document.getElementById('intro');function enter(){intro.style.transition='opacity 1.2s';intro.style.opacity='0';setTimeout(()=>intro.remove(),1250)}
 document.getElementById('skip').onclick=enter;setTimeout(enter,9000);
+const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
+window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const v=document.getElementById(b.dataset.go);if(v){v.classList.add('active');scrollTo({top:0,behavior:'smooth'})}});
-document.querySelectorAll('.radio-exit').forEach(x=>x.onclick=()=>document.querySelector('[data-go="inicio"]').click());
+document.querySelectorAll('.radio-exit').forEach(x=>x.onclick=()=>showView('inicio'));
+if(location.hash)showView(location.hash.slice(1),false);
 const resourcePanel=document.getElementById('resource-panel'),resourceTitle=document.getElementById('resource-title');document.querySelectorAll('[data-resource]').forEach(b=>b.onclick=()=>{resourceTitle.textContent=b.querySelector('h3').textContent;resourcePanel.classList.remove('hidden')});document.getElementById('resource-close').onclick=()=>resourcePanel.classList.add('hidden');
 document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.panel)?.classList.toggle('hidden'));\nlet taps=0,timer;document.getElementById('secret').onclick=()=>{clearTimeout(timer);taps++;timer=setTimeout(()=>taps=0,1800);if(taps===5){taps=0;document.getElementById('private-admin').classList.remove('hidden')}};
 document.getElementById('admin-close').onclick=()=>document.getElementById('private-admin').classList.add('hidden');
