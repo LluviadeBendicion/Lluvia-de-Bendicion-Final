@@ -38,6 +38,17 @@ jobs:
           home=html.split('<section id="inicio"',1)[1].split("</section>",1)[0]
           assert "radio-stage" not in home
           assert "/assets/logo-oficial-lldb.jpg" in html
+          # Once the official binary is committed, enforce its exact approved identity.
+          official=Path("assets/logo-oficial-lldb.jpg")
+          if official.exists():
+              import hashlib
+              assert official.read_bytes()[:3] == b"\xff\xd8\xff"
+              assert hashlib.sha256(official.read_bytes()).hexdigest()=="ca8635516d758bee008270c8aaf742f244ac6c80e91cddefdc726fa536097f43"
+          marketing=Path("assets/logo-marketing-redondo.jpg")
+          if marketing.exists():
+              import hashlib
+              assert marketing.read_bytes()[:3] == b"\xff\xd8\xff"
+              assert hashlib.sha256(marketing.read_bytes()).hexdigest()=="49763a583c9c415b47f85f0d648ababde1ff2ffaf6df3ef5f91b7ded125f3fe4"
           assert "/assets/logo-marketing-redondo.jpg" not in html
           assert "Estás entrando en sintonía de esta tu emisora Lluvia de Bendición .Com, porque queremos que el Señor llueva en ti." in html
           assert not re.search(r"purple|#800080|#6a0dad",html,re.I)
