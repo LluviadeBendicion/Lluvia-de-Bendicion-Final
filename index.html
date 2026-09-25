@@ -38,6 +38,11 @@ footer{border-top:1px solid var(--line);text-align:center;color:#aaa;padding:24p
   .cards{grid-template-columns:1fr}.radio-grid{grid-template-columns:72px 1fr 72px;gap:8px}.speaker{font-size:12px}.dial{font-size:12px}
 }
 button:focus-visible,[data-resource]:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* Intro timeline: 12 approved scenes, assets remain placeholders until official logo/audio are supplied */
+.intro-scene{position:absolute;inset:0;display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.intro-scene.on{opacity:1}.intro-mark{width:min(330px,68vw);aspect-ratio:1;border:2px solid #d5aa52;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 45px #d5aa5266;font-size:clamp(26px,6vw,54px);text-align:center;padding:24px}
+.intro-caption{position:absolute;bottom:9%;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#e9d39b}
 </style>
 </head>
 <body>
