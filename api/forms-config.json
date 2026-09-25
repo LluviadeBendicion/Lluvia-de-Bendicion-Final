@@ -1,0 +1,12 @@
+{
+  "contact": {
+    "enabled": true,
+    "destinationConfigured": false
+  },
+  "prayerRequests": {
+    "enabled": true,
+    "destinationConfigured": false,
+    "allowAnonymousName": true
+  },
+  "note": "No activar envío hasta configurar destino oficial y protección anti-spam."
+}
