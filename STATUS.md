@@ -16,7 +16,7 @@ Este archivo separa lo ya implementado de lo que requiere material oficial. No s
 - Panel administrativo visual por acceso oculto; no equivale a autenticación.
 
 ## Material oficial pendiente
-1. Logo oficial LLDB en formato web.
+1. Subir el PNG ya aprobado del logo oficial LLDB a `assets/logo-oficial-lldb.png` (referencia recibida; falta el binario en GitHub).
 2. Audio oficial de la introducción/identificación.
 3. URL real del stream de Radio.
 4. URLs oficiales de Instagram, Facebook y YouTube.
@@ -29,6 +29,8 @@ Este archivo separa lo ya implementado de lo que requiere material oficial. No s
 11. Destino/backend seguro de formularios.
 12. Fuente autorizada para búsqueda/concordancia Reina-Valera 1960.
 13. Autenticación y almacenamiento seguro del panel administrativo.
+
+- Logo de marketing/merchandise aprobado: reservado como `assets/logo-marketing-redondo.png`; no usar como logo principal de plataforma.
 
 ## Regla de diseño
 No rediseñar los módulos aprobados ni sustituir el logo, audio, imágenes, enlaces o contenido oficial por material inventado.
