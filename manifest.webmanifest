@@ -1,9 +1,19 @@
 {
+  "id": "/",
   "name": "Lluvia de Bendición .Com",
   "short_name": "LLDB",
-  "start_url": "/",
+  "description": "Lluvia de Bendición .Com — Porque queremos que el Señor llueva en ti.",
+  "lang": "es",
+  "start_url": "/#inicio",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#02060b",
   "theme_color": "#02060b",
-  "description": "Lluvia de Bendición .Com — Porque queremos que el Señor llueva en ti."
+  "categories": ["music", "lifestyle"],
+  "shortcuts": [
+    {"name":"Radio Interactiva","short_name":"Radio","url":"/#radio"},
+    {"name":"Especialmente para ti","short_name":"Recursos","url":"/#especial"},
+    {"name":"Media","short_name":"Media","url":"/#media"}
+  ]
 }
