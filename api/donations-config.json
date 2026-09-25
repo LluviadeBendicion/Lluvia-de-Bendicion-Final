@@ -1,0 +1,22 @@
+{
+  "publicPersonalData": false,
+  "methods": {
+    "zelle": {
+      "enabled": true,
+      "url": ""
+    },
+    "cashApp": {
+      "enabled": true,
+      "url": ""
+    },
+    "venmo": {
+      "enabled": true,
+      "url": ""
+    },
+    "paypal": {
+      "enabled": true,
+      "url": "",
+      "qrAsset": ""
+    }
+  }
+}
