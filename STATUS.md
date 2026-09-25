@@ -1,0 +1,34 @@
+# Estado de integración LLDB
+
+Este archivo separa lo ya implementado de lo que requiere material oficial. No sustituir los elementos pendientes por contenido inventado.
+
+## Implementado
+- Intro estructurada en 12 escenas.
+- Navegación principal aprobada.
+- Radio Interactiva como sección propia; radio grande fuera de Inicio.
+- Acceso rápido pequeño al Radio en el encabezado.
+- Especialmente para ti con presentación de pizarra y recursos inline.
+- Media con experiencia de Videos y Wallpapers.
+- Testimonios con pared/proyección y carrusel preparado.
+- Donaciones con capa pública sin datos personales.
+- Contacto y peticiones preparados sin envío falso.
+- PWA LLDB y service worker.
+- Panel administrativo visual por acceso oculto; no equivale a autenticación.
+
+## Material oficial pendiente
+1. Logo oficial LLDB en formato web.
+2. Audio oficial de la introducción/identificación.
+3. URL real del stream de Radio.
+4. URLs oficiales de Instagram, Facebook y YouTube.
+5. ID/URL de la playlist oficial de YouTube.
+6. Fuente de servicios/videos de Facebook.
+7. Videos originales LLDB.
+8. Wallpapers aprobados.
+9. Enlaces oficiales de Zelle, Cash App, Venmo y PayPal.
+10. QR oficial de PayPal.
+11. Destino/backend seguro de formularios.
+12. Fuente autorizada para búsqueda/concordancia Reina-Valera 1960.
+13. Autenticación y almacenamiento seguro del panel administrativo.
+
+## Regla de diseño
+No rediseñar los módulos aprobados ni sustituir el logo, audio, imágenes, enlaces o contenido oficial por material inventado.
