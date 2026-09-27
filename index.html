@@ -140,6 +140,19 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
 /* Intro cinematográfica: 12 cuadros derivados de la referencia aprobada 2026-09-16. */
+
+/* LLDB launch polish 2026-09-27 */
+.top .brand{display:flex;align-items:center;gap:11px;font-size:clamp(18px,3vw,25px)}
+.top .brand::before{content:"";width:52px;height:52px;flex:0 0 52px;border-radius:50%;background:url('/assets/logo-oficial-lldb.jpg') center/cover no-repeat;border:1px solid var(--line);box-shadow:0 0 18px #d7b56d33}
+@media(max-width:700px){.top .brand::before{width:42px;height:42px;flex-basis:42px}.top .brand{font-size:18px}.top{gap:10px}.quick{width:auto}.radio-shortcut{width:46px;height:38px}.install{padding:9px 12px}.menu-toggle{margin-top:4px}}
+#inicio.hero{position:relative;overflow:hidden;min-height:min(720px,72vh);border:1px solid #d7b56d22;border-radius:28px;background:radial-gradient(circle at 50% 22%,#d7b56d24,transparent 25%),radial-gradient(circle at 50% 50%,#102b42 0,#06111b 43%,#02060b 78%);box-shadow:inset 0 0 100px #000}
+#inicio.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,#02060b 92%),repeating-linear-gradient(90deg,transparent 0 27px,#cce8ff10 28px 29px);opacity:.7;pointer-events:none}
+#inicio.hero>div{position:relative;z-index:1;max-width:850px;padding:55px 24px}
+#inicio .sun-mark{width:150px;height:150px;margin:0 auto 18px;border-radius:50%;font-size:0;background:url('/assets/logo-oficial-lldb.jpg') center/cover no-repeat;border:2px solid #d7b56d99;box-shadow:0 0 30px #d7b56d66,0 0 90px #d7b56d22}
+#inicio.hero h1{font-size:clamp(42px,8vw,82px);line-height:.98;text-shadow:0 8px 35px #000,0 0 28px #d7b56d22}
+#inicio.hero p{margin:24px auto;color:#f7f1e6;line-height:1.45}
+.home-actions button{padding:12px 18px;border-radius:999px;background:#07131fd9;box-shadow:0 8px 25px #0005}
+@media(max-width:700px){main{padding:18px 10px 70px}#inicio.hero{min-height:68vh;border-radius:20px}#inicio.hero>div{padding:42px 16px}#inicio .sun-mark{width:120px;height:120px}#inicio.hero h1{font-size:clamp(40px,13vw,62px)}#inicio.hero p{font-size:20px}.home-actions{gap:8px}.home-actions button{padding:11px 13px}}
 </style>
 </head>
 <body>
