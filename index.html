@@ -176,24 +176,34 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 @keyframes boltDrop{0%{height:0;opacity:0}12%{opacity:1}75%{height:72%}100%{height:72%;opacity:.9}}
 @keyframes contactGlow{0%{width:30px;height:8px;opacity:1}100%{width:min(62vw,420px);height:72px;opacity:0}}
 @keyframes logoRise{0%{opacity:0;transform:translateY(70px) scale(.55);filter:brightness(.25)}55%{opacity:.8;filter:brightness(.75)}100%{opacity:1;transform:translateY(0) scale(1);filter:brightness(1.08) drop-shadow(0 0 26px #d7b56d66)}}
+
+/* Mobile intro cleanup from live screenshots */
+#intro{top:0!important;height:100dvh!important;min-height:100dvh!important}
+#intro::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 13%,#30373d 0 8%,#171c21 23%,transparent 45%),radial-gradient(ellipse at 15% 20%,#242a30 0 12%,transparent 38%),radial-gradient(ellipse at 85% 22%,#242a30 0 12%,transparent 38%);opacity:.85;filter:blur(9px);pointer-events:none}
+.intro-progress{bottom:54px!important}.skip{bottom:18px!important}.final-intro{bottom:105px!important}
+.intro-scene[data-scene="5"]::after{width:clamp(34px,7vw,68px)!important;height:74%!important;clip-path:polygon(47% 0,72% 0,57% 27%,78% 27%,48% 54%,67% 54%,25% 100%,39% 61%,20% 61%,43% 34%,30% 34%)!important}
+.intro-scene[data-scene="6"] .impact-ring,.intro-scene[data-scene="7"] .impact-ring{top:68%!important}
+.intro-logo-frame img{width:min(72vw,430px)!important;height:min(72vw,430px)!important;object-fit:cover!important;object-position:center!important;clip-path:circle(49% at 50% 50%)!important}
+@media(max-width:700px){#intro::before{background:radial-gradient(ellipse at 50% 10%,#343b42 0 8%,#171c22 25%,transparent 47%),radial-gradient(ellipse at 5% 20%,#252b31 0 15%,transparent 43%),radial-gradient(ellipse at 95% 20%,#252b31 0 15%,transparent 43%)}.intro-logo-frame img{width:68vw!important;height:68vw!important}.final-intro{font-size:clamp(26px,7vw,36px)!important;padding:0 26px}.intro-progress{left:26px!important;right:26px!important}}
 </style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
 <section id="intro" aria-label="Intro cinematográfica LLDB" data-voice="Estás entrando en sintonía de esta tu emisora Lluvia de Bendición .Com, porque queremos que el Señor llueva en ti.">
- <div class="intro-scene on" data-scene="1"><div class="intro-caption">Lluvia de Bendición .Com</div></div>
+ <div class="intro-scene on" data-scene="1"></div>
  <div class="intro-scene" data-scene="2"><div class="clouds"></div></div>
  <div class="intro-scene" data-scene="3"><div class="clouds"></div><div class="storm-flash"></div><div class="scene-bolt white-bolt"></div></div>
  <div class="intro-scene" data-scene="4"><div class="clouds"></div><div class="storm-flash"></div></div>
  <div class="intro-scene" data-scene="5"><div class="clouds"></div><div class="scene-bolt gold-bolt"></div></div>
  <div class="intro-scene" data-scene="6"><div class="impact-flash"></div><div class="impact-ring"></div></div>
- <div class="intro-scene" data-scene="7"><div class="impact-ring"></div></div>\n <div class="intro-scene" data-scene="8"><div class="intro-logo-frame logo-awake"><img src="/assets/logo-oficial-lldb.jpg" alt="Lluvia de Bendición .Com" onerror="this.hidden=true"><span>Lluvia de Bendición .Com</span></div></div>
+ <div class="intro-scene" data-scene="7"><div class="impact-ring"></div></div>
+ <div class="intro-scene" data-scene="8"><div class="intro-logo-frame logo-awake"><img src="/assets/logo-oficial-lldb.jpg" alt="Lluvia de Bendición .Com" onerror="this.hidden=true"><span>Lluvia de Bendición .Com</span></div></div>
  <div class="intro-scene" data-scene="9"><div class="intro-logo-frame logo-awake"><img src="/assets/logo-oficial-lldb.jpg" alt="Lluvia de Bendición .Com" onerror="this.hidden=true"><span>Lluvia de Bendición .Com</span></div><div class="music-notes"><i>♪</i><i>♫</i><i>♪</i><i>♫</i></div></div>
  <div class="intro-scene" data-scene="10"><div class="intro-logo-frame logo-awake full"><img src="/assets/logo-oficial-lldb.jpg" alt="Lluvia de Bendición .Com" onerror="this.hidden=true"><span>Lluvia de Bendición .Com</span></div></div>
  <div class="intro-scene" data-scene="11"><div class="intro-logo-frame logo-awake full"><img src="/assets/logo-oficial-lldb.jpg" alt="Lluvia de Bendición .Com" onerror="this.hidden=true"><span>Lluvia de Bendición .Com</span></div></div>
  <div class="intro-scene" data-scene="12"><div class="intro-logo-frame logo-awake full"><img src="/assets/logo-oficial-lldb.jpg" alt="Lluvia de Bendición .Com" onerror="this.hidden=true"><span>Lluvia de Bendición .Com</span></div><div class="final-intro">Porque queremos que el Señor llueva en ti.</div></div>
  <div class="intro-progress" aria-hidden="true"><span id="intro-progress-bar"></span></div>
- <div class="intro-audio-status" aria-hidden="true">Audio oficial pendiente</div>
+ 
  <button class="skip" id="skip">Entrar</button>
 </section>
 <header>
