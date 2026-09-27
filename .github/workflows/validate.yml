@@ -13,6 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate browser JavaScript syntax
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path("index.html").read_text(encoding="utf-8")
+          scripts=re.findall(r'<script(?:\\s[^>]*)?>(.*?)</script>',html,re.S)
+          Path("/tmp/lldb-inline.js").write_text("\\n".join(scripts),encoding="utf-8")
+          PY
+          node --check /tmp/lldb-inline.js
       - name: Validate LLDB launch invariants
         shell: python
         run: |
