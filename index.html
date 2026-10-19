@@ -235,12 +235,14 @@ if(location.hash&&location.hash!=='#inicio'){intro.classList.add('hidden');showV
 else if(introVideo){
  introVideo.addEventListener('ended',enter,{once:true});
  introVideo.addEventListener('error',()=>{introGate.classList.remove('hidden');introStart.setAttribute('aria-label','Error al cargar el video. Entrar al sitio');introStart.onclick=enter});
- introStart.onclick=()=>{
+ const startApprovedIntro=()=>{
   introVideo.muted=false;introVideo.volume=1;introVideo.currentTime=0;
+  introGate.classList.add('hidden');introSkip.classList.remove('hidden');
   const playback=introVideo.play();
-  if(playback&&playback.then)playback.then(()=>{introGate.classList.add('hidden');introSkip.classList.remove('hidden')}).catch(()=>{introGate.classList.remove('hidden');introStart.setAttribute('aria-label','Tocar para intentar reproducir el video');});
-  else{introGate.classList.add('hidden');introSkip.classList.remove('hidden')}
+  if(playback&&playback.catch)playback.catch(()=>{introGate.classList.remove('hidden');introSkip.classList.add('hidden');introStart.setAttribute('aria-label','Tocar para intentar reproducir el video');});
  };
+ introStart.onclick=startApprovedIntro;
+ introGate.onclick=(event)=>{if(event.target!==introStart)startApprovedIntro()};
 }
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
