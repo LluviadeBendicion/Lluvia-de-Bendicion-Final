@@ -195,12 +195,14 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
-<section id="intro" aria-label="Intro cinematográfica de Lluvia de Bendición .Com">
- <video id="intro-video" class="intro-video" autoplay muted playsinline preload="auto" aria-label="Intro cinematográfica de Lluvia de Bendición .Com">
+<section id="intro" aria-label="Bienvenida cinematográfica de Lluvia de Bendición .Com">
+ <div id="intro-gate" role="group" aria-label="Bienvenida a Lluvia de Bendición" style="position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:#c4d8e9 url('/assets/entrada-celestial-lldb.png') center center / contain no-repeat;">
+  <button id="intro-start" type="button" aria-label="Entrar a Lluvia de Bendición y reproducir la película con sonido" style="position:absolute;left:23%;width:54%;top:70%;height:17%;min-height:62px;cursor:pointer;background:transparent;border:0;border-radius:24px;touch-action:manipulation"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Entrar a Lluvia de Bendición</span></button>
+ </div>
+ <video id="intro-video" class="intro-video" playsinline preload="auto" aria-label="Intro cinematográfica de Lluvia de Bendición .Com">
   <source src="/assets/intro-cinematografica-lldb.mp4" type="video/mp4">
  </video>
- <button class="skip" id="skip">Entrar</button>
- <button id="intro-sound" type="button" aria-label="Activar sonido de la introducción" style="position:absolute;left:18px;bottom:18px;z-index:4;border:1px solid #d7b56d;background:#000b;color:#fff;border-radius:999px;padding:9px 14px">🔊 Activar sonido</button>
+ <button class="skip hidden" id="skip" type="button">Saltar película</button>
 </section>
 <header>
  <div class="top"><div class="brand"><img class="brand-logo" src="/assets/logo-oficial-lldb.jpg" alt="" aria-hidden="true" decoding="async" onerror="this.hidden=true">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
@@ -225,13 +227,21 @@ button:disabled{opacity:.45;cursor:not-allowed}.wall-actions-note{font-size:11px
 <div id="private-admin" class="hidden" role="dialog" aria-modal="true" aria-labelledby="admin-title" style="position:fixed;inset:8%;z-index:60;background:#06101a;border:1px solid var(--gold);border-radius:18px;padding:24px;overflow:auto;box-shadow:0 20px 80px #000"><button class="exit" id="admin-close">×</button><h2 id="admin-title">LLDB · Panel administrativo</h2><p class="admin-warning">Acceso visual reservado. La secuencia de 5 clics no sustituye autenticación; no guardar datos sensibles aquí hasta conectar seguridad real.</p><div class="cards"><article class="card"><h3>Wallpapers</h3><p>Aprobación previa antes de publicar.</p></article><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div>
 <footer aria-label="Pie de página"><button id="secret-admin-trigger" class="secret-mark" type="button" aria-label="Lluvia de Bendición">LLDB</button><span id="secret">Lluvia de Bendición .Com</span> · Todos los derechos reservados.</footer>
 <script>
-const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video');let introExited=false;
+const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
 function enter(){if(introExited)return;introExited=true;if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.1s ease';intro.style.opacity='0';setTimeout(()=>intro.remove(),1150)}
-document.getElementById('skip').onclick=enter;
-const introSound=document.getElementById('intro-sound');introSound.onclick=()=>{introVideo.muted=false;introVideo.volume=1;introVideo.play().catch(()=>{});introSound.remove()};
+introSkip.onclick=enter;
 const initial=(location.hash||'#inicio').slice(1);
 if(location.hash&&location.hash!=='#inicio'){intro.classList.add('hidden');showView(document.getElementById(initial)?initial:'inicio')}
-else if(introVideo){introVideo.addEventListener('ended',enter,{once:true});introVideo.addEventListener('error',()=>{document.getElementById('skip').textContent='Entrar'});const play=introVideo.play();if(play&&play.catch)play.catch(()=>{document.getElementById('skip').textContent='▶ Reproducir intro';document.getElementById('skip').onclick=()=>{introVideo.play().catch(()=>enter())}})}
+else if(introVideo){
+ introVideo.addEventListener('ended',enter,{once:true});
+ introVideo.addEventListener('error',()=>{introGate.classList.remove('hidden');introStart.setAttribute('aria-label','Error al cargar el video. Entrar al sitio');introStart.onclick=enter});
+ introStart.onclick=()=>{
+  introVideo.muted=false;introVideo.volume=1;introVideo.currentTime=0;
+  const playback=introVideo.play();
+  if(playback&&playback.then)playback.then(()=>{introGate.classList.add('hidden');introSkip.classList.remove('hidden')}).catch(()=>{introGate.classList.remove('hidden');introStart.setAttribute('aria-label','Tocar para intentar reproducir el video');});
+  else{introGate.classList.add('hidden');introSkip.classList.remove('hidden')}
+ };
+}
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
