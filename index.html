@@ -224,7 +224,7 @@ body:has(#inicio.active) #menu-toggle{display:none}
  .lldb-home-side .lldb-home-seed{grid-column:1/-1;min-height:105px}
 }
 @media(max-width:380px){.lldb-home-nav{grid-template-columns:1fr}.lldb-home-side{grid-template-columns:1fr}.lldb-home-side .lldb-home-seed{grid-column:auto}}
-.top .brand::before{content:none!important;display:none!important}.top .brand{display:flex;align-items:center}</style>
+.top .brand::before{content:none!important;display:none!important}.top .brand{display:flex;align-items:center}.lldb-official-header-logo{width:64px;height:64px;object-fit:contain;flex:none;filter:drop-shadow(0 0 8px #d6ae5b55)}.top .brand{display:flex;align-items:center;gap:10px}.lldb-home-official-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;background:linear-gradient(90deg,#02060b30,#02060b05 20%,#02060b05 80%,#02060b30)}.lldb-home-official-center img{display:block;width:min(68%,440px);height:auto;max-height:78%;object-fit:contain;filter:drop-shadow(0 12px 22px #000b)}@media(max-width:760px){.lldb-official-header-logo{width:46px;height:46px}.top .brand{gap:6px}.lldb-home-official-center img{width:62%;max-height:75%}}</style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -238,7 +238,7 @@ body:has(#inicio.active) #menu-toggle{display:none}
  <button class="skip hidden" id="skip" type="button">Saltar película</button>
 </section>
 <header>
- <div class="top"><div class="brand">Lluvia de Bendición .Com</div><div class="quick" aria-label="Accesos rápidos">
+ <div class="top"><div class="brand"><img class="lldb-official-header-logo" src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"><span>Lluvia de Bendición .Com</span></div><div class="quick" aria-label="Accesos rápidos">
   <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram">Instagram</a><a class="social social-link" data-social="facebook">Facebook</a><a class="social social-link" data-social="youtube">YouTube</a><button class="install" id="install" aria-label="Instalar aplicación LLDB">Instalar LLDB</button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
@@ -262,7 +262,7 @@ body:has(#inicio.active) #menu-toggle{display:none}
    <button data-go="contacto">✉ Contacto</button>
    <p class="lldb-home-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
   </aside>
-  <div class="lldb-home-art" role="img" aria-label="Paisaje oficial de Lluvia de Bendición: sol dorado, nubes de tormenta, lluvia y reflejos en el lago"></div>
+  <div class="lldb-home-art" aria-label="Paisaje de lluvia, nubes y reflejos en el lago"><div class="lldb-home-official-center"><img src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"></div></div>
   <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
    <article><h2>Apoya nuestro ministerio</h2><p>Tu donación nos ayuda a seguir llevando esperanza.</p><div class="lldb-side-icon">♡</div><button data-go="donaciones">Hacer una donación ›</button></article>
    <article><h2>Anúnciate con nosotros</h2><p>Juntos hacemos más impacto.</p><div class="lldb-side-icon">♬</div><button data-go="afiliados">Conoce más ›</button></article>
