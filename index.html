@@ -248,6 +248,11 @@ body:has(#inicio.active) #menu-toggle{display:none}
 .lldb-stage-water{position:absolute;z-index:1;bottom:0;left:0;right:0;height:16%;pointer-events:none;opacity:.65;background:repeating-radial-gradient(ellipse at 50% -70%,transparent 0 18px,#70bbde12 20px 21px,transparent 23px 40px),linear-gradient(0deg,#020b17,transparent);mask-image:linear-gradient(to top,#000,transparent)}
 @media(max-width:760px){.lldb-cinematic-stage{min-height:440px}.lldb-cinematic-stage .lldb-home-official-center{min-height:440px;padding:22px 12px 40px}.lldb-stage-emblem{width:min(84vw,365px)}}
 @media(prefers-reduced-motion:no-preference){.lldb-stage-beams{animation:lldbBeamGlow 9s ease-in-out infinite alternate}.lldb-stage-emblem{animation:lldbStageFloat 8s ease-in-out infinite}@keyframes lldbBeamGlow{from{opacity:.25}to{opacity:.65}}@keyframes lldbStageFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}}
+
+/* Escena de Inicio aprobada: imagen completa sin capas ni emblemas duplicados */
+.lldb-home-art.lldb-approved-scene{display:flex;align-items:center;justify-content:center;position:relative;min-height:0!important;height:auto!important;aspect-ratio:auto!important;background:#030b17!important;border:0!important;overflow:hidden}
+.lldb-approved-scene>img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;position:relative;z-index:1}
+@media(max-width:760px){.lldb-home-art.lldb-approved-scene{min-height:0!important;height:auto!important}.lldb-approved-scene>img{width:100%;height:auto}}
 </style>
 </head>
 <body>
@@ -286,7 +291,7 @@ body:has(#inicio.active) #menu-toggle{display:none}
    <button data-go="contacto">✉ Contacto</button>
    <p class="lldb-home-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
   </aside>
-  <div class="lldb-home-art lldb-cinematic-stage" aria-label="Presentación oficial de Lluvia de Bendición"><div class="lldb-home-atmosphere" aria-hidden="true"></div><div class="lldb-stage-horizon" aria-hidden="true"></div><div class="lldb-stage-beams" aria-hidden="true"></div><div class="lldb-home-official-center"><div class="lldb-home-hero"><div class="lldb-stage-emblem"><img src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"></div></div></div><div class="lldb-stage-water" aria-hidden="true"></div></div>
+  <div class="lldb-home-art lldb-approved-scene" aria-label="Escena oficial aprobada de Lluvia de Bendición"><img src="/assets/escena-inicio.png" alt="Logo oficial de Lluvia de Bendición emergiendo de una pared en una oficina con Biblia abierta y paisaje de tormenta" decoding="async" fetchpriority="high"></div>
   <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
    <article><h2>Apoya nuestro ministerio</h2><p>Tu donación nos ayuda a seguir llevando esperanza.</p><div class="lldb-side-icon">♡</div><button data-go="donaciones">Hacer una donación ›</button></article>
    <article><h2>Anúnciate con nosotros</h2><p>Juntos hacemos más impacto.</p><div class="lldb-side-icon">♬</div><button data-go="afiliados">Conoce más ›</button></article>
