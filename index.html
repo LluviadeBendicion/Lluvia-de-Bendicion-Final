@@ -236,6 +236,18 @@ body:has(#inicio.active) #menu-toggle{display:none}
 .lldb-home-side article{border-color:#29465e}
 .lldb-home-side button{background:linear-gradient(#274960,#10283e);border-color:#58778b;color:#f2f4f7}
 @media(max-width:760px){.lldb-home-official-center{min-height:355px;margin:12px;border-radius:12px}.lldb-home-art{min-height:380px}}
+/* Escenario cinematográfico: una sola identidad, profundidad y luz azul */
+.lldb-cinematic-stage{isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 73%,#205073 0%,#0a223b 40%,#020813 85%)}
+.lldb-cinematic-stage .lldb-home-atmosphere{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 42%,#457da83a,transparent 58%),radial-gradient(ellipse at 12% 15%,#45698c25,transparent 40%),radial-gradient(ellipse at 88% 18%,#45698c25,transparent 40%)}
+.lldb-stage-horizon{position:absolute;inset:auto -15% 0;height:35%;z-index:0;background:radial-gradient(ellipse at 50% 100%,#1b527a55,transparent 70%);filter:blur(14px)}
+.lldb-stage-beams{position:absolute;inset:0;z-index:0;opacity:.55;background:conic-gradient(from 195deg at 50% 53%,transparent 0deg,#a3d3f40c 17deg,transparent 35deg,#a3d3f40d 55deg,transparent 72deg,#a3d3f40a 95deg,transparent 125deg);pointer-events:none}
+.lldb-cinematic-stage .lldb-home-official-center{position:relative;z-index:2;margin:0;min-height:540px;padding:34px 20px 50px;background:transparent;border:0;border-radius:0;box-shadow:none}
+.lldb-stage-emblem{position:relative;display:grid;place-items:center;width:min(88%,490px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#4b91b52b 0%,#173b5c30 52%,transparent 71%);box-shadow:0 0 85px #5b9dc21b}
+.lldb-stage-emblem:before{content:"";position:absolute;inset:-5%;border:1px solid #78b3d426;border-radius:50%;box-shadow:0 0 50px #6aa9ce16,inset 0 0 40px #74b5d113;pointer-events:none}
+.lldb-cinematic-stage .lldb-home-official-center .lldb-home-hero img{width:100%;max-height:none;filter:drop-shadow(0 20px 28px #000c);position:relative;z-index:1}
+.lldb-stage-water{position:absolute;z-index:1;bottom:0;left:0;right:0;height:16%;pointer-events:none;opacity:.65;background:repeating-radial-gradient(ellipse at 50% -70%,transparent 0 18px,#70bbde12 20px 21px,transparent 23px 40px),linear-gradient(0deg,#020b17,transparent);mask-image:linear-gradient(to top,#000,transparent)}
+@media(max-width:760px){.lldb-cinematic-stage{min-height:440px}.lldb-cinematic-stage .lldb-home-official-center{min-height:440px;padding:22px 12px 40px}.lldb-stage-emblem{width:min(84vw,365px)}}
+@media(prefers-reduced-motion:no-preference){.lldb-stage-beams{animation:lldbBeamGlow 9s ease-in-out infinite alternate}.lldb-stage-emblem{animation:lldbStageFloat 8s ease-in-out infinite}@keyframes lldbBeamGlow{from{opacity:.25}to{opacity:.65}}@keyframes lldbStageFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}}
 </style>
 </head>
 <body>
@@ -274,7 +286,7 @@ body:has(#inicio.active) #menu-toggle{display:none}
    <button data-go="contacto">✉ Contacto</button>
    <p class="lldb-home-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
   </aside>
-  <div class="lldb-home-art" aria-label="Presentación oficial de Lluvia de Bendición"><div class="lldb-home-atmosphere" aria-hidden="true"></div><div class="lldb-home-official-center"><div class="lldb-home-hero"><img src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"></div></div></div>
+  <div class="lldb-home-art lldb-cinematic-stage" aria-label="Presentación oficial de Lluvia de Bendición"><div class="lldb-home-atmosphere" aria-hidden="true"></div><div class="lldb-stage-horizon" aria-hidden="true"></div><div class="lldb-stage-beams" aria-hidden="true"></div><div class="lldb-home-official-center"><div class="lldb-home-hero"><div class="lldb-stage-emblem"><img src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"></div></div></div><div class="lldb-stage-water" aria-hidden="true"></div></div>
   <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
    <article><h2>Apoya nuestro ministerio</h2><p>Tu donación nos ayuda a seguir llevando esperanza.</p><div class="lldb-side-icon">♡</div><button data-go="donaciones">Hacer una donación ›</button></article>
    <article><h2>Anúnciate con nosotros</h2><p>Juntos hacemos más impacto.</p><div class="lldb-side-icon">♬</div><button data-go="afiliados">Conoce más ›</button></article>
