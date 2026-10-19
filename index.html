@@ -271,6 +271,39 @@ body:has(#inicio.active) .lldb-home-side button{font:600 14px system-ui,sans-ser
 body:has(#inicio.active) .lldb-side-icon{font-size:34px}
 @media(max-width:900px){body:has(#inicio.active) .lldb-home-layout{grid-template-columns:1fr;gap:12px}body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{grid-column:1;grid-row:1}body:has(#inicio.active) .lldb-home-nav{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}body:has(#inicio.active) .lldb-home-verse{grid-column:1/-1}body:has(#inicio.active) .lldb-home-side{grid-column:1;grid-row:3;grid-template-columns:repeat(2,minmax(0,1fr))}body:has(#inicio.active) .lldb-home-side .lldb-home-seed{grid-column:1/-1;min-height:90px}}
 @media(max-width:600px){body:has(#inicio.active) .top{gap:8px}body:has(#inicio.active) .top .brand{flex:1 1 100%;font-size:17px}body:has(#inicio.active) .lldb-home-side{grid-template-columns:1fr}body:has(#inicio.active) .lldb-home-side .lldb-home-seed{grid-column:1}body:has(#inicio.active) .lldb-home-side article{min-height:140px}body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{border-radius:8px}body:has(#inicio.active) .lldb-home-nav button{font-size:13px}}
+
+/* LLDB Inicio desktop edition — layout aprobado, controles HTML reales */
+@media(min-width:901px){
+body:has(#inicio.active) header{background:linear-gradient(100deg,#030914,#06182a 58%,#02060d);border-bottom:1px solid #52657b}
+body:has(#inicio.active) .top{max-width:1600px;min-height:102px;gap:18px;padding:10px 20px}
+body:has(#inicio.active) .top .brand{font-family:Georgia,serif;font-size:clamp(21px,2.4vw,35px);color:#f2e2bc;flex:1 1 420px;display:flex;align-items:center;gap:15px;white-space:nowrap}
+body:has(#inicio.active) .lldb-official-header-logo{width:75px;height:75px;object-fit:contain;flex:none}
+body:has(#inicio.active) .quick{gap:14px;align-items:center;flex-wrap:nowrap}
+body:has(#inicio.active) .radio-shortcut{width:62px;height:54px;border-color:#6d8ba2}
+body:has(#inicio.active) .social{font:12px system-ui,sans-serif;color:#dce5ee}
+body:has(#inicio.active) .install{min-height:50px;border:1px solid #a8884e;border-radius:9px;padding:10px 14px;white-space:nowrap}
+body:has(#inicio.active) #main-nav{display:none}
+body:has(#inicio.active) main{max-width:1600px;padding:10px 12px 16px}
+body:has(#inicio.active) .lldb-home-layout{display:grid;grid-template-columns:minmax(205px,16%) minmax(0,1fr) minmax(220px,17%);grid-template-rows:auto auto;gap:8px;align-items:stretch}
+body:has(#inicio.active) .lldb-home-nav{grid-column:1;grid-row:1/3;border:1px solid #3c566b;display:flex;flex-direction:column;padding:9px 7px}
+body:has(#inicio.active) .lldb-home-nav button{font-size:clamp(14px,1.1vw,18px);min-height:47px;padding:8px 11px}
+body:has(#inicio.active) .lldb-home-nav button.selected{background:linear-gradient(105deg,#b28a47,#674718);border-color:#c4a06a;color:#fff}
+body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{grid-column:2;grid-row:1;display:flex;align-self:stretch;align-items:center;background:#061321!important;overflow:hidden;border-radius:8px}
+body:has(#inicio.active) .lldb-approved-scene>img{width:100%;height:100%;object-fit:cover;object-position:center}
+body:has(#inicio.active) .lldb-home-side{grid-column:3;grid-row:1/3;display:flex;flex-direction:column;gap:8px}
+body:has(#inicio.active) .lldb-home-side article{flex:1;min-height:0;padding:14px 10px}
+body:has(#inicio.active) .lldb-home-side h2{font-size:clamp(17px,1.6vw,24px)}
+body:has(#inicio.active) .lldb-home-side p{font-size:clamp(13px,1.15vw,17px)}
+body:has(#inicio.active) .lldb-home-side .lldb-home-seed{min-height:125px;flex:.75}
+body:has(#inicio.active) .lldb-home-features{grid-column:2;grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+}
+.lldb-home-features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.lldb-home-features button{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;background:linear-gradient(#0c2032,#030a13);border:1px solid #61758a;border-radius:9px;color:#e9e4d9;min-height:76px;padding:10px 5px;cursor:pointer;font-size:22px}
+.lldb-home-features button strong{font:600 clamp(12px,1.1vw,16px) Georgia,serif;color:#f4e5c4}
+.lldb-home-features button small{flex-basis:100%;font:italic 12px Georgia,serif;color:#c5ced6}
+.lldb-home-features button:hover,.lldb-home-features button:focus-visible{border-color:#d0a45c;background:#10283b}
+@media(max-width:900px){body:has(#inicio.active) .lldb-home-features{grid-column:1;grid-row:4;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.lldb-home-features button{min-height:75px}}
 </style>
 </head>
 <body>
@@ -315,6 +348,7 @@ body:has(#inicio.active) .lldb-side-icon{font-size:34px}
    <article><h2>Anúnciate con nosotros</h2><p>Juntos hacemos más impacto.</p><div class="lldb-side-icon">♬</div><button data-go="afiliados">Conoce más ›</button></article>
    <article class="lldb-home-seed"><div class="lldb-side-icon">🌱</div><p>Sembrando hoy para un mejor mañana.</p></article>
   </aside>
+  <div class="lldb-home-features"><button data-go="especial" data-resource-link="versiculo">▣ <strong>PALABRA</strong><small>Mensajes que edifican tu vida.</small></button><button data-go="radio">♫ <strong>MÚSICA</strong><small>Alabanza que transforma.</small></button><button data-go="testimonios">♧ <strong>ESPERANZA</strong><small>Una comunidad para ti.</small></button><button data-go="especial">♥ <strong>PARA TU VIDA</strong><small>Recursos que te inspiran.</small></button></div>
  </div>
 </section>
 <section id="nosotros" class="view"><h2>Nosotros</h2><div class="about-tabs" role="tablist" aria-label="Nosotros"><button data-about="mision" aria-controls="about-mision" aria-selected="false" role="tab">Misión</button><button data-about="vision" aria-controls="about-vision" aria-selected="false" role="tab">Visión</button><button data-about="creencias" aria-controls="about-creencias" aria-selected="false" role="tab">Creencias</button></div><p>Conoce el corazón de Lluvia de Bendición .Com.</p><div class="cards"><article class="card about" data-about="Misión"><h3>✦ Misión</h3><p>Compartir el evangelio y contenido cristiano, llevando un mensaje de fe, esperanza y bendición a través de la tecnología.</p></article><article class="card about" data-about="Visión"><h3>☀ Visión</h3><p>Dios y el cristianismo no son una carga; son un camino que nos recompensa a corto y largo plazo con el propósito final de obtener la salvación.</p><p>Este proyecto nace dentro de mi corazón y pidiéndole dirección a Dios se ha creado.</p></article><article class="card about" data-about="Creencias"><h3>♢ Creencias</h3><p>Creemos en Dios Padre, Hijo y Espíritu Santo, y en la Biblia como fundamento de nuestra fe.</p></article></div><div id="about-panel" class="card hidden" style="margin-top:18px"><button class="exit" id="about-close">×</button><h3 id="about-title"></h3><div id="about-body"></div></div></section>
