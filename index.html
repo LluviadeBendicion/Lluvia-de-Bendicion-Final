@@ -453,6 +453,37 @@ body:has(#inicio.active) .lldb-donation-art,body:has(#inicio.active) .lldb-ad-ar
 body:has(#inicio.active) .lldb-home-side button{width:100%!important;flex-shrink:0!important}
 body:has(#inicio.active) .lldb-home-features{display:none!important}
 }
+
+/* Desktop web layout: fixed composition without app-style full-height panels */
+@media(min-width:901px){
+body:has(#inicio.active){background:#02060b}
+body:has(#inicio.active) header{position:relative!important}
+body:has(#inicio.active) header .top{height:75px!important;min-height:75px!important;padding:6px clamp(18px,2vw,32px)!important}
+body:has(#inicio.active) main{display:block!important;padding:0!important}
+body:has(#inicio.active) .lldb-home-layout{
+width:100%!important;max-width:1600px!important;margin:0 auto!important;
+height:auto!important;min-height:0!important;max-height:none!important;
+display:grid!important;grid-template-columns:clamp(185px,18%,245px) minmax(0,1fr) clamp(215px,20%,270px)!important;
+grid-template-rows:auto!important;align-items:stretch!important;gap:0!important;
+border:1px solid #8f6b35!important;border-top:0!important;border-radius:0!important;
+overflow:visible!important;box-shadow:none!important}
+body:has(#inicio.active) .lldb-home-nav{height:auto!important;overflow:visible!important;padding:10px 8px!important;gap:3px!important}
+body:has(#inicio.active) .lldb-home-nav button{min-height:38px!important;padding:7px 10px!important;font-size:clamp(12px,1vw,15px)!important}
+body:has(#inicio.active) .lldb-home-art{height:auto!important;min-height:0!important;aspect-ratio:1.36!important;overflow:hidden!important}
+body:has(#inicio.active) .lldb-home-art img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+body:has(#inicio.active) .lldb-home-side{
+height:auto!important;min-height:0!important;overflow:visible!important;
+display:flex!important;flex-direction:column!important;gap:8px!important;padding:8px!important}
+body:has(#inicio.active) .lldb-home-side article{
+flex:1 1 auto!important;min-height:0!important;width:100%!important;
+border-radius:3px!important;padding:9px 8px!important;gap:5px!important}
+body:has(#inicio.active) .lldb-home-side article.lldb-home-seed{flex:0 0 105px!important;min-height:105px!important}
+body:has(#inicio.active) .lldb-home-side h2{font-size:clamp(15px,1.3vw,20px)!important}
+body:has(#inicio.active) .lldb-home-side p{font-size:clamp(11px,.95vw,14px)!important}
+body:has(#inicio.active) .lldb-donation-art,body:has(#inicio.active) .lldb-ad-art{max-width:175px!important;min-height:55px!important}
+body:has(#inicio.active) .lldb-home-features{display:none!important}
+body:has(#inicio.active) footer{max-width:1600px;margin:auto!important;background:#030b14;padding:13px 20px!important;border:1px solid #8f6b35;border-top:0}
+}
 </style>
 </head>
 <body>
