@@ -484,6 +484,27 @@ body:has(#inicio.active) .lldb-donation-art,body:has(#inicio.active) .lldb-ad-ar
 body:has(#inicio.active) .lldb-home-features{display:none!important}
 body:has(#inicio.active) footer{max-width:1600px;margin:auto!important;background:#030b14;padding:13px 20px!important;border:1px solid #8f6b35;border-top:0}
 }
+
+/* Fix image overflow: center artwork cannot cover right-side actions */
+@media(min-width:901px){
+body:has(#inicio.active) .lldb-home-layout{
+grid-template-columns:clamp(185px,18vw,245px) minmax(0,1fr) clamp(215px,20vw,270px)!important;
+overflow:hidden!important;isolation:isolate!important}
+body:has(#inicio.active) .lldb-home-art{
+position:relative!important;grid-column:2!important;grid-row:1!important;
+width:100%!important;min-width:0!important;max-width:100%!important;
+height:100%!important;aspect-ratio:auto!important;overflow:hidden!important;
+z-index:0!important;contain:paint!important}
+body:has(#inicio.active) .lldb-home-art img{
+position:absolute!important;inset:0!important;width:100%!important;
+height:100%!important;max-width:100%!important;object-fit:cover!important;
+object-position:center!important;transform:none!important;min-width:0!important}
+body:has(#inicio.active) .lldb-home-side{
+position:relative!important;grid-column:3!important;grid-row:1!important;
+z-index:2!important;isolation:isolate!important;overflow:hidden!important;
+background:#04101c!important;border-left:2px solid #ac8749!important}
+body:has(#inicio.active) .lldb-home-side article{position:relative!important;z-index:1!important}
+}
 </style>
 </head>
 <body>
