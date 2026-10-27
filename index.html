@@ -826,6 +826,15 @@ body:has(#radio.active) #radio .lldb-radio-live-data{display:none!important;}
 
 /* Restauración visual: desactivar capas superpuestas hasta rediseño correcto */
 body:has(#radio.active) #radio .lldb-radio-next-screen,body:has(#radio.active) #radio .lldb-radio-now-screen,body:has(#radio.active) #radio .lldb-radio-power-glow{display:none!important;}
+
+/* Radio Interactiva: animación cinematográfica sin tapar ni duplicar el arte aprobado */
+@keyframes lldb-radio-arrive{0%{opacity:0;transform:scale(.975);filter:brightness(.45)}55%{opacity:1;filter:brightness(.82)}100%{opacity:1;transform:scale(1);filter:brightness(1)}}
+@keyframes lldb-radio-halo{0%,100%{opacity:.26;filter:brightness(.85)}50%{opacity:.65;filter:brightness(1.2)}}
+@keyframes lldb-radio-dial{0%,100%{opacity:.15}50%{opacity:.48}}
+body:has(#radio.active) #radio .lldb-radio-art>img{animation:lldb-radio-arrive 1.65s ease-out both!important;}
+#radio .lldb-radio-art::before{content:"";position:absolute;z-index:1;pointer-events:none;inset:0;background:radial-gradient(ellipse 11% 20% at 30% 54%,transparent 65%,#f6b74a30 75%,transparent 90%),radial-gradient(ellipse 11% 20% at 81% 54%,transparent 65%,#f6b74a30 75%,transparent 90%);mix-blend-mode:screen;animation:lldb-radio-halo 3.2s ease-in-out infinite;}
+#radio .lldb-radio-art::after{content:"";position:absolute;z-index:1;pointer-events:none;left:40%;top:64%;width:34%;height:9%;border-radius:10px;background:linear-gradient(90deg,transparent,#f9bd4930,transparent);mix-blend-mode:screen;animation:lldb-radio-dial 2.7s ease-in-out infinite;}
+@media(prefers-reduced-motion:reduce){body:has(#radio.active) #radio .lldb-radio-art>img,#radio .lldb-radio-art::before,#radio .lldb-radio-art::after{animation:none!important;}}
 </style>
 </head>
 <body>
