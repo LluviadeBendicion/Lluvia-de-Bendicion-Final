@@ -505,6 +505,30 @@ z-index:2!important;isolation:isolate!important;overflow:hidden!important;
 background:#04101c!important;border-left:2px solid #ac8749!important}
 body:has(#inicio.active) .lldb-home-side article{position:relative!important;z-index:1!important}
 }
+
+/* Inicio escritorio: ajustar altura completa al viewport sin cortar tarjetas ni pie */
+@media(min-width:901px){
+body:has(#inicio.active) header .top{height:64px!important;min-height:64px!important;padding-top:3px!important;padding-bottom:3px!important}
+body:has(#inicio.active) header .lldb-official-header-logo{width:50px!important;height:50px!important}
+body:has(#inicio.active) .lldb-home-layout{
+height:calc(100dvh - 104px)!important;
+min-height:480px!important;max-height:none!important;
+grid-template-rows:minmax(0,1fr)!important;overflow:hidden!important}
+body:has(#inicio.active) .lldb-home-art{height:100%!important;min-height:0!important;aspect-ratio:auto!important}
+body:has(#inicio.active) .lldb-home-art img{height:100%!important;object-fit:contain!important;background:#061320}
+body:has(#inicio.active) .lldb-home-nav{overflow-y:auto!important;padding:5px 7px!important;gap:1px!important}
+body:has(#inicio.active) .lldb-home-nav button{min-height:30px!important;padding:4px 7px!important;font-size:clamp(11px,.94vw,14px)!important}
+body:has(#inicio.active) .lldb-home-nav .lldb-home-verse{font-size:clamp(11px,.95vw,14px)!important;margin-top:5px!important}
+body:has(#inicio.active) .lldb-home-side{overflow:hidden!important;padding:5px!important;gap:5px!important}
+body:has(#inicio.active) .lldb-home-side article{min-height:0!important;padding:6px!important;gap:3px!important}
+body:has(#inicio.active) .lldb-home-side article.lldb-home-seed{flex:0 0 14%!important;min-height:0!important}
+body:has(#inicio.active) .lldb-home-side h2{font-size:clamp(13px,1.1vw,17px)!important;line-height:1.1!important}
+body:has(#inicio.active) .lldb-home-side p{font-size:clamp(10px,.85vw,13px)!important;line-height:1.2!important;margin:2px 0!important}
+body:has(#inicio.active) .lldb-home-side button{padding:5px!important;font-size:11px!important}
+body:has(#inicio.active) .lldb-ad-art{min-height:0!important}
+body:has(#inicio.active) .lldb-ad-art svg{max-height:90px!important}
+body:has(#inicio.active) footer{padding:6px 12px!important;font-size:10px!important}
+}
 </style>
 </head>
 <body>
