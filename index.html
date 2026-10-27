@@ -789,6 +789,10 @@ body:has(#radio.active) #radio .lldb-radio-art>img{width:100%!important;height:1
 #radio .lldb-radio-power-glow{position:absolute;left:47%;top:47%;width:27%;height:9%;border-radius:12px;pointer-events:none;box-shadow:0 0 18px #f8ad3855;animation:lldb-dial-breathe 3.5s ease-in-out infinite;}
 @keyframes lldb-equalizer{from{height:20%}to{height:100%}}@keyframes lldb-dial-breathe{50%{opacity:.3}}
 @media(prefers-reduced-motion:reduce){#radio .lldb-radio-eq i,#radio .lldb-radio-power-glow{animation:none!important}}
+
+/* Mantener geometría circular: nunca estirar arte 3:2 */
+body:has(#radio.active) #radio .lldb-radio-art{inset:auto!important;position:relative!important;width:min(100vw,150dvh)!important;height:auto!important;aspect-ratio:3/2!important;max-width:100vw!important;max-height:100dvh!important;}
+body:has(#radio.active) #radio .lldb-radio-art>img{width:100%!important;height:100%!important;object-fit:contain!important;}
 </style>
 </head>
 <body>
