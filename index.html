@@ -807,6 +807,11 @@ body:has(#radio.active) #radio .lldb-radio-art{width:min(100vw,177.7778dvh)!impo
 #radio .lldb-radio-speaker-left{left:20%!important;top:37%!important;width:17%!important;height:30%!important;}
 #radio .lldb-radio-speaker-right{right:6%!important;top:37%!important;width:17%!important;height:30%!important;}
 #radio .lldb-radio-close{right:4%!important;top:4%!important;}
+
+/* Ajuste visual de la radio: texto centrado y salida completamente visible */
+body:has(#radio.active) #radio .lldb-radio-art .lldb-radio-now-screen{left:42%!important;top:63%!important;width:33%!important;height:9%!important;justify-content:center!important;padding:0 2%!important;box-sizing:border-box!important;}
+body:has(#radio.active) #radio .lldb-radio-art #radio-now-display{text-align:center!important;display:block!important;min-width:0!important;}
+body:has(#radio.active) #radio .lldb-radio-art .lldb-radio-close{right:8%!important;top:3%!important;transform:none!important;z-index:10!important;background:#111821!important;border:2px solid #d5a34e!important;box-shadow:0 0 0 3px #0b1116,0 0 12px #d5a34e88!important;}
 </style>
 </head>
 <body>
