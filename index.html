@@ -304,6 +304,32 @@ body:has(#inicio.active) .lldb-home-features{grid-column:2;grid-row:2;display:gr
 .lldb-home-features button:hover,.lldb-home-features button:focus-visible{border-color:#d0a45c;background:#10283b}
 @media(max-width:900px){body:has(#inicio.active) .lldb-home-features{grid-column:1;grid-row:4;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.lldb-home-features button{min-height:75px}}
+
+/* Ajuste de Inicio a la referencia visual aprobada 2026-10-27; sin alterar Radio Interactiva */
+@media(min-width:901px){
+body:has(#inicio.active){background:#020811}
+body:has(#inicio.active) header{position:relative;background:linear-gradient(90deg,#061321,#061c31 65%,#020811);border-bottom:3px solid #b78d47}
+body:has(#inicio.active) .top{max-width:none;min-height:110px;padding:8px 15px}
+body:has(#inicio.active) .top .brand{font-size:clamp(24px,2.5vw,39px);text-shadow:0 2px 5px #000;letter-spacing:-.025em}
+body:has(#inicio.active) .lldb-official-header-logo{width:110px;height:90px}
+body:has(#inicio.active) .quick{gap:12px}
+body:has(#inicio.active) .radio-shortcut{width:68px;height:55px;background:#17140e;border:2px solid #c79b56}
+body:has(#inicio.active) .install{background:linear-gradient(#31230f,#090b0d);border:2px solid #bc9256;color:#f6dba4;font-family:Georgia,serif;font-size:17px}
+body:has(#inicio.active) main{max-width:none;padding:6px 5px 0}
+body:has(#inicio.active) .lldb-home-layout{grid-template-columns:minmax(195px,17.5%) minmax(0,1fr) minmax(205px,15%);grid-template-rows:minmax(680px,calc(100vh - 155px));gap:5px}
+body:has(#inicio.active) .lldb-home-nav{grid-row:1;gap:0;background:linear-gradient(#081421,#02070d);border:1px solid #8a672f;border-radius:0;padding:3px}
+body:has(#inicio.active) .lldb-home-nav button{flex:1;text-align:left;border-radius:4px;border-bottom:1px solid #29323b;font:clamp(15px,1.3vw,20px) Georgia,serif;min-height:42px}
+body:has(#inicio.active) .lldb-home-nav button.selected{background:linear-gradient(#e7b95d,#97601e);box-shadow:inset 0 0 8px #fff6;color:#fff}
+body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{grid-column:2;grid-row:1;border:1px solid #8a672f!important;border-radius:0;min-height:0;height:100%}
+body:has(#inicio.active) .lldb-approved-scene>img{width:100%;height:100%;object-fit:cover}
+body:has(#inicio.active) .lldb-home-side{grid-column:3;grid-row:1;gap:6px}
+body:has(#inicio.active) .lldb-home-side article{border:2px solid #a47d42;border-radius:10px;background:linear-gradient(145deg,#111d2b,#02060b);padding:12px 9px;text-align:center}
+body:has(#inicio.active) .lldb-home-side h2{font:700 clamp(18px,1.65vw,25px) Georgia,serif;color:#f8ecdc;margin:0}
+body:has(#inicio.active) .lldb-home-side p{font:clamp(13px,1.1vw,17px) Georgia,serif}
+body:has(#inicio.active) .lldb-home-side button{background:linear-gradient(#ffe2a0,#d59a43);color:#2d1805;border:1px solid #d9a54e;border-radius:6px;font:17px Georgia,serif}
+body:has(#inicio.active) .lldb-home-features{display:none}
+body:has(#inicio.active) footer{border-top:2px solid #b78d47;background:#030d19}
+}
 </style>
 </head>
 <body>
