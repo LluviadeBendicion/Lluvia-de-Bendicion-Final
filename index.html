@@ -565,6 +565,20 @@ background:linear-gradient(140deg,#18291c,#0b1720)!important}
 body:has(#inicio.active) .lldb-home-side article.lldb-home-seed p{font-size:12px!important}
 }
 .lldb-giving-heart{font-size:clamp(40px,5vw,74px);line-height:1;color:#ffd18a;text-shadow:0 0 13px #ffb65d,0 0 32px #c8792d;align-self:center;margin:auto 0}
+
+/* LLDB visual balance: artwork centered, warm giving heart and partnership graphic */
+@media(min-width:901px){
+body:has(#inicio.active) .lldb-home-art{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#061320!important}
+body:has(#inicio.active) .lldb-home-art img{
+position:relative!important;inset:auto!important;display:block!important;
+width:100%!important;height:100%!important;max-width:100%!important;
+object-fit:cover!important;object-position:42% center!important;
+transform:translateX(3%)!important;transform-origin:center!important}
+body:has(#inicio.active) .lldb-partnership-art{width:100%;max-width:150px;min-height:55px;display:flex;align-items:center;justify-content:center;margin:auto}
+body:has(#inicio.active) .lldb-partnership-art svg{width:100%;height:auto;max-height:100px;filter:drop-shadow(0 0 9px #eab85b80)}
+body:has(#inicio.active) .lldb-giving-heart{width:75px;height:70px;margin:auto;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 14px #f5b56e8a)}
+body:has(#inicio.active) .lldb-giving-heart svg{width:100%;height:100%}
+}
 </style>
 </head>
 <body>
@@ -605,8 +619,8 @@ body:has(#inicio.active) .lldb-home-side article.lldb-home-seed p{font-size:12px
   </aside>
   <div class="lldb-home-art lldb-approved-scene" aria-label="Escena oficial aprobada de Lluvia de Bendición"><img src="/assets/escena-inicio.png" alt="Logo oficial de Lluvia de Bendición emergiendo de una pared en una oficina con Biblia abierta y paisaje de tormenta" decoding="async" fetchpriority="high"></div>
   <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
-   <article><h2>Apoya nuestro ministerio</h2><p>Tu generosidad nos ayuda a compartir fe, esperanza y bendición.</p><div class="lldb-giving-heart" aria-hidden="true">♥</div><button data-go="donaciones">Quiero apoyar ♥</button></article>
-   <article><h2>Anúnciate con nosotros</h2><p>Tu negocio puede ser parte de esta misión.</p><div class="lldb-side-icon lldb-ad-art" aria-hidden="true"><svg viewBox="0 0 220 150" role="img"><defs><linearGradient id="lldb-meg-gold" x2="1" y2="1"><stop stop-color="#fff2b9"/><stop offset=".5" stop-color="#d89a35"/><stop offset="1" stop-color="#845014"/></linearGradient><filter id="lldb-meg-glow"><feGaussianBlur stdDeviation="5"/></filter></defs><path d="M47 75 L136 31 L136 112 L47 92Z" fill="#e3ad4a" opacity=".6" filter="url(#lldb-meg-glow)"/><path d="M52 68 L141 25 L141 116 L52 90Z" fill="url(#lldb-meg-gold)" stroke="#ffe2a1" stroke-width="4"/><rect x="34" y="65" width="29" height="31" rx="6" fill="#f2c66b" stroke="#fff0bd" stroke-width="3"/><path d="M63 95 L83 95 L97 135 L75 135Z" fill="#b87c29" stroke="#f9d27b" stroke-width="3"/><ellipse cx="144" cy="70" rx="15" ry="47" fill="#5b3b20" stroke="#ffdd91" stroke-width="6"/><path d="M173 42 Q195 70 173 98 M188 27 Q217 70 188 114" fill="none" stroke="#ffd078" stroke-width="5" stroke-linecap="round"/></svg></div><button data-go="afiliados">Conoce cómo participar ›</button></article>
+   <article><h2>Apoya nuestro ministerio</h2><p>Tu generosidad nos ayuda a compartir fe, esperanza y bendición.</p><div class="lldb-giving-heart" aria-hidden="true"><svg viewBox="0 0 140 115"><defs><radialGradient id="heartWarm"><stop stop-color="#fff9df"/><stop offset=".55" stop-color="#ffd48c"/><stop offset="1" stop-color="#c77b42"/></radialGradient></defs><path d="M70 101 C50 86 17 62 17 38 C17 17 43 11 57 26 L70 40 L83 26 C97 11 123 17 123 38 C123 62 90 86 70 101Z" fill="url(#heartWarm)" stroke="#ffe7b7" stroke-width="3"/><path d="M70 91 C50 74 29 57 29 39" fill="none" stroke="#fff5dd" stroke-width="4" stroke-linecap="round" opacity=".75"/></svg></div><button data-go="donaciones">Quiero apoyar ♥</button></article>
+   <article><h2>Anúnciate con nosotros</h2><p>Tu negocio puede ser parte de esta misión.</p><div class="lldb-partnership-art" aria-hidden="true"><svg viewBox="0 0 190 110"><defs><linearGradient id="partnershipGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff2c2"/><stop offset=".5" stop-color="#e2b665"/><stop offset="1" stop-color="#a36e2d"/></linearGradient></defs><circle cx="95" cy="53" r="47" fill="#dba44a" opacity=".09"/><path d="M28 52 L65 34 Q78 29 93 40 L103 47 L116 39 Q129 31 144 39 L164 53 L145 73 Q133 82 122 75 L103 62 L90 72 Q81 78 72 72 L55 60 L43 67Z" fill="url(#partnershipGold)" stroke="#ffe3a3" stroke-width="3" stroke-linejoin="round"/><path d="M77 49 L95 42 L116 57 M100 65 L114 75" stroke="#fff4ce" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M28 53 L16 63 L42 85 L56 68 M164 53 L177 64 L149 85 L141 74" fill="#173c58" stroke="#e9c37c" stroke-width="3"/><path d="M91 18 L95 7 L99 18 M56 27 L49 17 M134 27 L142 17" stroke="#f6d789" stroke-width="3" stroke-linecap="round"/></svg></div><button data-go="afiliados">Conoce cómo participar ›</button></article>
    <article class="lldb-home-seed"><div class="lldb-side-icon">🌱</div><p>Sembrando hoy para un mejor mañana.</p></article>
   </aside>
   <div class="lldb-home-features"><button data-go="especial" data-resource-link="versiculo">▣ <strong>PALABRA</strong><small>Mensajes que edifican tu vida.</small></button><button data-go="radio">♫ <strong>MÚSICA</strong><small>Alabanza que transforma.</small></button><button data-go="testimonios">♧ <strong>ESPERANZA</strong><small>Una comunidad para ti.</small></button><button data-go="especial">♥ <strong>PARA TU VIDA</strong><small>Recursos que te inspiran.</small></button></div>
