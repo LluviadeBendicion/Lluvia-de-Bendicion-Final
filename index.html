@@ -660,6 +660,38 @@ body:has(#inicio.active) .lldb-home-side .lldb-partnership-art.lldb-photo-icon i
 object-position:38% 18%!important;
 }
 }
+
+/* Corrección final: retrato completo y corazón visible, sin recortes */
+@media(min-width:901px){
+body:has(#inicio.active) .lldb-home-side article:nth-child(1),
+body:has(#inicio.active) .lldb-home-side article:nth-child(2){
+display:flex!important;flex-direction:column!important;align-items:stretch!important;
+justify-content:space-between!important;min-height:0!important;overflow:hidden!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) .lldb-giving-heart.lldb-photo-icon,
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) .lldb-partnership-art.lldb-photo-icon{
+width:100%!important;max-width:none!important;height:clamp(66px,9vh,100px)!important;
+flex:1 1 auto!important;min-height:55px!important;margin:3px 0!important;
+border-radius:8px!important;overflow:hidden!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) .lldb-photo-icon img,
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) .lldb-photo-icon img{
+display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) .lldb-photo-icon img{
+object-position:50% 49%!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) .lldb-photo-icon img{
+object-position:39% 16%!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) button,
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) button{
+display:block!important;visibility:visible!important;opacity:1!important;
+position:relative!important;flex:0 0 auto!important;margin-top:3px!important;
+padding:7px 5px!important;min-height:30px!important;line-height:1.15!important;
+font-size:clamp(12px,1vw,15px)!important;z-index:2!important;
+}
+}
 </style>
 </head>
 <body>
