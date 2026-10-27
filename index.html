@@ -646,6 +646,20 @@ body:has(#inicio.active) .lldb-home-side .lldb-photo-icon{height:clamp(64px,9vh,
 body:has(#inicio.active) .lldb-home-side article:nth-child(1) button,
 body:has(#inicio.active) .lldb-home-side article:nth-child(2) button{display:block!important;flex-shrink:0!important;position:relative!important;z-index:1!important}
 }
+
+/* Afiliados: mostrar el rostro completo en la miniatura */
+body:has(#inicio.active) .lldb-home-side .lldb-partnership-art.lldb-photo-icon img{
+object-fit:cover!important;
+object-position:43% 22%!important;
+}
+@media(min-width:901px){
+body:has(#inicio.active) .lldb-home-side .lldb-partnership-art.lldb-photo-icon{
+height:clamp(80px,11vh,125px)!important;
+}
+body:has(#inicio.active) .lldb-home-side .lldb-partnership-art.lldb-photo-icon img{
+object-position:38% 18%!important;
+}
+}
 </style>
 </head>
 <body>
