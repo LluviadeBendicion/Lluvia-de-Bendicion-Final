@@ -770,6 +770,11 @@ body:has(#radio.active) #radio.lldb-radio-fullscreen{display:flex!important;posi
 #radio .lldb-radio-speaker-left{left:10%;}#radio .lldb-radio-speaker-right{right:10%;}
 #radio .lldb-radio-live-data{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);color:#d6b174;font-size:12px;text-align:center;opacity:.8;}
 @media(max-width:700px){#radio .lldb-radio-art{width:100vw;}#radio .lldb-radio-close{right:2%;top:2%;width:36px;height:36px;}}
+
+/* Radio: imagen aprobada cubre la pantalla completa sin márgenes */
+body:has(#radio.active) #radio.lldb-radio-fullscreen{inset:0!important;width:100vw!important;height:100dvh!important;padding:0!important;margin:0!important;overflow:hidden!important;}
+body:has(#radio.active) #radio .lldb-radio-art{position:absolute!important;inset:0!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;}
+body:has(#radio.active) #radio .lldb-radio-art>img{width:100%!important;height:100%!important;object-fit:fill!important;object-position:center!important;}
 </style>
 </head>
 <body>
