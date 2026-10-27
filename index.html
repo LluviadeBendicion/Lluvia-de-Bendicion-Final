@@ -842,6 +842,13 @@ body:has(#radio.active) #radio .lldb-radio-art>img{animation:lldb-radio-arrive 1
 body:has(#radio.active) #radio .lldb-radio-art>img{animation:lldb-radio-boot-image 2.5s ease-out both!important;}
 body:has(#radio.active) #radio .lldb-radio-startup-shutter{display:block;position:absolute;inset:0;z-index:8;background:#020304;pointer-events:none;animation:lldb-radio-boot-shutter 2.5s ease-out forwards;}
 @media(prefers-reduced-motion:reduce){body:has(#radio.active) #radio .lldb-radio-startup-shutter{display:none!important}body:has(#radio.active) #radio .lldb-radio-art>img{animation:none!important}}
+
+/* Encendido reiniciado al abrir Radio, no al cargar la página oculta */
+#radio .lldb-radio-startup-shutter{display:none!important;}
+body:has(#radio.active) #radio .lldb-radio-art>img{animation:none!important;filter:none!important;}
+body:has(#radio.active) #radio.radio-booting .lldb-radio-startup-shutter{display:block!important;animation:lldb-radio-boot-shutter 3.2s linear both!important;}
+body:has(#radio.active) #radio.radio-booting .lldb-radio-art>img{animation:lldb-radio-boot-image 3.2s linear both!important;}
+@media(prefers-reduced-motion:reduce){body:has(#radio.active) #radio.radio-booting .lldb-radio-startup-shutter{display:none!important}body:has(#radio.active) #radio.radio-booting .lldb-radio-art>img{animation:none!important}}
 </style>
 </head>
 <body>
@@ -920,7 +927,7 @@ else if(introVideo){
  introGate.onclick=(event)=>{if(event.target!==introStart)startApprovedIntro()};
 }
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
-const views=[...document.querySelectorAll('.view')];function showView(id,push=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
+const views=[...document.querySelectorAll('.view')];function showView(id,push=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){target.classList.remove('radio-booting');void target.offsetWidth;target.classList.add('radio-booting');}else{document.getElementById('radio')?.classList.remove('radio-booting');}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);target.scrollIntoView({behavior:'smooth',block:'start'})}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);if(b.dataset.subview){document.querySelector('[data-about="'+b.dataset.subview+'"]')?.click()}if(b.dataset.resourceLink){document.querySelector('[data-resource="'+b.dataset.resourceLink+'"]')?.click()}if(b.dataset.panel){document.getElementById(b.dataset.panel)?.classList.remove('hidden')}mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 const tuner=document.getElementById('tuner'),radioStage=document.getElementById('radio-stage');tuner?.addEventListener('click',()=>{radioStage.classList.remove('tuning');void radioStage.offsetWidth;radioStage.classList.add('tuning')});
