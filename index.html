@@ -823,6 +823,9 @@ body:has(#radio.active) #radio .lldb-radio-art .lldb-radio-next-screen{left:46%!
 body:has(#radio.active) #radio .lldb-radio-art .lldb-radio-next-screen strong{font-size:clamp(10px,1.3vw,18px)!important;color:#fff7dc!important;}
 body:has(#radio.active) #radio .lldb-radio-live-data{display:none!important;}
 #radio .lldb-radio-next-screen .lldb-radio-mode{font-size:clamp(8px,.95vw,13px);color:#ffe3a3;line-height:1.2;font-weight:600;}
+
+/* Restauración visual: desactivar capas superpuestas hasta rediseño correcto */
+body:has(#radio.active) #radio .lldb-radio-next-screen,body:has(#radio.active) #radio .lldb-radio-now-screen,body:has(#radio.active) #radio .lldb-radio-power-glow{display:none!important;}
 </style>
 </head>
 <body>
