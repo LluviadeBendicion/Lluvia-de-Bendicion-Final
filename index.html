@@ -352,6 +352,28 @@ body:has(#inicio.active) .lldb-home-nav button{color:#f0e8d9}
 body:has(#inicio.active) .lldb-home-nav button:hover{background:#1b3042;color:#ffd990}
 }
 @media(max-width:900px){.lldb-radio-label{display:none}.lldb-brand-copy small{font-size:11px}.lldb-social-icon{width:28px;height:28px;font-size:20px}}
+
+/* Corrección de escala escritorio solicitada 2026-10-27 */
+@media(min-width:901px){
+body:has(#inicio.active) .top{min-height:78px;padding:5px 12px;gap:10px}
+body:has(#inicio.active) .top .brand{font-size:clamp(19px,1.9vw,29px);gap:8px;flex-basis:330px}
+body:has(#inicio.active) .lldb-official-header-logo{width:65px;height:62px}
+body:has(#inicio.active) .lldb-brand-copy small{font-size:clamp(10px,.95vw,14px);margin-top:3px}
+body:has(#inicio.active) .quick{gap:9px}
+body:has(#inicio.active) .radio-shortcut{min-width:115px;width:auto;height:43px;padding:4px 6px;gap:5px}
+body:has(#inicio.active) .lldb-radio-label{font-size:15px}
+body:has(#inicio.active) .lldb-radio-label small{font-size:9px}
+body:has(#inicio.active) .lldb-social-icon{width:29px;height:29px;font-size:21px}
+body:has(#inicio.active) .quick .social-link small{font-size:9px}
+body:has(#inicio.active) .install{min-height:38px;font-size:13px;padding:6px 9px}
+body:has(#inicio.active) .lldb-home-layout{grid-template-columns:minmax(160px,17.5%) minmax(0,1fr) minmax(175px,15%);grid-template-rows:minmax(540px,calc(100vh - 132px))}
+body:has(#inicio.active) .lldb-home-nav button{font-size:clamp(12px,1vw,15px);min-height:35px;padding:5px 7px}
+body:has(#inicio.active) .lldb-home-side h2{font-size:clamp(15px,1.35vw,19px)}
+body:has(#inicio.active) .lldb-home-side p{font-size:clamp(11px,.9vw,14px)}
+body:has(#inicio.active) .lldb-home-side button{font-size:13px;padding:7px}
+body:has(#inicio.active) .lldb-heart-art{font-size:48px!important}
+body:has(#inicio.active) .lldb-megaphone-art{font-size:43px!important}
+}
 </style>
 </head>
 <body>
