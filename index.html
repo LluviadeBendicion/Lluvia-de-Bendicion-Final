@@ -692,6 +692,28 @@ padding:7px 5px!important;min-height:30px!important;line-height:1.15!important;
 font-size:clamp(12px,1vw,15px)!important;z-index:2!important;
 }
 }
+
+/* Inicio: fotografías grandes, sin encabezado en Afiliados ni texto en Donaciones */
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) .lldb-giving-heart.lldb-photo-icon,
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) .lldb-partnership-art.lldb-photo-icon{
+width:100%!important;max-width:100%!important;min-height:0!important;flex:1 1 auto!important;
+height:auto!important;margin:3px 0 6px!important;overflow:hidden!important;border-radius:8px!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) .lldb-photo-icon img,
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) .lldb-photo-icon img{
+width:100%!important;height:100%!important;object-fit:contain!important;
+object-position:center!important;background:#0c2034!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1),
+body:has(#inicio.active) .lldb-home-side article:nth-child(2){
+display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+min-height:0!important;overflow:hidden!important;
+}
+body:has(#inicio.active) .lldb-home-side article:nth-child(1) button,
+body:has(#inicio.active) .lldb-home-side article:nth-child(2) button{
+display:block!important;visibility:visible!important;flex:0 0 auto!important;
+margin-top:4px!important;position:relative!important;z-index:3!important;
+}
 </style>
 </head>
 <body>
@@ -732,8 +754,8 @@ font-size:clamp(12px,1vw,15px)!important;z-index:2!important;
   </aside>
   <div class="lldb-home-art lldb-approved-scene" aria-label="Escena oficial aprobada de Lluvia de Bendición"><img src="/assets/escena-inicio.png" alt="Logo oficial de Lluvia de Bendición emergiendo de una pared en una oficina con Biblia abierta y paisaje de tormenta" decoding="async" fetchpriority="high"></div>
   <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
-   <article><h2>Apoya nuestro ministerio</h2><p>Tu generosidad nos ayuda a compartir fe, esperanza y bendición.</p><div class="lldb-giving-heart lldb-photo-icon"><img src="/assets/donaciones-corazon-acero.jpg" alt="Corazón de acero cepillado con llave acercándose a la cerradura" loading="lazy"></div><button data-go="donaciones">Quiero apoyar ♥</button></article>
-   <article><h2>Anúnciate con nosotros</h2><div class="lldb-partnership-art lldb-photo-icon"><img src="/assets/afiliados-omar.jpg" alt="Invitación a participar como afiliado de Lluvia de Bendición" loading="lazy"></div><button data-go="afiliados">Conoce cómo participar</button></article>
+   <article><h2>Apoya nuestro ministerio</h2><div class="lldb-giving-heart lldb-photo-icon"><img src="/assets/donaciones-corazon-acero.jpg" alt="Corazón de acero cepillado con llave acercándose a la cerradura" loading="lazy"></div><button data-go="donaciones">Quiero apoyar ♥</button></article>
+   <article><div class="lldb-partnership-art lldb-photo-icon"><img src="/assets/afiliados-omar.jpg" alt="Invitación a participar como afiliado de Lluvia de Bendición" loading="lazy"></div><button data-go="afiliados">Conoce cómo participar</button></article>
    <article class="lldb-home-seed"><div class="lldb-side-icon lldb-seed-photo"><img src="/assets/sembrando-nino.jpg" alt="Niño arrodillado sembrando una planta" loading="lazy"></div><p>Sembrando hoy para un mejor mañana.</p></article>
   </aside>
   <div class="lldb-home-features"><button data-go="especial" data-resource-link="versiculo">▣ <strong>PALABRA</strong><small>Mensajes que edifican tu vida.</small></button><button data-go="radio">♫ <strong>MÚSICA</strong><small>Alabanza que transforma.</small></button><button data-go="testimonios">♧ <strong>ESPERANZA</strong><small>Una comunidad para ti.</small></button><button data-go="especial">♥ <strong>PARA TU VIDA</strong><small>Recursos que te inspiran.</small></button></div>
