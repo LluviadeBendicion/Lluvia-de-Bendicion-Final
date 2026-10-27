@@ -579,6 +579,38 @@ body:has(#inicio.active) .lldb-partnership-art svg{width:100%;height:auto;max-he
 body:has(#inicio.active) .lldb-giving-heart{width:75px;height:70px;margin:auto;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 14px #f5b56e8a)}
 body:has(#inicio.active) .lldb-giving-heart svg{width:100%;height:100%}
 }
+
+/* Ajustes de lectura y encuadre solicitados: 2026-10-27 */
+@media(min-width:901px){
+body:has(#inicio.active) .lldb-home-art img{
+object-fit:contain!important;object-position:center center!important;
+transform:none!important;background:#061320!important}
+body:has(#inicio.active) .lldb-home-side article.lldb-home-seed{
+flex:0 0 auto!important;min-height:90px!important;overflow:visible!important;
+display:flex!important;flex-direction:row!important;align-items:center!important;
+justify-content:center!important;gap:8px!important;padding:9px 7px!important}
+body:has(#inicio.active) .lldb-home-side article.lldb-home-seed .lldb-side-icon{
+font-size:30px!important;flex:0 0 38px!important;line-height:1!important}
+body:has(#inicio.active) .lldb-home-side article.lldb-home-seed p{
+font:italic 13px/1.35 Georgia,serif!important;max-width:none!important;
+white-space:normal!important;overflow:visible!important;display:block!important;
+margin:0!important;color:#f6e8c8!important}
+body:has(#inicio.active) .lldb-home-verse{
+font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif!important;
+font-size:clamp(15px,1.35vw,19px)!important;
+font-weight:500!important;font-style:italic!important;
+line-height:1.28!important;letter-spacing:.1px!important;
+color:#fff0cc!important;text-shadow:0 1px 5px #000!important;
+margin:12px 5px 8px!important}
+body:has(#inicio.active) .lldb-home-verse small{
+font-family:Georgia,serif!important;font-size:clamp(12px,.95vw,14px)!important;
+margin-top:5px!important;color:#e6bd74!important}
+body:has(#inicio.active) .lldb-brand-copy small{
+font-size:clamp(12px,1.05vw,15px)!important;
+line-height:1.25!important;color:#f2ddad!important}
+body:has(#inicio.active) .lldb-home-side article:nth-child(2){
+justify-content:space-between!important}
+}
 </style>
 </head>
 <body>
@@ -620,7 +652,7 @@ body:has(#inicio.active) .lldb-giving-heart svg{width:100%;height:100%}
   <div class="lldb-home-art lldb-approved-scene" aria-label="Escena oficial aprobada de Lluvia de Bendición"><img src="/assets/escena-inicio.png" alt="Logo oficial de Lluvia de Bendición emergiendo de una pared en una oficina con Biblia abierta y paisaje de tormenta" decoding="async" fetchpriority="high"></div>
   <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
    <article><h2>Apoya nuestro ministerio</h2><p>Tu generosidad nos ayuda a compartir fe, esperanza y bendición.</p><div class="lldb-giving-heart" aria-hidden="true"><svg viewBox="0 0 140 115"><defs><radialGradient id="heartWarm"><stop stop-color="#fff9df"/><stop offset=".55" stop-color="#ffd48c"/><stop offset="1" stop-color="#c77b42"/></radialGradient></defs><path d="M70 101 C50 86 17 62 17 38 C17 17 43 11 57 26 L70 40 L83 26 C97 11 123 17 123 38 C123 62 90 86 70 101Z" fill="url(#heartWarm)" stroke="#ffe7b7" stroke-width="3"/><path d="M70 91 C50 74 29 57 29 39" fill="none" stroke="#fff5dd" stroke-width="4" stroke-linecap="round" opacity=".75"/></svg></div><button data-go="donaciones">Quiero apoyar ♥</button></article>
-   <article><h2>Anúnciate con nosotros</h2><p>Tu negocio puede ser parte de esta misión.</p><div class="lldb-partnership-art" aria-hidden="true"><svg viewBox="0 0 190 110"><defs><linearGradient id="partnershipGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff2c2"/><stop offset=".5" stop-color="#e2b665"/><stop offset="1" stop-color="#a36e2d"/></linearGradient></defs><circle cx="95" cy="53" r="47" fill="#dba44a" opacity=".09"/><path d="M28 52 L65 34 Q78 29 93 40 L103 47 L116 39 Q129 31 144 39 L164 53 L145 73 Q133 82 122 75 L103 62 L90 72 Q81 78 72 72 L55 60 L43 67Z" fill="url(#partnershipGold)" stroke="#ffe3a3" stroke-width="3" stroke-linejoin="round"/><path d="M77 49 L95 42 L116 57 M100 65 L114 75" stroke="#fff4ce" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M28 53 L16 63 L42 85 L56 68 M164 53 L177 64 L149 85 L141 74" fill="#173c58" stroke="#e9c37c" stroke-width="3"/><path d="M91 18 L95 7 L99 18 M56 27 L49 17 M134 27 L142 17" stroke="#f6d789" stroke-width="3" stroke-linecap="round"/></svg></div><button data-go="afiliados">Conoce cómo participar ›</button></article>
+   <article><h2>Anúnciate con nosotros</h2><div class="lldb-partnership-art" aria-hidden="true"><svg viewBox="0 0 190 110"><defs><linearGradient id="partnershipGold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff2c2"/><stop offset=".5" stop-color="#e2b665"/><stop offset="1" stop-color="#a36e2d"/></linearGradient></defs><circle cx="95" cy="53" r="47" fill="#dba44a" opacity=".09"/><path d="M28 52 L65 34 Q78 29 93 40 L103 47 L116 39 Q129 31 144 39 L164 53 L145 73 Q133 82 122 75 L103 62 L90 72 Q81 78 72 72 L55 60 L43 67Z" fill="url(#partnershipGold)" stroke="#ffe3a3" stroke-width="3" stroke-linejoin="round"/><path d="M77 49 L95 42 L116 57 M100 65 L114 75" stroke="#fff4ce" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M28 53 L16 63 L42 85 L56 68 M164 53 L177 64 L149 85 L141 74" fill="#173c58" stroke="#e9c37c" stroke-width="3"/><path d="M91 18 L95 7 L99 18 M56 27 L49 17 M134 27 L142 17" stroke="#f6d789" stroke-width="3" stroke-linecap="round"/></svg></div><button data-go="afiliados">Conoce cómo participar ›</button></article>
    <article class="lldb-home-seed"><div class="lldb-side-icon">🌱</div><p>Sembrando hoy para un mejor mañana.</p></article>
   </aside>
   <div class="lldb-home-features"><button data-go="especial" data-resource-link="versiculo">▣ <strong>PALABRA</strong><small>Mensajes que edifican tu vida.</small></button><button data-go="radio">♫ <strong>MÚSICA</strong><small>Alabanza que transforma.</small></button><button data-go="testimonios">♧ <strong>ESPERANZA</strong><small>Una comunidad para ti.</small></button><button data-go="especial">♥ <strong>PARA TU VIDA</strong><small>Recursos que te inspiran.</small></button></div>
