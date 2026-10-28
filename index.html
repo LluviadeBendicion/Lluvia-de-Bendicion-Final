@@ -1603,6 +1603,14 @@ body:has(#especial.active) header #main-nav{height:20px!important;min-height:20p
 body:has(#especial.active) #especial.lldb-photo-special{padding-top:4px!important}
 }
 </style>
+
+<style id="lldb-especial-bottom-gap-reduction-20261028">
+/* Solo quitar el espacio sobrante bajo el logo, sin alterar su tamaño ni el recorte de la pizarra. */
+@media(min-width:701px){
+body:has(#especial.active) header #main-nav{height:18px!important;min-height:18px!important;margin:-13px 0 0!important;padding:0!important;line-height:1!important}
+body:has(#especial.active) #especial.lldb-photo-special{padding-top:0!important}
+}
+</style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
