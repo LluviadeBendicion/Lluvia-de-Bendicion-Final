@@ -1329,6 +1329,21 @@ body:has(#nosotros.active){background-image:url("https://images.unsplash.com/pho
 body:has(#nosotros.active) header,body:has(#nosotros.active) header .top,body:has(#nosotros.active) #main-nav{background:transparent!important;background-image:none!important;backdrop-filter:none!important;filter:none!important}
 body:has(#nosotros.active) #nosotros,body:has(#nosotros.active) main{background:transparent!important;backdrop-filter:none!important}
 body:has(#nosotros.active) #nosotros>h2,body:has(#nosotros.active) .lldb-nosotros-intro,body:has(#nosotros.active) .lldb-header-title{text-shadow:0 2px 5px #000b!important}
+</style><style>
+/* SOLO paisaje de fondo de Nosotros: imagen original sin hielo, velo ni desenfoque */
+body:has(#nosotros.active){
+background-image:url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2400&q=95")!important;
+background-color:#1c1512!important;
+background-size:cover!important;
+background-position:center 42%!important;
+background-repeat:no-repeat!important;
+filter:none!important;
+}
+body:has(#nosotros.active)::before,
+body:has(#nosotros.active)::after{backdrop-filter:none!important;filter:none!important}
+body:has(#nosotros.active) header,
+body:has(#nosotros.active) header .top,
+body:has(#nosotros.active) #main-nav{backdrop-filter:none!important;background:transparent!important;background-image:none!important}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
