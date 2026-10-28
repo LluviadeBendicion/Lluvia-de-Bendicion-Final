@@ -1651,6 +1651,18 @@ body:has(#especial.active) #especial.lldb-photo-special{padding-top:0!important}
 #especial .lldb-photo-hotspot-4,#especial .lldb-photo-hotspot-5,#especial .lldb-photo-hotspot-6{top:67.3%!important}
 }
 </style>
+
+<style id="lldb-especial-hotspot-specificity-fix-20261028">
+/* Corrección real: selector de igual especificidad al que bloqueaba los cambios anteriores. */
+@media(min-width:701px){
+body:has(#especial.active) #especial .lldb-photo-hotspot-1,
+body:has(#especial.active) #especial .lldb-photo-hotspot-2,
+body:has(#especial.active) #especial .lldb-photo-hotspot-3{top:43.8%!important}
+body:has(#especial.active) #especial .lldb-photo-hotspot-4,
+body:has(#especial.active) #especial .lldb-photo-hotspot-5,
+body:has(#especial.active) #especial .lldb-photo-hotspot-6{top:70.0%!important}
+}
+</style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
