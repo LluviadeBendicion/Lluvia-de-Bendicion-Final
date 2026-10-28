@@ -955,6 +955,11 @@ header #quick-radio{margin-left:14px}
 #main-nav{display:flex!important;max-width:1180px!important;overflow:visible!important;justify-content:flex-start!important;flex-wrap:nowrap!important;padding:8px 18px!important}
 #main-nav>button{border:1px solid #b99452!important;background:#102235!important;border-radius:9px!important;padding:10px 25px!important;color:#f5deb0!important}
 #nosotros .lldb-nosotros-intro{font-size:18px}
+</style><style>
+header #install{display:inline-flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important}
+header #install .lldb-install-logo{display:block;width:27px;height:27px;object-fit:contain;border-radius:6px}
+header #install .lldb-install-app-icon{display:none!important}
+@media(max-width:700px){header #install .lldb-install-logo{width:23px;height:23px}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -969,7 +974,7 @@ header #quick-radio{margin-left:14px}
 </section>
 <header>
  <div class="top"><div class="brand"><img class="lldb-official-header-logo" src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"></div><div class="quick" aria-label="Accesos rápidos">
-  <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="lldb-radio-label">Radio</span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram"><span class="lldb-social-icon lldb-ig" aria-hidden="true">◎</span><small>Instagram</small></a><a class="social social-link" data-social="facebook"><span class="lldb-social-icon lldb-fb" aria-hidden="true">f</span><small>Facebook</small></a><a class="social social-link" data-social="youtube"><span class="lldb-social-icon lldb-yt" aria-hidden="true">▶</span><small>YouTube</small></a><button class="install" id="install" aria-label="Instalar aplicación LLDB"><span class="lldb-install-app-icon" aria-hidden="true">LLDB</span><span>Instalar LLDB</span></button>
+  <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="lldb-radio-label">Radio</span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram"><span class="lldb-social-icon lldb-ig" aria-hidden="true">◎</span><small>Instagram</small></a><a class="social social-link" data-social="facebook"><span class="lldb-social-icon lldb-fb" aria-hidden="true">f</span><small>Facebook</small></a><a class="social social-link" data-social="youtube"><span class="lldb-social-icon lldb-yt" aria-hidden="true">▶</span><small>YouTube</small></a><button class="install" id="install" aria-label="Instalar aplicación LLDB"><img class="lldb-install-logo" src="/assets/logo-oficial-definitivo.png" alt="" aria-hidden="true"><span>Instalar LLDB</span></button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
  <nav id="main-nav" aria-label="Volver al inicio"><button data-go="inicio">⌂ Inicio</button></nav>
