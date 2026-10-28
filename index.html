@@ -1174,6 +1174,27 @@ background-image:linear-gradient(90deg,rgba(3,13,24,.86) 0%,rgba(4,19,31,.72) 48
 background-size:cover!important;background-position:center 53%!important;background-repeat:no-repeat!important;
 }
 body:has(#nosotros.active) header{background:#071522!important}
+</style><style>
+/* Nosotros: paisaje nítido y continuo de arriba a abajo, sin corte bajo Inicio */
+body:has(#nosotros.active){
+ background-color:#071522!important;
+ background-image:linear-gradient(180deg,rgba(5,16,29,.43),rgba(5,16,29,.58)),url("https://images.unsplash.com/photo-1743309411498-a0f4f4b96b65?auto=format&fit=crop&w=1800&q=90")!important;
+ background-position:center top!important;
+ background-size:cover!important;
+ background-repeat:no-repeat!important;
+ background-attachment:fixed!important;
+}
+body:has(#nosotros.active) header,
+body:has(#nosotros.active) header .top,
+body:has(#nosotros.active) header #main-nav,
+body:has(#nosotros.active) main,
+body:has(#nosotros.active) #nosotros{
+ background:transparent!important;
+ background-image:none!important;
+}
+body:has(#nosotros.active) header{border-bottom:2px solid #bb9354!important}
+body:has(#nosotros.active) .lldb-nosotros-tile .lldb-nosotros-image-pending{background:linear-gradient(90deg,rgba(5,15,25,.6),rgba(5,15,25,.12))!important}
+@media(max-width:700px){body:has(#nosotros.active){background-attachment:scroll!important;background-size:auto 100%!important}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
