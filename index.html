@@ -1060,6 +1060,25 @@ body:has(#nosotros.active) main{padding:3px 18px 40px!important}
 #nosotros .lldb-nosotros-tile span{font-size:clamp(29px,3.5vw,45px)!important}
 @media(max-width:850px){#nosotros .lldb-nosotros-design{grid-template-columns:minmax(0,1fr)!important}#nosotros .lldb-nosotros-promos{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:145px!important}}
 @media(max-width:530px){#nosotros .lldb-nosotros-tiles{grid-template-rows:repeat(3,135px)!important}#nosotros .lldb-nosotros-tile{height:135px!important;min-height:135px!important;max-height:135px!important}#nosotros .lldb-nosotros-promos{grid-template-columns:1fr!important;grid-template-rows:repeat(3,135px)!important}#nosotros .lldb-nosotros-promo{height:135px!important;min-height:135px!important;max-height:135px!important}}
+</style><style>
+/* Encabezado compacto de Nosotros: radio retro, redes y app en ese orden */
+body:has(#nosotros.active) header .top{min-height:0!important;padding:6px 16px!important;gap:8px!important;flex-wrap:nowrap!important}
+body:has(#nosotros.active) header .brand{flex:1 1 auto!important;min-width:220px!important;gap:8px!important}
+body:has(#nosotros.active) header .quick{display:flex!important;flex:0 1 auto!important;flex-wrap:nowrap!important;gap:5px!important;align-items:center!important;justify-content:flex-end!important;margin-left:auto!important}
+body:has(#nosotros.active) header #quick-radio{order:0!important;width:64px!important;min-width:64px!important;height:48px!important;margin:0!important;flex:0 0 64px!important}
+body:has(#nosotros.active) header #quick-radio .mini-radio{width:39px!important;height:27px!important;border:2px solid #d3b06c!important;border-radius:6px!important;background:linear-gradient(150deg,#737b7d,#27323c 65%,#121a23)!important;box-shadow:inset 0 0 0 2px #c2a26a,0 2px 5px #0008!important}
+body:has(#nosotros.active) header #quick-radio .mini-radio:before{height:2px!important;width:23px!important;top:-8px!important;left:10px!important;transform:rotate(-16deg)!important}
+body:has(#nosotros.active) header #quick-radio .mini-radio i{width:13px!important;height:13px!important;top:6px!important;left:4px!important;border:2px dotted #e5d6ac!important}
+body:has(#nosotros.active) header #quick-radio .mini-radio b{width:13px!important;height:3px!important;top:7px!important;right:4px!important;box-shadow:0 5px #c4ad7a,0 10px #c4ad7a!important}
+body:has(#nosotros.active) header #quick-radio .lldb-radio-label{font-size:10px!important}
+body:has(#nosotros.active) header .quick .social-link{width:64px!important;min-width:64px!important;height:48px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;flex:0 0 64px!important}
+body:has(#nosotros.active) header .quick .social-link .lldb-social-icon{font-size:22px!important;line-height:1!important}
+body:has(#nosotros.active) header .quick .social-link small{font-size:10px!important}
+body:has(#nosotros.active) header #install{order:9!important;flex:0 0 auto!important;margin-left:9px!important;height:48px!important}
+body:has(#nosotros.active) #main-nav{display:flex!important;justify-content:center!important;max-width:none!important;padding:0 0 2px!important}
+body:has(#nosotros.active) #main-nav>button{padding:4px 13px!important;font-size:12px!important}
+body:has(#nosotros.active) main{padding-top:0!important}
+@media(max-width:850px){body:has(#nosotros.active) header .top{flex-wrap:wrap!important}body:has(#nosotros.active) header .brand{flex:1 1 100%!important}body:has(#nosotros.active) header .quick{width:100%!important;justify-content:center!important}body:has(#nosotros.active) header #install{margin-left:auto!important}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
