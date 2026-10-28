@@ -1098,6 +1098,13 @@ body:has(#nosotros.active) #nosotros>h2{padding-top:5px!important;line-height:1.
 #nosotros .lldb-nosotros-tile:hover .lldb-nosotros-cta,#nosotros .lldb-nosotros-tile:focus-visible .lldb-nosotros-cta{background:#ffe2a1!important}
 #nosotros #about-panel{scroll-margin-top:18px!important}
 @media(max-width:700px){#nosotros .lldb-nosotros-tile .lldb-nosotros-cta{left:14px!important;bottom:10px!important;font-size:12px!important;padding:7px 10px!important}}
+</style><style>
+/* Botones visibles: anular estilos antiguos aplicados a todos los span */
+#nosotros .lldb-nosotros-tile .lldb-nosotros-cta{position:absolute!important;z-index:12!important;display:flex!important;top:auto!important;bottom:9px!important;left:auto!important;right:15px!important;width:auto!important;max-width:55%!important;height:auto!important;min-height:32px!important;box-sizing:border-box!important;padding:6px 11px!important;margin:0!important;align-items:center!important;justify-content:center!important;background:#e9c579!important;border:2px solid #fff0bd!important;border-radius:7px!important;color:#111b28!important;font:700 13px/1.2 Georgia,serif!important;text-align:center!important;text-shadow:none!important;white-space:normal!important;opacity:1!important;visibility:visible!important}
+#nosotros .lldb-nosotros-tile>span:not(.lldb-nosotros-cta){pointer-events:none!important}
+#nosotros #about-panel:not(.hidden){display:block!important;visibility:visible!important;opacity:1!important}
+#nosotros #about-panel{scroll-margin-top:28px!important}
+@media(max-width:700px){#nosotros .lldb-nosotros-tile .lldb-nosotros-cta{right:5px!important;bottom:5px!important;max-width:65%!important;padding:4px 6px!important;font-size:11px!important}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -1190,7 +1197,7 @@ function selectAbout(section){
  aboutPanel.classList.remove('hidden');
  document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.setAttribute('aria-expanded',String(btn.dataset.nosotrosChoice===section)));
 }
-document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.addEventListener('click',()=>{selectAbout(btn.dataset.nosotrosChoice);requestAnimationFrame(()=>aboutPanel.scrollIntoView({behavior:'smooth',block:'start'}));}));
+document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.addEventListener('click',()=>{selectAbout(btn.dataset.nosotrosChoice);aboutPanel.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>aboutPanel.scrollIntoView({behavior:'smooth',block:'start'}),100);}));
 document.getElementById('about-close').onclick=()=>{aboutPanel.classList.add('hidden');document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
 let officialContent={};fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>officialContent=c).catch(()=>{});
 const resourcePanel=document.getElementById('resource-panel'),resourceTitle=document.getElementById('resource-title');document.querySelectorAll('[data-resource]').forEach(b=>b.onclick=()=>{resourceTitle.textContent=b.querySelector('h3').textContent;const key=b.dataset.resource,map={oracion:'dailyPrayer',versiculo:'dailyVerse',memorizar:'memoryVerse',devocional:'weeklyDevotional',sermones:'weeklySermons',peticiones:'prayerRequests'},cfg=officialContent[map[key]]||{};document.getElementById('resource-body').textContent=cfg.text||cfg.content||b.dataset.copy||'Contenido LLDB';const prayerForm=document.getElementById('prayer-form');prayerForm?.classList.toggle('hidden',key!=='peticiones');resourcePanel.classList.remove('hidden')});document.getElementById('resource-close').onclick=()=>resourcePanel.classList.add('hidden');
