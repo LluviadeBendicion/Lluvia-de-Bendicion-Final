@@ -1241,6 +1241,17 @@ background-position:center 42%!important;background-size:cover!important;backgro
 filter:none!important;backdrop-filter:none!important;
 }
 body:has(#nosotros.active) #main-nav{background:transparent!important}
+</style><style>
+/* Una sola imagen de paisaje para Nosotros: eliminar repetición en cabecera */
+body:has(#nosotros.active) header,
+body:has(#nosotros.active) header .top,
+body:has(#nosotros.active) #main-nav{
+ background-image:none!important;
+ background-color:transparent!important;
+ background:transparent!important;
+ backdrop-filter:none!important;
+}
+body:has(#nosotros.active){background-repeat:no-repeat!important;background-size:cover!important;background-position:center 38%!important}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
