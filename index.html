@@ -1195,6 +1195,12 @@ body:has(#nosotros.active) #nosotros{
 body:has(#nosotros.active) header{border-bottom:2px solid #bb9354!important}
 body:has(#nosotros.active) .lldb-nosotros-tile .lldb-nosotros-image-pending{background:linear-gradient(90deg,rgba(5,15,25,.6),rgba(5,15,25,.12))!important}
 @media(max-width:700px){body:has(#nosotros.active){background-attachment:scroll!important;background-size:auto 100%!important}}
+</style><style>
+/* Legibilidad de la descripción sobre paisaje, sin ocultarlo */
+body:has(#nosotros.active) #nosotros .lldb-nosotros-intro{display:table!important;max-width:calc(100% - 20px)!important;margin:3px auto 10px!important;padding:7px 20px!important;border-radius:9px!important;background:rgba(5,17,30,.82)!important;border:1px solid rgba(229,188,113,.65)!important;color:#fff1d4!important;text-shadow:0 2px 3px #000!important;font:italic 700 18px/1.4 Georgia,'Times New Roman',serif!important;box-shadow:0 3px 12px #0005!important}
+body:has(#nosotros.active) header #install{border:2px solid #e5bd77!important;border-radius:9px!important;background:linear-gradient(135deg,#17324b,#0a1727)!important;box-shadow:0 0 0 1px #624b2d,inset 0 1px 0 #ffffff33,0 3px 8px #0006!important;color:#ffe4a5!important}
+body:has(#nosotros.active) header #install:focus-visible{outline:3px solid #fff1bb!important;outline-offset:3px!important}
+@media(max-width:700px){body:has(#nosotros.active) #nosotros .lldb-nosotros-intro{font-size:15px!important;padding:6px 10px!important}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
