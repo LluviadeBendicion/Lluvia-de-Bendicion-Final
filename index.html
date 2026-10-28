@@ -1398,6 +1398,27 @@ body:has(#nosotros.active)::before,
 body:has(#nosotros.active)::after,
 body:has(#nosotros.active) header::before,
 body:has(#nosotros.active) header::after{backdrop-filter:none!important;filter:none!important;opacity:0!important;pointer-events:none!important}
+</style><style>
+/* Una sola fotografía continua: evitar paisaje duplicado en encabezado */
+body:has(#nosotros.active){
+background-image:url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2400&q=95")!important;
+background-position:center top!important;
+background-size:cover!important;
+background-repeat:no-repeat!important;
+background-attachment:fixed!important;
+}
+body:has(#nosotros.active) header,
+body:has(#nosotros.active) header .top,
+body:has(#nosotros.active) header #main-nav,
+body:has(#nosotros.active) main,
+body:has(#nosotros.active) #nosotros{
+background-image:none!important;
+background-color:transparent!important;
+background:transparent!important;
+backdrop-filter:none!important;
+filter:none!important;
+}
+@media(max-width:700px){body:has(#nosotros.active){background-attachment:scroll!important}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
