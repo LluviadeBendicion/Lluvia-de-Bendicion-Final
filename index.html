@@ -1344,6 +1344,26 @@ body:has(#nosotros.active)::after{backdrop-filter:none!important;filter:none!imp
 body:has(#nosotros.active) header,
 body:has(#nosotros.active) header .top,
 body:has(#nosotros.active) #main-nav{backdrop-filter:none!important;background:transparent!important;background-image:none!important}
+</style><style>
+/* Nosotros: fotografía nítida, con exposición más oscura y sin velo blanco */
+body:has(#nosotros.active){
+ background-image:linear-gradient(rgba(0,0,0,.56),rgba(0,0,0,.56)),url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2400&q=95")!important;
+ background-color:#090a0b!important;
+ background-position:center 42%!important;
+ background-size:cover!important;
+ background-repeat:no-repeat!important;
+ background-attachment:fixed!important;
+ filter:none!important;
+ backdrop-filter:none!important;
+}
+body:has(#nosotros.active) header,
+body:has(#nosotros.active) header .top,
+body:has(#nosotros.active) #main-nav,
+body:has(#nosotros.active) main,
+body:has(#nosotros.active) #nosotros{
+ backdrop-filter:none!important;
+ filter:none!important;
+}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
