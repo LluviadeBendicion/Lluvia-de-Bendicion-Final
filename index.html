@@ -1048,6 +1048,18 @@ body:has(#nosotros.active) main{padding:3px 18px 40px!important}
 #nosotros .lldb-nosotros-intro{font:italic 18px/1.3 Georgia,'Times New Roman',serif!important;color:#f0d6a5!important;margin:0 0 9px!important;text-align:center!important}
 #nosotros .lldb-nosotros-design{margin-top:4px!important}
 @media(max-width:700px){body:has(#nosotros.active) .lldb-official-header-logo{width:60px!important;height:60px!important}body:has(#nosotros.active) main{padding:6px 10px 32px!important}}
+</style><style>
+/* Nosotros: seis módulos compactos con filas exactamente simétricas */
+#nosotros .lldb-nosotros-design{display:grid!important;grid-template-columns:minmax(0,1fr) 285px!important;align-items:stretch!important;gap:12px!important}
+#nosotros .lldb-nosotros-tiles,#nosotros .lldb-nosotros-promos{display:grid!important;grid-template-rows:repeat(3,145px)!important;gap:12px!important;align-items:stretch!important}
+#nosotros .lldb-nosotros-tile,#nosotros .lldb-nosotros-promo{height:145px!important;min-height:145px!important;max-height:145px!important;box-sizing:border-box!important;margin:0!important}
+#nosotros .lldb-nosotros-promo{padding:10px 13px!important;overflow:hidden!important}
+#nosotros .lldb-nosotros-promo h3{font-size:20px!important;line-height:1.1!important}
+#nosotros .lldb-nosotros-promo p{font-size:11px!important;line-height:1.25!important;margin:4px 0!important}
+#nosotros .lldb-nosotros-promo button{padding:6px!important}
+#nosotros .lldb-nosotros-tile span{font-size:clamp(29px,3.5vw,45px)!important}
+@media(max-width:850px){#nosotros .lldb-nosotros-design{grid-template-columns:minmax(0,1fr)!important}#nosotros .lldb-nosotros-promos{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:145px!important}}
+@media(max-width:530px){#nosotros .lldb-nosotros-tiles{grid-template-rows:repeat(3,135px)!important}#nosotros .lldb-nosotros-tile{height:135px!important;min-height:135px!important;max-height:135px!important}#nosotros .lldb-nosotros-promos{grid-template-columns:1fr!important;grid-template-rows:repeat(3,135px)!important}#nosotros .lldb-nosotros-promo{height:135px!important;min-height:135px!important;max-height:135px!important}}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
