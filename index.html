@@ -1377,6 +1377,27 @@ background:linear-gradient(180deg,#ffffff 0%,#fffdf6 30%,#f4d68d 65%,#c58a2c 100
 -webkit-text-fill-color:transparent!important;color:transparent!important;
 filter:drop-shadow(0 2px 3px #000b)!important;text-shadow:none!important;
 }
+</style><style>
+/* Corrección definitiva del paisaje de Nosotros: foto directa, sin capa difusa */
+body:has(#nosotros.active),
+body:has(#nosotros.active) header{
+ background-image:url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2400&q=95")!important;
+ background-color:#10151a!important;
+ background-size:cover!important;
+ background-position:center 42%!important;
+ background-repeat:no-repeat!important;
+ filter:none!important;
+ backdrop-filter:none!important;
+}
+body:has(#nosotros.active) header{background-attachment:scroll!important}
+body:has(#nosotros.active) header .top,
+body:has(#nosotros.active) header #main-nav,
+body:has(#nosotros.active) main,
+body:has(#nosotros.active) #nosotros{background:transparent!important;background-image:none!important;backdrop-filter:none!important;filter:none!important}
+body:has(#nosotros.active)::before,
+body:has(#nosotros.active)::after,
+body:has(#nosotros.active) header::before,
+body:has(#nosotros.active) header::after{backdrop-filter:none!important;filter:none!important;opacity:0!important;pointer-events:none!important}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
