@@ -885,7 +885,18 @@ body:has(#radio.active) #radio .lldb-radio-startup-shutter{display:none!importan
 #radio .lldb-function-led{left:82.1%!important;width:clamp(12px,1.6vw,22px)!important;height:clamp(12px,1.6vw,22px)!important}
 #radio .lldb-function-status-label{left:84.0%!important;width:5.5%!important;font-size:clamp(7px,.82vw,12px)!important;text-align:center!important;overflow:visible!important}
 </style>
-<style>#nosotros .lldb-beliefs{display:grid;gap:14px;margin-top:20px;text-align:left}#nosotros .lldb-belief{padding:12px 16px;border-left:3px solid #cba65a;background:rgba(12,22,38,.35);border-radius:8px}#nosotros .lldb-belief h4{margin:0 0 7px;color:#eacb86}#nosotros .lldb-belief p{margin:0;line-height:1.55}#nosotros .about[data-about="Creencias"]{max-width:100%}</style></head>
+<style>#nosotros .lldb-beliefs{display:grid;gap:14px;margin-top:20px;text-align:left}#nosotros .lldb-belief{padding:12px 16px;border-left:3px solid #cba65a;background:rgba(12,22,38,.35);border-radius:8px}#nosotros .lldb-belief h4{margin:0 0 7px;color:#eacb86}#nosotros .lldb-belief p{margin:0;line-height:1.55}#nosotros .about[data-about="Creencias"]{max-width:100%}</style><style>
+/* Menú desplegable Nosotros */
+#main-nav .nav-group:has(>button[data-go="nosotros"])>.nav-tree{min-width:220px;padding:9px;border:1px solid #b9995a;border-radius:12px;background:linear-gradient(145deg,#10253a,#06111e);box-shadow:0 16px 38px #000b;animation:lldbSubmenuIn .2s ease-out}
+#main-nav .nav-group:has(>button[data-go="nosotros"])>.nav-tree button{font-size:14px;padding:12px 14px;color:#f5e9cf;border-radius:7px;transition:background .2s,color .2s,transform .2s}
+#main-nav .nav-group:has(>button[data-go="nosotros"])>.nav-tree button:hover,#main-nav .nav-group:has(>button[data-go="nosotros"])>.nav-tree button:focus-visible{background:#b99a58;color:#081522;transform:translateX(3px)}
+@keyframes lldbSubmenuIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+#nosotros .about-tabs button.is-selected{background:#b99a58;color:#091522;font-weight:700}
+#nosotros article.about[hidden]{display:none!important}
+#nosotros .about-tabs{margin:20px 0;justify-content:center}
+#nosotros .about-tabs button{font-size:15px;padding:12px 20px;cursor:pointer}
+@media(max-width:700px){#main-nav .nav-group:has(>button[data-go="nosotros"])>.nav-tree{position:static;animation:none;box-shadow:none;min-width:0}}
+</style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
 <section id="intro" aria-label="Bienvenida cinematográfica de Lluvia de Bendición .Com">
@@ -970,6 +981,17 @@ document.querySelectorAll('.radio-home').forEach(b=>b.onclick=()=>showView('inic
 document.querySelectorAll('.radio-exit').forEach(b=>b.onclick=()=>showView('inicio'));
 if(location.hash && document.getElementById(location.hash.slice(1))){showView(location.hash.slice(1),false);if(location.hash==='#radio'){intro?.classList.add('hidden');}}
 const aboutPanel=document.getElementById('about-panel'),aboutTitle=document.getElementById('about-title'),aboutBody=document.getElementById('about-body');document.querySelectorAll('.about').forEach(b=>b.onclick=()=>{aboutTitle.textContent=b.querySelector('h3').textContent;aboutBody.innerHTML=b.querySelector('.lldb-beliefs')?.outerHTML || [...b.querySelectorAll('p')].map(p=>'<p>'+p.textContent+'</p>').join('');aboutPanel.classList.remove('hidden')});document.getElementById('about-close').onclick=()=>aboutPanel.classList.add('hidden');
+// Navegación accesible de Nosotros: cada opción abre su contenido correspondiente.
+const aboutTabs=[...document.querySelectorAll('#nosotros .about-tabs [data-about]')];
+const aboutCards=[...document.querySelectorAll('#nosotros article.about')];
+function selectAbout(section){
+ const selected={mision:'Misión',vision:'Visión',creencias:'Creencias'}[section]||'Misión';
+ aboutTabs.forEach(tab=>{const active=tab.dataset.about===section;tab.setAttribute('aria-selected',String(active));tab.classList.toggle('is-selected',active)});
+ aboutCards.forEach(card=>{card.hidden=card.dataset.about!==selected});
+ aboutPanel.classList.add('hidden');
+}
+aboutTabs.forEach(tab=>tab.addEventListener('click',()=>selectAbout(tab.dataset.about)));
+selectAbout('mision');
 let officialContent={};fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>officialContent=c).catch(()=>{});
 const resourcePanel=document.getElementById('resource-panel'),resourceTitle=document.getElementById('resource-title');document.querySelectorAll('[data-resource]').forEach(b=>b.onclick=()=>{resourceTitle.textContent=b.querySelector('h3').textContent;const key=b.dataset.resource,map={oracion:'dailyPrayer',versiculo:'dailyVerse',memorizar:'memoryVerse',devocional:'weeklyDevotional',sermones:'weeklySermons',peticiones:'prayerRequests'},cfg=officialContent[map[key]]||{};document.getElementById('resource-body').textContent=cfg.text||cfg.content||b.dataset.copy||'Contenido LLDB';const prayerForm=document.getElementById('prayer-form');prayerForm?.classList.toggle('hidden',key!=='peticiones');resourcePanel.classList.remove('hidden')});document.getElementById('resource-close').onclick=()=>resourcePanel.classList.add('hidden');
 document.querySelectorAll('[data-wall]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-wall]').forEach(x=>x.classList.toggle('selected',x===b));document.getElementById('wall-preview').textContent='Wallpaper LLDB '+b.dataset.wall});
