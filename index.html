@@ -1088,6 +1088,10 @@ body:has(#nosotros.active) main{padding-top:0!important}
 body:has(#nosotros.active) #nosotros{padding-top:0!important;margin-top:-9px!important}
 body:has(#nosotros.active) #nosotros>h2{margin-top:0!important;margin-bottom:1px!important}
 @media(max-width:700px){body:has(#nosotros.active) #main-nav{margin-top:-3px!important}body:has(#nosotros.active) #nosotros{margin-top:-3px!important}}
+</style><style>
+/* Evitar que el título Nosotros quede cortado, sin mover Inicio */
+body:has(#nosotros.active) #nosotros{margin-top:3px!important}
+body:has(#nosotros.active) #nosotros>h2{padding-top:5px!important;line-height:1.25!important;overflow:visible!important}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
