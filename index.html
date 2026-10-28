@@ -1368,14 +1368,13 @@ body:has(#nosotros.active) #nosotros{
 /* Nosotros: únicamente etiquetas blancas y títulos blanco/dorado */
 body:has(#nosotros.active) header .quick .social-link small,
 body:has(#nosotros.active) header #quick-radio .lldb-radio-label{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 1px 3px #0009!important}
-#nosotros .lldb-nosotros-tile>span:not(.lldb-nosotros-cta){color:#f9e6b9!important;background-image:linear-gradient(110deg,#fffefa 0%,#f6f0e4 35%,#e4b65b 65%,#fff2d0 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;filter:drop-shadow(0 2px 3px #000b)!important}
-</style><style>
-/* Único ajuste: letras de Misión, Visión y Creencias de blanco a dorado */
+/* Titulos de Nosotros: color uniforme, sin degradado ni relleno transparente */
+#nosotros .lldb-nosotros-tile>span:not(.lldb-nosotros-cta),
 #nosotros .lldb-nosotros-tile .lldb-nosotros-heading{
-background:linear-gradient(180deg,#ffffff 0%,#fffdf6 30%,#f4d68d 65%,#c58a2c 100%)!important;
--webkit-background-clip:text!important;background-clip:text!important;
--webkit-text-fill-color:transparent!important;color:transparent!important;
-filter:drop-shadow(0 2px 3px #000b)!important;text-shadow:none!important;
+background-image:none!important;background:none!important;
+-webkit-background-clip:border-box!important;background-clip:border-box!important;
+-webkit-text-fill-color:#fff0cf!important;color:#fff0cf!important;
+filter:none!important;text-shadow:0 2px 5px #000b!important;
 }
 </style><style>
 /* Corrección definitiva del paisaje de Nosotros: foto directa, sin capa difusa */
