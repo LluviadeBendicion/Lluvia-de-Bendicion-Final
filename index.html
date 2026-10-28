@@ -1163,6 +1163,10 @@ body:has(#nosotros.active) header .lldb-header-title{text-shadow:0 2px 8px #000,
 #nosotros .lldb-nosotros-tile{background:linear-gradient(140deg,#1c2c3b 0%,#304052 46%,#0a1828 100%)!important}
 #nosotros .lldb-nosotros-tile .lldb-nosotros-image-pending{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;background:radial-gradient(ellipse at 75% 75%,#a88b5740,transparent 50%),linear-gradient(135deg,#14283b,#263b4b 50%,#081522)!important;pointer-events:none!important}
 #nosotros .lldb-nosotros-tile .lldb-nosotros-cta{z-index:12!important}
+</style><style>
+/* Inicio: retirar solamente la imagen del logo en el encabezado.
+   Conservar el nombre, lema, radio, redes y botón Instalar LLDB. */
+body:has(#inicio.active) header .brand>.lldb-official-header-logo{display:none!important}
 </style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
