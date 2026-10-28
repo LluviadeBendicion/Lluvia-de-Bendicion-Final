@@ -1584,6 +1584,15 @@ body:has(#especial.active) #especial.lldb-photo-special{padding-top:13px!importa
 body:has(#especial.active) #especial .lldb-photo-stage{aspect-ratio:1672/900!important;background-size:100% auto!important;background-position:center bottom!important}
 }
 </style>
+
+<style id="lldb-especial-precise-top-crop-20261028">
+/* Recortar exclusivamente la franja superior con navegación impresa, sin desplazar el contenido inferior. */
+@media(min-width:701px){
+body:has(#especial.active) #especial .lldb-photo-stage{aspect-ratio:1672/825!important;background-size:100% auto!important;background-position:center bottom!important}
+body:has(#especial.active) #especial .lldb-photo-hotspot-1,body:has(#especial.active) #especial .lldb-photo-hotspot-2,body:has(#especial.active) #especial .lldb-photo-hotspot-3{top:46.5%!important}
+body:has(#especial.active) #especial .lldb-photo-hotspot-4,body:has(#especial.active) #especial .lldb-photo-hotspot-5,body:has(#especial.active) #especial .lldb-photo-hotspot-6{top:77.2%!important}
+}
+</style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
