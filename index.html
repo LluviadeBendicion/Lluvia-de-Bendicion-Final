@@ -1938,4 +1938,26 @@ document.addEventListener('DOMContentLoaded',()=>{
  highlight(null);
 });
 </script>
+<style id="lldb-especial-neutral-image-css">
+#especial .lldb-photo-stage #lldb-prayer-board,
+#especial .lldb-photo-stage #lldb-resource-board{scrollbar-width:none!important;overscroll-behavior:contain!important}
+#especial .lldb-photo-stage #lldb-prayer-board::-webkit-scrollbar,
+#especial .lldb-photo-stage #lldb-resource-board::-webkit-scrollbar{display:none!important}
+</style>
+<script id="lldb-especial-neutral-image">
+document.addEventListener('DOMContentLoaded',()=>{
+ const stage=document.querySelector('#especial .lldb-photo-stage');if(!stage)return;
+ stage.style.setProperty('background-image',"url('/assets/file_0000000070ac81f5ba1bec516e5d5662.png')",'important');
+ stage.style.setProperty('aspect-ratio','1728 / 1024','important');
+ stage.style.setProperty('background-size','100% 100%','important');
+ const xs=[21.7,32.5,43.5,54.4,65.4,76.3];
+ stage.querySelectorAll('.lldb-photo-hotspot').forEach((btn,i)=>{
+  for(const [k,v] of Object.entries({left:xs[i]+'%',top:'18.8%',width:'10%',height:'17%',zIndex:'30'}))btn.style.setProperty(k,v,'important');
+ });
+ for(const id of ['lldb-prayer-board','lldb-resource-board']){
+  const panel=document.getElementById(id);if(!panel)continue;
+  for(const [k,v] of Object.entries({top:'40%',left:'25%',width:'60%',height:'27%',padding:'0 2%',overflow:'auto',background:'transparent',boxShadow:'none'}))panel.style.setProperty(k,v,'important');
+ }
+});
+</script>
 </body></html>
