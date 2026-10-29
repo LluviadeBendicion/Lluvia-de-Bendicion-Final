@@ -1872,4 +1872,25 @@ const radioModeSource=document.getElementById('radio-status');const radioModeTar
 
 const lldbStartupVideo=document.getElementById('lldb-radio-startup-video');if(lldbStartupVideo){lldbStartupVideo.addEventListener('timeupdate',()=>{if(lldbStartupVideo.duration&&lldbStartupVideo.duration-lldbStartupVideo.currentTime<=1.3){lldbStartupVideo.style.opacity='0';}});lldbStartupVideo.addEventListener('ended',()=>{lldbStartupVideo.style.opacity='0';setTimeout(()=>{if(lldbStartupVideo.paused)lldbStartupVideo.style.display='none';document.getElementById('lldb-function-led')?.classList.remove('video-active');document.getElementById('lldb-function-status-label')?.classList.remove('video-active');},1350);});lldbStartupVideo.addEventListener('error',()=>{lldbStartupVideo.style.display='none';document.getElementById('lldb-function-led')?.classList.remove('video-active');});}
 </script><!-- LLDB_DEPLOY_SYNC_20260925_2349 -->
+<script id="lldb-especial-geometry-final">
+document.addEventListener('DOMContentLoaded',()=>{
+ const stage=document.querySelector('#especial .lldb-photo-stage');
+ if(!stage)return;
+ // Posiciones derivadas de la imagen aprobada de 1648 × 928 píxeles.
+ const xs=[20.9,32.2,43.5,54.8,66.1,77.4];
+ stage.querySelectorAll('.lldb-photo-hotspot').forEach((btn,i)=>{
+  btn.style.setProperty('position','absolute','important');
+  btn.style.setProperty('left',xs[i]+'%','important');
+  btn.style.setProperty('top','23%','important');
+  btn.style.setProperty('width','10.7%','important');
+  btn.style.setProperty('height','17%','important');
+  btn.style.setProperty('z-index','30','important');
+ });
+ stage.style.setProperty('aspect-ratio','1648 / 928','important');
+ stage.style.setProperty('background-size','100% 100%','important');
+ stage.style.setProperty('background-position','center center','important');
+ // El encabezado fijo no debe cubrir el título impreso en la imagen.
+ stage.style.setProperty('margin-top','145px','important');
+});
+</script>
 </body></html>
