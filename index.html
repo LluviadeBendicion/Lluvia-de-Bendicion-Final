@@ -1534,7 +1534,7 @@ body:has(#especial.active) main{max-width:none!important;width:100%!important;pa
 /* Imagen aprobada exacta; el menú superior continúa siendo HTML funcional. */
 body:has(#especial.active) main{max-width:none!important;width:100%!important;padding:0!important;background:#140d08!important}
 #especial.lldb-photo-special{margin:0!important;padding:0 0 30px!important;background:#140d08!important;max-width:none!important}
-#especial .lldb-photo-stage{position:relative;width:100%;aspect-ratio:1648/818;background-image:url('/assets/a_warm_cinematic_highly_detailed_photorealistic.png');background-repeat:no-repeat;background-size:100% auto;background-position:center bottom;box-shadow:0 10px 25px #0009}
+#especial .lldb-photo-stage{position:relative;width:100%;aspect-ratio:1648/818;background-image:url('/assets/a_warm_cinematic_richly_detailed_interior_scene.png');background-repeat:no-repeat;background-size:100% auto;background-position:center bottom;box-shadow:0 10px 25px #0009}
 #especial .lldb-photo-hotspot{position:absolute!important;display:block!important;width:15.5%!important;height:7%!important;border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;cursor:pointer!important;border-radius:8px!important;z-index:3!important}
 #especial .lldb-photo-hotspot:hover,#especial .lldb-photo-hotspot:focus-visible{outline:2px solid #f5c566!important;background:#f5c56622!important}
 #especial .lldb-photo-hotspot-1{left:29.3%;top:45.7%}#especial .lldb-photo-hotspot-2{left:49.9%;top:45.7%}#especial .lldb-photo-hotspot-3{left:70.4%;top:45.7%}
@@ -1706,9 +1706,13 @@ body:has(#especial.active) #especial .lldb-photo-hotspot-6{top:74.3%!important}
 #especial .lldb-photo-stage.prayer-open #lldb-prayer-board p,#especial .lldb-photo-stage.prayer-open #lldb-resource-board p{font-size:clamp(19px,2.2vw,32px)!important;line-height:1.23!important}
 </style>
 <style id="lldb-blackboard-asset-override">
-#especial .lldb-photo-stage{background-image:url('/assets/a_warm_cinematic_highly_detailed_photorealistic.png')!important;background-size:100% 100%!important;background-position:center!important}
-/* Imagen nueva: menú impreso en el tablero; áreas activas invisibles. */
-#especial .lldb-photo-stage.prayer-open::before{background:#111614!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:inset 0 0 25px 10px #ffffff08!important}
+#especial .lldb-photo-stage{background-image:url('/assets/a_warm_cinematic_richly_detailed_interior_scene.png')!important;background-size:100% 100%!important;background-position:center!important}
+#especial .lldb-photo-hotspot{top:22%!important;height:16%!important;width:10.5%!important}
+#especial .lldb-photo-hotspot-1{left:21%!important}#especial .lldb-photo-hotspot-2{left:32.4%!important}#especial .lldb-photo-hotspot-3{left:43.7%!important}#especial .lldb-photo-hotspot-4{left:55%!important}#especial .lldb-photo-hotspot-5{left:66.2%!important}#especial .lldb-photo-hotspot-6{left:77.4%!important}
+#especial .lldb-photo-stage.prayer-open::before{content:none!important;display:none!important}
+#especial .lldb-photo-stage #lldb-prayer-board,#especial .lldb-photo-stage #lldb-resource-board{left:24%!important;top:42%!important;width:62%!important;height:38%!important;background:transparent!important;box-shadow:none!important;overflow:auto!important;padding:0 3%!important}
+#especial .lldb-photo-stage #lldb-prayer-board h2,#especial .lldb-photo-stage #lldb-resource-board h2{font-size:clamp(23px,2.7vw,42px)!important}
+#especial .lldb-photo-stage #lldb-prayer-board p,#especial .lldb-photo-stage #lldb-resource-board p{font-size:clamp(19px,2.05vw,31px)!important;line-height:1.16!important}
 </style>
 </head>
 <body>
