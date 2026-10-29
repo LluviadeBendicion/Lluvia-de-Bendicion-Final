@@ -1,4 +1,4 @@
-const CACHE='lldb-v12';
+const CACHE='lldb-v13';
 const CORE=['/manifest.webmanifest','/api/radio-config.json','/api/content-config.json','/api/media-config.json','/api/social-config.json','/api/donations-config.json','/api/forms-config.json'];
 
 self.addEventListener('install',event=>{
