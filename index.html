@@ -1725,6 +1725,12 @@ body:has(#especial.active) #especial .lldb-photo-stage .lldb-photo-hotspot-5{lef
 body:has(#especial.active) #especial .lldb-photo-stage .lldb-photo-hotspot-6{left:77.4%!important}
 body:has(#especial.active) #especial .lldb-photo-stage.prayer-open .lldb-photo-hotspot{display:none!important;visibility:hidden!important;pointer-events:none!important}
 </style>
+<style id="lldb-especial-no-title-crop-fix">
+/* Imagen nueva 1648x928: mostrarla completa; reglas antiguas recortaban el título. */
+body:has(#especial.active) #especial .lldb-photo-stage{aspect-ratio:1648/928!important;background-size:100% 100%!important;background-position:center center!important;min-height:0!important}
+body:has(#especial.active) #especial.lldb-photo-special{padding-top:14px!important}
+body:has(#especial.active) #especial .lldb-photo-stage .lldb-photo-hotspot{top:22%!important;height:16%!important}
+</style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
