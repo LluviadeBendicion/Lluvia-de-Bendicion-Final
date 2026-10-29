@@ -1668,7 +1668,12 @@ body:has(#especial.active) #especial .lldb-photo-hotspot-6{top:74.3%!important}
 @media(max-width:700px){#especial .lldb-photo-stage .lldb-prayer-board h2{font-size:clamp(10px,2.7vw,18px)!important}#especial .lldb-photo-stage .lldb-prayer-board p{font-size:clamp(8px,1.65vw,13px)!important}}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
+<style id="lldb-no-external-board">
+/* Integración sin panel exterior: la fotografía original ES la pizarra. */
+#especial .lldb-photo-stage .lldb-prayer-board,#especial .lldb-photo-stage #lldb-prayer-board,#especial .lldb-photo-stage #lldb-resource-board{position:absolute!important;left:26.7%!important;top:26%!important;width:53.4%!important;height:56%!important;background:transparent!important;background-color:transparent!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;animation:none!important;overflow:auto!important;z-index:8!important;padding:1.5% 3%!important}
+#especial .lldb-photo-stage .lldb-prayer-board::before,#especial .lldb-photo-stage .lldb-prayer-board::after{display:none!important}
+#especial .lldb-photo-stage .lldb-prayer-board h2,#especial .lldb-photo-stage .lldb-prayer-board p{color:#eee8d9!important;font-family:'Caveat','Segoe Print',cursive!important;text-shadow:0 1px 1px #fff4!important}
+</style></head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
 <section id="intro" aria-label="Bienvenida cinematográfica de Lluvia de Bendición .Com">
