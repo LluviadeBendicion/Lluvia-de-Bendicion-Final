@@ -1,4 +1,4 @@
-const CACHE='lldb-v11';
+const CACHE='lldb-v12';
 const CORE=['/manifest.webmanifest','/api/radio-config.json','/api/content-config.json','/api/media-config.json','/api/social-config.json','/api/donations-config.json','/api/forms-config.json'];
 
 self.addEventListener('install',event=>{
@@ -20,7 +20,7 @@ self.addEventListener('fetch',event=>{
 
   if(event.request.mode==='navigate'||url.pathname==='/'||url.pathname==='/index.html'){
     event.respondWith(
-      fetch(event.request)
+      fetch(new Request(event.request,{cache:'no-store'}))
         .then(response=>{
           if(response.ok){
             const copy=response.clone();
