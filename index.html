@@ -1897,7 +1897,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  stage.style.setProperty('margin-top','0px','important');
  const section=document.getElementById('especial');
  section.style.setProperty('padding-top','0px','important');
- stage.style.setProperty('transform','translateY(-6px)','important');
+ stage.style.setProperty('transform','translateY(12px)','important');
  for(const id of ['lldb-prayer-board','lldb-resource-board']){
   const panel=document.getElementById(id);if(!panel)continue;
   for(const [k,v] of Object.entries({top:'46%',left:'24%',width:'62%',height:'43%',padding:'0 3%',overflow:'auto',background:'transparent',boxShadow:'none'}))panel.style.setProperty(k,v,'important');
@@ -1966,13 +1966,13 @@ document.addEventListener('DOMContentLoaded',()=>{
  // La imagen 1728x1024 tiene los marcos entre y=192 y y=369.
  const xs=[21.7,32.5,43.5,54.4,65.4,76.3];
  stage.querySelectorAll('.lldb-photo-hotspot').forEach((btn,i)=>{
-  for(const [k,v] of Object.entries({left:xs[i]+'%',top:'21.8%',width:'10%',height:'17%',boxSizing:'border-box'}))
+  for(const [k,v] of Object.entries({left:xs[i]+'%',top:'24.5%',width:'10%',height:'17%',boxSizing:'border-box'}))
    btn.style.setProperty(k,v,'important');
  });
  // Comienza por debajo de los seis marcos, con margen visible.
  for(const id of ['lldb-prayer-board','lldb-resource-board']){
   const panel=document.getElementById(id);if(!panel)continue;
-  for(const [k,v] of Object.entries({top:'42%',left:'25%',width:'60%',height:'24%',padding:'0.3% 2%',overflow:'auto',boxSizing:'border-box'}))
+  for(const [k,v] of Object.entries({top:'46%',left:'25%',width:'60%',height:'23%',padding:'0.3% 2%',overflow:'auto',boxSizing:'border-box'}))
    panel.style.setProperty(k,v,'important');
   const h=panel.querySelector('h2');if(h){h.style.setProperty('margin','0 0 8px','important');h.style.setProperty('font-size','clamp(18px,2.4vw,36px)','important');}
   panel.querySelectorAll('p').forEach(p=>{p.style.setProperty('font-size','clamp(13px,1.65vw,26px)','important');p.style.setProperty('line-height','1.2','important');});
