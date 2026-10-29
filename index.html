@@ -1928,7 +1928,7 @@ document.addEventListener('DOMContentLoaded',()=>{
    btn.style.setProperty('display','block','important');
    btn.style.setProperty('visibility','visible','important');
    btn.style.setProperty('pointer-events','auto','important');
-   btn.style.setProperty('border',chosen?'3px solid #f3c66a':'3px solid transparent','important');
+   btn.style.setProperty('border',chosen?'2px solid #f3c66a':'2px solid transparent','important');
    btn.style.setProperty('box-shadow',chosen?'0 0 7px 1px rgba(243,198,106,.65), inset 0 0 5px rgba(243,198,106,.2)':'none','important');
    btn.style.setProperty('border-radius','12px','important');
    btn.setAttribute('aria-pressed',String(chosen));
@@ -1966,7 +1966,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  // La imagen 1728x1024 tiene los marcos entre y=192 y y=369.
  const xs=[21.7,32.5,43.5,54.4,65.4,76.3];
  stage.querySelectorAll('.lldb-photo-hotspot').forEach((btn,i)=>{
-  for(const [k,v] of Object.entries({left:xs[i]+'%',top:'21.5%',width:'10.5%',height:'23.8%',boxSizing:'border-box'}))
+  for(const [k,v] of Object.entries({left:xs[i]+'%',top:'23%',width:'9.4%',height:'20.8%',boxSizing:'border-box'}))
    btn.style.setProperty(k,v,'important');
  });
  // Comienza por debajo de los seis marcos, con margen visible.
