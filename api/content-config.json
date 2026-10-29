@@ -4,23 +4,36 @@
   },
   "dailyVerse": {
     "enabled": true,
-    "bible": "Reina-Valera 1960"
+    "reference": "Salmo 46:1",
+    "text": "Dios es nuestro amparo y fortaleza, nuestro pronto auxilio en las tribulaciones.",
+    "note": "Reflexiona hoy sobre la ayuda de Dios."
   },
   "memoryVerse": {
-    "enabled": true
+    "enabled": true,
+    "reference": "Proverbios 3:5",
+    "text": "Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia.",
+    "note": "Repítelo y medita en su significado durante la semana."
   },
   "weeklyDevotional": {
     "enabled": true,
-    "note": "Meditar en él durante toda la semana."
+    "title": "Fortaleza en medio del cansancio",
+    "text": "Hay días en que nuestras fuerzas parecen pequeñas. La fe no exige negar el cansancio: nos invita a llevarlo ante Dios. Lee Isaías 40:28-31 y dedica unos minutos a reconocer lo que necesitas hoy. Ora pidiendo sabiduría para descansar y perseverar con esperanza.",
+    "reference": "Isaías 40:28-31"
   },
   "weeklySermons": {
-    "enabled": true
+    "enabled": true,
+    "title": "La paz que sostiene",
+    "text": "Lectura: Filipenses 4:6-7.\n\nIntroducción: La preocupación puede ocupar nuestra mente, pero la oración nos invita a confiar.\n\n1. Presentar nuestras necesidades a Dios con sinceridad.\n2. Cultivar gratitud incluso en las dificultades.\n3. Practicar la paz mediante la oración y el cuidado mutuo.\n\nAplicación: Escribe una preocupación y conviértela en una oración concreta.\n\nOración final: Señor, danos paz y sabiduría para caminar contigo. Amén.",
+    "reference": "Filipenses 4:6-7"
   },
   "testimonies": {
     "enabled": true
   },
   "studies": {
-    "enabled": true
+    "enabled": true,
+    "title": "Estudio bíblico: La fe y las obras",
+    "text": "Lectura principal: Santiago 2:14-17.\n\nContexto: Santiago invita a una fe que se expresa en acciones concretas.\n\nObserva: ¿Qué ejemplos utiliza el pasaje?\nInterpreta: ¿Qué relación presenta entre la fe y el cuidado del prójimo?\nAplica: ¿A quién puedes ayudar esta semana?\n\nLecturas complementarias: Efesios 2:8-10; Mateo 25:35-40.\n\nOración: Señor, ayúdanos a vivir una fe activa y compasiva. Amén.",
+    "reference": "Santiago 2:14-17"
   },
   "wallpapers": {
     "approvalRequired": true
