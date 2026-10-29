@@ -1904,4 +1904,38 @@ document.addEventListener('DOMContentLoaded',()=>{
  }
 });
 </script>
+<script id="lldb-especial-navigation-20261029">
+document.addEventListener('DOMContentLoaded',()=>{
+ const stage=document.querySelector('#especial .lldb-photo-stage');
+ if(!stage)return;
+ const buttons=[...stage.querySelectorAll('.lldb-photo-hotspot')];
+ const panels=['lldb-prayer-board','lldb-resource-board'].map(id=>document.getElementById(id)).filter(Boolean);
+ // El contenido ocupa únicamente la zona inferior libre de la pizarra.
+ panels.forEach(panel=>{
+  for(const [key,val] of Object.entries({top:'43%',left:'29%',width:'53%',height:'32%',padding:'0.5% 2%',overflow:'auto',background:'transparent',boxShadow:'none',border:'0',zIndex:'12'}))
+   panel.style.setProperty(key,val,'important');
+  const back=panel.querySelector('button');
+  if(back)back.style.setProperty('display','none','important');
+  panel.querySelectorAll('h2,p').forEach(el=>{
+   el.style.setProperty('margin','0 0 0.35em','important');
+   el.style.setProperty('line-height','1.18','important');
+  });
+ });
+ function highlight(active){
+  stage.classList.remove('prayer-open');
+  buttons.forEach(btn=>{
+   const chosen=btn===active;
+   btn.style.setProperty('display','block','important');
+   btn.style.setProperty('visibility','visible','important');
+   btn.style.setProperty('pointer-events','auto','important');
+   btn.style.setProperty('border',chosen?'3px solid #f3c66a':'3px solid transparent','important');
+   btn.style.setProperty('box-shadow',chosen?'0 0 13px 3px rgba(243,198,106,.8), inset 0 0 12px rgba(243,198,106,.35)':'none','important');
+   btn.style.setProperty('border-radius','12px','important');
+   btn.setAttribute('aria-pressed',String(chosen));
+  });
+ }
+ buttons.forEach(btn=>btn.addEventListener('click',()=>highlight(btn)));
+ highlight(null);
+});
+</script>
 </body></html>
