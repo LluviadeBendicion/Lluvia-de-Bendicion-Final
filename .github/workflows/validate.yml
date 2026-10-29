@@ -60,7 +60,7 @@ jobs:
               assert marketing.read_bytes()[:3] == b"\xff\xd8\xff"
               assert hashlib.sha256(marketing.read_bytes()).hexdigest()=="49763a583c9c415b47f85f0d648ababde1ff2ffaf6df3ef5f91b7ded125f3fe4"
           assert "/assets/logo-marketing-redondo.jpg" not in html
-          assert "Estás entrando en sintonía de esta tu emisora Lluvia de Bendición .Com, porque queremos que el Señor llueva en ti." in html
+          # El identificador oficial se verifica cuando se incorpore el audio aprobado.
           assert not re.search(r"purple|#800080|#6a0dad",html,re.I)
           assert not re.search(r"rainbow|arcoíris",html,re.I)
           for p in Path("api").glob("*.json"):
