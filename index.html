@@ -1966,7 +1966,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  // La imagen 1728x1024 tiene los marcos entre y=192 y y=369.
  const xs=[21.7,32.5,43.5,54.4,65.4,76.3];
  stage.querySelectorAll('.lldb-photo-hotspot').forEach((btn,i)=>{
-  for(const [k,v] of Object.entries({left:(xs[i]+0.25)+'%',top:'24.2%',width:'8.9%',height:'18.4%',boxSizing:'border-box'}))
+  for(const [k,v] of Object.entries({left:(xs[i]+0.1)+'%',top:'23.6%',width:'9.2%',height:'19.6%',boxSizing:'border-box'}))
    btn.style.setProperty(k,v,'important');
  });
  // Comienza por debajo de los seis marcos, con margen visible.
