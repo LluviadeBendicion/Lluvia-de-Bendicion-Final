@@ -1864,7 +1864,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
 #afiliados .lldb-aff-stage{position:relative}
 #afiliados .lldb-aff-carousel{position:absolute;left:21.7%;top:48.1%;width:59.6%;height:19.5%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:0;padding:.35% .2%;background:#0b1424;border:3px solid #e3b95f;border-radius:5px;box-shadow:0 0 0 1px rgba(255,226,157,.22);z-index:5;color:white;isolation:isolate;overflow:visible;outline:none}
 #afiliados .lldb-aff-carousel:before{content:"";position:absolute;inset:-1.5% -1%;background:#0b1424;z-index:-1;border-radius:3px}
-#afiliados .lldb-aff-card{flex:0 0 calc(100% / 6 - 2px);min-width:0;max-width:none;height:96%;aspect-ratio:1/1;border:1px solid #6b8cae;border-radius:8px;background:#0b1424;color:#f6e2b5;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;padding:2px;box-sizing:border-box;cursor:pointer}
+#afiliados .lldb-aff-card{flex:0 0 calc(100% / 4 - 2px);min-width:0;max-width:none;height:96%;aspect-ratio:1/1;border:1px solid #6b8cae;border-radius:8px;background:#0b1424;color:#f6e2b5;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden;padding:2px;box-sizing:border-box;cursor:pointer}
 #afiliados .lldb-aff-card:disabled{cursor:default}
 #afiliados .lldb-aff-card[hidden]{display:none!important}
 #afiliados .lldb-aff-brand{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4%;padding:4%;box-sizing:border-box;text-align:center;background:radial-gradient(circle,#15233a,#080d18 90%)}
@@ -2103,4 +2103,45 @@ document.addEventListener('DOMContentLoaded',()=>{
  }
 });
 </script>
-<script id="lldb-affiliates-carousel-script">(function(){const root=document.getElementById('afiliados');if(!root)return;const ads=[{name:'ECAFE',type:'ecafe',headline:'ECAFE',desc:'FOOD TRUCK · FRITURAS · REFRESCOS · CAFÉ',file:'Screenshot_20261029_164444_ChatGPT.jpg'},{name:'Lone Star Neon',type:'neon',headline:'Lone Star NEON',desc:'LONE STAR SIGNS',file:null},{name:'JA Towing LLC',type:'towing',headline:'JA TOWING 24/7',desc:'SERVICIO PRIVADO',file:null},{name:'Coming Soon'},{name:'Coming Soon'},{name:'Coming Soon'}];let start=0;const cards=[...root.querySelectorAll('.lldb-aff-card')],modal=root.querySelector('.lldb-aff-modal'),full=root.querySelector('.lldb-aff-full');function path(f){return '/assets/'+encodeURIComponent(f)}function show(){cards.forEach((card,i)=>{if(i>=6){card.hidden=true;return}card.hidden=false;const idx=(start+i)%ads.length,a=ads[idx];card.dataset.index=idx;card.disabled=!a.file;card.setAttribute('aria-label',a.file?'Abrir flyer de '+a.name:a.name);card.innerHTML=a.type?'<span class="lldb-aff-brand '+a.type+'"><strong>'+a.headline+'</strong><small>'+a.desc+'</small></span>':'<span class="lldb-aff-coming">COMING<br>SOON</span>'})}root.querySelector('.lldb-aff-prev-v2').addEventListener('click',e=>{e.stopPropagation();start=(start+ads.length-1)%ads.length;show()});root.querySelector('.lldb-aff-next').addEventListener('click',e=>{e.stopPropagation();start=(start+1)%ads.length;show()});cards.forEach(card=>card.addEventListener('click',()=>{const a=ads[Number(card.dataset.index)];if(!a.file)return;full.src=path(a.file);full.alt='Flyer de '+a.name;modal.hidden=false}));function close(){modal.hidden=true;full.removeAttribute('src')}root.querySelector('.lldb-aff-close').addEventListener('click',close);modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});show()})();</script></body></html>
+<script id="lldb-affiliates-carousel-script">
+(function(){
+ const root=document.getElementById('afiliados');if(!root)return;
+ const ads=[
+  {name:'JA Towing LLC',image:'ja-towing-tarjeta.webp',file:'ja-towing-flyer.webp'},
+  {name:'ECAFÉ',image:'ecafe-tarjeta.webp',file:'ecafe-flyer.webp'},
+  {name:'Lone Star Neon',image:'lone-star-tarjeta.webp',file:'lone-star-flyer.webp'},
+  {name:'Coming Soon',image:'coming-soon-1.webp'},
+  {name:'Coming Soon',image:'coming-soon-2.webp'}
+ ];
+ let start=0;
+ const cards=[...root.querySelectorAll('.lldb-aff-card')];
+ const modal=root.querySelector('.lldb-aff-modal'),full=root.querySelector('.lldb-aff-full');
+ const path=f=>'/assets/'+encodeURIComponent(f);
+ function show(){
+  cards.forEach((card,i)=>{
+   if(i>=4){card.hidden=true;return}
+   card.hidden=false;
+   const idx=(start+i)%ads.length,a=ads[idx];
+   card.dataset.index=idx;
+   card.disabled=!a.file;
+   card.setAttribute('aria-label',a.file?'Abrir flyer de '+a.name:a.name);
+   card.innerHTML='';
+   const img=document.createElement('img');
+   img.src=path(a.image);img.alt=a.name;
+   img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;border-radius:5px';
+   card.appendChild(img);
+  });
+ }
+ root.querySelector('.lldb-aff-prev-v2').addEventListener('click',e=>{e.stopPropagation();start=(start+ads.length-1)%ads.length;show()});
+ root.querySelector('.lldb-aff-next').addEventListener('click',e=>{e.stopPropagation();start=(start+1)%ads.length;show()});
+ cards.forEach(card=>card.addEventListener('click',()=>{
+  const a=ads[Number(card.dataset.index)];if(!a.file)return;
+  full.src=path(a.file);full.alt='Flyer de '+a.name;modal.hidden=false;
+ }));
+ function close(){modal.hidden=true;full.removeAttribute('src')}
+ root.querySelector('.lldb-aff-close').addEventListener('click',close);
+ modal.addEventListener('click',e=>{if(e.target===modal)close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
+ show();
+})();
+</script></body></html>
