@@ -1755,7 +1755,110 @@ body header .top .quick #quick-radio .mini-radio i{left:4px!important;top:6px!im
 body header .top .quick #quick-radio .mini-radio b{right:5px!important;top:21px!important;width:6px!important;height:6px!important;border:1px solid #b28b57!important;border-radius:50%!important;background:radial-gradient(circle,#d6b67e,#52351f)!important;box-shadow:-10px 0 0 -1px #ad8854!important;}
 
 
-</style></head>
+</style>
+<style id="lldb-inicio-comparacion">
+body:has(#inicio.active) header #main-nav,
+body:has(#inicio.active) header #menu-toggle{display:none!important}
+body:has(#inicio.active) header .top .brand>.lldb-official-header-logo{display:block!important}
+body:has(#inicio.active) header .top .brand .lldb-header-title{white-space:normal}
+#inicio .inicio-grid{
+  display:grid;
+  grid-template-columns:minmax(168px, .85fr) minmax(0, 2.8fr) minmax(296px, 1.75fr);
+  align-items:start;
+  gap:clamp(12px, 1.4vw, 24px);
+  max-width:1680px;
+  margin:auto;
+  padding:clamp(12px, 2vw, 30px);
+}
+#inicio .inicio-tree,
+#inicio .inicio-scene,
+#inicio .inicio-card,
+#inicio .inicio-seed{
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#081522;
+}
+#inicio .inicio-tree{padding:9px}
+#inicio .inicio-tree button,
+#inicio .inicio-tree summary{
+  display:block;
+  width:100%;
+  border:0;
+  border-radius:5px;
+  padding:8px 9px;
+  background:transparent;
+  color:var(--warm);
+  text-align:left;
+  font-size:14px;
+  line-height:1.3;
+  cursor:pointer;
+}
+#inicio .inicio-tree summary{display:list-item;color:#f3d495}
+#inicio .inicio-tree button:hover,
+#inicio .inicio-tree summary:hover{background:#172b3c}
+#inicio .inicio-branch{margin:0 0 5px 13px;padding-left:5px;border-left:1px solid var(--line)}
+#inicio .inicio-branch button{font-size:13px}
+#inicio .inicio-verse{
+  margin:9px 0 0;
+  padding:10px 9px 4px;
+  border-top:1px solid var(--line);
+  color:#e6cf9d;
+  font:italic 14px/1.4 Georgia,serif;
+}
+#inicio .inicio-verse small{display:block;margin-top:3px}
+#inicio .inicio-scene{overflow:hidden}
+#inicio .inicio-scene img{display:block;width:100%;height:auto}
+#inicio .inicio-participa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#inicio .inicio-card{
+  position:relative;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  aspect-ratio:1;
+  min-width:0;
+  overflow:hidden;
+  text-align:center;
+}
+#inicio .inicio-card h2{
+  margin:0;
+  padding:6px 5px;
+  background:#0e2031;
+  color:#fff0cc;
+  font:700 clamp(13px,1.1vw,19px)/1.12 Georgia,serif;
+}
+#inicio .inicio-card img{width:100%;height:100%;min-height:0;display:block;object-fit:cover}
+#inicio .inicio-card img[src="/assets/afiliados-omar.jpg"]{object-position:center 30%}
+#inicio .inicio-card button{
+  border:0;
+  border-top:1px solid var(--line);
+  padding:7px 4px;
+  background:#efd391;
+  color:#241608;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+#inicio .inicio-card button:hover{background:#fff0c0}
+#inicio .inicio-seed{grid-column:1/-1;margin:0;overflow:hidden;text-align:center}
+#inicio .inicio-seed img{display:block;width:100%;max-height:260px;object-fit:cover;object-position:center 45%}
+#inicio .inicio-seed figcaption{padding:8px;color:#f0dbad;font:italic 15px Georgia,serif}
+#inicio button:focus-visible,
+#inicio summary:focus-visible{outline:2px solid #fff3bf;outline-offset:-3px}
+@media(max-width:1050px){
+  #inicio .inicio-grid{grid-template-columns:minmax(168px,1fr) minmax(0,3fr)}
+  #inicio .inicio-participa{grid-column:2}
+  #inicio .inicio-tree{grid-row:1/3}
+}
+@media(max-width:620px){
+  body:has(#inicio.active) header .top{height:auto!important;min-height:0!important;flex-wrap:wrap!important}
+  body:has(#inicio.active) header .top .brand{flex-basis:100%!important}
+  body:has(#inicio.active) header .top .quick{justify-content:center!important}
+  #inicio .inicio-grid{grid-template-columns:minmax(0,1fr)}
+  #inicio .inicio-tree{grid-row:auto}
+  #inicio .inicio-scene{grid-row:1}
+  #inicio .inicio-participa{grid-column:1}
+}
+</style>
+</head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
 <section id="intro" aria-label="Bienvenida cinematográfica de Lluvia de Bendición .Com">
@@ -1883,28 +1986,70 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
 #afiliados .lldb-aff-close{position:absolute;top:12px;right:24px;color:white;background:#4b2615;border:1px solid #e7c58b;border-radius:50%;font-size:32px;width:48px;height:48px;cursor:pointer}
 #afiliados .lldb-aff-stage>button.lldb-aff-prev-v2{position:absolute!important;left:calc(21.7% - 48px)!important;top:57.85%!important;right:auto!important;bottom:auto!important;transform:translateY(-50%)!important;translate:none!important;width:48px!important;min-width:48px!important;max-width:48px!important;height:48px!important;min-height:48px!important;max-height:48px!important;padding:0!important;margin:0!important;border:0!important;border-radius:50%!important;background:transparent!important;color:transparent!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;cursor:pointer!important;z-index:9999!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:30px!important;line-height:1!important;box-shadow:none!important}#afiliados .lldb-aff-prev-v2:focus-visible{outline:2px solid #f6c97d;outline-offset:2px}</style><style id="lldb-affiliates-top-crop">#afiliados{overflow:hidden!important}#afiliados>img{transform:none!important;clip-path:inset(1% 0 0 0)!important;margin-top:-1%!important;margin-bottom:0!important;object-position:center top!important}</style></header>
 <main id="main-content"><section id="inicio" class="view active">
- <div class="lldb-home-layout">
-  <aside class="lldb-home-nav" aria-label="Menú de Inicio">
-   <button data-go="inicio" class="selected">⌂ Inicio</button>
-   <button data-go="nosotros">✦ Nosotros <span>›</span></button>
-   <button data-go="radio">▣ Radio</button>
-   <button data-go="especial">▤ Especialmente para ti <span>›</span></button>
-   <button data-go="media">▷ Media <span>›</span></button>
-   <button data-go="estudios">▤ Recursos <span>›</span></button>
-   <button data-go="especial" data-resource-link="peticiones">♧ Peticiones de Oración</button>
-   <button data-go="testimonios">◉ Testimonios <span>›</span></button>
-   <button data-go="donaciones">♥ Donaciones</button>
-   <button data-go="afiliados">♧ Afiliados</button>
-   <button data-go="contacto">✉ Contacto</button>
-   <p class="lldb-home-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
+ <div class="inicio-grid">
+  <aside class="inicio-tree" aria-label="Menú de Inicio">
+   <details>
+    <summary>Nosotros</summary>
+    <div class="inicio-branch">
+     <button type="button" data-go="nosotros">Ver Nosotros</button>
+     <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='mision']">Misión</button>
+     <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='vision']">Visión</button>
+     <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='creencias']">Creencias</button>
+    </div>
+   </details>
+   <button type="button" data-go="radio">Radio</button>
+   <details>
+    <summary>Especialmente para ti</summary>
+    <div class="inicio-branch">
+     <button type="button" data-go="especial">Ver todos</button>
+     <button type="button" data-go="especial" data-resource-link="oracion">Oración del día</button>
+     <button type="button" data-go="especial" data-resource-link="versiculo">Versículo del día</button>
+     <button type="button" data-go="especial" data-resource-link="memorizar">Versículo para memorizar</button>
+     <button type="button" data-go="especial" data-resource-link="devocional">Devocional de la semana</button>
+     <button type="button" data-go="especial" data-resource-link="estudios">Estudios bíblicos</button>
+     <button type="button" data-go="especial" data-resource-link="sermones">Sermones</button>
+    </div>
+   </details>
+   <details>
+    <summary>Media</summary>
+    <div class="inicio-branch">
+     <button type="button" data-go="media">Ver Media</button>
+     <button type="button" data-go="media" data-home-target="#media [data-panel='video-room']">Videos</button>
+     <button type="button" data-go="media" data-home-target="#media [data-panel='wall-room']">Wallpapers</button>
+    </div>
+   </details>
+   <details>
+    <summary>Recursos</summary>
+    <div class="inicio-branch">
+     <button type="button" data-go="estudios">Biblia y concordancia</button>
+    </div>
+   </details>
+   <button type="button" data-go="contacto" data-home-focus="#contacto [data-form='prayer'] input">Peticiones de Oración</button>
+   <button type="button" data-go="testimonios">Testimonios</button>
+   <button type="button" data-go="donaciones">Donaciones</button>
+   <button type="button" data-go="afiliados">Afiliados</button>
+   <button type="button" data-go="contacto">Contacto</button>
+   <p class="inicio-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
   </aside>
-  <div class="lldb-home-art lldb-approved-scene" aria-label="Escena oficial aprobada de Lluvia de Bendición"><img src="/assets/escena-inicio.png" alt="Logo oficial de Lluvia de Bendición emergiendo de una pared en una oficina con Biblia abierta y paisaje de tormenta" decoding="async" fetchpriority="high"></div>
-  <aside class="lldb-home-side" aria-label="Participa con Lluvia de Bendición">
-   <article><h2>Apoya nuestro ministerio</h2><div class="lldb-giving-heart lldb-photo-icon"><img src="/assets/corazon-web.jpg" alt="Corazón de acero cepillado con llave acercándose a la cerradura" loading="lazy"></div><button data-go="donaciones">Quiero apoyar ♥</button></article>
-   <article><div class="lldb-partnership-art lldb-photo-icon"><img src="/assets/afiliados-omar.jpg" alt="Invitación a participar como afiliado de Lluvia de Bendición" loading="lazy"></div><button data-go="afiliados">Conoce cómo participar</button></article>
-   <article class="lldb-home-seed"><div class="lldb-side-icon lldb-seed-photo"><img src="/assets/sembrando-nino.jpg" alt="Niño arrodillado sembrando una planta" loading="lazy"></div><p>Sembrando hoy para un mejor mañana.</p></article>
+  <div class="inicio-scene">
+   <img src="/assets/escena-inicio.png" alt="Logo oficial de Lluvia de Bendición en una oficina con una Biblia abierta y un paisaje de tormenta" decoding="async" fetchpriority="high">
+  </div>
+  <aside class="inicio-participa" aria-label="Participa con Lluvia de Bendición">
+   <article class="inicio-card">
+    <h2>Apoya nuestro ministerio</h2>
+    <img src="/assets/corazon-web.jpg" alt="Corazón de acero con una llave" loading="lazy">
+    <button type="button" data-go="donaciones">Quiero apoyar ♥</button>
+   </article>
+   <article class="inicio-card">
+    <h2>Conoce cómo participar de nuestro programa</h2>
+    <img src="/assets/afiliados-omar.jpg" alt="Omar de Lluvia de Bendición" loading="lazy">
+    <button type="button" data-go="afiliados">Afiliados</button>
+   </article>
+   <figure class="inicio-seed">
+    <img src="/assets/sembrando-nino.jpg" alt="Niño arrodillado sembrando una planta" loading="lazy">
+    <figcaption>Sembrando hoy para un mejor mañana.</figcaption>
+   </figure>
   </aside>
-  <div class="lldb-home-features"><button data-go="especial" data-resource-link="versiculo">▣ <strong>PALABRA</strong><small>Mensajes que edifican tu vida.</small></button><button data-go="radio">♫ <strong>MÚSICA</strong><small>Alabanza que transforma.</small></button><button data-go="testimonios">♧ <strong>ESPERANZA</strong><small>Una comunidad para ti.</small></button><button data-go="especial">♥ <strong>PARA TU VIDA</strong><small>Recursos que te inspiran.</small></button></div>
  </div>
 </section>
 <section id="nosotros" class="view"><h2 class="lldb-nosotros-title-fixed"><span class="lldb-nosotros-title-gold" style="display:inline-block!important;font-family:Georgia,serif!important;font-size:46px!important;font-weight:900!important;line-height:1.18!important;color:#eac170!important;-webkit-text-fill-color:transparent!important;background:linear-gradient(180deg,#fff7df 0%,#f9d989 46%,#b77c24 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;filter:drop-shadow(0 2px 2px #29190b)!important;">Nosotros</span></h2><p class="lldb-nosotros-intro">Aquí encontrarás nuestra misión, visión y creencias.</p><div class="lldb-nosotros-design"><div class="lldb-nosotros-tiles"><div class="lldb-nosotros-entry"><button type="button" class="lldb-nosotros-tile" data-nosotros-choice="mision" aria-controls="about-panel" aria-expanded="false"><img src="/assets/mision-referencia.jpg" alt="" loading="lazy"><span class="lldb-nosotros-heading"><strong class="lldb-gold-title">Misión</strong></span><span class="lldb-nosotros-cta">Ver nuestra misión</span></button></div><div class="lldb-nosotros-entry"><button type="button" class="lldb-nosotros-tile" data-nosotros-choice="vision" aria-controls="about-panel" aria-expanded="false"><img src="/assets/vision-referencia.jpg" alt="" loading="lazy"><span class="lldb-nosotros-heading"><strong class="lldb-gold-title">Visión</strong></span><span class="lldb-nosotros-cta">Ver nuestra visión</span></button></div><div class="lldb-nosotros-entry"><button type="button" class="lldb-nosotros-tile" data-nosotros-choice="creencias" aria-controls="about-panel" aria-expanded="false"><img src="/assets/creencias-referencia.jpg" alt="" loading="lazy"><span class="lldb-nosotros-heading"><strong class="lldb-gold-title">Creencias</strong></span><span class="lldb-nosotros-cta">Ver nuestras creencias</span></button></div></div><aside class="lldb-nosotros-promos" aria-label="Apoya y participa"><div class="lldb-nosotros-promo"><h3>Apoya nuestro <em>ministerio</em></h3><p>Tu generosidad nos ayuda a seguir llevando un mensaje de esperanza a más personas.</p><button type="button" data-go="donaciones">Hacer una Donación</button></div><div class="lldb-nosotros-promo"><h3>Anúnciate <em>con nosotros</em></h3><p>Tu negocio puede ser parte de esta misión y llegar a más personas con un mensaje de valor.</p><button type="button" data-go="afiliados">Ver Afiliados</button></div><div class="lldb-nosotros-promo lldb-nosotros-seed"><img src="/assets/sembrando-nino.jpg" alt="Sembrando una planta" loading="lazy"><p>Sembrando hoy para un mejor mañana.</p></div></aside></div><div id="about-panel" class="card hidden" aria-live="polite"><button class="exit" id="about-close" aria-label="Cerrar contenido">×</button><h3 id="about-title"></h3><div id="about-body"></div></div><div class="lldb-about-source" data-about-source="mision" hidden><h3>✦ Misión</h3><p>Nuestra misión es compartir el evangelio de Jesucristo, llevando un mensaje de fe, amor, esperanza y salvación a personas de todas las edades y en cualquier lugar del mundo.</p><p>A través de la tecnología y los medios de comunicación, buscamos crear un espacio donde cada persona pueda encontrar inspiración, orientación espiritual y recursos que fortalezcan su relación con Dios.</p><p>Trabajamos con dedicación y amor, procurando que cada contenido que compartimos sea un instrumento de bendición y refleje nuestro compromiso de servir a Dios y al prójimo.</p></div><div class="lldb-about-source" data-about-source="vision" hidden><h3>☀ Visión</h3><p>Nuestra visión es transmitir que vivir conforme a la voluntad de Dios y seguir el camino del cristianismo no representa una carga, sino una vida llena de propósito, esperanza y bendiciones, cuyos frutos podemos experimentar tanto a corto como a largo plazo, teniendo siempre presente nuestra meta más importante: la salvación y vida eterna en Cristo Jesús.</p><p>Lluvia de Bendición .Com nació en el corazón de nuestro equipo de trabajo, como resultado de la fe, la oración y el deseo de servir a Dios. Confiando en su dirección, trabajamos para que esta plataforma sea un instrumento que lleve su Palabra, su amor y su mensaje de esperanza a cada persona que podamos alcanzar.</p></div><div class="lldb-about-source" data-about-source="creencias" hidden><h3>♢ Nuestras Creencias</h3><p>Conoce los fundamentos de nuestra fe.</p><div class="lldb-beliefs"><section class="lldb-belief"><h4>1. La inspiración de las Escrituras</h4><p>La Biblia es la Palabra inspirada de Dios y nuestra guía de fe y conducta.</p></section><section class="lldb-belief"><h4>2. El único Dios verdadero</h4><p>Existe un solo Dios eterno, revelado como Padre, Hijo y Espíritu Santo.</p></section><section class="lldb-belief"><h4>3. La deidad del Señor Jesucristo</h4><p>Jesucristo es el Hijo eterno de Dios, verdadero Dios y verdadero hombre.</p></section><section class="lldb-belief"><h4>4. La caída del hombre</h4><p>La humanidad fue creada buena, pero el pecado produjo separación de Dios.</p></section><section class="lldb-belief"><h4>5. La salvación del hombre</h4><p>Recibimos salvación por la gracia de Dios, mediante la fe en Jesucristo.</p></section><section class="lldb-belief"><h4>6. Las ordenanzas de la Iglesia</h4><p>Reconocemos el bautismo en agua y la Santa Cena.</p></section><section class="lldb-belief"><h4>7. El bautismo en el Espíritu Santo</h4><p>Dios capacita a los creyentes con poder espiritual para servir y testificar.</p></section><section class="lldb-belief"><h4>8. La evidencia física inicial</h4><p>Hablar en otras lenguas es la evidencia física inicial del bautismo en el Espíritu Santo.</p></section><section class="lldb-belief"><h4>9. La santificación</h4><p>Es el proceso de vivir apartados del pecado y dedicados a Dios.</p></section><section class="lldb-belief"><h4>10. La Iglesia y su misión</h4><p>La Iglesia es el cuerpo de Cristo, llamado a anunciar el evangelio y servir.</p></section><section class="lldb-belief"><h4>11. El ministerio</h4><p>Dios llama y capacita a personas para enseñar, pastorear y edificar la Iglesia.</p></section><section class="lldb-belief"><h4>12. La sanidad divina</h4><p>Creemos que Dios tiene poder para sanar y que podemos acudir a Él en oración.</p></section><section class="lldb-belief"><h4>13. La esperanza bienaventurada</h4><p>Esperamos el regreso de Jesucristo y la resurrección de los creyentes.</p></section><section class="lldb-belief"><h4>14. El reino milenario de Cristo</h4><p>Creemos en el reinado futuro de Jesucristo.</p></section><section class="lldb-belief"><h4>15. El juicio final</h4><p>Dios juzgará con justicia a toda la humanidad.</p></section><section class="lldb-belief"><h4>16. Los cielos nuevos y la tierra nueva</h4><p>Esperamos la restauración final de todas las cosas conforme a las promesas de Dios.</p></section></div></div></section>
@@ -1941,6 +2086,12 @@ const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElem
 const views=[...document.querySelectorAll('.view')];function showView(id,push=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);if(target.id==='nosotros'||target.id==='especial'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);if(b.dataset.subview){document.querySelector('[data-about="'+b.dataset.subview+'"]')?.click()}if(b.dataset.resourceLink){document.querySelector('[data-resource="'+b.dataset.resourceLink+'"]')?.click()}if(b.dataset.panel){document.getElementById(b.dataset.panel)?.classList.remove('hidden')}mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
+document.querySelectorAll('#inicio [data-home-target]').forEach(button=>{
+ button.addEventListener('click',()=>document.querySelector(button.dataset.homeTarget)?.click());
+});
+document.querySelector('#inicio [data-home-focus]').addEventListener('click',event=>{
+ document.querySelector(event.currentTarget.dataset.homeFocus)?.focus();
+});
 const tuner=document.getElementById('tuner'),radioStage=document.getElementById('radio-stage');tuner?.addEventListener('click',()=>{radioStage.classList.remove('tuning');void radioStage.offsetWidth;radioStage.classList.add('tuning')});
 document.querySelectorAll('.radio-home').forEach(b=>b.onclick=()=>showView('inicio'));
 document.querySelectorAll('.radio-exit').forEach(b=>b.onclick=()=>showView('inicio'));
