@@ -1761,24 +1761,31 @@ body:has(#inicio.active) header #main-nav,
 body:has(#inicio.active) header #menu-toggle{display:none!important}
 body:has(#inicio.active) header .top .brand>.lldb-official-header-logo{display:block!important}
 body:has(#inicio.active) header .top .brand .lldb-header-title{white-space:normal}
+body:not(:has(#inicio.active)) header .quick [data-social="tiktok"]{display:none!important}
+body:has(#inicio.active) header .quick .lldb-tt{background:#151a24;text-shadow:-1px 0 #25f4ee,1px 1px #fe2c55!important}
+body:has(#inicio.active) header .quick [data-social="tiktok"][aria-disabled="true"]{cursor:default}
 #inicio .inicio-grid{
   display:grid;
-  grid-template-columns:minmax(168px, .85fr) minmax(0, 2.8fr) minmax(296px, 1.75fr);
+  grid-template-columns:clamp(174px,16vw,230px) minmax(0,1fr) clamp(180px,18vw,248px);
   align-items:start;
-  gap:clamp(12px, 1.4vw, 24px);
-  max-width:1680px;
+  gap:clamp(12px,1.5vw,22px);
+  max-width:1540px;
   margin:auto;
-  padding:clamp(12px, 2vw, 30px);
+  padding:clamp(12px,1.8vw,26px);
 }
 #inicio .inicio-tree,
 #inicio .inicio-scene,
 #inicio .inicio-card,
 #inicio .inicio-seed{
   border:1px solid var(--line);
-  border-radius:10px;
+  border-radius:9px;
   background:#081522;
+  box-shadow:0 8px 22px #0004;
 }
-#inicio .inicio-tree{padding:9px}
+#inicio .inicio-tree{
+  padding:9px;
+  background:linear-gradient(155deg,#132437,#081522 60%);
+}
 #inicio .inicio-tree button,
 #inicio .inicio-tree summary{
   display:block;
@@ -1806,52 +1813,71 @@ body:has(#inicio.active) header .top .brand .lldb-header-title{white-space:norma
   font:italic 14px/1.4 Georgia,serif;
 }
 #inicio .inicio-verse small{display:block;margin-top:3px}
-#inicio .inicio-scene{overflow:hidden}
-#inicio .inicio-scene img{display:block;width:100%;height:auto}
-#inicio .inicio-participa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-#inicio .inicio-card{
-  position:relative;
+#inicio .inicio-scene{aspect-ratio:1.36;overflow:hidden}
+#inicio .inicio-scene img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:26% top;
+}
+#inicio .inicio-participa{
   display:grid;
-  grid-template-rows:auto minmax(0,1fr) auto;
+  grid-template-columns:minmax(0,1fr);
+  gap:12px;
+}
+#inicio .inicio-card{
+  display:grid;
+  grid-template-rows:minmax(0,1fr) 3.25rem 2.25rem;
   aspect-ratio:1;
   min-width:0;
   overflow:hidden;
+  padding:7px;
+  background:linear-gradient(155deg,#192b3c,#081522 62%);
   text-align:center;
 }
 #inicio .inicio-card h2{
+  display:grid;
+  place-items:center;
   margin:0;
-  padding:6px 5px;
-  background:#0e2031;
-  color:#fff0cc;
-  font:700 clamp(13px,1.1vw,19px)/1.12 Georgia,serif;
+  padding:3px 5px;
+  color:#f7e1b5;
+  font:700 clamp(16px,1.25vw,19px)/1.05 "Cormorant Garamond",Georgia,serif;
 }
-#inicio .inicio-card img{width:100%;height:100%;min-height:0;display:block;object-fit:cover}
-#inicio .inicio-card img[src="/assets/afiliados-omar.jpg"]{object-position:center 30%}
+#inicio .inicio-card img{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+  border-radius:5px;
+  object-fit:cover;
+  object-position:center 34%;
+}
 #inicio .inicio-card button{
-  border:0;
-  border-top:1px solid var(--line);
-  padding:7px 4px;
-  background:#efd391;
+  border:1px solid #bb9657;
+  border-radius:5px;
+  padding:5px;
+  background:linear-gradient(#f5dfab,#cfab67);
   color:#241608;
   font-size:13px;
   font-weight:700;
   cursor:pointer;
 }
 #inicio .inicio-card button:hover{background:#fff0c0}
-#inicio .inicio-seed{grid-column:1/-1;margin:0;overflow:hidden;text-align:center}
-#inicio .inicio-seed img{display:block;width:100%;max-height:260px;object-fit:cover;object-position:center 45%}
+#inicio .inicio-seed{margin:0;overflow:hidden;text-align:center}
+#inicio .inicio-seed img{display:block;width:100%;aspect-ratio:1.7;object-fit:cover;object-position:center 45%}
 #inicio .inicio-seed figcaption{padding:8px;color:#f0dbad;font:italic 15px Georgia,serif}
 #inicio button:focus-visible,
 #inicio summary:focus-visible{outline:2px solid #fff3bf;outline-offset:-3px}
-@media(max-width:1050px){
-  #inicio .inicio-grid{grid-template-columns:minmax(168px,1fr) minmax(0,3fr)}
-  #inicio .inicio-participa{grid-column:2}
+@media(max-width:880px){
+  body:has(#inicio.active) header .top{height:auto!important;min-height:0!important;flex-wrap:wrap!important}
+  body:has(#inicio.active) header .top .brand{flex-basis:100%!important}
+  body:has(#inicio.active) header .top .quick{justify-content:center!important;flex-wrap:wrap!important}
+  #inicio .inicio-grid{grid-template-columns:minmax(165px,1fr) minmax(0,3fr)}
+  #inicio .inicio-participa{grid-column:2;width:min(100%,310px);justify-self:center}
   #inicio .inicio-tree{grid-row:1/3}
 }
 @media(max-width:620px){
-  body:has(#inicio.active) header .top{height:auto!important;min-height:0!important;flex-wrap:wrap!important}
-  body:has(#inicio.active) header .top .brand{flex-basis:100%!important}
-  body:has(#inicio.active) header .top .quick{justify-content:center!important}
   #inicio .inicio-grid{grid-template-columns:minmax(0,1fr)}
   #inicio .inicio-tree{grid-row:auto}
   #inicio .inicio-scene{grid-row:1}
@@ -1872,7 +1898,7 @@ body:has(#inicio.active) header .top .brand .lldb-header-title{white-space:norma
 </section>
 <header>
  <div class="top"><div class="brand"><img class="lldb-official-header-logo" src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"><span class="lldb-header-title">Lluvia de Bendición .Com<small>Porque queremos que el Señor llueva en ti.</small></span></div><div class="quick" aria-label="Accesos rápidos">
-  <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="lldb-radio-label">Radio</span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram"><span class="lldb-social-icon lldb-ig" aria-hidden="true">◎</span><small>Instagram</small></a><a class="social social-link" data-social="facebook"><span class="lldb-social-icon lldb-fb" aria-hidden="true">f</span><small>Facebook</small></a><a class="social social-link" data-social="youtube"><span class="lldb-social-icon lldb-yt" aria-hidden="true">▶</span><small>YouTube</small></a><button class="install" id="install" aria-label="Instalar aplicación LLDB"><img class="lldb-install-logo" src="/assets/logo-oficial-definitivo.png" alt="" aria-hidden="true"><span>Instalar LLDB</span></button>
+  <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="lldb-radio-label">Radio</span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram"><span class="lldb-social-icon lldb-ig" aria-hidden="true">◎</span><small>Instagram</small></a><a class="social social-link" data-social="facebook"><span class="lldb-social-icon lldb-fb" aria-hidden="true">f</span><small>Facebook</small></a><a class="social social-link" data-social="youtube"><span class="lldb-social-icon lldb-yt" aria-hidden="true">▶</span><small>YouTube</small></a><a class="social social-link" data-social="tiktok" role="link" aria-disabled="true" title="Enlace oficial de TikTok pendiente"><span class="lldb-social-icon lldb-tt" aria-hidden="true">♪</span><small>TikTok</small></a><button class="install" id="install" aria-label="Instalar aplicación LLDB"><img class="lldb-install-logo" src="/assets/logo-oficial-definitivo.png" alt="" aria-hidden="true"><span>Instalar LLDB</span></button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
  <nav id="main-nav" aria-label="Volver al inicio"><button data-go="inicio">⌂ Inicio</button></nav>
@@ -2036,13 +2062,13 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   </div>
   <aside class="inicio-participa" aria-label="Participa con Lluvia de Bendición">
    <article class="inicio-card">
-    <h2>Apoya nuestro ministerio</h2>
     <img src="/assets/corazon-web.jpg" alt="Corazón de acero con una llave" loading="lazy">
+    <h2>Apoya nuestro ministerio</h2>
     <button type="button" data-go="donaciones">Quiero apoyar ♥</button>
    </article>
    <article class="inicio-card">
-    <h2>Conoce cómo participar de nuestro programa</h2>
     <img src="/assets/afiliados-omar.jpg" alt="Omar de Lluvia de Bendición" loading="lazy">
+    <h2>Conoce cómo participar de nuestro programa</h2>
     <button type="button" data-go="afiliados">Afiliados</button>
    </article>
    <figure class="inicio-seed">
@@ -2120,7 +2146,7 @@ const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=
 document.getElementById('bible-search-btn')?.addEventListener('click',()=>{const q=document.getElementById('bible-query').value.trim();document.getElementById('bible-status').textContent=q?'Búsqueda preparada para “'+q+'”. Falta conectar la fuente bíblica oficial.':'Escribe una palabra, tema o referencia.'});
 document.querySelectorAll('[data-testimony]').forEach(b=>b.onclick=()=>{document.getElementById('testimony-title').textContent='Testimonios LLDB';document.getElementById('testimony-meta').textContent='Contenido aprobado pendiente';document.getElementById('testimony-body').textContent='El carrusel está preparado para mostrar testimonios oficiales sin inventar información.'});
 let formsConfig={};fetch('/api/forms-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>formsConfig=c).catch(()=>{});document.querySelectorAll('.lldb-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const status=f.querySelector('.form-status'),cfg=formsConfig[f.dataset.form]||{};status.textContent=cfg.destinationConfigured?'Destino configurado; falta implementar el envío seguro del formulario.':'Formulario preparado. Falta conectar el destino oficial para enviar.'}));
-fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer'}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
+fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.removeAttribute('aria-disabled');a.removeAttribute('title')}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
 fetch('/api/donations-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.donation-link').forEach(b=>{const m=c.methods?.[b.dataset.method];if(m?.enabled&&m.url){b.disabled=false;b.textContent='Abrir';b.onclick=()=>window.open(m.url,'_blank','noopener')}})}).catch(()=>{});
 let deferred;document.querySelectorAll('.resource,.about').forEach(x=>{x.tabIndex=0;x.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();x.click()}})});
 const installBtn=document.getElementById('install');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;installBtn.classList.add('install-ready')});window.addEventListener('appinstalled',()=>{installBtn.textContent='LLDB instalada';installBtn.disabled=true});installBtn.onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;installBtn.classList.remove('install-ready')}else alert('En Android/Chrome abre el menú del navegador y busca “Instalar app” o “Añadir a pantalla principal”.')};
