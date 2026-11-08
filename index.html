@@ -1759,121 +1759,191 @@ body header .top .quick #quick-radio .mini-radio b{right:5px!important;top:21px!
 <style id="lldb-inicio-comparacion">
 body:has(#inicio.active) header #main-nav,
 body:has(#inicio.active) header #menu-toggle{display:none!important}
-body:has(#inicio.active) header .top .brand>.lldb-official-header-logo{display:block!important}
-body:has(#inicio.active) header .top .brand .lldb-header-title{white-space:normal}
+body:has(#inicio.active) header{
+  background:linear-gradient(115deg,#010308,#061426 58%,#010308)!important;
+  border-bottom:2px solid #56c2ff!important;
+  border-radius:0 0 26px 26px;
+  box-shadow:0 2px 5px #00a4ff,0 8px 25px #005cff70;
+}
+body:has(#inicio.active) header .top .brand>.lldb-official-header-logo{
+  display:block!important;
+  filter:drop-shadow(0 0 10px #dda74090);
+}
+body:has(#inicio.active) header .top .brand .lldb-header-title{
+  color:#ffe099!important;
+  white-space:normal;
+  text-shadow:0 2px 1px #59370e,0 0 15px #ffcb5e35;
+}
+body:has(#inicio.active) header .top .brand .lldb-header-title small{color:#fff6e5!important}
 body:not(:has(#inicio.active)) header .quick [data-social="tiktok"]{display:none!important}
-body:has(#inicio.active) header .quick .lldb-tt{background:#151a24;text-shadow:-1px 0 #25f4ee,1px 1px #fe2c55!important}
-body:has(#inicio.active) header .quick [data-social="tiktok"][aria-disabled="true"]{cursor:default}
+body:has(#inicio.active) header .quick [data-social="tiktok"]{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:0;
+  border:0;
+  background:none;
+  color:#f4ead9;
+  opacity:1;
+}
+body:has(#inicio.active) header .quick .lldb-tt{background:#11131b;text-shadow:-2px 0 #25f4ee,2px 1px #fe2c55!important}
 #inicio .inicio-grid{
+  --home-gold:#e8b957;
+  --home-frame:inset 0 1px 0 #ffe6ac80,0 0 0 1px #5b381a,0 6px 17px #0008;
   display:grid;
-  grid-template-columns:clamp(174px,16vw,230px) minmax(0,1fr) clamp(180px,18vw,248px);
+  grid-template-columns:clamp(176px,18vw,270px) minmax(0,1fr) clamp(190px,19vw,270px);
   align-items:start;
-  gap:clamp(12px,1.5vw,22px);
-  max-width:1540px;
+  gap:clamp(12px,1.35vw,22px);
+  max-width:1640px;
   margin:auto;
-  padding:clamp(12px,1.8vw,26px);
+  padding:clamp(15px,1.8vw,27px);
+  background:radial-gradient(ellipse at 50% 0,#071a32,#02060b 70%);
 }
 #inicio .inicio-tree,
-#inicio .inicio-scene,
 #inicio .inicio-card,
 #inicio .inicio-seed{
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:#081522;
-  box-shadow:0 8px 22px #0004;
+  border:1px solid var(--home-gold);
+  border-radius:14px;
+  background:#030a13;
+  box-shadow:var(--home-frame);
 }
 #inicio .inicio-tree{
-  padding:9px;
-  background:linear-gradient(155deg,#132437,#081522 60%);
+  display:grid;
+  gap:5px;
+  padding:7px;
+  background:linear-gradient(150deg,#161821,#03080e 45%);
 }
 #inicio .inicio-tree button,
 #inicio .inicio-tree summary{
-  display:block;
+  display:grid;
+  grid-template-columns:1.45em minmax(0,1fr);
+  align-items:center;
+  gap:.45em;
   width:100%;
-  border:0;
-  border-radius:5px;
-  padding:8px 9px;
-  background:transparent;
-  color:var(--warm);
+  min-height:42px;
+  border:1px solid #a98243;
+  border-radius:8px;
+  padding:5px 9px;
+  background:linear-gradient(#152235 0%,#02060b 53%,#0c1727 100%);
+  box-shadow:inset 0 1px 3px #ffdfa43b;
+  color:#fff6e6;
   text-align:left;
-  font-size:14px;
-  line-height:1.3;
+  font:700 clamp(16px,1.5vw,23px)/1.05 "Cormorant Garamond",Georgia,serif;
   cursor:pointer;
 }
-#inicio .inicio-tree summary{display:list-item;color:#f3d495}
+#inicio .inicio-tree summary{grid-template-columns:1.45em minmax(0,1fr) auto;list-style:none}
+#inicio .inicio-tree summary::-webkit-details-marker{display:none}
+#inicio .inicio-tree summary::after{content:"";width:.34em;height:.34em;border-right:2px solid var(--home-gold);border-bottom:2px solid var(--home-gold);transform:rotate(45deg)}
+#inicio .inicio-tree details[open]>summary::after{transform:rotate(225deg)}
 #inicio .inicio-tree button:hover,
-#inicio .inicio-tree summary:hover{background:#172b3c}
-#inicio .inicio-branch{margin:0 0 5px 13px;padding-left:5px;border-left:1px solid var(--line)}
-#inicio .inicio-branch button{font-size:13px}
+#inicio .inicio-tree summary:hover{border-color:#ffdb86;background:linear-gradient(#124374,#051325 75%)}
+#inicio .inicio-icon{color:#ffd780;font:700 1.14em/1 system-ui,sans-serif;text-align:center;text-shadow:0 0 7px #ffc14755}
+#inicio .inicio-branch{display:grid;gap:3px;margin:5px 0 1px 15px;padding-left:7px;border-left:1px solid #a98243}
+#inicio .inicio-branch button{display:block;min-height:34px;font:500 13px/1.25 system-ui,sans-serif}
 #inicio .inicio-verse{
-  margin:9px 0 0;
-  padding:10px 9px 4px;
+  margin:3px 0 0;
+  padding:9px 6px 2px;
   border-top:1px solid var(--line);
-  color:#e6cf9d;
-  font:italic 14px/1.4 Georgia,serif;
+  color:#f0d39e;
+  font:italic 14px/1.3 Georgia,serif;
 }
 #inicio .inicio-verse small{display:block;margin-top:3px}
-#inicio .inicio-scene{aspect-ratio:1.36;overflow:hidden}
+#inicio .inicio-scene{
+  position:relative;
+  align-self:stretch;
+  min-height:0;
+  overflow:hidden;
+  border-radius:10px;
+  background:#030810;
+  box-shadow:0 14px 30px #0009;
+}
 #inicio .inicio-scene img{
+  position:absolute;
   display:block;
   width:100%;
   height:100%;
   object-fit:cover;
   object-position:26% top;
 }
-#inicio .inicio-participa{
-  display:grid;
-  grid-template-columns:minmax(0,1fr);
-  gap:12px;
-}
+#inicio .inicio-participa{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
 #inicio .inicio-card{
   display:grid;
-  grid-template-rows:minmax(0,1fr) 3.25rem 2.25rem;
+  grid-template-rows:minmax(0,1fr) 3.3rem 2rem;
   aspect-ratio:1;
   min-width:0;
   overflow:hidden;
-  padding:7px;
-  background:linear-gradient(155deg,#192b3c,#081522 62%);
+  padding:6px;
+  background:radial-gradient(ellipse at 50% 36%,#142a47,#030810 78%);
   text-align:center;
 }
 #inicio .inicio-card h2{
-  display:grid;
-  place-items:center;
+  align-content:center;
   margin:0;
-  padding:3px 5px;
-  color:#f7e1b5;
-  font:700 clamp(16px,1.25vw,19px)/1.05 "Cormorant Garamond",Georgia,serif;
+  padding:2px 5px;
+  color:#fff6e6;
+  font:700 clamp(17px,1.47vw,22px)/.97 "Cormorant Garamond",Georgia,serif;
+  text-shadow:0 2px 4px #000;
 }
+#inicio .inicio-card h2 strong{display:block;color:#ffda7d;font-size:1.1em}
 #inicio .inicio-card img{
   display:block;
   width:100%;
   height:100%;
   min-height:0;
-  border-radius:5px;
+  border-radius:8px 8px 3px 3px;
   object-fit:cover;
-  object-position:center 34%;
+  object-position:center 32%;
 }
 #inicio .inicio-card button{
-  border:1px solid #bb9657;
-  border-radius:5px;
-  padding:5px;
-  background:linear-gradient(#f5dfab,#cfab67);
-  color:#241608;
-  font-size:13px;
-  font-weight:700;
+  justify-self:center;
+  width:min(94%,220px);
+  border:1px solid #ffe3a0;
+  border-radius:999px;
+  padding:3px 6px;
+  background:linear-gradient(#fff2b9 0%,#ffcc4b 45%,#e99a17 90%);
+  box-shadow:inset 0 0 0 1px #9e5b1b70,0 2px 8px #0009;
+  color:#281603;
+  font:700 16px Georgia,serif;
   cursor:pointer;
 }
-#inicio .inicio-card button:hover{background:#fff0c0}
-#inicio .inicio-seed{margin:0;overflow:hidden;text-align:center}
-#inicio .inicio-seed img{display:block;width:100%;aspect-ratio:1.7;object-fit:cover;object-position:center 45%}
-#inicio .inicio-seed figcaption{padding:8px;color:#f0dbad;font:italic 15px Georgia,serif}
+#inicio .inicio-card button:hover{background:#ffe9a3}
+#inicio .inicio-seed{position:relative;margin:0;overflow:hidden;text-align:right}
+#inicio .inicio-seed img{display:block;width:100%;aspect-ratio:1.7;object-fit:cover;object-position:center 43%}
+#inicio .inicio-seed figcaption{
+  position:absolute;
+  inset:0;
+  display:grid;
+  align-content:end;
+  padding:9px 10px 8px 30%;
+  background:linear-gradient(transparent 33%,#010509ef 100%);
+  color:#fff6e6;
+  font:700 italic clamp(16px,1.5vw,22px)/1.02 Georgia,serif;
+  text-shadow:0 2px 4px #000;
+}
 #inicio button:focus-visible,
-#inicio summary:focus-visible{outline:2px solid #fff3bf;outline-offset:-3px}
-@media(max-width:880px){
+#inicio summary:focus-visible{outline:2px solid #a1e5ff;outline-offset:-3px}
+body:has(#inicio.active) footer{
+  max-width:none;
+  min-height:57px;
+  border-top:1px solid #be904a;
+  background:linear-gradient(#0b192c,#02060b 78%);
+  box-shadow:inset 0 2px 7px #00a3ff70;
+  color:#f4e3c7;
+  font:italic 16px Georgia,serif;
+}
+body:has(#inicio.active) footer #secret-admin-trigger{
+  margin-right:8px;
+  color:#ffd780;
+  font:700 italic 28px Georgia,serif;
+  text-shadow:0 1px 5px #e19a5166;
+}
+@media(max-width:900px){
   body:has(#inicio.active) header .top{height:auto!important;min-height:0!important;flex-wrap:wrap!important}
   body:has(#inicio.active) header .top .brand{flex-basis:100%!important}
   body:has(#inicio.active) header .top .quick{justify-content:center!important;flex-wrap:wrap!important}
-  #inicio .inicio-grid{grid-template-columns:minmax(165px,1fr) minmax(0,3fr)}
+  #inicio .inicio-grid{grid-template-columns:minmax(160px,1fr) minmax(0,2.8fr)}
+  #inicio .inicio-scene{aspect-ratio:1.32}
   #inicio .inicio-participa{grid-column:2;width:min(100%,310px);justify-self:center}
   #inicio .inicio-tree{grid-row:1/3}
 }
@@ -1898,7 +1968,7 @@ body:has(#inicio.active) header .quick [data-social="tiktok"][aria-disabled="tru
 </section>
 <header>
  <div class="top"><div class="brand"><img class="lldb-official-header-logo" src="/assets/logo-oficial-definitivo.png" alt="Logo oficial de Lluvia de Bendición .Com" decoding="async"><span class="lldb-header-title">Lluvia de Bendición .Com<small>Porque queremos que el Señor llueva en ti.</small></span></div><div class="quick" aria-label="Accesos rápidos">
-  <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="lldb-radio-label">Radio</span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram"><span class="lldb-social-icon lldb-ig" aria-hidden="true">◎</span><small>Instagram</small></a><a class="social social-link" data-social="facebook"><span class="lldb-social-icon lldb-fb" aria-hidden="true">f</span><small>Facebook</small></a><a class="social social-link" data-social="youtube"><span class="lldb-social-icon lldb-yt" aria-hidden="true">▶</span><small>YouTube</small></a><a class="social social-link" data-social="tiktok" role="link" aria-disabled="true" title="Enlace oficial de TikTok pendiente"><span class="lldb-social-icon lldb-tt" aria-hidden="true">♪</span><small>TikTok</small></a><button class="install" id="install" aria-label="Instalar aplicación LLDB"><img class="lldb-install-logo" src="/assets/logo-oficial-definitivo.png" alt="" aria-hidden="true"><span>Instalar LLDB</span></button>
+  <button class="radio-shortcut" id="quick-radio" data-go="radio" title="Radio Interactiva" aria-label="Abrir Radio Interactiva"><span class="mini-radio" aria-hidden="true"><i></i><b></b></span><span class="lldb-radio-label">Radio</span><span class="sr-only">Radio</span></button><a class="social social-link" data-social="instagram"><span class="lldb-social-icon lldb-ig" aria-hidden="true">◎</span><small>Instagram</small></a><a class="social social-link" data-social="facebook"><span class="lldb-social-icon lldb-fb" aria-hidden="true">f</span><small>Facebook</small></a><a class="social social-link" data-social="youtube"><span class="lldb-social-icon lldb-yt" aria-hidden="true">▶</span><small>YouTube</small></a><button type="button" class="social social-link" data-social="tiktok" disabled><span class="lldb-social-icon lldb-tt" aria-hidden="true">♪</span><small>TikTok</small></button><button class="install" id="install" aria-label="Instalar aplicación LLDB"><img class="lldb-install-logo" src="/assets/logo-oficial-definitivo.png" alt="" aria-hidden="true"><span>Instalar LLDB</span></button>
  </div></div>
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
  <nav id="main-nav" aria-label="Volver al inicio"><button data-go="inicio">⌂ Inicio</button></nav>
@@ -2015,7 +2085,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
  <div class="inicio-grid">
   <aside class="inicio-tree" aria-label="Menú de Inicio">
    <details>
-    <summary>Nosotros</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">♣</span>Nosotros</summary>
     <div class="inicio-branch">
      <button type="button" data-go="nosotros">Ver Nosotros</button>
      <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='mision']">Misión</button>
@@ -2023,9 +2093,9 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
      <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='creencias']">Creencias</button>
     </div>
    </details>
-   <button type="button" data-go="radio">Radio</button>
+   <button type="button" data-go="radio"><span class="inicio-icon" aria-hidden="true">♫</span>Radio</button>
    <details>
-    <summary>Especialmente para ti</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">▤</span>Especialmente para ti</summary>
     <div class="inicio-branch">
      <button type="button" data-go="especial">Ver todos</button>
      <button type="button" data-go="especial" data-resource-link="oracion">Oración del día</button>
@@ -2037,7 +2107,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
     </div>
    </details>
    <details>
-    <summary>Media</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">▶</span>Media</summary>
     <div class="inicio-branch">
      <button type="button" data-go="media">Ver Media</button>
      <button type="button" data-go="media" data-home-target="#media [data-panel='video-room']">Videos</button>
@@ -2045,16 +2115,16 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
     </div>
    </details>
    <details>
-    <summary>Recursos</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">▥</span>Recursos</summary>
     <div class="inicio-branch">
      <button type="button" data-go="estudios">Biblia y concordancia</button>
     </div>
    </details>
-   <button type="button" data-go="contacto" data-home-focus="#contacto [data-form='prayer'] input">Peticiones de Oración</button>
-   <button type="button" data-go="testimonios">Testimonios</button>
-   <button type="button" data-go="donaciones">Donaciones</button>
-   <button type="button" data-go="afiliados">Afiliados</button>
-   <button type="button" data-go="contacto">Contacto</button>
+   <button type="button" data-go="contacto" data-home-focus="#contacto [data-form='prayer'] input"><span class="inicio-icon" aria-hidden="true">✦</span>Peticiones de Oración</button>
+   <button type="button" data-go="testimonios"><span class="inicio-icon" aria-hidden="true">☷</span>Testimonios</button>
+   <button type="button" data-go="donaciones"><span class="inicio-icon" aria-hidden="true">♥</span>Donaciones</button>
+   <button type="button" data-go="afiliados"><span class="inicio-icon" aria-hidden="true">◇</span>Afiliados</button>
+   <button type="button" data-go="contacto"><span class="inicio-icon" aria-hidden="true">✉</span>Contacto</button>
    <p class="inicio-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
   </aside>
   <div class="inicio-scene">
@@ -2063,12 +2133,12 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   <aside class="inicio-participa" aria-label="Participa con Lluvia de Bendición">
    <article class="inicio-card">
     <img src="/assets/corazon-web.jpg" alt="Corazón de acero con una llave" loading="lazy">
-    <h2>Apoya nuestro ministerio</h2>
+    <h2>Apoya nuestro <strong>ministerio</strong></h2>
     <button type="button" data-go="donaciones">Quiero apoyar ♥</button>
    </article>
    <article class="inicio-card">
     <img src="/assets/afiliados-omar.jpg" alt="Omar de Lluvia de Bendición" loading="lazy">
-    <h2>Conoce cómo participar de nuestro programa</h2>
+    <h2>Conoce cómo participar de nuestro <strong>programa</strong></h2>
     <button type="button" data-go="afiliados">Afiliados</button>
    </article>
    <figure class="inicio-seed">
@@ -2146,7 +2216,7 @@ const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=
 document.getElementById('bible-search-btn')?.addEventListener('click',()=>{const q=document.getElementById('bible-query').value.trim();document.getElementById('bible-status').textContent=q?'Búsqueda preparada para “'+q+'”. Falta conectar la fuente bíblica oficial.':'Escribe una palabra, tema o referencia.'});
 document.querySelectorAll('[data-testimony]').forEach(b=>b.onclick=()=>{document.getElementById('testimony-title').textContent='Testimonios LLDB';document.getElementById('testimony-meta').textContent='Contenido aprobado pendiente';document.getElementById('testimony-body').textContent='El carrusel está preparado para mostrar testimonios oficiales sin inventar información.'});
 let formsConfig={};fetch('/api/forms-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>formsConfig=c).catch(()=>{});document.querySelectorAll('.lldb-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const status=f.querySelector('.form-status'),cfg=formsConfig[f.dataset.form]||{};status.textContent=cfg.destinationConfigured?'Destino configurado; falta implementar el envío seguro del formulario.':'Formulario preparado. Falta conectar el destino oficial para enviar.'}));
-fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.removeAttribute('aria-disabled');a.removeAttribute('title')}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
+fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('a.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.removeAttribute('aria-disabled');a.removeAttribute('title')}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
 fetch('/api/donations-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.donation-link').forEach(b=>{const m=c.methods?.[b.dataset.method];if(m?.enabled&&m.url){b.disabled=false;b.textContent='Abrir';b.onclick=()=>window.open(m.url,'_blank','noopener')}})}).catch(()=>{});
 let deferred;document.querySelectorAll('.resource,.about').forEach(x=>{x.tabIndex=0;x.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();x.click()}})});
 const installBtn=document.getElementById('install');window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;installBtn.classList.add('install-ready')});window.addEventListener('appinstalled',()=>{installBtn.textContent='LLDB instalada';installBtn.disabled=true});installBtn.onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;installBtn.classList.remove('install-ready')}else alert('En Android/Chrome abre el menú del navegador y busca “Instalar app” o “Añadir a pantalla principal”.')};
