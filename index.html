@@ -1965,38 +1965,52 @@ body:has(#inicio.active) footer #secret-admin-trigger{
   box-sizing:border-box;
   width:16.6%;
   min-height:66.5%;
-  padding:clamp(11px,1.35vw,22px);
-  border:1px solid #a88045;
-  border-radius:12px;
-  background:linear-gradient(150deg,#14243a,#060e1b 76%);
-  color:#fff8eb;
-  font:clamp(14px,1.1vw,17px)/1.45 system-ui,sans-serif;
+  padding:clamp(13px,1.5vw,24px);
+  border:2px solid transparent;
+  border-radius:13px;
+  background:
+    radial-gradient(ellipse at 7% 0%,#534027 0%,transparent 43%) padding-box,
+    radial-gradient(ellipse at 105% 55%,#1b3047 0%,transparent 66%) padding-box,
+    linear-gradient(145deg,#17263b,#070e19 69%,#1b1514) padding-box,
+    linear-gradient(145deg,#ffdf9b 0%,#be874a 14%,#603d24 40%,#ad773e 69%,#ffe3a4 87%,#79502b) border-box;
+  box-shadow:inset 0 0 0 1px #fff3c136,inset 0 0 22px #0008,0 8px 18px #000a;
+  color:#fff6e5;
+  font:clamp(15px,1.15vw,18px)/1.4 Georgia,serif;
 }
 #donaciones .lldb-donation-guide h2{
-  margin:0 0 .75em;
-  color:#ffe0a0;
-  font:700 clamp(21px,2vw,30px)/1.08 Georgia,serif;
+  margin:0 0 .5em;
+  color:#ffe2a1;
+  font:700 clamp(25px,2.35vw,39px)/.98 "Cormorant Garamond",Georgia,serif;
+  text-shadow:0 2px 2px #130b06,0 0 14px #ed9c373d;
 }
 #donaciones .lldb-donation-guide h3{
-  margin:.85em 0 .25em;
-  color:#f4d599;
-  font:700 1em/1.25 system-ui,sans-serif;
+  margin:.7em 0 .13em;
+  color:#f8d899;
+  font:700 clamp(19px,1.55vw,25px)/1.08 "Cormorant Garamond",Georgia,serif;
 }
 #donaciones .lldb-donation-guide p{margin:0}
 #donaciones .lldb-donation-guide blockquote{
-  margin:1em 0 0;
-  padding-top:.7em;
-  border-top:1px solid #a88045;
+  margin:.8em 0 0;
+  padding:.65em 0 0;
+  background:linear-gradient(90deg,#c59658,#e5b96e83,transparent) top left / 100% 1px no-repeat;
+  color:#ffe8bd;
+  font-style:italic;
 }
-#donaciones .lldb-donation-guide cite{display:block;margin-top:.3em;font-size:.88em;color:#f4d599}
+#donaciones .lldb-donation-guide cite{
+  display:block;
+  margin-top:.25em;
+  color:#f2ca8d;
+  font-size:.88em;
+  font-style:normal;
+}
 @media(max-width:950px){
   #donaciones .lldb-donation-guide{
     position:static;
     width:auto;
     min-height:0;
     margin:12px;
-    padding:16px;
-    font-size:16px;
+    padding:18px;
+    font-size:17px;
   }
   #donaciones .lldb-donation-board{width:122%;margin-left:-22%}
 }
@@ -2203,7 +2217,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
 <aside class="lldb-donation-guide" aria-labelledby="lldb-donation-guide-title">
   <h2 id="lldb-donation-guide-title">Apoya la visión</h2>
   <h3>¿Por qué donar?</h3>
-  <p>Tu apoyo nos ayuda a compartir la Palabra de Dios a través de la radio, los medios y la comunidad.</p>
+  <p>Tu apoyo lleva la Palabra de Dios por la radio, los medios y la comunidad.</p>
   <h3>Formas de donar</h3>
   <p>Puedes usar Zelle, Cash App, Venmo, PayPal o una tarjeta.</p>
   <blockquote>
