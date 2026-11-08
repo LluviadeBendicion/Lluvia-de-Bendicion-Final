@@ -1790,9 +1790,11 @@ body:has(#inicio.active) header .quick [data-social="tiktok"]{
 body:has(#inicio.active) header .quick .lldb-tt{background:#11131b;text-shadow:-2px 0 #25f4ee,2px 1px #fe2c55!important}
 #inicio .inicio-grid{
   --home-gold:#e8b957;
+  --home-side-width:clamp(190px,19vw,270px);
+  --home-side-gap:12px;
   --home-frame:inset 0 1px 0 #ffe6ac80,0 0 0 1px #5b381a,0 6px 17px #0008;
   display:grid;
-  grid-template-columns:clamp(176px,18vw,270px) minmax(0,1fr) clamp(190px,19vw,270px);
+  grid-template-columns:clamp(176px,18vw,270px) minmax(0,1fr) var(--home-side-width);
   align-items:start;
   gap:clamp(12px,1.35vw,22px);
   max-width:1640px;
@@ -1851,8 +1853,8 @@ body:has(#inicio.active) header .quick .lldb-tt{background:#11131b;text-shadow:-
 #inicio .inicio-verse small{display:block;margin-top:3px}
 #inicio .inicio-scene{
   position:relative;
-  align-self:stretch;
-  min-height:0;
+  /* La escena sigue la altura de las tarjetas, aunque se expanda el menú. */
+  height:calc(var(--home-side-width) * 2 + (var(--home-side-width) - 2px) / 1.7 + 2px + var(--home-side-gap) * 2);
   overflow:hidden;
   border-radius:10px;
   background:#030810;
@@ -1866,7 +1868,7 @@ body:has(#inicio.active) header .quick .lldb-tt{background:#11131b;text-shadow:-
   object-fit:cover;
   object-position:26% top;
 }
-#inicio .inicio-participa{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+#inicio .inicio-participa{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--home-side-gap)}
 #inicio .inicio-card{
   display:grid;
   grid-template-rows:minmax(0,1fr) 3.3rem 2rem;
@@ -1943,7 +1945,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
   body:has(#inicio.active) header .top .brand{flex-basis:100%!important}
   body:has(#inicio.active) header .top .quick{justify-content:center!important;flex-wrap:wrap!important}
   #inicio .inicio-grid{grid-template-columns:minmax(160px,1fr) minmax(0,2.8fr)}
-  #inicio .inicio-scene{aspect-ratio:1.32}
+  #inicio .inicio-scene{height:auto;aspect-ratio:1.32}
   #inicio .inicio-participa{grid-column:2;width:min(100%,310px);justify-self:center}
   #inicio .inicio-tree{grid-row:1/3}
 }
