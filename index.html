@@ -262,9 +262,9 @@ body:has(#inicio.active) #menu-toggle{display:none}
 
 /* LLDB responsive homepage layout: wide image first, balanced navigation */
 body:has(#inicio.active) main{max-width:1500px;width:100%;box-sizing:border-box;padding:18px clamp(12px,2vw,28px) 44px}
-body:has(#inicio.active, #donaciones.active) .top{max-width:1500px;box-sizing:border-box;width:100%;padding:12px clamp(12px,2vw,28px);flex-wrap:wrap}
-body:has(#inicio.active, #donaciones.active) .top .brand{min-width:0;flex:1 1 250px;font-size:clamp(17px,1.7vw,23px);line-height:1.2;overflow-wrap:normal}
-body:has(#inicio.active, #donaciones.active) .quick{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end}
+body:not(:has(#radio.active)) .top{max-width:1500px;box-sizing:border-box;width:100%;padding:12px clamp(12px,2vw,28px);flex-wrap:wrap}
+body:not(:has(#radio.active)) .top .brand{min-width:0;flex:1 1 250px;font-size:clamp(17px,1.7vw,23px);line-height:1.2;overflow-wrap:normal}
+body:not(:has(#radio.active)) .quick{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end}
 body:has(#inicio.active) .lldb-home-layout{grid-template-columns:minmax(170px,210px) minmax(0,1fr);gap:12px;min-height:0;align-items:start;overflow:visible;border:0;background:transparent}
 body:has(#inicio.active) .lldb-home-nav{grid-column:1;grid-row:1/3;border:1px solid #294056;border-radius:12px;min-width:0}
 body:has(#inicio.active) .lldb-home-nav button{font-size:clamp(13px,1.1vw,16px);overflow-wrap:anywhere;min-width:0}
@@ -276,12 +276,12 @@ body:has(#inicio.active) .lldb-home-side p{font-size:clamp(13px,1vw,16px)}
 body:has(#inicio.active) .lldb-home-side button{font:600 14px system-ui,sans-serif;padding:10px 8px;overflow-wrap:anywhere}
 body:has(#inicio.active) .lldb-side-icon{font-size:34px}
 @media(max-width:900px){body:has(#inicio.active) .lldb-home-layout{grid-template-columns:1fr;gap:12px}body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{grid-column:1;grid-row:1}body:has(#inicio.active) .lldb-home-nav{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}body:has(#inicio.active) .lldb-home-verse{grid-column:1/-1}body:has(#inicio.active) .lldb-home-side{grid-column:1;grid-row:3;grid-template-columns:repeat(2,minmax(0,1fr))}body:has(#inicio.active) .lldb-home-side .lldb-home-seed{grid-column:1/-1;min-height:90px}}
-@media(max-width:600px){body:has(#inicio.active, #donaciones.active) .top{gap:8px}body:has(#inicio.active, #donaciones.active) .top .brand{flex:1 1 100%;font-size:17px}body:has(#inicio.active) .lldb-home-side{grid-template-columns:1fr}body:has(#inicio.active) .lldb-home-side .lldb-home-seed{grid-column:1}body:has(#inicio.active) .lldb-home-side article{min-height:140px}body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{border-radius:8px}body:has(#inicio.active) .lldb-home-nav button{font-size:13px}}
+@media(max-width:600px){body:not(:has(#radio.active)) .top{gap:8px}body:not(:has(#radio.active)) .top .brand{flex:1 1 100%;font-size:17px}body:has(#inicio.active) .lldb-home-side{grid-template-columns:1fr}body:has(#inicio.active) .lldb-home-side .lldb-home-seed{grid-column:1}body:has(#inicio.active) .lldb-home-side article{min-height:140px}body:has(#inicio.active) .lldb-home-art.lldb-approved-scene{border-radius:8px}body:has(#inicio.active) .lldb-home-nav button{font-size:13px}}
 
 /* LLDB Inicio desktop edition — layout aprobado, controles HTML reales */
 @media(min-width:901px){
-body:has(#donaciones.active) header #menu-toggle{display:none!important}
-body:has(#donaciones.active) header #main-nav{
+body:not(:has(#inicio.active, #radio.active)) header #menu-toggle{display:none!important}
+body:not(:has(#inicio.active, #radio.active)) header #main-nav{
   position:static!important;
   display:flex!important;
   justify-content:center!important;
@@ -294,19 +294,19 @@ body:has(#donaciones.active) header #main-nav{
   border:0!important;
   background:transparent!important;
 }
-body:has(#donaciones.active) header #main-nav button{
+body:not(:has(#inicio.active, #radio.active)) header #main-nav button{
   border:1px solid #c89c58!important;
   background:linear-gradient(#14263d,#080f1d)!important;
   color:#ffe1a5!important;
 }
 body:has(#donaciones.active) #donaciones{margin-top:0!important}
-body:has(#inicio.active, #donaciones.active) header{background:linear-gradient(100deg,#030914,#06182a 58%,#02060d);border-bottom:1px solid #52657b}
-body:has(#inicio.active, #donaciones.active) .top{max-width:1600px;min-height:102px;gap:18px;padding:10px 20px}
-body:has(#inicio.active, #donaciones.active) .top .brand{font-family:Georgia,serif;font-size:clamp(21px,2.4vw,35px);color:#f2e2bc;flex:1 1 420px;display:flex;align-items:center;gap:15px;white-space:nowrap}
-body:has(#inicio.active, #donaciones.active) .lldb-official-header-logo{width:75px;height:75px;object-fit:contain;flex:none}
-body:has(#inicio.active, #donaciones.active) .quick{gap:14px;align-items:center;flex-wrap:nowrap}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut{width:62px;height:54px;border-color:#6d8ba2}
-body:has(#inicio.active, #donaciones.active) .social{font:12px system-ui,sans-serif;color:#dce5ee}
+body:not(:has(#radio.active)) header{background:linear-gradient(100deg,#030914,#06182a 58%,#02060d);border-bottom:1px solid #52657b}
+body:not(:has(#radio.active)) .top{max-width:1600px;min-height:102px;gap:18px;padding:10px 20px}
+body:not(:has(#radio.active)) .top .brand{font-family:Georgia,serif;font-size:clamp(21px,2.4vw,35px);color:#f2e2bc;flex:1 1 420px;display:flex;align-items:center;gap:15px;white-space:nowrap}
+body:not(:has(#radio.active)) .lldb-official-header-logo{width:75px;height:75px;object-fit:contain;flex:none}
+body:not(:has(#radio.active)) .quick{gap:14px;align-items:center;flex-wrap:nowrap}
+body:not(:has(#radio.active)) .radio-shortcut{width:62px;height:54px;border-color:#6d8ba2}
+body:not(:has(#radio.active)) .social{font:12px system-ui,sans-serif;color:#dce5ee}
 body:has(#inicio.active) .install{min-height:50px;border:1px solid #a8884e;border-radius:9px;padding:10px 14px;white-space:nowrap}
 body:has(#inicio.active) #main-nav{display:none}
 body:has(#inicio.active) main{max-width:1600px;padding:10px 12px 16px}
@@ -334,12 +334,12 @@ body:has(#inicio.active) .lldb-home-features{grid-column:2;grid-row:2;display:gr
 /* Ajuste de Inicio a la referencia visual aprobada 2026-10-27; sin alterar Radio Interactiva */
 @media(min-width:901px){
 body:has(#inicio.active){background:#020811}
-body:has(#inicio.active, #donaciones.active) header{position:relative;background:linear-gradient(90deg,#061321,#061c31 65%,#020811);border-bottom:3px solid #b78d47}
-body:has(#inicio.active, #donaciones.active) .top{max-width:none;min-height:110px;padding:8px 15px}
-body:has(#inicio.active, #donaciones.active) .top .brand{font-size:clamp(24px,2.5vw,39px);text-shadow:0 2px 5px #000;letter-spacing:-.025em}
-body:has(#inicio.active, #donaciones.active) .lldb-official-header-logo{width:110px;height:90px}
-body:has(#inicio.active, #donaciones.active) .quick{gap:12px}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut{width:68px;height:55px;background:#17140e;border:2px solid #c79b56}
+body:not(:has(#radio.active)) header{position:relative;background:linear-gradient(90deg,#061321,#061c31 65%,#020811);border-bottom:3px solid #b78d47}
+body:not(:has(#radio.active)) .top{max-width:none;min-height:110px;padding:8px 15px}
+body:not(:has(#radio.active)) .top .brand{font-size:clamp(24px,2.5vw,39px);text-shadow:0 2px 5px #000;letter-spacing:-.025em}
+body:not(:has(#radio.active)) .lldb-official-header-logo{width:110px;height:90px}
+body:not(:has(#radio.active)) .quick{gap:12px}
+body:not(:has(#radio.active)) .radio-shortcut{width:68px;height:55px;background:#17140e;border:2px solid #c79b56}
 body:has(#inicio.active) .install{background:linear-gradient(#31230f,#090b0d);border:2px solid #bc9256;color:#f6dba4;font-family:Georgia,serif;font-size:17px}
 body:has(#inicio.active) main{max-width:none;padding:6px 5px 0}
 body:has(#inicio.active) .lldb-home-layout{grid-template-columns:minmax(195px,17.5%) minmax(0,1fr) minmax(205px,15%);grid-template-rows:minmax(680px,calc(100vh - 155px));gap:5px}
@@ -370,7 +370,7 @@ body:has(#inicio.active) footer{border-top:2px solid #b78d47;background:#030d19}
 .lldb-heart-art{font-size:72px!important;color:#ffdb8a;text-shadow:0 0 15px #ffad2b,0 0 40px #f9a23c}
 .lldb-megaphone-art{font-size:64px!important;filter:drop-shadow(0 0 16px #dfa43e)}
 @media(min-width:901px){
-body:has(#inicio.active, #donaciones.active) .radio-shortcut{width:auto;min-width:150px;padding:5px 9px;display:flex;align-items:center;justify-content:center;gap:9px}
+body:not(:has(#radio.active)) .radio-shortcut{width:auto;min-width:150px;padding:5px 9px;display:flex;align-items:center;justify-content:center;gap:9px}
 body:has(#inicio.active) .lldb-home-side article:first-child{background:radial-gradient(circle at 50% 57%,#704920,#090b12 62%)}
 body:has(#inicio.active) .lldb-home-side article:nth-child(2){background:radial-gradient(circle at 80% 60%,#1d4d79,#050d19 65%)}
 body:has(#inicio.active) .lldb-home-side .lldb-home-seed{background:radial-gradient(circle at 45% 35%,#846126,#091017 70%)}
@@ -381,16 +381,16 @@ body:has(#inicio.active) .lldb-home-nav button:hover{background:#1b3042;color:#f
 
 /* Corrección de escala escritorio solicitada 2026-10-27 */
 @media(min-width:901px){
-body:has(#inicio.active, #donaciones.active) .top{min-height:78px;padding:5px 12px;gap:10px}
-body:has(#inicio.active, #donaciones.active) .top .brand{font-size:clamp(19px,1.9vw,29px);gap:8px;flex-basis:330px}
-body:has(#inicio.active, #donaciones.active) .lldb-official-header-logo{width:65px;height:62px}
-body:has(#inicio.active, #donaciones.active) .lldb-brand-copy small{font-size:clamp(10px,.95vw,14px);margin-top:3px}
-body:has(#inicio.active, #donaciones.active) .quick{gap:9px}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut{min-width:115px;width:auto;height:43px;padding:4px 6px;gap:5px}
+body:not(:has(#radio.active)) .top{min-height:78px;padding:5px 12px;gap:10px}
+body:not(:has(#radio.active)) .top .brand{font-size:clamp(19px,1.9vw,29px);gap:8px;flex-basis:330px}
+body:not(:has(#radio.active)) .lldb-official-header-logo{width:65px;height:62px}
+body:not(:has(#radio.active)) .lldb-brand-copy small{font-size:clamp(10px,.95vw,14px);margin-top:3px}
+body:not(:has(#radio.active)) .quick{gap:9px}
+body:not(:has(#radio.active)) .radio-shortcut{min-width:115px;width:auto;height:43px;padding:4px 6px;gap:5px}
 body:has(#inicio.active) .lldb-radio-label{font-size:15px}
 body:has(#inicio.active) .lldb-radio-label small{font-size:9px}
-body:has(#inicio.active, #donaciones.active) .lldb-social-icon{width:29px;height:29px;font-size:21px}
-body:has(#inicio.active, #donaciones.active) .quick .social-link small{font-size:9px}
+body:not(:has(#radio.active)) .lldb-social-icon{width:29px;height:29px;font-size:21px}
+body:not(:has(#radio.active)) .quick .social-link small{font-size:9px}
 body:has(#inicio.active) .install{min-height:38px;font-size:13px;padding:6px 9px}
 body:has(#inicio.active) .lldb-home-layout{grid-template-columns:minmax(160px,17.5%) minmax(0,1fr) minmax(175px,15%);grid-template-rows:minmax(540px,calc(100vh - 132px))}
 body:has(#inicio.active) .lldb-home-nav button{font-size:clamp(12px,1vw,15px);min-height:35px;padding:5px 7px}
@@ -429,11 +429,11 @@ body:has(#inicio.active) .lldb-donation-art svg,body:has(#inicio.active) .lldb-a
 
 /* INICIO: un solo encabezado y navegación integrada, sin tarjetas extra */
 @media(min-width:901px){
-body:has(#inicio.active, #donaciones.active) header{position:relative;top:auto;border-bottom:2px solid #a57939;background:linear-gradient(100deg,#04111d,#071d2f 55%,#030810)}
-body:has(#inicio.active, #donaciones.active) header .top{max-width:none;width:100%;padding:7px 16px;min-height:72px;flex-wrap:nowrap}
-body:has(#inicio.active, #donaciones.active) header .brand{flex:1 1 auto;min-width:0;max-width:none}
-body:has(#inicio.active, #donaciones.active) header .lldb-official-header-logo{width:60px;height:60px;object-fit:contain}
-body:has(#inicio.active, #donaciones.active) header .quick{flex:0 0 auto;gap:12px}
+body:not(:has(#radio.active)) header{position:relative;top:auto;border-bottom:2px solid #a57939;background:linear-gradient(100deg,#04111d,#071d2f 55%,#030810)}
+body:not(:has(#radio.active)) header .top{max-width:none;width:100%;padding:7px 16px;min-height:72px;flex-wrap:nowrap}
+body:not(:has(#radio.active)) header .brand{flex:1 1 auto;min-width:0;max-width:none}
+body:not(:has(#radio.active)) header .lldb-official-header-logo{width:60px;height:60px;object-fit:contain}
+body:not(:has(#radio.active)) header .quick{flex:0 0 auto;gap:12px}
 body:has(#inicio.active) #main-nav,body:has(#inicio.active) #menu-toggle{display:none!important}
 body:has(#inicio.active) main{padding:0!important;margin:0!important;max-width:none!important;width:100%}
 body:has(#inicio.active) #inicio{padding:0!important;margin:0!important}
@@ -483,8 +483,8 @@ body:has(#inicio.active) .lldb-home-features{display:none!important}
 /* Desktop web layout: fixed composition without app-style full-height panels */
 @media(min-width:901px){
 body:has(#inicio.active){background:#02060b}
-body:has(#inicio.active, #donaciones.active) header{position:relative!important}
-body:has(#inicio.active, #donaciones.active) header .top{height:75px!important;min-height:75px!important;padding:6px clamp(18px,2vw,32px)!important}
+body:not(:has(#radio.active)) header{position:relative!important}
+body:not(:has(#radio.active)) header .top{height:75px!important;min-height:75px!important;padding:6px clamp(18px,2vw,32px)!important}
 body:has(#inicio.active) main{display:block!important;padding:0!important}
 body:has(#inicio.active) .lldb-home-layout{
 width:100%!important;max-width:1600px!important;margin:0 auto!important;
@@ -534,8 +534,8 @@ body:has(#inicio.active) .lldb-home-side article{position:relative!important;z-i
 
 /* Inicio escritorio: ajustar altura completa al viewport sin cortar tarjetas ni pie */
 @media(min-width:901px){
-body:has(#inicio.active, #donaciones.active) header .top{height:64px!important;min-height:64px!important;padding-top:3px!important;padding-bottom:3px!important}
-body:has(#inicio.active, #donaciones.active) header .lldb-official-header-logo{width:50px!important;height:50px!important}
+body:not(:has(#radio.active)) header .top{height:64px!important;min-height:64px!important;padding-top:3px!important;padding-bottom:3px!important}
+body:not(:has(#radio.active)) header .lldb-official-header-logo{width:50px!important;height:50px!important}
 body:has(#inicio.active) .lldb-home-layout{
 height:calc(100dvh - 104px)!important;
 min-height:480px!important;max-height:none!important;
@@ -631,7 +631,7 @@ margin:12px 5px 8px!important}
 body:has(#inicio.active) .lldb-home-verse small{
 font-family:Georgia,serif!important;font-size:clamp(12px,.95vw,14px)!important;
 margin-top:5px!important;color:#e6bd74!important}
-body:has(#inicio.active, #donaciones.active) .lldb-brand-copy small{
+body:not(:has(#radio.active)) .lldb-brand-copy small{
 font-size:clamp(12px,1.05vw,15px)!important;
 line-height:1.25!important;color:#f2ddad!important}
 body:has(#inicio.active) .lldb-home-side article:nth-child(2){
@@ -650,7 +650,7 @@ body:has(#inicio.active) .lldb-home-side article button{font-size:clamp(13px,1.0
 body:has(#inicio.active) .lldb-giving-heart{height:83px!important;width:105px!important}
 body:has(#inicio.active) .lldb-partnership-art{max-width:120px!important;min-height:72px!important}
 body:has(#inicio.active) .lldb-home-side article.lldb-home-seed p{font-size:14px!important}
-body:has(#inicio.active, #donaciones.active) #install{padding:7px 11px!important;font-size:13px!important}
+body:not(:has(#radio.active)) #install{padding:7px 11px!important;font-size:13px!important}
 }
 
 /* Iconos sólidos, sin efecto de alambre; versículo más legible */
@@ -752,37 +752,37 @@ body:has(#inicio.active) .lldb-home-side article:nth-child(2) .lldb-photo-icon i
 body:has(#inicio.active) .lldb-home-side article:nth-child(2) button{width:100%!important;align-self:center!important;}
 
 /* Acceso rápido: radio portátil retro, sin alterar Radio Interactiva */
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio{display:block!important;position:relative!important;flex:none!important;width:43px!important;height:30px!important;border:2px solid #7d8589!important;border-radius:6px!important;background:linear-gradient(155deg,#d2d0c7 0%,#8d979b 52%,#4c555b 100%)!important;box-shadow:inset 0 2px 2px #ffffffaa,inset 0 -3px 3px #20262a88,0 2px 4px #0009!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio:before{content:""!important;position:absolute!important;top:-7px!important;left:5px!important;width:24px!important;height:4px!important;border:2px solid #7b858a!important;border-bottom:0!important;border-radius:5px 5px 0 0!important;background:#252d33!important;transform:none!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio:after{content:""!important;position:absolute!important;left:18px!important;top:8px!important;width:15px!important;height:7px!important;border:1px solid #414a4e!important;border-radius:2px!important;background:linear-gradient(#e4bb77,#a97530)!important;box-shadow:inset 0 0 2px #fff7!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio i{left:4px!important;top:9px!important;width:13px!important;height:13px!important;border:2px dotted #555e63!important;border-radius:50%!important;background:radial-gradient(circle,#2d3439 20%,#697277 25%,#293137 65%)!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio b{right:4px!important;top:19px!important;width:5px!important;height:5px!important;border:1px solid #495057!important;border-radius:50%!important;background:#d9d7c8!important;box-shadow:none!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio{display:block!important;position:relative!important;flex:none!important;width:43px!important;height:30px!important;border:2px solid #7d8589!important;border-radius:6px!important;background:linear-gradient(155deg,#d2d0c7 0%,#8d979b 52%,#4c555b 100%)!important;box-shadow:inset 0 2px 2px #ffffffaa,inset 0 -3px 3px #20262a88,0 2px 4px #0009!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio:before{content:""!important;position:absolute!important;top:-7px!important;left:5px!important;width:24px!important;height:4px!important;border:2px solid #7b858a!important;border-bottom:0!important;border-radius:5px 5px 0 0!important;background:#252d33!important;transform:none!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio:after{content:""!important;position:absolute!important;left:18px!important;top:8px!important;width:15px!important;height:7px!important;border:1px solid #414a4e!important;border-radius:2px!important;background:linear-gradient(#e4bb77,#a97530)!important;box-shadow:inset 0 0 2px #fff7!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio i{left:4px!important;top:9px!important;width:13px!important;height:13px!important;border:2px dotted #555e63!important;border-radius:50%!important;background:radial-gradient(circle,#2d3439 20%,#697277 25%,#293137 65%)!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio b{right:4px!important;top:19px!important;width:5px!important;height:5px!important;border:1px solid #495057!important;border-radius:50%!important;background:#d9d7c8!important;box-shadow:none!important;}
 
 /* Icono radio: válvulas de los años 40, baquelita oscura y dial ámbar */
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio{width:46px!important;height:32px!important;border:2px solid #392318!important;border-radius:10px 10px 6px 6px!important;background:linear-gradient(135deg,#71472a 0%,#342018 42%,#180f0d 100%)!important;box-shadow:inset 0 2px 2px #c08c5270,inset 0 -3px 3px #080606,0 2px 4px #000a!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio:before{content:""!important;top:4px!important;left:19px!important;width:20px!important;height:12px!important;border:2px solid #9e7540!important;border-radius:7px 7px 3px 3px!important;background:linear-gradient(#f9d590,#d18b2c 70%,#76411d)!important;box-shadow:0 0 7px #ffad3980,inset 0 0 4px #fff2b0!important;transform:none!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio:after{content:""!important;top:9px!important;left:22px!important;width:14px!important;height:2px!important;border:0!important;border-radius:0!important;background:repeating-linear-gradient(90deg,#53301a 0 1px,transparent 1px 4px)!important;box-shadow:0 3px #6b411c!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio i{left:4px!important;top:6px!important;width:14px!important;height:17px!important;border:1px solid #a37b4e!important;border-radius:5px!important;background:repeating-linear-gradient(0deg,#241914 0 2px,#956b43 2px 3px)!important;}
-body:has(#inicio.active, #donaciones.active) .radio-shortcut .mini-radio b{right:5px!important;top:21px!important;width:6px!important;height:6px!important;border:1px solid #b28b57!important;border-radius:50%!important;background:radial-gradient(circle,#d6b67e,#52351f)!important;box-shadow:-10px 0 0 -1px #ad8854!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio{width:46px!important;height:32px!important;border:2px solid #392318!important;border-radius:10px 10px 6px 6px!important;background:linear-gradient(135deg,#71472a 0%,#342018 42%,#180f0d 100%)!important;box-shadow:inset 0 2px 2px #c08c5270,inset 0 -3px 3px #080606,0 2px 4px #000a!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio:before{content:""!important;top:4px!important;left:19px!important;width:20px!important;height:12px!important;border:2px solid #9e7540!important;border-radius:7px 7px 3px 3px!important;background:linear-gradient(#f9d590,#d18b2c 70%,#76411d)!important;box-shadow:0 0 7px #ffad3980,inset 0 0 4px #fff2b0!important;transform:none!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio:after{content:""!important;top:9px!important;left:22px!important;width:14px!important;height:2px!important;border:0!important;border-radius:0!important;background:repeating-linear-gradient(90deg,#53301a 0 1px,transparent 1px 4px)!important;box-shadow:0 3px #6b411c!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio i{left:4px!important;top:6px!important;width:14px!important;height:17px!important;border:1px solid #a37b4e!important;border-radius:5px!important;background:repeating-linear-gradient(0deg,#241914 0 2px,#956b43 2px 3px)!important;}
+body:not(:has(#radio.active)) .radio-shortcut .mini-radio b{right:5px!important;top:21px!important;width:6px!important;height:6px!important;border:1px solid #b28b57!important;border-radius:50%!important;background:radial-gradient(circle,#d6b67e,#52351f)!important;box-shadow:-10px 0 0 -1px #ad8854!important;}
 
 /* Redes sociales: iconos con relieve suave, estilo plastilina 3D */
-body:has(#inicio.active, #donaciones.active) .quick .lldb-social-icon{display:grid!important;place-items:center!important;width:36px!important;height:36px!important;border-radius:11px!important;font-family:Arial,sans-serif!important;font-weight:900!important;font-size:24px!important;line-height:1!important;color:#fff!important;text-shadow:0 2px 2px #0006!important;box-shadow:inset 0 3px 3px #ffffff70,inset 0 -4px 4px #0005,0 4px 7px #0008!important;transform:rotate(-3deg)!important;transition:transform .15s ease!important;}
-body:has(#inicio.active, #donaciones.active) .quick .social-link:hover .lldb-social-icon{transform:rotate(0deg) translateY(-2px) scale(1.07)!important;}
-body:has(#inicio.active, #donaciones.active) .quick .lldb-ig{background:linear-gradient(140deg,#f9bb55 5%,#e43b83 45%,#7e42c9 90%)!important;border:1px solid #d884b8!important;}
-body:has(#inicio.active, #donaciones.active) .quick .lldb-fb{background:linear-gradient(140deg,#65a9ff,#1352b8 85%)!important;border:1px solid #80aaf0!important;}
-body:has(#inicio.active, #donaciones.active) .quick .lldb-yt{background:linear-gradient(140deg,#ff7878,#c90815 85%)!important;border:1px solid #ff9c9c!important;font-size:19px!important;}
+body:not(:has(#radio.active)) .quick .lldb-social-icon{display:grid!important;place-items:center!important;width:36px!important;height:36px!important;border-radius:11px!important;font-family:Arial,sans-serif!important;font-weight:900!important;font-size:24px!important;line-height:1!important;color:#fff!important;text-shadow:0 2px 2px #0006!important;box-shadow:inset 0 3px 3px #ffffff70,inset 0 -4px 4px #0005,0 4px 7px #0008!important;transform:rotate(-3deg)!important;transition:transform .15s ease!important;}
+body:not(:has(#radio.active)) .quick .social-link:hover .lldb-social-icon{transform:rotate(0deg) translateY(-2px) scale(1.07)!important;}
+body:not(:has(#radio.active)) .quick .lldb-ig{background:linear-gradient(140deg,#f9bb55 5%,#e43b83 45%,#7e42c9 90%)!important;border:1px solid #d884b8!important;}
+body:not(:has(#radio.active)) .quick .lldb-fb{background:linear-gradient(140deg,#65a9ff,#1352b8 85%)!important;border:1px solid #80aaf0!important;}
+body:not(:has(#radio.active)) .quick .lldb-yt{background:linear-gradient(140deg,#ff7878,#c90815 85%)!important;border:1px solid #ff9c9c!important;font-size:19px!important;}
 
 /* Instalar: botón moderno con icono de descarga de app */
-body:has(#inicio.active, #donaciones.active) .quick #install{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;padding:6px 12px!important;min-height:43px!important;border:1px solid #7b9eb5!important;border-radius:13px!important;background:linear-gradient(155deg,#234b67,#0b243a 75%)!important;color:#f3f8fb!important;font:600 13px system-ui,sans-serif!important;letter-spacing:.01em!important;box-shadow:inset 0 1px #ffffff44,0 3px 8px #0007!important;}
-body:has(#inicio.active, #donaciones.active) .quick #install .lldb-install-symbol{display:block!important;flex:none!important;width:29px!important;height:29px!important;color:#eaf5ff!important;filter:drop-shadow(0 1px 2px #0007)!important;}
-body:has(#inicio.active, #donaciones.active) .quick #install:hover{background:linear-gradient(155deg,#326789,#123650 75%)!important;}
+body:not(:has(#radio.active)) .quick #install{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;padding:6px 12px!important;min-height:43px!important;border:1px solid #7b9eb5!important;border-radius:13px!important;background:linear-gradient(155deg,#234b67,#0b243a 75%)!important;color:#f3f8fb!important;font:600 13px system-ui,sans-serif!important;letter-spacing:.01em!important;box-shadow:inset 0 1px #ffffff44,0 3px 8px #0007!important;}
+body:not(:has(#radio.active)) .quick #install .lldb-install-symbol{display:block!important;flex:none!important;width:29px!important;height:29px!important;color:#eaf5ff!important;filter:drop-shadow(0 1px 2px #0007)!important;}
+body:not(:has(#radio.active)) .quick #install:hover{background:linear-gradient(155deg,#326789,#123650 75%)!important;}
 
 /* Instalar LLDB: icono 3D tipo redes sociales, con las letras LLDB */
-body:has(#inicio.active, #donaciones.active) .quick #install{display:flex!important;flex-direction:column!important;gap:3px!important;min-width:56px!important;width:auto!important;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#f5ebdf!important;font:500 9px system-ui,sans-serif!important;letter-spacing:0!important;}
-body:has(#inicio.active, #donaciones.active) .quick #install .lldb-install-app-icon{display:grid!important;place-items:center!important;width:36px!important;height:36px!important;border-radius:11px!important;border:1px solid #a2b8c8!important;background:linear-gradient(140deg,#729bb6 0%,#234a6d 52%,#102b47 100%)!important;color:#fff5d6!important;font:900 11px system-ui,sans-serif!important;letter-spacing:-.04em!important;text-shadow:0 2px 2px #0008!important;box-shadow:inset 0 3px 3px #ffffff70,inset 0 -4px 4px #0005,0 4px 7px #0008!important;transform:rotate(-3deg)!important;transition:transform .15s ease!important;}
-body:has(#inicio.active, #donaciones.active) .quick #install:hover{background:transparent!important;}
-body:has(#inicio.active, #donaciones.active) .quick #install:hover .lldb-install-app-icon{transform:rotate(0deg) translateY(-2px) scale(1.07)!important;}
-body:has(#inicio.active, #donaciones.active) .quick #install>span:last-child{font:500 9px system-ui,sans-serif!important;white-space:nowrap!important;}
+body:not(:has(#radio.active)) .quick #install{display:flex!important;flex-direction:column!important;gap:3px!important;min-width:56px!important;width:auto!important;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#f5ebdf!important;font:500 9px system-ui,sans-serif!important;letter-spacing:0!important;}
+body:not(:has(#radio.active)) .quick #install .lldb-install-app-icon{display:grid!important;place-items:center!important;width:36px!important;height:36px!important;border-radius:11px!important;border:1px solid #a2b8c8!important;background:linear-gradient(140deg,#729bb6 0%,#234a6d 52%,#102b47 100%)!important;color:#fff5d6!important;font:900 11px system-ui,sans-serif!important;letter-spacing:-.04em!important;text-shadow:0 2px 2px #0008!important;box-shadow:inset 0 3px 3px #ffffff70,inset 0 -4px 4px #0005,0 4px 7px #0008!important;transform:rotate(-3deg)!important;transition:transform .15s ease!important;}
+body:not(:has(#radio.active)) .quick #install:hover{background:transparent!important;}
+body:not(:has(#radio.active)) .quick #install:hover .lldb-install-app-icon{transform:rotate(0deg) translateY(-2px) scale(1.07)!important;}
+body:not(:has(#radio.active)) .quick #install>span:last-child{font:500 9px system-ui,sans-serif!important;white-space:nowrap!important;}
 
 /* Radio: experiencia inmersiva exclusiva, sin encabezados ni menús */
 body:has(#radio.active){background:#020304!important;}
@@ -1072,16 +1072,16 @@ header .quick{flex:0 0 auto!important}
 #nosotros .lldb-nosotros-seed p{position:relative;z-index:1;font:italic 700 20px Georgia,serif!important;color:#ffe3a5;text-shadow:0 2px 7px #000;background:linear-gradient(transparent,#061321d9);padding:24px 8px 6px;margin:0!important}
 </style><style>
 /* Ajustes finos solicitados en Nosotros */
-body:has(#nosotros.active) header .top{min-height:64px!important;padding:7px 18px!important}
-body:has(#nosotros.active) .lldb-official-header-logo{width:80px!important;height:80px!important}
-body:has(#nosotros.active) #main-nav{min-height:0!important;padding:0 18px 3px!important;margin:0 auto!important}
-body:has(#nosotros.active) #main-nav>button{font-size:12px!important;padding:5px 13px!important;min-height:28px!important;border-radius:7px!important}
+
+
+
+
 body:has(#nosotros.active) main{padding:3px 18px 40px!important}
 #nosotros{padding-top:0!important}
 #nosotros>h2{font:700 33px Georgia,serif!important;margin:0 0 2px!important;line-height:1.1!important}
 #nosotros .lldb-nosotros-intro{font:italic 18px/1.3 Georgia,'Times New Roman',serif!important;color:#f0d6a5!important;margin:0 0 9px!important;text-align:center!important}
 #nosotros .lldb-nosotros-design{margin-top:4px!important}
-@media(max-width:700px){body:has(#nosotros.active) .lldb-official-header-logo{width:60px!important;height:60px!important}body:has(#nosotros.active) main{padding:6px 10px 32px!important}}
+@media(max-width:700px){body:has(#nosotros.active) main{padding:6px 10px 32px!important}}
 </style><style>
 /* Nosotros: seis módulos compactos con filas exactamente simétricas */
 #nosotros .lldb-nosotros-design{display:grid!important;grid-template-columns:minmax(0,1fr) 285px!important;align-items:stretch!important;gap:12px!important}
@@ -1096,32 +1096,32 @@ body:has(#nosotros.active) main{padding:3px 18px 40px!important}
 @media(max-width:530px){#nosotros .lldb-nosotros-tiles{grid-template-rows:repeat(3,135px)!important}#nosotros .lldb-nosotros-tile{height:135px!important;min-height:135px!important;max-height:135px!important}#nosotros .lldb-nosotros-promos{grid-template-columns:1fr!important;grid-template-rows:repeat(3,135px)!important}#nosotros .lldb-nosotros-promo{height:135px!important;min-height:135px!important;max-height:135px!important}}
 </style><style>
 /* Encabezado compacto de Nosotros: radio retro, redes y app en ese orden */
-body:has(#nosotros.active) header .top{min-height:0!important;padding:6px 16px!important;gap:8px!important;flex-wrap:nowrap!important}
-body:has(#nosotros.active) header .brand{flex:1 1 auto!important;min-width:220px!important;gap:8px!important}
-body:has(#nosotros.active) header .quick{display:flex!important;flex:0 1 auto!important;flex-wrap:nowrap!important;gap:5px!important;align-items:center!important;justify-content:flex-end!important;margin-left:auto!important}
-body:has(#nosotros.active) header #quick-radio{order:0!important;width:64px!important;min-width:64px!important;height:48px!important;margin:0!important;flex:0 0 64px!important}
-body:has(#nosotros.active) header #quick-radio .mini-radio{width:39px!important;height:27px!important;border:2px solid #d3b06c!important;border-radius:6px!important;background:linear-gradient(150deg,#737b7d,#27323c 65%,#121a23)!important;box-shadow:inset 0 0 0 2px #c2a26a,0 2px 5px #0008!important}
-body:has(#nosotros.active) header #quick-radio .mini-radio:before{height:2px!important;width:23px!important;top:-8px!important;left:10px!important;transform:rotate(-16deg)!important}
-body:has(#nosotros.active) header #quick-radio .mini-radio i{width:13px!important;height:13px!important;top:6px!important;left:4px!important;border:2px dotted #e5d6ac!important}
-body:has(#nosotros.active) header #quick-radio .mini-radio b{width:13px!important;height:3px!important;top:7px!important;right:4px!important;box-shadow:0 5px #c4ad7a,0 10px #c4ad7a!important}
-body:has(#nosotros.active) header #quick-radio .lldb-radio-label{font-size:10px!important}
-body:has(#nosotros.active) header .quick .social-link{width:64px!important;min-width:64px!important;height:48px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;flex:0 0 64px!important}
-body:has(#nosotros.active) header .quick .social-link .lldb-social-icon{font-size:22px!important;line-height:1!important}
-body:has(#nosotros.active) header .quick .social-link small{font-size:10px!important}
-body:has(#nosotros.active) header #install{order:9!important;flex:0 0 auto!important;margin-left:9px!important;height:48px!important}
-body:has(#nosotros.active) #main-nav{display:flex!important;justify-content:center!important;max-width:none!important;padding:0 0 2px!important}
-body:has(#nosotros.active) #main-nav>button{padding:4px 13px!important;font-size:12px!important}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body:has(#nosotros.active) main{padding-top:0!important}
-@media(max-width:850px){body:has(#nosotros.active) header .top{flex-wrap:wrap!important}body:has(#nosotros.active) header .brand{flex:1 1 100%!important}body:has(#nosotros.active) header .quick{width:100%!important;justify-content:center!important}body:has(#nosotros.active) header #install{margin-left:auto!important}}
+@media(max-width:850px){}
 </style><style>
 /* Ajuste final de altura en Nosotros: Inicio y título más próximos al logo */
-body:has(#nosotros.active) header .top{padding-top:2px!important;padding-bottom:2px!important}
-body:has(#nosotros.active) #main-nav{min-height:0!important;margin-top:-7px!important;padding-bottom:0!important;align-items:flex-start!important}
-body:has(#nosotros.active) #main-nav>button{padding:3px 12px!important;line-height:1.15!important}
+
+
+
 body:has(#nosotros.active) main{padding-top:0!important}
 body:has(#nosotros.active) #nosotros{padding-top:0!important;margin-top:-9px!important}
 body:has(#nosotros.active) #nosotros>h2{margin-top:0!important;margin-bottom:1px!important}
-@media(max-width:700px){body:has(#nosotros.active) #main-nav{margin-top:-3px!important}body:has(#nosotros.active) #nosotros{margin-top:-3px!important}}
+@media(max-width:700px){body:has(#nosotros.active) #nosotros{margin-top:-3px!important}}
 </style><style>
 /* Evitar que el título Nosotros quede cortado, sin mover Inicio */
 body:has(#nosotros.active) #nosotros{margin-top:3px!important}
@@ -1141,8 +1141,8 @@ body:has(#nosotros.active) #nosotros>h2{padding-top:5px!important;line-height:1.
 @media(max-width:700px){#nosotros .lldb-nosotros-tile .lldb-nosotros-cta{right:5px!important;bottom:5px!important;max-width:65%!important;padding:4px 6px!important;font-size:11px!important}}
 </style><style>
 /* Inicio ligeramente más arriba, sin recortar el botón */
-body:has(#nosotros.active) #main-nav{margin-top:-4px!important;padding-top:0!important;padding-bottom:0!important;overflow:visible!important}
-body:has(#nosotros.active) #main-nav>button{margin-top:0!important;transform:translateY(-2px)!important}
+
+
 </style><style>
 /* El mismo radio de Inicio es el componente reutilizable en todas las secciones */
 /* Icono radio: válvulas de los años 40, baquelita oscura y dial ámbar */
@@ -1156,19 +1156,18 @@ body:has(#nosotros.active) #main-nav>button{margin-top:0!important;transform:tra
 </style><style>
 /* Igualar el icono de Nosotros al radio retro definido para Inicio */
 /* Icono radio: válvulas de los años 40, baquelita oscura y dial ámbar */
-body:has(#nosotros.active) header #quick-radio .mini-radio{width:46px!important;height:32px!important;border:2px solid #392318!important;border-radius:10px 10px 6px 6px!important;background:linear-gradient(135deg,#71472a 0%,#342018 42%,#180f0d 100%)!important;box-shadow:inset 0 2px 2px #c08c5270,inset 0 -3px 3px #080606,0 2px 4px #000a!important;}
-body:has(#nosotros.active) header #quick-radio .mini-radio:before{content:""!important;top:4px!important;left:19px!important;width:20px!important;height:12px!important;border:2px solid #9e7540!important;border-radius:7px 7px 3px 3px!important;background:linear-gradient(#f9d590,#d18b2c 70%,#76411d)!important;box-shadow:0 0 7px #ffad3980,inset 0 0 4px #fff2b0!important;transform:none!important;}
-body:has(#nosotros.active) header #quick-radio .mini-radio:after{content:""!important;top:9px!important;left:22px!important;width:14px!important;height:2px!important;border:0!important;border-radius:0!important;background:repeating-linear-gradient(90deg,#53301a 0 1px,transparent 1px 4px)!important;box-shadow:0 3px #6b411c!important;}
-body:has(#nosotros.active) header #quick-radio .mini-radio i{left:4px!important;top:6px!important;width:14px!important;height:17px!important;border:1px solid #a37b4e!important;border-radius:5px!important;background:repeating-linear-gradient(0deg,#241914 0 2px,#956b43 2px 3px)!important;}
-body:has(#nosotros.active) header #quick-radio .mini-radio b{right:5px!important;top:21px!important;width:6px!important;height:6px!important;border:1px solid #b28b57!important;border-radius:50%!important;background:radial-gradient(circle,#d6b67e,#52351f)!important;box-shadow:-10px 0 0 -1px #ad8854!important;}
+
+
+
+
+
 
 
 /* Bajar logo y nombre juntos, dejando aire sobre ellos */
-body:has(#nosotros.active) header .top{padding-top:13px!important;padding-bottom:3px!important}
-body:has(#nosotros.active) header .brand{transform:translateY(5px)!important}
-body:has(#nosotros.active) header .brand .lldb-official-header-logo,
-body:has(#nosotros.active) header .brand .lldb-header-title{transform:translateY(0)!important}
-@media(max-width:700px){body:has(#nosotros.active) header .top{padding-top:10px!important}body:has(#nosotros.active) header .brand{transform:translateY(3px)!important}}
+
+
+
+@media(max-width:700px){}
 </style><style>
 /* Nosotros: paisaje nocturno de montañas y horizonte cálido, sin alterar tarjetas */
 body:has(#nosotros.active){background-color:#071523!important;background-image:linear-gradient(180deg,rgba(3,10,20,.23),rgba(2,10,18,.45) 50%,rgba(3,10,18,.83)),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201600%201000%22%20preserveAspectRatio%3D%22xMidYMid%20slice%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sky%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23061422%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%231b3145%22%2F%3E%3Cstop%20offset%3D%22.78%22%20stop-color%3D%22%238e654b%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23141d26%22%2F%3E%3C%2FlinearGradient%3E%3CradialGradient%20id%3D%22glow%22%3E%3Cstop%20stop-color%3D%22%23e4b06d%22%20stop-opacity%3D%22.45%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e4b06d%22%20stop-opacity%3D%220%22%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Cpath%20fill%3D%22url(%23sky)%22%20d%3D%22M0%200h1600v1000H0z%22%2F%3E%3Cellipse%20cx%3D%221100%22%20cy%3D%22490%22%20rx%3D%22490%22%20ry%3D%22270%22%20fill%3D%22url(%23glow)%22%2F%3E%3Cpath%20fill%3D%22%23172b3a%22%20d%3D%22M0%20690L160%20540l145%20100%20180-215%20165%20160%20150-115%20210%20175%20185-170%20205%20140%20200-115v500H0z%22%2F%3E%3Cpath%20fill%3D%22%23102332%22%20d%3D%22M0%20770l190-115%20190%2090%20230-175%20240%20170%20175-115%20250%20100%20185-120%20140%20100v300H0z%22%2F%3E%3Cpath%20fill%3D%22%23081925%22%20d%3D%22M0%20845l220-95%20210%2070%20205-110%20260%20130%20235-100%20210%2075%20260-100v300H0z%22%2F%3E%3C%2Fsvg%3E")!important;background-size:cover!important;background-position:center top!important;background-attachment:fixed!important}
@@ -1181,17 +1180,10 @@ body:has(#nosotros.active) main{background:transparent!important}
 @media(max-width:700px){body:has(#nosotros.active){background-attachment:scroll!important}}
 </style><style>
 /* Nosotros: paisaje cálido en cabecera; el logo y los accesos conservan prioridad */
-body:has(#nosotros.active) header{
- background-color:#081522!important;
- background-image:linear-gradient(90deg,rgba(3,11,20,.96) 0%,rgba(3,11,20,.88) 28%,rgba(3,11,20,.68) 60%,rgba(3,11,20,.82) 100%),url('/assets/escena-inicio.png')!important;
- background-position:center,center 44%!important;
- background-size:cover,cover!important;
- background-repeat:no-repeat!important;
- border-bottom:2px solid #bb9354!important;
-}
-body:has(#nosotros.active) header .top,body:has(#nosotros.active) header #main-nav{background:transparent!important}
-body:has(#nosotros.active) header .brand,body:has(#nosotros.active) header .quick,body:has(#nosotros.active) header #main-nav{position:relative!important;z-index:2!important}
-body:has(#nosotros.active) header .lldb-header-title{text-shadow:0 2px 8px #000,0 0 15px #000!important}
+
+
+
+
 </style><style>
 /* Fotos de Nosotros pendientes: no reutilizar imágenes de Inicio */
 #nosotros .lldb-nosotros-tile{background:linear-gradient(140deg,#1c2c3b 0%,#304052 46%,#0a1828 100%)!important}
@@ -1200,14 +1192,11 @@ body:has(#nosotros.active) header .lldb-header-title{text-shadow:0 2px 8px #000,
 </style><style>
 /* Inicio: retirar solamente la imagen del logo en el encabezado.
    Conservar el nombre, lema, radio, redes y botón Instalar LLDB. */
-body:has(#inicio.active, #donaciones.active) header .brand>.lldb-official-header-logo{display:none!important}
+body:not(:has(#radio.active)) header .brand>.lldb-official-header-logo{display:none!important}
 </style><style>
 /* Nosotros: paisaje nuevo solo en franja de logo y accesos */
-body:has(#nosotros.active) header .top{
-background-image:linear-gradient(90deg,rgba(3,13,24,.86) 0%,rgba(4,19,31,.72) 48%,rgba(4,15,25,.77) 100%),url("https://images.unsplash.com/photo-1743309411498-a0f4f4b96b65?auto=format&fit=crop&w=1800&q=82")!important;
-background-size:cover!important;background-position:center 53%!important;background-repeat:no-repeat!important;
-}
-body:has(#nosotros.active) header{background:#071522!important}
+
+
 </style><style>
 /* Nosotros: paisaje nítido y continuo de arriba a abajo, sin corte bajo Inicio */
 body:has(#nosotros.active){
@@ -1218,48 +1207,34 @@ body:has(#nosotros.active){
  background-repeat:no-repeat!important;
  background-attachment:fixed!important;
 }
-body:has(#nosotros.active) header,
-body:has(#nosotros.active) header .top,
-body:has(#nosotros.active) header #main-nav,
 body:has(#nosotros.active) main,
 body:has(#nosotros.active) #nosotros{
  background:transparent!important;
  background-image:none!important;
 }
-body:has(#nosotros.active) header{border-bottom:2px solid #bb9354!important}
+
 body:has(#nosotros.active) .lldb-nosotros-tile .lldb-nosotros-image-pending{background:linear-gradient(90deg,rgba(5,15,25,.6),rgba(5,15,25,.12))!important}
 @media(max-width:700px){body:has(#nosotros.active){background-attachment:scroll!important;background-size:auto 100%!important}}
 </style><style>
 /* Legibilidad de la descripción sobre paisaje, sin ocultarlo */
 body:has(#nosotros.active) #nosotros .lldb-nosotros-intro{display:table!important;max-width:calc(100% - 20px)!important;margin:3px auto 10px!important;padding:7px 20px!important;border-radius:9px!important;background:rgba(5,17,30,.82)!important;border:1px solid rgba(229,188,113,.65)!important;color:#fff1d4!important;text-shadow:0 2px 3px #000!important;font:italic 700 18px/1.4 Georgia,'Times New Roman',serif!important;box-shadow:0 3px 12px #0005!important}
-body:has(#nosotros.active) header #install{border:2px solid #e5bd77!important;border-radius:9px!important;background:linear-gradient(135deg,#17324b,#0a1727)!important;box-shadow:0 0 0 1px #624b2d,inset 0 1px 0 #ffffff33,0 3px 8px #0006!important;color:#ffe4a5!important}
-body:has(#nosotros.active) header #install:focus-visible{outline:3px solid #fff1bb!important;outline-offset:3px!important}
+
+
 @media(max-width:700px){body:has(#nosotros.active) #nosotros .lldb-nosotros-intro{font-size:15px!important;padding:6px 10px!important}}
 </style><style>
 /* Etiquetas legibles sobre el paisaje claro de Nosotros */
-body:has(#nosotros.active) header .quick .social-link small,
-body:has(#nosotros.active) header #quick-radio .lldb-radio-label{
- color:#17212a!important;background:rgba(255,241,207,.94)!important;
- border:1px solid rgba(96,65,30,.55)!important;border-radius:5px!important;
- padding:3px 6px!important;font:700 11px/1.25 Georgia,serif!important;
- text-shadow:none!important;white-space:nowrap!important;
-}
-body:has(#nosotros.active) header #quick-radio{
- gap:7px!important;padding-top:2px!important;padding-bottom:3px!important;
- display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
-}
-body:has(#nosotros.active) header #quick-radio .mini-radio{flex-shrink:0!important;margin-bottom:5px!important}
-body:has(#nosotros.active) header .quick .social-link{gap:6px!important}
+
+
+
+
 </style><style>
 /* Nosotros: etiquetas limpias, sin recuadros claros, y accesos alineados */
-body:has(#nosotros.active) header .quick{align-items:center!important}
-body:has(#nosotros.active) header #quick-radio,
-body:has(#nosotros.active) header .quick .social-link{width:68px!important;min-width:68px!important;flex:0 0 68px!important;height:65px!important;min-height:65px!important;box-sizing:border-box!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-end!important;gap:5px!important;padding:3px 1px 0!important;margin:0!important}
-body:has(#nosotros.active) header #quick-radio .mini-radio{flex:0 0 auto!important;margin:0 auto!important}
-body:has(#nosotros.active) header .quick .social-link .lldb-social-icon{width:46px!important;height:38px!important;min-height:38px!important;display:grid!important;place-items:center!important;font-size:27px!important;line-height:1!important;transform:none!important;margin:0 auto!important}
-body:has(#nosotros.active) header .quick .social-link small,
-body:has(#nosotros.active) header #quick-radio .lldb-radio-label{position:static!important;display:block!important;box-sizing:border-box!important;min-height:15px!important;height:15px!important;line-height:15px!important;margin:0!important;padding:0!important;background:transparent!important;background-color:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#111821!important;font:700 11px/15px Georgia,serif!important;text-align:center!important;text-shadow:none!important;white-space:nowrap!important}
-body:has(#nosotros.active) header #install{align-self:center!important}
+
+
+
+
+
+
 </style><style>
 /* Nosotros: paisaje NUEVO, cálido y nítido, sin la imagen de Inicio */
 body:has(#nosotros.active){
@@ -1267,24 +1242,11 @@ background-color:#1a1718!important;
 background-image:linear-gradient(180deg,rgba(20,16,18,.08),rgba(16,13,18,.13)),url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2000&q=90")!important;
 background-size:cover!important;background-position:center 38%!important;background-repeat:no-repeat!important;background-attachment:fixed!important;
 }
-body:has(#nosotros.active) header,
-body:has(#nosotros.active) header .top{
-background-color:transparent!important;
-background-image:linear-gradient(90deg,rgba(15,12,16,.16),rgba(20,14,17,.08),rgba(16,12,18,.16)),url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2000&q=90")!important;
-background-position:center 42%!important;background-size:cover!important;background-repeat:no-repeat!important;
-filter:none!important;backdrop-filter:none!important;
-}
-body:has(#nosotros.active) #main-nav{background:transparent!important}
+
+
 </style><style>
 /* Una sola imagen de paisaje para Nosotros: eliminar repetición en cabecera */
-body:has(#nosotros.active) header,
-body:has(#nosotros.active) header .top,
-body:has(#nosotros.active) #main-nav{
- background-image:none!important;
- background-color:transparent!important;
- background:transparent!important;
- backdrop-filter:none!important;
-}
+
 body:has(#nosotros.active){background-repeat:no-repeat!important;background-size:cover!important;background-position:center 38%!important}
 </style><style>
 /* Títulos de tarjetas y botones de lectura por debajo de cada fotografía */
@@ -1328,7 +1290,7 @@ font:700 12px/17px Georgia,serif!important;box-shadow:0 0 8px #dba63d66!importan
 </style><style>
 /* Recuperar legibilidad y calidez de Nosotros; conservar radio y logo aprobados */
 body:has(#nosotros.active){background-color:#151a21!important;background-image:linear-gradient(180deg,rgba(8,14,22,.74),rgba(13,20,28,.80)),url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2000&q=90")!important;background-position:center center!important;background-size:cover!important}
-body:has(#nosotros.active) header,body:has(#nosotros.active) header .top,body:has(#nosotros.active) #main-nav{background:rgba(9,17,28,.42)!important}
+
 #nosotros .lldb-nosotros-tiles .lldb-nosotros-entry .lldb-nosotros-tile .lldb-nosotros-cta{display:flex!important;position:relative!important;inset:auto!important;z-index:50!important;width:calc(100% - 24px)!important;max-width:none!important;height:35px!important;min-height:35px!important;flex:0 0 35px!important;margin:4px 12px 10px!important;padding:5px 10px!important;opacity:1!important;visibility:visible!important;color:#18212b!important;-webkit-text-fill-color:#18212b!important;font:700 15px/1.2 Georgia,serif!important;letter-spacing:0!important;text-shadow:none!important;background:#efd49b!important;border:2px solid #fff1c9!important;border-radius:7px!important;box-shadow:0 2px 7px #0006!important;white-space:nowrap!important;text-align:center!important;align-items:center!important;justify-content:center!important}
 #nosotros .lldb-nosotros-tiles .lldb-nosotros-entry .lldb-nosotros-tile .lldb-nosotros-heading{color:#ffe6ad!important;-webkit-text-fill-color:#ffe6ad!important;text-shadow:0 2px 5px #000!important}
 #nosotros .lldb-nosotros-tiles .lldb-nosotros-entry .lldb-nosotros-tile{background:linear-gradient(115deg,rgba(14,32,49,.94),rgba(32,48,61,.91))!important}
@@ -1352,17 +1314,17 @@ body:has(#nosotros.active) header,body:has(#nosotros.active) header .top,body:ha
 </style><style>
 /* Nosotros: recuperar paisaje cálido sin la capa azul intensa */
 body:has(#nosotros.active){background-color:#1c1512!important;background-image:linear-gradient(180deg,rgba(17,13,14,.30),rgba(15,12,15,.40)),url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2000&q=90")!important;background-size:cover!important;background-position:center 42%!important;background-attachment:fixed!important}
-body:has(#nosotros.active) header,body:has(#nosotros.active) header .top{background:linear-gradient(90deg,rgba(19,14,16,.42),rgba(21,15,15,.20),rgba(19,14,16,.42))!important}
-body:has(#nosotros.active) #main-nav{background:rgba(22,15,15,.18)!important}
+
+
 #nosotros .lldb-nosotros-tile{background:linear-gradient(95deg,rgba(14,12,16,.88),rgba(28,19,18,.55))!important;border-color:#d7ac63!important}
 #nosotros .lldb-nosotros-tile .lldb-nosotros-heading{display:block!important;position:absolute!important;z-index:9!important;top:15px!important;left:22px!important;right:auto!important;bottom:auto!important;width:auto!important;height:auto!important;padding:0!important;margin:0!important;background:none!important;color:#fff0cf!important;font:700 clamp(32px,3.4vw,48px)/1.12 Georgia,serif!important;text-shadow:0 2px 5px #000!important;visibility:visible!important;opacity:1!important}
 #nosotros .lldb-nosotros-tile .lldb-nosotros-cta{z-index:11!important}
 </style><style>
 /* Nosotros: paisaje nítido, colores originales, sin velo ni efecto frost */
 body:has(#nosotros.active){background-image:url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2400&q=100&sharp=100")!important;background-color:#1c1512!important;background-size:cover!important;background-position:center 42%!important;background-repeat:no-repeat!important;filter:none!important}
-body:has(#nosotros.active) header,body:has(#nosotros.active) header .top,body:has(#nosotros.active) #main-nav{background:transparent!important;background-image:none!important;backdrop-filter:none!important;filter:none!important}
+
 body:has(#nosotros.active) #nosotros,body:has(#nosotros.active) main{background:transparent!important;backdrop-filter:none!important}
-body:has(#nosotros.active) #nosotros>h2,body:has(#nosotros.active) .lldb-nosotros-intro,body:has(#nosotros.active) .lldb-header-title{text-shadow:0 2px 5px #000b!important}
+body:has(#nosotros.active) #nosotros>h2,body:has(#nosotros.active) .lldb-nosotros-intro{text-shadow:0 2px 5px #000b!important}
 </style><style>
 /* SOLO paisaje de fondo de Nosotros: imagen original sin hielo, velo ni desenfoque */
 body:has(#nosotros.active){
@@ -1375,9 +1337,7 @@ filter:none!important;
 }
 body:has(#nosotros.active)::before,
 body:has(#nosotros.active)::after{backdrop-filter:none!important;filter:none!important}
-body:has(#nosotros.active) header,
-body:has(#nosotros.active) header .top,
-body:has(#nosotros.active) #main-nav{backdrop-filter:none!important;background:transparent!important;background-image:none!important}
+
 </style><style>
 /* Nosotros: fotografía nítida, con exposición más oscura y sin velo blanco */
 body:has(#nosotros.active){
@@ -1390,9 +1350,6 @@ body:has(#nosotros.active){
  filter:none!important;
  backdrop-filter:none!important;
 }
-body:has(#nosotros.active) header,
-body:has(#nosotros.active) header .top,
-body:has(#nosotros.active) #main-nav,
 body:has(#nosotros.active) main,
 body:has(#nosotros.active) #nosotros{
  backdrop-filter:none!important;
@@ -1400,8 +1357,7 @@ body:has(#nosotros.active) #nosotros{
 }
 </style><style>
 /* Nosotros: únicamente etiquetas blancas y títulos blanco/dorado */
-body:has(#nosotros.active) header .quick .social-link small,
-body:has(#nosotros.active) header #quick-radio .lldb-radio-label{color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 1px 3px #0009!important}
+
 /* Titulos de Nosotros: color uniforme, sin degradado ni relleno transparente */
 #nosotros .lldb-nosotros-tile>span:not(.lldb-nosotros-cta),
 #nosotros .lldb-nosotros-tile .lldb-nosotros-heading{
@@ -1412,8 +1368,7 @@ filter:none!important;text-shadow:0 2px 5px #000b!important;
 }
 </style><style>
 /* Corrección definitiva del paisaje de Nosotros: foto directa, sin capa difusa */
-body:has(#nosotros.active),
-body:has(#nosotros.active) header{
+body:has(#nosotros.active){
  background-image:url("https://images.unsplash.com/photo-1707334459557-e3034e158035?auto=format&fit=crop&w=2400&q=95")!important;
  background-color:#10151a!important;
  background-size:cover!important;
@@ -1422,15 +1377,11 @@ body:has(#nosotros.active) header{
  filter:none!important;
  backdrop-filter:none!important;
 }
-body:has(#nosotros.active) header{background-attachment:scroll!important}
-body:has(#nosotros.active) header .top,
-body:has(#nosotros.active) header #main-nav,
+
 body:has(#nosotros.active) main,
 body:has(#nosotros.active) #nosotros{background:transparent!important;background-image:none!important;backdrop-filter:none!important;filter:none!important}
 body:has(#nosotros.active)::before,
-body:has(#nosotros.active)::after,
-body:has(#nosotros.active) header::before,
-body:has(#nosotros.active) header::after{backdrop-filter:none!important;filter:none!important;opacity:0!important;pointer-events:none!important}
+body:has(#nosotros.active)::after{backdrop-filter:none!important;filter:none!important;opacity:0!important;pointer-events:none!important}
 </style><style>
 /* Una sola fotografía continua: evitar paisaje duplicado en encabezado */
 body:has(#nosotros.active){
@@ -1440,9 +1391,6 @@ background-size:cover!important;
 background-repeat:no-repeat!important;
 background-attachment:fixed!important;
 }
-body:has(#nosotros.active) header,
-body:has(#nosotros.active) header .top,
-body:has(#nosotros.active) header #main-nav,
 body:has(#nosotros.active) main,
 body:has(#nosotros.active) #nosotros{
 background-image:none!important;
@@ -1489,7 +1437,7 @@ text-shadow:none!important;
 header .top .brand .lldb-official-header-logo{width:72px!important;height:72px!important;max-height:calc(100% - 4px)!important;object-fit:contain!important}
 header .top .brand .lldb-header-title{font-size:clamp(21px,2.15vw,33px)!important;line-height:1.06!important}
 header .top .brand .lldb-header-title small{display:block!important;font-size:clamp(12px,1.15vw,17px)!important;line-height:1.2!important;margin-top:4px!important}
-@media(min-width:901px){body:has(#inicio.active, #donaciones.active) header .top{height:82px!important;min-height:82px!important}body:has(#inicio.active, #donaciones.active) header .top .brand .lldb-official-header-logo{width:76px!important;height:76px!important}}
+@media(min-width:901px){body:not(:has(#radio.active)) header .top{height:82px!important;min-height:82px!important}body:not(:has(#radio.active)) header .top .brand .lldb-official-header-logo{width:76px!important;height:76px!important}}
 @media(max-width:700px){header .top .brand .lldb-official-header-logo{width:52px!important;height:52px!important}header .top .brand .lldb-header-title{font-size:18px!important}header .top .brand .lldb-header-title small{font-size:11px!important}}
 </style>
 
@@ -1497,14 +1445,14 @@ header .top .brand .lldb-header-title small{display:block!important;font-size:cl
 /* Ajuste solicitado: solo logo y lema; título principal sin cambios. */
 header .top .brand .lldb-official-header-logo{width:84px!important;height:84px!important;max-height:none!important}
 header .top .brand .lldb-header-title small{font-size:clamp(16px,1.55vw,22px)!important}
-@media(min-width:901px){body:has(#inicio.active, #donaciones.active) header .top{height:94px!important;min-height:94px!important}body:has(#inicio.active, #donaciones.active) header .top .brand .lldb-official-header-logo{width:88px!important;height:88px!important}}
+@media(min-width:901px){body:not(:has(#radio.active)) header .top{height:94px!important;min-height:94px!important}body:not(:has(#radio.active)) header .top .brand .lldb-official-header-logo{width:88px!important;height:88px!important}}
 @media(max-width:700px){header .top .brand .lldb-official-header-logo{width:59px!important;height:59px!important}header .top .brand .lldb-header-title small{font-size:13px!important}}
 </style>
 
 <style id="lldb-logo-only-20261028">
 /* Solo ampliar logo; letras intactas. */
 header .top .brand .lldb-official-header-logo{width:96px!important;height:96px!important;max-height:none!important;flex:none!important}
-@media(min-width:901px){body:has(#inicio.active, #donaciones.active) header .top{height:102px!important;min-height:102px!important}body:has(#inicio.active, #donaciones.active) header .top .brand .lldb-official-header-logo{width:96px!important;height:96px!important}}
+@media(min-width:901px){body:not(:has(#radio.active)) header .top{height:102px!important;min-height:102px!important}body:not(:has(#radio.active)) header .top .brand .lldb-official-header-logo{width:96px!important;height:96px!important}}
 @media(max-width:700px){header .top .brand .lldb-official-header-logo{width:65px!important;height:65px!important}}
 </style>
 
@@ -1566,10 +1514,10 @@ body:has(#especial.active) main{max-width:none!important;width:100%!important;pa
 
 <style id="lldb-especial-position-hotspots-20261028">
 /* Solo Especial: botón Inicio centrado y compacto, imagen elevada y áreas clic precisas. */
-body:has(#especial.active) header #main-nav{display:flex!important;justify-content:center!important;align-items:center!important;width:100%!important;padding:0!important;margin:0!important;min-height:26px!important}
-body:has(#especial.active) header #main-nav button[data-go="inicio"]{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:auto!important;min-width:0!important;min-height:0!important;padding:3px 12px!important;margin:0 auto!important;font-size:12px!important;line-height:1.2!important;border-radius:6px!important}
-body:has(#especial.active) header{padding-bottom:0!important;margin-bottom:0!important}
-body:has(#especial.active) header .top{margin-bottom:0!important;padding-bottom:0!important}
+
+
+
+
 #especial.lldb-photo-special{padding-top:0!important;margin-top:0!important}
 #especial .lldb-photo-stage{margin-top:0!important;background-position:center center!important}
 #especial .lldb-photo-hotspot{width:12.6%!important;height:4.7%!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;padding:0!important;margin:0!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;appearance:none!important}
@@ -1580,14 +1528,14 @@ body:has(#especial.active) header .top{margin-bottom:0!important;padding-bottom:
 
 <style id="lldb-especial-crop-header-20261028">
 /* Especial únicamente: ocultar menú que está impreso dentro de la imagen y compactar encabezado. */
-body:has(#especial.active) header .top{height:76px!important;min-height:76px!important;padding-top:1px!important;padding-bottom:1px!important}
-body:has(#especial.active) header #main-nav{height:20px!important;min-height:20px!important;padding:0!important;margin:-8px 0 0!important;position:relative!important;z-index:2!important}
-body:has(#especial.active) header #main-nav button[data-go="inicio"]{font-size:11px!important;padding:2px 9px!important;line-height:1!important}
+
+
+
 body:has(#especial.active) #especial .lldb-photo-stage{aspect-ratio:1648/690!important;background-size:100% auto!important;background-position:center bottom!important;margin:0!important}
 /* Las áreas clic se ajustan a la imagen recortada. */
 #especial .lldb-photo-hotspot-1{left:30.9%!important;top:35.7%!important}#especial .lldb-photo-hotspot-2{left:51.4%!important;top:35.7%!important}#especial .lldb-photo-hotspot-3{left:72%!important;top:35.7%!important}
 #especial .lldb-photo-hotspot-4{left:30.9%!important;top:71.7%!important}#especial .lldb-photo-hotspot-5{left:51.4%!important;top:71.7%!important}#especial .lldb-photo-hotspot-6{left:72%!important;top:71.7%!important}
-@media(max-width:700px){body:has(#especial.active) header .top{height:auto!important;min-height:0!important}body:has(#especial.active) header #main-nav{margin-top:0!important}}
+@media(max-width:700px){}
 </style>
 
 <style id="lldb-especial-crop-fix-20261028">
@@ -1608,9 +1556,9 @@ body:has(#especial.active) #especial .lldb-photo-stage{aspect-ratio:1648/690!imp
 <style id="lldb-especial-careful-spacing-20261028">
 /* Ajuste aislado a Especial: logo sin recorte, aire arriba/abajo y pizarra visible. */
 @media(min-width:701px){
-body:has(#especial.active) header .top{height:108px!important;min-height:108px!important;box-sizing:border-box!important;padding:7px 18px 5px!important;overflow:visible!important;align-items:center!important}
-body:has(#especial.active) header .top .brand .lldb-official-header-logo{width:92px!important;height:92px!important;max-height:92px!important;object-fit:contain!important}
-body:has(#especial.active) header #main-nav{height:25px!important;min-height:25px!important;margin:0!important;padding:0!important}
+
+
+
 body:has(#especial.active) #especial.lldb-photo-special{padding-top:13px!important;padding-bottom:24px!important}
 body:has(#especial.active) #especial .lldb-photo-stage{aspect-ratio:1672/900!important;background-size:100% auto!important;background-position:center bottom!important}
 }
@@ -1628,9 +1576,9 @@ body:has(#especial.active) #especial .lldb-photo-hotspot-4,body:has(#especial.ac
 <style id="lldb-especial-symmetric-logo-spacing-20261028">
 /* Especial: igualar espacio libre superior e inferior alrededor del logo. */
 @media(min-width:701px){
-body:has(#especial.active) header .top{height:108px!important;min-height:108px!important;padding:7px 18px!important;box-sizing:border-box!important;align-items:center!important}
-body:has(#especial.active) header .top .brand .lldb-official-header-logo{width:92px!important;height:92px!important;max-height:92px!important;object-fit:contain!important}
-body:has(#especial.active) header #main-nav{height:20px!important;min-height:20px!important;margin:-7px 0 0!important;padding:0!important}
+
+
+
 body:has(#especial.active) #especial.lldb-photo-special{padding-top:4px!important}
 }
 </style>
@@ -1638,7 +1586,7 @@ body:has(#especial.active) #especial.lldb-photo-special{padding-top:4px!importan
 <style id="lldb-especial-bottom-gap-reduction-20261028">
 /* Solo quitar el espacio sobrante bajo el logo, sin alterar su tamaño ni el recorte de la pizarra. */
 @media(min-width:701px){
-body:has(#especial.active) header #main-nav{height:18px!important;min-height:18px!important;margin:-19px 0 0!important;padding:0!important;line-height:1!important}
+
 body:has(#especial.active) #especial.lldb-photo-special{padding-top:0!important}
 }
 </style>
@@ -1782,24 +1730,23 @@ body header .top .quick #quick-radio .mini-radio b{right:5px!important;top:21px!
 <style id="lldb-inicio-comparacion">
 body:has(#inicio.active) header #main-nav,
 body:has(#inicio.active) header #menu-toggle{display:none!important}
-body:has(#inicio.active, #donaciones.active) header{
+body:not(:has(#radio.active)) header{
   background:linear-gradient(115deg,#010308,#061426 58%,#010308)!important;
   border-bottom:2px solid #56c2ff!important;
   border-radius:0 0 26px 26px;
   box-shadow:0 2px 5px #00a4ff,0 8px 25px #005cff70;
 }
-body:has(#inicio.active, #donaciones.active) header .top .brand>.lldb-official-header-logo{
+body:not(:has(#radio.active)) header .top .brand>.lldb-official-header-logo{
   display:block!important;
   filter:drop-shadow(0 0 10px #dda74090);
 }
-body:has(#inicio.active, #donaciones.active) header .top .brand .lldb-header-title{
+body:not(:has(#radio.active)) header .top .brand .lldb-header-title{
   color:#ffe099!important;
   white-space:normal;
   text-shadow:0 2px 1px #59370e,0 0 15px #ffcb5e35;
 }
-body:has(#inicio.active, #donaciones.active) header .top .brand .lldb-header-title small{color:#fff6e5!important}
-body:not(:has(#inicio.active, #donaciones.active)) header .quick [data-social="tiktok"]{display:none!important}
-body:has(#inicio.active, #donaciones.active) header .quick [data-social="tiktok"]{
+body:not(:has(#radio.active)) header .top .brand .lldb-header-title small{color:#fff6e5!important}
+body:not(:has(#radio.active)) header .quick [data-social="tiktok"]{
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -1810,7 +1757,7 @@ body:has(#inicio.active, #donaciones.active) header .quick [data-social="tiktok"
   color:#f4ead9;
   opacity:1;
 }
-body:has(#inicio.active, #donaciones.active) header .quick .lldb-tt{background:#11131b;text-shadow:-2px 0 #25f4ee,2px 1px #fe2c55!important}
+body:not(:has(#radio.active)) header .quick .lldb-tt{background:#11131b;text-shadow:-2px 0 #25f4ee,2px 1px #fe2c55!important}
 #inicio .inicio-grid{
   --home-gold:#e8b957;
   --home-side-width:clamp(190px,19vw,270px);
@@ -1964,9 +1911,9 @@ body:has(#inicio.active) footer #secret-admin-trigger{
   text-shadow:0 1px 5px #e19a5166;
 }
 @media(max-width:900px){
-  body:has(#inicio.active, #donaciones.active) header .top{height:auto!important;min-height:0!important;flex-wrap:wrap!important}
-  body:has(#inicio.active, #donaciones.active) header .top .brand{flex-basis:100%!important}
-  body:has(#inicio.active, #donaciones.active) header .top .quick{justify-content:center!important;flex-wrap:wrap!important}
+  body:not(:has(#radio.active)) header .top{height:auto!important;min-height:0!important;flex-wrap:wrap!important}
+  body:not(:has(#radio.active)) header .top .brand{flex-basis:100%!important}
+  body:not(:has(#radio.active)) header .top .quick{justify-content:center!important;flex-wrap:wrap!important}
   #inicio .inicio-grid{grid-template-columns:minmax(160px,1fr) minmax(0,2.8fr)}
   #inicio .inicio-scene{height:auto;aspect-ratio:1.32}
   #inicio .inicio-participa{grid-column:2;width:min(100%,310px);justify-self:center}
@@ -2278,7 +2225,7 @@ else if(introVideo){
  introGate.onclick=(event)=>{if(event.target!==introStart)startApprovedIntro()};
 }
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
-const views=[...document.querySelectorAll('.view')];function showView(id,push=true,scroll=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);if(!scroll)return;if(target.id==='nosotros'||target.id==='especial'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
+const views=[...document.querySelectorAll('.view')];function showView(id,push=true,scroll=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);if(!scroll)return;if(target.id!=='radio'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);if(b.dataset.subview){document.querySelector('[data-about="'+b.dataset.subview+'"]')?.click()}if(b.dataset.resourceLink){document.querySelector('[data-resource="'+b.dataset.resourceLink+'"]')?.click()}if(b.dataset.panel){document.getElementById(b.dataset.panel)?.classList.remove('hidden')}mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 document.querySelectorAll('#inicio [data-home-target]').forEach(button=>{

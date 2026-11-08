@@ -74,6 +74,16 @@
       "source": "/media",
       "destination": "/#media",
       "permanent": false
+    },
+    {
+      "source": "/donaciones",
+      "destination": "/#donaciones",
+      "permanent": false
+    },
+    {
+      "source": "/donaciones/index.html",
+      "destination": "/#donaciones",
+      "permanent": false
     }
   ]
 }
