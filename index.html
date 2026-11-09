@@ -2188,6 +2188,11 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   display:grid;
   align-content:center;
   gap:4px;
+  padding:5px;
+  border:1px solid #56c2ff;
+  border-radius:8px;
+  box-shadow:0 0 5px #00a4ff,0 0 12px #005cff70;
+  background:#090e15;
   color:#f9edd6;
   font:13px/1.2 system-ui,sans-serif;
 }
@@ -2199,17 +2204,13 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   background:#0b111a;color:#ffe1a5;font:22px/1 system-ui,sans-serif;cursor:pointer;
 }
 .media-video-items{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:3px 2px 7px;
-  scroll-snap-type:x mandatory;
-  scrollbar-color:#ba8a43 #121b27;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(3px,.65vw,8px);
 }
-.media-video-items:empty{display:none}
-.media-video-items button{
-  flex:0 0 clamp(102px,11vw,146px);
-  scroll-snap-align:start;
+.media-video-items button,
+.media-video-placeholder{
+  min-width:0;
   display:grid;
   gap:5px;
   padding:4px;
@@ -2217,9 +2218,14 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   border-radius:7px;
   background:#10141b;
   color:#fff0c9;
-  font:600 12px/1.15 system-ui,sans-serif;
-  cursor:pointer;
+  font:600 clamp(8px,1vw,12px)/1.15 system-ui,sans-serif;
+  overflow-wrap:anywhere;
+  text-align:center;
 }
+.media-video-items button{cursor:pointer}
+.media-video-placeholder{padding:2px}
+.media-video-placeholder img{object-fit:contain}
+.media-video-controls button:disabled{opacity:.5;cursor:default}
 .media-video-items button[aria-pressed="true"]{border-color:#ffe0a1;background:#263b54}
 .media-video-items button:focus-visible{outline:2px solid #ffe1a5;outline-offset:1px}
 .media-video-items img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px}
@@ -2233,13 +2239,14 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
     justify-content:space-between;pointer-events:none;
   }
   .media-video-controls button{pointer-events:auto;width:clamp(22px,2.8vw,32px);height:clamp(22px,2.8vw,32px)}
-  .media-video-items{padding-bottom:4px;scrollbar-width:none}
-  .media-video-items img{height:clamp(29px,4.35vw,56px);aspect-ratio:auto}
+  .media-video-items img{height:clamp(26px,4.1vw,53px);aspect-ratio:auto}
+  .media-video-placeholder img{object-fit:contain}
 }
 @media(max-width:700px){
   #media-projector{height:max(200px,52vw);border:1px solid var(--line);border-radius:7px}
   #media-projector:empty{display:none}
-  .media-video-carousel{margin:10px 0;padding:10px;background:#0b1726;border-radius:7px}
+  .media-video-carousel{margin:10px 0;padding:8px}
+  .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
 </head>
@@ -2477,10 +2484,10 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
       <input type="search" id="media-video-query" placeholder="Buscar videos…" autocomplete="off">
       <button type="submit">Buscar</button>
     </form>
-    <div class="media-video-carousel hidden" aria-label="Carrusel de videos">
+    <div class="media-video-carousel" aria-label="Carrusel de videos">
       <div class="media-video-carousel-head">
         <p id="media-video-status" role="status"></p>
-        <div class="media-video-controls hidden" aria-label="Desplazar el carrusel">
+        <div class="media-video-controls" aria-label="Desplazar el carrusel">
           <button type="button" data-carousel-direction="-1" aria-label="Videos anteriores">‹</button>
           <button type="button" data-carousel-direction="1" aria-label="Videos siguientes">›</button>
         </div>
@@ -2584,7 +2591,6 @@ document.querySelectorAll('[data-wall]').forEach(b=>b.onclick=()=>{document.quer
 const cinema=document.getElementById('videos');
 const cinemaSources=[...cinema.querySelectorAll('[data-video-source]')];
 const projector=document.getElementById('media-projector');
-const cinemaCarousel=cinema.querySelector('.media-video-carousel');
 const cinemaItems=cinema.querySelector('.media-video-items');
 const cinemaStatus=document.getElementById('media-video-status');
 const cinemaControls=cinema.querySelector('.media-video-controls');
@@ -2595,6 +2601,9 @@ let mediaConfig=null;
 let mediaConfigFailed=false;
 let selectedCinemaSource=null;
 let selectedCinemaVideo=null;
+const cinemaPageSize=5;
+let cinemaCatalog=[];
+let cinemaOffset=0;
 
 function cinemaVideo(url) {
  let source;
@@ -2640,55 +2649,81 @@ function normalizeCinemaTitle(value) {
  return value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 }
 
+function renderCinemaWindow() {
+ cinemaItems.replaceChildren();
+ const count=cinemaCatalog.length;
+ for (let slot=0;slot<cinemaPageSize;slot++) {
+  const entry=count>cinemaPageSize
+   ? cinemaCatalog[(cinemaOffset+slot)%count]
+   : cinemaCatalog[slot];
+  if (!entry) {
+   const tile=document.createElement('div');
+   tile.className='media-video-placeholder';
+   const image=document.createElement('img');
+   image.src='/assets/coming-soon-'+(slot%2+1)+'.webp';
+   image.alt='';
+   const label=document.createElement('span');
+   label.textContent='Coming Soon';
+   tile.append(image,label);
+   cinemaItems.append(tile);
+   continue;
+  }
+
+  const {item,video}=entry;
+  const button=document.createElement('button');
+  button.type='button';
+  button.setAttribute('aria-pressed',String(video.url===selectedCinemaVideo));
+  if (typeof item.thumbnail==='string' && /^(?:https:\/\/|\/(?!\/))/.test(item.thumbnail)) {
+   const thumbnail=document.createElement('img');
+   thumbnail.src=item.thumbnail;
+   thumbnail.alt='';
+   thumbnail.loading='lazy';
+   button.append(thumbnail);
+  }
+  const title=document.createElement('span');
+  title.textContent=item.title;
+  button.append(title);
+  button.addEventListener('click',()=>playCinemaVideo(item,video,button));
+  cinemaItems.append(button);
+ }
+ cinemaControls.querySelectorAll('button').forEach(button=>{
+  button.disabled=count<=cinemaPageSize;
+ });
+}
+
 function renderCinemaCatalog() {
  const query=normalizeCinemaTitle(cinemaSearchInput.value);
  const terms=query?query.split(/\s+/):[];
  const key=selectedCinemaSource;
- cinemaItems.replaceChildren();
- cinemaCarousel.classList.toggle('hidden',!key&&!query);
- cinemaControls.classList.add('hidden');
- if (!key&&!query) return;
+ cinemaCatalog=[];
+ cinemaOffset=0;
 
- const label=key?cinemaSources.find(button=>button.dataset.videoSource===key).textContent.trim():'';
- if (!mediaConfig) {
-  cinemaStatus.textContent=mediaConfigFailed?'No se pudo cargar el catálogo.':'Cargando videos…';
-  return;
- }
-
- const keys=query?Object.keys(catalogKeys):[key];
+ const keys=query?Object.keys(catalogKeys):(key?[key]:[]);
  for (const sourceKey of keys) {
-  const entries=mediaConfig.videos?.[catalogKeys[sourceKey]]?.items;
+  const entries=mediaConfig?.videos?.[catalogKeys[sourceKey]]?.items;
   if (!Array.isArray(entries)) continue;
   for (const item of entries) {
    if (!item || typeof item.title!=='string' || !item.title.trim() || typeof item.url!=='string') continue;
    const titleText=normalizeCinemaTitle(item.title);
    if (!terms.every(term=>titleText.includes(term))) continue;
    const video=cinemaVideo(item.url);
-   if (!video) continue;
-
-   const button=document.createElement('button');
-   button.type='button';
-   button.setAttribute('aria-pressed',String(video.url===selectedCinemaVideo));
-   if (typeof item.thumbnail==='string' && /^(?:https:\/\/|\/(?!\/))/.test(item.thumbnail)) {
-    const thumbnail=document.createElement('img');
-    thumbnail.src=item.thumbnail;
-    thumbnail.alt='';
-    thumbnail.loading='lazy';
-    button.append(thumbnail);
-   }
-   const title=document.createElement('span');
-   title.textContent=item.title;
-   button.append(title);
-   button.addEventListener('click',()=>playCinemaVideo(item,video,button));
-   cinemaItems.append(button);
+   if (video) cinemaCatalog.push({item,video});
   }
  }
- cinemaItems.scrollLeft=0;
- const count=cinemaItems.childElementCount;
+ renderCinemaWindow();
+ if (!key&&!query) {
+  cinemaStatus.textContent='Selecciona una fuente o busca un video.';
+  return;
+ }
+ if (!mediaConfig) {
+  cinemaStatus.textContent=mediaConfigFailed?'No se pudo cargar el catálogo.':'Cargando videos…';
+  return;
+ }
+ const count=cinemaCatalog.length;
+ const label=key?cinemaSources.find(button=>button.dataset.videoSource===key).textContent.trim():'';
  cinemaStatus.textContent=query
   ? (count ? (count===1?'1 video encontrado':count+' videos encontrados') : 'No se encontraron videos.')
   : (count ? label+' · elige un video.' : label+' · todavía no hay videos publicados.');
- cinemaControls.classList.toggle('hidden',count<2);
 }
 
 function showCinemaCatalog(key) {
@@ -2712,9 +2747,13 @@ cinemaSources.forEach(button=>{
 });
 cinemaControls.querySelectorAll('button').forEach(button=>{
  button.addEventListener('click',()=>{
-  cinemaItems.scrollBy({left:Number(button.dataset.carouselDirection)*cinemaItems.clientWidth});
+  const count=cinemaCatalog.length;
+  if (count<=cinemaPageSize) return;
+  cinemaOffset=(cinemaOffset+Number(button.dataset.carouselDirection)+count)%count;
+  renderCinemaWindow();
  });
 });
+renderCinemaCatalog();
 fetch('/api/media-config.json',{cache:'no-store'})
  .then(response=>{
   if (!response.ok) throw new Error('No se pudo cargar el catálogo');
