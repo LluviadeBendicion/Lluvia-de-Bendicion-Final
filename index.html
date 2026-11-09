@@ -281,16 +281,20 @@ body:has(#inicio.active) .lldb-side-icon{font-size:34px}
 /* LLDB Inicio desktop edition — layout aprobado, controles HTML reales */
 @media(min-width:901px){
 body:not(:has(#inicio.active, #radio.active)) header #menu-toggle{display:none!important}
+body:not(:has(#inicio.active, #radio.active)) header{margin-bottom:28px!important}
 body:not(:has(#inicio.active, #radio.active)) header #main-nav{
-  position:static!important;
+  position:absolute!important;
+  top:100%!important;
+  bottom:auto!important;
+  left:50%!important;
   display:flex!important;
   justify-content:center!important;
-  width:auto!important;
+  width:max-content!important;
   height:auto!important;
   min-height:0!important;
-  margin:0 auto 6px!important;
+  margin:4px 0 0!important;
   padding:0!important;
-  transform:none!important;
+  transform:translateX(-50%)!important;
   border:0!important;
   background:transparent!important;
 }
