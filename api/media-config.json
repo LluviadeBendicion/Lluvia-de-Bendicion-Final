@@ -76,7 +76,7 @@
       "items": [
         {
           "title": "Introducción de Lluvia de Bendición",
-          "url": "/assets/intro-cinematografica-lldb.mp4",
+          "url": "/assets/intro-cinematografica-1080p.mp4",
           "thumbnail": "/assets/entrada-celestial-lldb.png"
         }
       ]
@@ -93,7 +93,20 @@
       "share",
       "favorite"
     ],
-    "approvalRequired": true
+    "approvalRequired": true,
+    "christian": [
+      {
+        "title": "Luz del amanecer",
+        "url": "/assets/wallpapers/cristianos/luz-del-amanecer.jpg"
+      },
+      {
+        "title": "Camino de oración",
+        "url": "/assets/wallpapers/cristianos/camino-de-oracion.jpg"
+      }
+    ]
   },
-  "disclaimer": "YouTube y Facebook se reproducen desde sus servidores y los derechos pertenecen a sus respectivos titulares; los originales LLDB mantienen sus derechos propios."
+  "disclaimer": "YouTube y Facebook se reproducen desde sus servidores y los derechos pertenecen a sus respectivos titulares; los originales LLDB mantienen sus derechos propios.",
+  "podcasts": {
+    "items": []
+  }
 }

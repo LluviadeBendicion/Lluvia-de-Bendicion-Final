@@ -2285,6 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
+<link rel="stylesheet" href="/assets/media-rooms.css">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2293,7 +2294,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   <button id="intro-start" type="button" aria-label="Entrar a Lluvia de Bendición y reproducir la película con sonido" style="position:absolute;left:23%;width:54%;top:70%;height:17%;min-height:62px;cursor:pointer;background:transparent;border:0;border-radius:24px;touch-action:manipulation"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Entrar a Lluvia de Bendición</span></button>
  </div>
  <video id="intro-video" class="intro-video" playsinline preload="auto" aria-label="Intro cinematográfica de Lluvia de Bendición .Com">
-  <source src="/assets/intro-cinematografica-lldb.mp4" type="video/mp4">
+  <source src="/assets/intro-cinematografica-1080p.mp4" type="video/mp4">
  </video>
  <button class="skip hidden" id="skip" type="button">Saltar película</button>
 </section>
@@ -2535,14 +2536,50 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
 </section>
 <section id="wallpapers" class="view media-subpage" aria-labelledby="media-wallpapers-title">
   <h2 id="media-wallpapers-title" class="sr-only">Wallpapers</h2>
-  <img class="media-gallery-art" src="/assets/wallpapers-nitida.jpg" alt="Galería de Wallpapers de LLDB con un teléfono central y las colecciones Cristianos, LLDB Productions y Nuestros Afiliados" width="1536" height="1024" decoding="async" loading="lazy">
-  <p class="media-subpage-note">Las descargas estarán disponibles cuando se publiquen los fondos oficiales.</p>
+  <div class="wallpaper-stage">
+    <div class="wallpaper-scene">
+      <img class="media-gallery-art" src="/assets/wallpapers-nitida.jpg" alt="Galería de Wallpapers de LLDB con un teléfono central" width="1536" height="1024" decoding="async" loading="lazy">
+      <div class="wallpaper-phone hidden" aria-label="Vista previa en el celular"></div>
+    </div>
+    <div class="wallpaper-groups" role="group" aria-label="Colecciones de Wallpapers">
+      <button type="button" data-wallpaper-group="christian" aria-pressed="false">Cristianos</button>
+      <button type="button" data-wallpaper-group="originals" aria-pressed="false">LLDB Originales</button>
+      <button type="button" data-wallpaper-group="affiliates" aria-pressed="false">Nuestros Afiliados</button>
+    </div>
+    <div class="wallpaper-options hidden" role="group" aria-label="Fondos de la colección"></div>
+    <div class="wallpaper-actions" role="group" aria-label="Acciones del fondo seleccionado">
+      <a data-wallpaper-download aria-disabled="true">Descargar</a>
+      <button type="button" data-wallpaper-share disabled>Compartir</button>
+      <button type="button" data-wallpaper-favorite aria-pressed="false" disabled>Favorito</button>
+    </div>
+  </div>
+  <p class="wallpaper-status" id="wallpaper-status" role="status">Selecciona una colección para ver sus fondos en el celular.</p>
   <button type="button" class="media-back" data-go="media">‹ Volver a Media</button>
 </section>
 <section id="podcasts" class="view media-subpage" aria-labelledby="media-podcasts-title">
-  <h2 id="media-podcasts-title">Podcasts</h2>
-  <p>Los episodios de LLDB aparecerán aquí cuando estén disponibles.</p>
-  <button type="button" class="media-back" data-go="media">‹ Volver a Media</button>
+  <div class="podcast-stage">
+    <div class="podcast-heading">
+      <p>Lluvia de Bendición .Com</p>
+      <h2 id="media-podcasts-title">Podcasts</h2>
+      <p>Un espacio para escuchar y reflexionar.</p>
+    </div>
+    <button type="button" class="podcast-light-toggle" data-podcast-lights aria-pressed="false" aria-label="Atenuar las luces" title="Atenuar las luces">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 4h8l4 9H4l4-9Zm4 9v7m-4 0h8"/>
+        <path d="M3 15l-1 2m19-2 1 2"/>
+      </svg>
+    </button>
+    <div class="podcast-desk">
+      <button type="button" data-podcast-test>Prueba de sonido</button>
+      <details>
+        <summary>Explorar episodios</summary>
+        <div class="podcast-episodes" role="group" aria-label="Episodios de LLDB"></div>
+      </details>
+      <audio controls preload="none" hidden></audio>
+      <p role="status"></p>
+    </div>
+  </div>
+  <p><button type="button" class="media-back" data-go="media">‹ Volver a Media</button></p>
 </section>
 <section id="testimonios" class="view"><div class="crumb">Inicio › Testimonios</div><h2>Testimonios</h2><div class="testimony-wall"><div class="speech-card"><strong>Historias de bendición</strong><span>Título · Nombre</span></div><div class="projection"><div class="projector-light" aria-hidden="true"></div><h3 id="testimony-title">Testimonios LLDB</h3><p id="testimony-meta">Nombre · Localidad</p><small id="testimony-body">Los testimonios oficiales aparecerán aquí después de aprobación.</small><div class="testimony-controls"><button data-testimony="-1" aria-label="Testimonio anterior">‹</button><button data-testimony="1" aria-label="Testimonio siguiente">›</button></div></div><div class="speech-card"><strong>Tu testimonio</strong><span>Comparte lo que Dios ha hecho</span></div></div></section>
 <section id="donaciones" class="view" style="padding:0!important;background:#050914!important;min-height:0!important;overflow:visible!important">
@@ -3018,4 +3055,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script></body></html>
+</script><script src="/assets/media-wallpapers.js" defer></script>
+<script src="/assets/podcast-room.js" defer></script>
+</body></html>

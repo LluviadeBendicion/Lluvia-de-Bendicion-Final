@@ -115,5 +115,12 @@
       "source": "/api/social-config.json",
       "destination": "/api/site-config?name=social-config"
     }
-  ]
+  ],
+  "functions": {
+    "api/wallpaper-catalog.js": {
+      "includeFiles": "assets/wallpapers/{originales,afiliados}/**"
+    }
+  },
+  "buildCommand": "npm install --no-save --package-lock=false --ignore-scripts @ffmpeg-installer/linux-x64@4.1.0 && node scripts/build-site.cjs",
+  "outputDirectory": "dist"
 }
