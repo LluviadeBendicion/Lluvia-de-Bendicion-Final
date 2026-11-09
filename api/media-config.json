@@ -3,10 +3,6 @@
     "youtubePlaylist": {
       "enabled": true,
       "shuffle": true,
-      "items": []
-    },
-    "facebookServices": {
-      "enabled": true,
       "items": [
         {
           "title": "🔥Adoración Cristiana en Vivo | ABRE LOS CIELOS | Adoración 2026 | HolyWave Worship #worship",
@@ -70,6 +66,10 @@
         }
       ],
       "playlistId": "PLCQtk93VrmzA"
+    },
+    "facebookServices": {
+      "enabled": true,
+      "items": []
     },
     "lldbOriginals": {
       "enabled": true,

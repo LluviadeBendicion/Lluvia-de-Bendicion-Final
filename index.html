@@ -2220,8 +2220,9 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 .media-video-carousel-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .media-video-controls{display:flex;gap:4px}
 .media-video-controls button{
+  display:grid;place-items:center;
   width:30px;height:30px;padding:0;border:1px solid #d3ad70;border-radius:50%;
-  background:#0b111a;color:#ffe1a5;font:22px/1 system-ui,sans-serif;cursor:pointer;
+  background:#0b111a;color:#ffe1a5;cursor:pointer;
 }
 .media-video-items{
   display:grid;
@@ -2251,6 +2252,12 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 }
 .media-video-placeholder{padding:2px}
 .media-video-placeholder img{object-fit:contain}
+.media-video-controls button::before{
+  content:"";width:7px;height:7px;
+  border-top:2px solid currentColor;border-right:2px solid currentColor;
+  transform:rotate(45deg);translate:-1px 0;
+}
+.media-video-controls button:first-child::before{transform:rotate(-135deg);translate:1px 0}
 .media-video-controls button:disabled{opacity:.5;cursor:default}
 .media-video-items button[aria-pressed="true"]{border-color:#ffe0a1;background:#263b54}
 .media-video-items button:focus-visible{outline:2px solid #ffe1a5;outline-offset:1px}
@@ -2261,10 +2268,13 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-search{position:absolute;left:36%;right:24%;top:54%;font:clamp(11px,1.05vw,14px) system-ui,sans-serif}
   .media-video-carousel{position:absolute;left:25.3%;right:16.2%;top:61%;bottom:21%;z-index:2}
   .media-video-controls{
-    position:absolute;left:-6.8%;right:-6.8%;top:37%;
-    justify-content:space-between;pointer-events:none;
+    position:absolute;inset:40.6% 0 auto;height:0;pointer-events:none;
   }
-  .media-video-controls button{pointer-events:auto;width:clamp(22px,2.8vw,32px);height:clamp(22px,2.8vw,32px)}
+  .media-video-controls button{
+    position:absolute;top:0;pointer-events:auto;width:clamp(22px,2.8vw,32px);height:clamp(22px,2.8vw,32px);
+  }
+  .media-video-controls button:first-child{right:calc(100% + 4.23%);transform:translate(50%,-50%)}
+  .media-video-controls button:last-child{left:calc(100% + 4.06%);transform:translate(-50%,-50%)}
   .media-video-items img{height:clamp(26px,4.1vw,53px);aspect-ratio:auto}
   .media-video-placeholder img{object-fit:contain}
 }
@@ -2514,8 +2524,8 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
       <div class="media-video-carousel-head">
         <p id="media-video-status" role="status"></p>
         <div class="media-video-controls" aria-label="Desplazar el carrusel">
-          <button type="button" data-carousel-direction="-1" aria-label="Videos anteriores">‹</button>
-          <button type="button" data-carousel-direction="1" aria-label="Videos siguientes">›</button>
+          <button type="button" data-carousel-direction="-1" aria-label="Videos anteriores"></button>
+          <button type="button" data-carousel-direction="1" aria-label="Videos siguientes"></button>
         </div>
       </div>
       <div class="media-video-items" role="group" aria-label="Elige un video"></div>
@@ -2630,9 +2640,10 @@ const cinemaControls=cinema.querySelector('.media-video-controls');
 const cinemaSearch=cinema.querySelector('.media-video-search');
 const cinemaSearchInput=document.getElementById('media-video-query');
 const catalogKeys={youtube:'youtubePlaylist',facebook:'facebookServices',originals:'lldbOriginals',affiliates:'affiliateVideos'};
+const cinemaProviders={youtube:'youtube',facebook:'facebook',originals:'file',affiliates:'file'};
 let mediaConfig=null;
 let mediaConfigFailed=false;
-let facebookPlaylistRequested=false;
+let youtubePlaylistRequested=false;
 let selectedCinemaSource=null;
 let selectedCinemaVideo=null;
 const cinemaPageSize=5;
@@ -2648,13 +2659,13 @@ function cinemaVideo(url) {
   const id=host==='youtu.be' ? source.pathname.split('/')[1]
    : source.searchParams.get('v') || source.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1];
   if (!/^[\w-]{11}$/.test(id||'')) return null;
-  return {embed:'https://www.youtube.com/embed/'+id+'?autoplay=1',url:source.href};
+  return {provider:'youtube',embed:'https://www.youtube.com/embed/'+id+'?autoplay=1',url:source.href};
  }
  if (['facebook.com','www.facebook.com','m.facebook.com'].includes(host)) {
   if (!/\/videos\//.test(source.pathname) && !source.searchParams.has('v')) return null;
-  return {embed:'https://www.facebook.com/plugins/video.php?autoplay=true&href='+encodeURIComponent(source.href),url:source.href};
+  return {provider:'facebook',embed:'https://www.facebook.com/plugins/video.php?autoplay=true&href='+encodeURIComponent(source.href),url:source.href};
  }
- if (/\.(?:mp4|webm|ogv)$/i.test(source.pathname)) return {url:source.href};
+ if (/\.(?:mp4|webm|ogv)$/i.test(source.pathname)) return {provider:'file',url:source.href};
  return null;
 }
 
@@ -2734,17 +2745,17 @@ function renderCinemaWindow() {
  });
 }
 
-function refreshFacebookPlaylist() {
- if (facebookPlaylistRequested || !mediaConfig?.videos?.facebookServices?.playlistId) return;
- facebookPlaylistRequested=true;
- fetch('/api/facebook-playlist')
+function refreshYouTubePlaylist() {
+ if (youtubePlaylistRequested || !mediaConfig?.videos?.youtubePlaylist?.playlistId) return;
+ youtubePlaylistRequested=true;
+ fetch('/api/youtube-playlist')
   .then(response=>response.ok?response.json():null)
   .then(result=>{
    if (!Array.isArray(result?.items)) return;
-   const facebook=mediaConfig.videos.facebookServices;
-   if (JSON.stringify(facebook.items)===JSON.stringify(result.items)) return;
-   facebook.items=result.items;
-   if (selectedCinemaSource==='facebook'||(!selectedCinemaSource&&cinemaSearchInput.value.trim())) {
+   const youtube=mediaConfig.videos.youtubePlaylist;
+   if (JSON.stringify(youtube.items)===JSON.stringify(result.items)) return;
+   youtube.items=result.items;
+   if (selectedCinemaSource==='youtube'||(!selectedCinemaSource&&cinemaSearchInput.value.trim())) {
     renderCinemaCatalog();
    }
   })
@@ -2759,7 +2770,7 @@ function renderCinemaCatalog() {
  cinemaOffset=0;
 
  const keys=key?[key]:(query?Object.keys(catalogKeys):[]);
- if (keys.includes('facebook')) refreshFacebookPlaylist();
+ if (keys.includes('youtube')) refreshYouTubePlaylist();
  for (const sourceKey of keys) {
   const entries=mediaConfig?.videos?.[catalogKeys[sourceKey]]?.items;
   if (!Array.isArray(entries)) continue;
@@ -2768,7 +2779,7 @@ function renderCinemaCatalog() {
    const titleText=normalizeCinemaTitle(item.title);
    if (!terms.every(term=>titleText.includes(term))) continue;
    const video=cinemaVideo(item.url);
-   if (video) cinemaCatalog.push({item,video});
+   if (video && video.provider===cinemaProviders[sourceKey]) cinemaCatalog.push({item,video});
   }
  }
  renderCinemaWindow();

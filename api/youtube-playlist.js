@@ -1,4 +1,4 @@
-const { videos: { facebookServices } } = require('./media-config.json');
+const { videos: { youtubePlaylist } } = require('./media-config.json');
 
 function readPlaylistData(html) {
   const encoded = html.match(/(?:window\[['"]ytInitialData['"]\]|ytInitialData)\s*=\s*'((?:\\.|[^'\\])*)'/)?.[1];
@@ -53,7 +53,7 @@ async function fetchPlaylist() {
     do {
       const params = new URLSearchParams({
         part: 'snippet',
-        playlistId: facebookServices.playlistId,
+        playlistId: youtubePlaylist.playlistId,
         maxResults: '50',
         key: process.env.YOUTUBE_API_KEY
       });
@@ -74,7 +74,7 @@ async function fetchPlaylist() {
     return [...items.values()];
   }
 
-  const page = await fetch('https://www.youtube.com/playlist?list=' + facebookServices.playlistId + '&hl=en', {
+  const page = await fetch('https://www.youtube.com/playlist?list=' + youtubePlaylist.playlistId + '&hl=en', {
     headers: { 'Accept-Language': 'en-US,en;q=0.9' },
     signal: AbortSignal.timeout(4500)
   });
@@ -92,7 +92,7 @@ module.exports = async function handler(req, res) {
   try {
     items = await fetchPlaylist();
   } catch {
-    items = facebookServices.items;
+    items = youtubePlaylist.items;
     source = 'respaldo';
   }
   res.setHeader('Vercel-CDN-Cache-Control', source === 'playlist'
