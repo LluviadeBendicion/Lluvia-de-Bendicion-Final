@@ -2,13 +2,26 @@
   "videos": {
     "youtubePlaylist": {
       "enabled": true,
-      "shuffle": true
+      "shuffle": true,
+      "items": []
     },
     "facebookServices": {
-      "enabled": true
+      "enabled": true,
+      "items": []
     },
     "lldbOriginals": {
-      "enabled": true
+      "enabled": true,
+      "items": [
+        {
+          "title": "Introducción de Lluvia de Bendición",
+          "url": "/assets/intro-cinematografica-lldb.mp4",
+          "thumbnail": "/assets/entrada-celestial-lldb.png"
+        }
+      ]
+    },
+    "affiliateVideos": {
+      "enabled": true,
+      "items": []
     }
   },
   "wallpapers": {

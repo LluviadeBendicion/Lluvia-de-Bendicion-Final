@@ -2079,6 +2079,140 @@ body:has(#inicio.active) footer #secret-admin-trigger{
   }
 }
 </style>
+<style id="lldb-media-subpages">
+body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header{margin-bottom:0!important}
+body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
+  top:auto!important;
+  bottom:2px!important;
+  margin:0!important;
+}
+@media(max-width:900px){
+  body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header .top{padding-bottom:24px!important}
+}
+.media-video-art{position:relative}
+.media-video-art>img,
+.media-gallery-art{display:block;width:100%;height:auto;border-radius:10px}
+.media-subpage-note{margin:12px 0;color:#eadbc0}
+.media-back{
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:8px 12px;
+  background:#122036;
+  color:#ffe1a5;
+  cursor:pointer;
+}
+@media(min-width:701px){
+  .media-video-sources button,
+  .media-video-exit{
+    position:absolute;
+    border:0;
+    border-radius:5px;
+    background:transparent;
+    cursor:pointer;
+  }
+  .media-video-sources button{left:2.4%;width:14.5%;height:12%}
+  .media-video-sources button:nth-child(1){top:8%}
+  .media-video-sources button:nth-child(2){top:20.7%}
+  .media-video-sources button:nth-child(3){top:33%}
+  .media-video-sources button:nth-child(4){top:46%}
+  .media-video-exit{top:1%;right:2.4%;width:7%;height:11%}
+  .media-video-sources button:hover,
+  .media-video-sources button[aria-pressed="true"],
+  .media-video-exit:hover{background:#f4ce7a22}
+  .media-video-sources button span,
+  .media-video-exit span{
+    position:absolute;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    clip-path:inset(50%);
+    white-space:nowrap;
+  }
+}
+@media(max-width:700px){
+  .media-video-sources{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+  .media-video-sources button,
+  .media-video-exit{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:9px;
+    background:#122036;
+    color:#ffe1a5;
+    cursor:pointer;
+  }
+  .media-video-sources button[aria-pressed="true"]{border-color:#ffdc89;background:#27364c}
+}
+.media-video-sources button:focus-visible,
+.media-video-exit:focus-visible,
+.media-back:focus-visible{outline:2px solid #ffe1a5;outline-offset:2px}
+</style>
+<style id="lldb-media-projector">
+.media-video-art{isolation:isolate}
+.media-video-backdrop{position:relative}
+.media-video-backdrop>img{display:block;width:100%;height:auto;border-radius:10px}
+.media-video-backdrop::before,
+.media-video-backdrop::after{content:"";position:absolute;pointer-events:none}
+.media-video-backdrop::before,
+#media-projector{background:radial-gradient(ellipse at 50% 38%,#14191e,#05070a 78%)}
+.media-video-backdrop::before{left:24.65%;top:11.05%;width:58.5%;height:40.1%}
+.media-video-backdrop::after{
+  left:20.7%;top:53.4%;width:67.5%;height:25.9%;
+  background:linear-gradient(165deg,#111e2a,#080d14 65%);
+  border-bottom:1px solid #bd8d45;
+}
+#media-projector{overflow:hidden}
+#media-projector :is(iframe,video){
+  display:block;width:100%;height:100%;border:0;background:#000;object-fit:contain;
+}
+.media-video-carousel{
+  display:grid;
+  align-content:center;
+  gap:6px;
+  color:#f9edd6;
+  font:14px/1.25 system-ui,sans-serif;
+}
+#media-video-status{margin:0}
+.media-video-carousel-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.media-video-controls{display:flex;gap:4px}
+.media-video-controls button{
+  border:1px solid var(--line);border-radius:5px;background:#111c2d;color:#ffe1a5;
+  padding:2px 8px;cursor:pointer;
+}
+.media-video-items{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:3px 2px 7px;
+  scroll-snap-type:x mandatory;
+  scrollbar-color:#ba8a43 #121b27;
+}
+.media-video-items:empty{display:none}
+.media-video-items button{
+  flex:0 0 clamp(112px,14vw,170px);
+  scroll-snap-align:start;
+  display:grid;
+  gap:5px;
+  padding:6px;
+  border:1px solid #b18445;
+  border-radius:7px;
+  background:#102035;
+  color:#fff0c9;
+  cursor:pointer;
+}
+.media-video-items button[aria-pressed="true"]{border-color:#ffe0a1;background:#263b54}
+.media-video-items button:focus-visible{outline:2px solid #ffe1a5;outline-offset:1px}
+.media-video-items img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px}
+@media(min-width:701px){
+  #media-projector{position:absolute;left:24.65%;top:11.05%;width:58.5%;height:40.1%}
+  #media-projector:not(:empty){min-height:200px;z-index:1}
+  .media-video-carousel{position:absolute;left:22.3%;right:13.3%;top:55%;bottom:22%;overflow:auto}
+}
+@media(max-width:700px){
+  #media-projector{height:max(200px,52vw);border:1px solid var(--line);border-radius:7px}
+  #media-projector:empty{display:none}
+  .media-video-carousel{margin:10px 0;padding:10px;background:#0b1726;border-radius:7px}
+}
+</style>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2234,8 +2368,10 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
     <summary><span class="inicio-icon" aria-hidden="true">▶</span>Media</summary>
     <div class="inicio-branch">
      <button type="button" data-go="media">Ver Media</button>
-     <button type="button" data-go="media" data-home-target="#media [data-panel='video-room']">Videos</button>
-     <button type="button" data-go="media" data-home-target="#media [data-panel='wall-room']">Wallpapers</button>
+     <button type="button" data-go="videos">Videos</button>
+     <button type="button" data-go="wallpapers">Wallpapers</button>
+     <button type="button" data-go="originales">LLDB Originales</button>
+     <button type="button" data-go="podcasts">Podcasts</button>
     </div>
    </details>
    <details>
@@ -2280,24 +2416,55 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   <h2>Media</h2>
   <img src="/assets/media-nitida.jpg" alt="" width="1628" height="966" decoding="async" loading="lazy">
   <div class="media-feature-grid">
-    <button type="button" class="media-feature media-videos" data-panel="video-room"><span>Videos</span></button>
-    <button type="button" class="media-feature media-wallpapers" data-panel="wall-room"><span>Wallpapers</span></button>
-    <button type="button" class="media-feature media-originals" data-panel="video-room" data-media-source="originals"><span>LLDB Originales</span></button>
-    <button type="button" class="media-feature media-podcasts" data-panel="podcast-room"><span>Podcasts</span></button>
+    <button type="button" class="media-feature media-videos" data-go="videos"><span>Videos</span></button>
+    <button type="button" class="media-feature media-wallpapers" data-go="wallpapers"><span>Wallpapers</span></button>
+    <button type="button" class="media-feature media-originals" data-go="originales"><span>LLDB Originales</span></button>
+    <button type="button" class="media-feature media-podcasts" data-go="podcasts"><span>Podcasts</span></button>
   </div>
   <div class="media-side" role="group" aria-label="Accesos de Media">
-    <button type="button" data-panel="video-room" aria-label="Videos"></button>
-    <button type="button" data-panel="wall-room" aria-label="Wallpapers"></button>
-    <button type="button" data-panel="video-room" data-media-source="originals" aria-label="LLDB Originales"></button>
-    <button type="button" data-panel="podcast-room" aria-label="Podcasts"></button>
+    <button type="button" data-go="videos" aria-label="Videos"></button>
+    <button type="button" data-go="wallpapers" aria-label="Wallpapers"></button>
+    <button type="button" data-go="originales" aria-label="LLDB Originales"></button>
+    <button type="button" data-go="podcasts" aria-label="Podcasts"></button>
   </div>
 </div>
-<div id="video-room" role="dialog" aria-modal="false" aria-label="Videos LLDB" class="card hidden cinema-room"><div class="acoustic-wall" aria-hidden="true"></div><button class="exit panel-exit exit-sign" data-close="video-room" aria-label="Salir de Videos">EXIT</button><h3>Videos · experiencia cine</h3><div class="cinema-screen" id="cinema-screen">Selecciona una fuente</div><div class="cinema-layout"><div class="source-rail" aria-label="Fuentes de video"><button data-video-source="youtube">YouTube Playlist</button><button data-video-source="facebook">Servicios Facebook</button><button data-video-source="originals">Originales LLDB</button></div><div class="cinema-speaker">LLDB</div></div><p class="legal">Los videos externos se reproducirán desde sus plataformas de origen.</p></div><div id="wall-room" role="dialog" aria-modal="false" aria-label="Wallpapers LLDB" class="card hidden wallpaper-room"><button class="exit panel-exit" data-close="wall-room" aria-label="Salir de Wallpapers">×</button><h3>Wallpapers</h3><div class="wall-layout"><div class="phone-frame"><div class="wall-preview" id="wall-preview">Wallpaper LLDB 1</div></div><div class="wall-rail" aria-label="Carrusel vertical de wallpapers"><button data-wall="1" aria-pressed="true" aria-label="Wallpaper 1">01</button><button data-wall="2" aria-pressed="false" aria-label="Wallpaper 2">02</button><button data-wall="3" aria-pressed="false" aria-label="Wallpaper 3">03</button><button data-wall="4" aria-pressed="false" aria-label="Wallpaper 4">04</button></div></div><div class="wall-actions"><button id="wall-download" type="button" disabled>Descargar</button><button id="wall-share" type="button" disabled>Compartir</button><button id="wall-favorite" type="button" disabled>Favorito</button></div><small>Los botones se habilitarán al cargar wallpapers oficiales aprobados.</small></div>
-<div id="podcast-room" role="dialog" aria-modal="false" aria-label="Podcasts LLDB" class="card hidden">
-  <button type="button" class="exit panel-exit" data-close="podcast-room" aria-label="Salir de Podcasts">×</button>
-  <h3>Podcasts</h3>
+</section>
+<section id="videos" class="view media-subpage" aria-labelledby="media-videos-title">
+  <h2 id="media-videos-title" class="sr-only">Videos</h2>
+  <div class="media-video-art">
+    <div class="media-video-backdrop">
+      <img src="/assets/videos-nitida.jpg" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
+    </div>
+    <div class="media-video-sources" role="group" aria-label="Fuentes de video">
+      <button type="button" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
+      <button type="button" data-video-source="facebook" aria-pressed="false"><span>Facebook</span></button>
+      <button type="button" data-video-source="originals" aria-pressed="false"><span>LLDB Producciones</span></button>
+      <button type="button" data-video-source="affiliates" aria-pressed="false"><span>Videos de afiliados</span></button>
+    </div>
+    <div id="media-projector" aria-label="Pantalla del cine"></div>
+    <div class="media-video-carousel hidden" aria-label="Videos de la fuente seleccionada">
+      <div class="media-video-carousel-head">
+        <p id="media-video-status" role="status"></p>
+        <div class="media-video-controls hidden" aria-label="Desplazar el carrusel">
+          <button type="button" data-carousel-direction="-1" aria-label="Videos anteriores">‹</button>
+          <button type="button" data-carousel-direction="1" aria-label="Videos siguientes">›</button>
+        </div>
+      </div>
+      <div class="media-video-items" role="group" aria-label="Elige un video"></div>
+    </div>
+    <button type="button" class="media-video-exit" data-go="media"><span>Volver a Media</span></button>
+  </div>
+</section>
+<section id="wallpapers" class="view media-subpage" aria-labelledby="media-wallpapers-title">
+  <h2 id="media-wallpapers-title" class="sr-only">Wallpapers</h2>
+  <img class="media-gallery-art" src="/assets/wallpapers-nitida.jpg" alt="Galería de Wallpapers de LLDB con un teléfono central y las colecciones Cristianos, LLDB Productions y Nuestros Afiliados" width="1536" height="1024" decoding="async" loading="lazy">
+  <p class="media-subpage-note">Las descargas estarán disponibles cuando se publiquen los fondos oficiales.</p>
+  <button type="button" class="media-back" data-go="media">‹ Volver a Media</button>
+</section>
+<section id="podcasts" class="view media-subpage" aria-labelledby="media-podcasts-title">
+  <h2 id="media-podcasts-title">Podcasts</h2>
   <p>Los episodios de LLDB aparecerán aquí cuando estén disponibles.</p>
-</div>
+  <button type="button" class="media-back" data-go="media">‹ Volver a Media</button>
 </section>
 <section id="testimonios" class="view"><div class="crumb">Inicio › Testimonios</div><h2>Testimonios</h2><div class="testimony-wall"><div class="speech-card"><strong>Historias de bendición</strong><span>Título · Nombre</span></div><div class="projection"><div class="projector-light" aria-hidden="true"></div><h3 id="testimony-title">Testimonios LLDB</h3><p id="testimony-meta">Nombre · Localidad</p><small id="testimony-body">Los testimonios oficiales aparecerán aquí después de aprobación.</small><div class="testimony-controls"><button data-testimony="-1" aria-label="Testimonio anterior">‹</button><button data-testimony="1" aria-label="Testimonio siguiente">›</button></div></div><div class="speech-card"><strong>Tu testimonio</strong><span>Comparte lo que Dios ha hecho</span></div></div></section>
 <section id="donaciones" class="view" style="padding:0!important;background:#050914!important;min-height:0!important;overflow:visible!important">
@@ -2341,8 +2508,12 @@ else if(introVideo){
  introGate.onclick=(event)=>{if(event.target!==introStart)startApprovedIntro()};
 }
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
-const views=[...document.querySelectorAll('.view')];function showView(id,push=true,scroll=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(id)||document.getElementById('inicio');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(push)history.pushState({view:target.id},'', '#'+target.id);if(!scroll)return;if(target.id!=='radio'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
-window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(id))showView(id,false)});
+const views=[...document.querySelectorAll('.view')];
+function mediaViewId(id) {
+ return id === 'originales' ? 'videos' : id;
+}
+function showView(id,push=true,scroll=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(mediaViewId(id))||document.getElementById('inicio');const wasInCinema=document.getElementById('videos').classList.contains('active');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(wasInCinema||target.id==='videos')queueMicrotask(()=>showCinemaCatalog(id==='originales'?'originals':null));if(push){const route=id==='originales'?id:target.id;history.pushState({view:route},'', '#'+route);}if(!scroll)return;if(target.id!=='radio'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
+window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(mediaViewId(id))?.classList.contains('view'))showView(id,false)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);if(b.dataset.subview){document.querySelector('[data-about="'+b.dataset.subview+'"]')?.click()}if(b.dataset.resourceLink){document.querySelector('[data-resource="'+b.dataset.resourceLink+'"]')?.click()}if(b.dataset.panel){document.getElementById(b.dataset.panel)?.classList.remove('hidden')}mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 document.querySelectorAll('#inicio [data-home-target]').forEach(button=>{
  button.addEventListener('click',()=>document.querySelector(button.dataset.homeTarget)?.click());
@@ -2353,7 +2524,7 @@ document.querySelector('#inicio [data-home-focus]').addEventListener('click',eve
 const tuner=document.getElementById('tuner'),radioStage=document.getElementById('radio-stage');tuner?.addEventListener('click',()=>{radioStage.classList.remove('tuning');void radioStage.offsetWidth;radioStage.classList.add('tuning')});
 document.querySelectorAll('.radio-home').forEach(b=>b.onclick=()=>showView('inicio'));
 document.querySelectorAll('.radio-exit').forEach(b=>b.onclick=()=>showView('inicio'));
-if (location.hash && document.getElementById(initial)) {
+if (location.hash && document.getElementById(mediaViewId(initial))?.classList.contains('view')) {
  showView(initial, false, false);
 }
 window.addEventListener('pageshow', () => {
@@ -2375,22 +2546,125 @@ document.getElementById('about-close').onclick=()=>{aboutPanel.classList.add('hi
 let officialContent={};fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>officialContent=c).catch(()=>{});
 const resourcePanel=document.getElementById('resource-panel'),resourceTitle=document.getElementById('resource-title');document.querySelectorAll('[data-resource]').forEach(b=>b.onclick=()=>{if(b.dataset.resource==='oracion'){const stage=document.querySelector('#especial .lldb-photo-stage');const board=document.getElementById('lldb-prayer-board');const cfg=officialContent.dailyPrayer||{};const actual=cfg.text||cfg.content;if(actual)document.getElementById('lldb-prayer-text').textContent=actual;document.getElementById('lldb-resource-board').hidden=true;board.hidden=false;stage.classList.add('prayer-open');board.style.animation='none';void board.offsetWidth;board.style.animation='';resourcePanel.classList.add('hidden');return;}resourceTitle.textContent=(b.querySelector('h3')?.textContent||b.getAttribute('aria-label')||'Recurso');const key=b.dataset.resource,map={oracion:'dailyPrayer',versiculo:'dailyVerse',memorizar:'memoryVerse',devocional:'weeklyDevotional',sermones:'weeklySermons',estudios:'studies',peticiones:'prayerRequests'},cfg=officialContent[map[key]]||{};document.getElementById('resource-body').textContent=[cfg.title,cfg.reference,cfg.text||cfg.content||b.dataset.copy||'Contenido LLDB',cfg.note].filter(Boolean).join('\n\n');const prayerForm=document.getElementById('prayer-form');prayerForm?.classList.toggle('hidden',key!=='peticiones');if(['versiculo','memorizar','devocional','sermones','estudios'].includes(key)){document.getElementById('lldb-prayer-board').hidden=true;document.getElementById('lldb-resource-title').textContent=resourceTitle.textContent;document.getElementById('lldb-resource-text').textContent=document.getElementById('resource-body').textContent;document.getElementById('lldb-resource-board').hidden=false;document.querySelector('#especial .lldb-photo-stage').classList.add('prayer-open');resourcePanel.classList.add('hidden')}else{resourcePanel.classList.remove('hidden')}});document.getElementById('resource-close').onclick=()=>resourcePanel.classList.add('hidden');document.getElementById('lldb-resource-back').onclick=()=>{document.getElementById('lldb-resource-board').hidden=true;document.querySelector('#especial .lldb-photo-stage').classList.remove('prayer-open')};document.getElementById('lldb-prayer-back').onclick=()=>{document.getElementById('lldb-prayer-board').hidden=true;document.querySelector('#especial .lldb-photo-stage').classList.remove('prayer-open')};
 document.querySelectorAll('[data-wall]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-wall]').forEach(x=>x.classList.toggle('selected',x===b));document.getElementById('wall-preview').textContent='Wallpaper LLDB '+b.dataset.wall});
-let mediaConfig={};fetch('/api/media-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>mediaConfig=c).catch(()=>{});document.querySelectorAll('[data-video-source]').forEach(b=>b.onclick=()=>{const room=document.getElementById('video-room'),key=b.dataset.videoSource,cfg=mediaConfig[key]||mediaConfig.sources?.[key]||{};room.classList.add('playing');document.getElementById('cinema-screen').textContent=cfg.url?'Fuente oficial configurada: '+b.textContent:b.textContent+' · fuente oficial pendiente de conexión'});
-document.querySelectorAll('[data-about]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-about]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));const target=document.getElementById('about-'+b.dataset.about);document.querySelectorAll('.about-detail').forEach(x=>x.classList.toggle('hidden',x!==target));target?.scrollIntoView({behavior:'smooth',block:'nearest'})});
-document.querySelectorAll('[data-panel]').forEach(button=>{
- button.onclick=()=>{
-  const panel=document.getElementById(button.dataset.panel);
-  if(button.closest('#media .media-scene')){
-   document.querySelectorAll('#media [role="dialog"]').forEach(room=>room.classList.toggle('hidden',room!==panel));
-  }
-  panel?.classList.remove('hidden');
-  if(button.dataset.mediaSource){
-   panel?.querySelector('[data-video-source="'+button.dataset.mediaSource+'"]')?.click();
-  }
- };
-});let lastPanelTrigger=null;document.querySelectorAll('[data-panel]').forEach(b=>b.addEventListener('click',()=>{lastPanelTrigger=b;const p=document.getElementById(b.dataset.panel);p?.setAttribute('tabindex','-1');setTimeout(()=>p?.focus(),0)}));document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>{document.getElementById(b.dataset.close)?.classList.add('hidden');lastPanelTrigger?.focus()});
-let taps=0,timer;const secretTrigger=document.getElementById('secret-admin-trigger');secretTrigger.onclick=()=>{clearTimeout(timer);taps++;timer=setTimeout(()=>taps=0,1800);if(taps===5){taps=0;admin.classList.remove('hidden');adminClose.focus()}};
-const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');document.getElementById('video-room')?.classList.add('hidden');document.getElementById('wall-room')?.classList.add('hidden');document.getElementById('podcast-room')?.classList.add('hidden');admin?.classList.add('hidden')}});
+const cinema=document.getElementById('videos');
+const cinemaSources=[...cinema.querySelectorAll('[data-video-source]')];
+const projector=document.getElementById('media-projector');
+const cinemaCarousel=cinema.querySelector('.media-video-carousel');
+const cinemaItems=cinema.querySelector('.media-video-items');
+const cinemaStatus=document.getElementById('media-video-status');
+const cinemaControls=cinema.querySelector('.media-video-controls');
+const catalogKeys={youtube:'youtubePlaylist',facebook:'facebookServices',originals:'lldbOriginals',affiliates:'affiliateVideos'};
+let mediaConfig=null;
+let mediaConfigFailed=false;
+let selectedCinemaSource=null;
+
+function cinemaVideo(url) {
+ let source;
+ try { source=new URL(url,location.origin); } catch { return null; }
+ if (source.protocol!=='https:' && source.origin!==location.origin) return null;
+ const host=source.hostname;
+ if (['youtube.com','www.youtube.com','m.youtube.com','youtu.be'].includes(host)) {
+  const id=host==='youtu.be' ? source.pathname.split('/')[1]
+   : source.searchParams.get('v') || source.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1];
+  if (!/^[\w-]{11}$/.test(id||'')) return null;
+  return {embed:'https://www.youtube.com/embed/'+id+'?autoplay=1',url:source.href};
+ }
+ if (['facebook.com','www.facebook.com','m.facebook.com'].includes(host)) {
+  if (!/\/videos\//.test(source.pathname) && !source.searchParams.has('v')) return null;
+  return {embed:'https://www.facebook.com/plugins/video.php?autoplay=true&href='+encodeURIComponent(source.href),url:source.href};
+ }
+ if (/\.(?:mp4|webm|ogv)$/i.test(source.pathname)) return {url:source.href};
+ return null;
+}
+
+function playCinemaVideo(item,video,button) {
+ const player=document.createElement(video.embed?'iframe':'video');
+ if (video.embed) {
+  player.src=video.embed;
+  player.title=item.title;
+  player.allow='autoplay; encrypted-media; fullscreen; picture-in-picture';
+  player.allowFullscreen=true;
+ } else {
+  player.src=video.url;
+  player.controls=true;
+  player.playsInline=true;
+  player.setAttribute('aria-label',item.title);
+ }
+ projector.replaceChildren(player);
+ cinemaItems.querySelectorAll('button').forEach(card=>{
+  card.setAttribute('aria-pressed',String(card===button));
+ });
+ if (!video.embed) player.play().catch(()=>{});
+}
+
+function showCinemaCatalog(key) {
+ selectedCinemaSource=key;
+ projector.replaceChildren();
+ cinemaItems.replaceChildren();
+ cinemaSources.forEach(button=>{
+  button.setAttribute('aria-pressed',String(button.dataset.videoSource===key));
+ });
+ cinemaCarousel.classList.toggle('hidden',!key);
+ cinemaControls.classList.add('hidden');
+ if (!key) return;
+
+ const label=cinemaSources.find(button=>button.dataset.videoSource===key).textContent.trim();
+ if (!mediaConfig) {
+  cinemaStatus.textContent=mediaConfigFailed?'No se pudo cargar el catálogo.':'Cargando videos de '+label+'…';
+  return;
+ }
+ const entries=mediaConfig.videos?.[catalogKeys[key]]?.items;
+ if (Array.isArray(entries)) {
+  entries.forEach(item=>{
+   if (!item || typeof item.title!=='string' || !item.title.trim() || typeof item.url!=='string') return;
+   const video=cinemaVideo(item.url);
+   if (!video) return;
+   const button=document.createElement('button');
+   button.type='button';
+   button.setAttribute('aria-pressed','false');
+   if (typeof item.thumbnail==='string' && /^(?:https:\/\/|\/(?!\/))/.test(item.thumbnail)) {
+    const thumbnail=document.createElement('img');
+    thumbnail.src=item.thumbnail;
+    thumbnail.alt='';
+    thumbnail.loading='lazy';
+    button.append(thumbnail);
+   }
+   const title=document.createElement('span');
+   title.textContent=item.title;
+   button.append(title);
+   button.addEventListener('click',()=>playCinemaVideo(item,video,button));
+   cinemaItems.append(button);
+  });
+ }
+ cinemaItems.scrollLeft=0;
+ cinemaStatus.textContent=cinemaItems.childElementCount
+  ? label+' · elige un video para proyectarlo.'
+  : label+' · todavía no hay videos publicados.';
+ cinemaControls.classList.toggle('hidden',cinemaItems.childElementCount<2);
+}
+
+cinemaSources.forEach(button=>{
+ button.addEventListener('click',()=>showCinemaCatalog(button.dataset.videoSource));
+});
+cinemaControls.querySelectorAll('button').forEach(button=>{
+ button.addEventListener('click',()=>{
+  cinemaItems.scrollBy({left:Number(button.dataset.carouselDirection)*cinemaItems.clientWidth});
+ });
+});
+fetch('/api/media-config.json',{cache:'no-store'})
+ .then(response=>{
+  if (!response.ok) throw new Error('No se pudo cargar el catálogo');
+  return response.json();
+ })
+ .then(config=>{
+  mediaConfig=config;
+  if (selectedCinemaSource) showCinemaCatalog(selectedCinemaSource);
+ })
+ .catch(()=>{
+  mediaConfigFailed=true;
+  if (selectedCinemaSource) showCinemaCatalog(selectedCinemaSource);
+ });
+const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
 document.getElementById('bible-search-btn')?.addEventListener('click',()=>{const q=document.getElementById('bible-query').value.trim();document.getElementById('bible-status').textContent=q?'Búsqueda preparada para “'+q+'”. Falta conectar la fuente bíblica oficial.':'Escribe una palabra, tema o referencia.'});
 document.querySelectorAll('[data-testimony]').forEach(b=>b.onclick=()=>{document.getElementById('testimony-title').textContent='Testimonios LLDB';document.getElementById('testimony-meta').textContent='Contenido aprobado pendiente';document.getElementById('testimony-body').textContent='El carrusel está preparado para mostrar testimonios oficiales sin inventar información.'});
