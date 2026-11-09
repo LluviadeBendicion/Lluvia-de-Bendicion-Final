@@ -85,5 +85,35 @@
       "destination": "/#donaciones",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/affiliate-status.json",
+      "destination": "/api/site-config?name=affiliate-status"
+    },
+    {
+      "source": "/api/content-config.json",
+      "destination": "/api/site-config?name=content-config"
+    },
+    {
+      "source": "/api/donations-config.json",
+      "destination": "/api/site-config?name=donations-config"
+    },
+    {
+      "source": "/api/forms-config.json",
+      "destination": "/api/site-config?name=forms-config"
+    },
+    {
+      "source": "/api/media-config.json",
+      "destination": "/api/site-config?name=media-config"
+    },
+    {
+      "source": "/api/radio-config.json",
+      "destination": "/api/site-config?name=radio-config"
+    },
+    {
+      "source": "/api/social-config.json",
+      "destination": "/api/site-config?name=social-config"
+    }
   ]
 }
