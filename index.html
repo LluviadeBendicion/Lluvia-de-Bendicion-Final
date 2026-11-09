@@ -2473,10 +2473,10 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
       <span class="media-video-arrow-mask" aria-hidden="true"></span>
     </div>
     <div class="media-video-sources" role="group" aria-label="Fuentes de video">
-      <button type="button" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
-      <button type="button" data-video-source="facebook" aria-pressed="false"><span>Facebook</span></button>
-      <button type="button" data-video-source="originals" aria-pressed="false"><span>LLDB Producciones</span></button>
-      <button type="button" data-video-source="affiliates" aria-pressed="false"><span>Videos de afiliados</span></button>
+      <button type="button" data-go="youtube" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
+      <button type="button" data-go="facebook" data-video-source="facebook" aria-pressed="false"><span>Facebook</span></button>
+      <button type="button" data-go="originales" data-video-source="originals" aria-pressed="false"><span>LLDB Producciones</span></button>
+      <button type="button" data-go="videos-afiliados" data-video-source="affiliates" aria-pressed="false"><span>Videos de afiliados</span></button>
     </div>
     <div id="media-projector" aria-label="Pantalla del cine"></div>
     <form class="media-video-search" role="search" aria-label="Buscar videos del cine">
@@ -2551,10 +2551,16 @@ else if(introVideo){
 }
 const menuToggle=document.getElementById('menu-toggle'),mainNav=document.getElementById('main-nav');menuToggle.onclick=()=>{const open=mainNav.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open))};
 const views=[...document.querySelectorAll('.view')];
+const cinemaRoutes=new Map([
+ ['youtube','youtube'],
+ ['facebook','facebook'],
+ ['originales','originals'],
+ ['videos-afiliados','affiliates']
+]);
 function mediaViewId(id) {
- return id === 'originales' ? 'videos' : id;
+ return cinemaRoutes.has(id) ? 'videos' : id;
 }
-function showView(id,push=true,scroll=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const target=document.getElementById(mediaViewId(id))||document.getElementById('inicio');const wasInCinema=document.getElementById('videos').classList.contains('active');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(wasInCinema||target.id==='videos')queueMicrotask(()=>showCinemaCatalog(id==='originales'?'originals':null));if(push){const route=id==='originales'?id:target.id;history.pushState({view:route},'', '#'+route);}if(!scroll)return;if(target.id!=='radio'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
+function showView(id,push=true,scroll=true){if(id==='radio'){document.getElementById('intro')?.classList.add('hidden');}const cinemaSource=cinemaRoutes.get(id)||null;const target=document.getElementById(mediaViewId(id))||document.getElementById('inicio');const wasInCinema=document.getElementById('videos').classList.contains('active');views.forEach(v=>v.classList.toggle('active',v===target));if(target.id==='radio'){const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.currentTime=0;rv.style.display='block';rv.style.opacity='1';document.getElementById('lldb-function-led')?.classList.add('video-active');document.getElementById('lldb-function-status-label')?.classList.add('video-active');rv.muted=false;rv.volume=1;const p=rv.play();if(p&&p.catch)p.catch(()=>rv.style.display='none');}}else{const rv=document.getElementById('lldb-radio-startup-video');if(rv){rv.pause();rv.style.display='none';}}const primaryId=target.id==='estudios'?'especial':target.id;document.querySelectorAll('nav [data-go]').forEach(b=>{const active=b.dataset.go===primaryId&&!b.closest('.nav-tree');b.classList.toggle('nav-active',active);b.toggleAttribute('aria-current',active)});if(wasInCinema||target.id==='videos')queueMicrotask(()=>showCinemaCatalog(cinemaSource));if(push){const route=cinemaSource?id:target.id;history.pushState({view:route},'', '#'+route);}if(!scroll)return;if(target.id!=='radio'){window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));}else{target.scrollIntoView({behavior:'smooth',block:'start'})}}
 window.addEventListener('popstate',()=>showView(location.hash.slice(1)||'inicio',false));window.addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(id&&document.getElementById(mediaViewId(id))?.classList.contains('view'))showView(id,false)});
 document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{showView(b.dataset.go);if(b.dataset.subview){document.querySelector('[data-about="'+b.dataset.subview+'"]')?.click()}if(b.dataset.resourceLink){document.querySelector('[data-resource="'+b.dataset.resourceLink+'"]')?.click()}if(b.dataset.panel){document.getElementById(b.dataset.panel)?.classList.remove('hidden')}mainNav.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false')});
 document.querySelectorAll('#inicio [data-home-target]').forEach(button=>{
@@ -2698,7 +2704,7 @@ function renderCinemaCatalog() {
  cinemaCatalog=[];
  cinemaOffset=0;
 
- const keys=query?Object.keys(catalogKeys):(key?[key]:[]);
+ const keys=key?[key]:(query?Object.keys(catalogKeys):[]);
  for (const sourceKey of keys) {
   const entries=mediaConfig?.videos?.[catalogKeys[sourceKey]]?.items;
   if (!Array.isArray(entries)) continue;
@@ -2730,6 +2736,7 @@ function showCinemaCatalog(key) {
  selectedCinemaSource=key;
  selectedCinemaVideo=null;
  cinemaSearchInput.value='';
+ cinemaSearchInput.placeholder=key?'Buscar en esta fuente…':'Buscar videos…';
  projector.replaceChildren();
  cinemaSources.forEach(button=>{
   button.setAttribute('aria-pressed',String(button.dataset.videoSource===key));
@@ -2742,9 +2749,6 @@ cinemaSearch.addEventListener('submit',event=>{
  renderCinemaCatalog();
 });
 cinemaSearchInput.addEventListener('input',renderCinemaCatalog);
-cinemaSources.forEach(button=>{
- button.addEventListener('click',()=>showCinemaCatalog(button.dataset.videoSource));
-});
 cinemaControls.querySelectorAll('button').forEach(button=>{
  button.addEventListener('click',()=>{
   const count=cinemaCatalog.length;
