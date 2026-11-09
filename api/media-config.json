@@ -7,7 +7,69 @@
     },
     "facebookServices": {
       "enabled": true,
-      "items": []
+      "items": [
+        {
+          "title": "🔥Adoración Cristiana en Vivo | ABRE LOS CIELOS | Adoración 2026 | HolyWave Worship #worship",
+          "url": "https://www.youtube.com/watch?v=m6NXzwpaqMw",
+          "thumbnail": "https://i.ytimg.com/vi/m6NXzwpaqMw/mqdefault.jpg"
+        },
+        {
+          "title": "Johan y Sofi - Si Te Tengo A Ti Lo Tengo Todo (Deseo Eterno Reprise) - Musica Cristiana - Yeshua",
+          "url": "https://www.youtube.com/watch?v=llbh-N2xPFk",
+          "thumbnail": "https://i.ytimg.com/vi/llbh-N2xPFk/mqdefault.jpg"
+        },
+        {
+          "title": "Samuel Hernandez- Levanto Mis Manos Video Lyrics Oficial",
+          "url": "https://www.youtube.com/watch?v=iM49tkRfJZs",
+          "thumbnail": "https://i.ytimg.com/vi/iM49tkRfJZs/mqdefault.jpg"
+        },
+        {
+          "title": "Jesús Adrián Romero - Mi Universo (Video Oficial)",
+          "url": "https://www.youtube.com/watch?v=3tSz1I1XogE",
+          "thumbnail": "https://i.ytimg.com/vi/3tSz1I1XogE/mqdefault.jpg"
+        },
+        {
+          "title": "Dios Imparable - Marcos Witt EN VIVO (Video Oficial)",
+          "url": "https://www.youtube.com/watch?v=iOCCVPepUb8",
+          "thumbnail": "https://i.ytimg.com/vi/iOCCVPepUb8/mqdefault.jpg"
+        },
+        {
+          "title": "No Hay Lugar Más Alto - Generación 12 Ft. Sofia Mancipe (Cover Miel San Marcos)",
+          "url": "https://www.youtube.com/watch?v=9FZiGbiwIo0",
+          "thumbnail": "https://i.ytimg.com/vi/9FZiGbiwIo0/mqdefault.jpg"
+        },
+        {
+          "title": "Dios de Pactos - Marcos Witt (Video Letra)",
+          "url": "https://www.youtube.com/watch?v=tu3J_fYuzh8",
+          "thumbnail": "https://i.ytimg.com/vi/tu3J_fYuzh8/mqdefault.jpg"
+        },
+        {
+          "title": "JULIO MELGAR canta \"Tus cuerdas de amor\" | 2019 - Ministración",
+          "url": "https://www.youtube.com/watch?v=hmXboOWbiXk",
+          "thumbnail": "https://i.ytimg.com/vi/hmXboOWbiXk/mqdefault.jpg"
+        },
+        {
+          "title": "🔥 Cámbiame Señor 😭 | Ya No Quiero Ser Igual | Adoración Profunda Worship Cristiano",
+          "url": "https://www.youtube.com/watch?v=6uWILCJUZKg",
+          "thumbnail": "https://i.ytimg.com/vi/6uWILCJUZKg/mqdefault.jpg"
+        },
+        {
+          "title": "Bendice Señor mi Casa - Canción de Adoración y Bendición Familiar",
+          "url": "https://www.youtube.com/watch?v=1Ct-UfVo7Qg",
+          "thumbnail": "https://i.ytimg.com/vi/1Ct-UfVo7Qg/mqdefault.jpg"
+        },
+        {
+          "title": "Generación 12 Ft. Marco Barrientos - Dios Incomparable (VIDEO OFICIAL) I Musica Cristiana",
+          "url": "https://www.youtube.com/watch?v=GA69Q-aTlVc",
+          "thumbnail": "https://i.ytimg.com/vi/GA69Q-aTlVc/mqdefault.jpg"
+        },
+        {
+          "title": "Adoraciones PODEROSAS que Te Harán LLORAR | En La Presencia De Dios | Hosanna Worship",
+          "url": "https://www.youtube.com/watch?v=c57zPAH_1zM",
+          "thumbnail": "https://i.ytimg.com/vi/c57zPAH_1zM/mqdefault.jpg"
+        }
+      ],
+      "playlistId": "PLCQtk93VrmzA"
     },
     "lldbOriginals": {
       "enabled": true,

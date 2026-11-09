@@ -2243,6 +2243,12 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   text-align:center;
 }
 .media-video-items button{cursor:pointer}
+.media-video-items button span{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+}
 .media-video-placeholder{padding:2px}
 .media-video-placeholder img{object-fit:contain}
 .media-video-controls button:disabled{opacity:.5;cursor:default}
@@ -2626,6 +2632,7 @@ const cinemaSearchInput=document.getElementById('media-video-query');
 const catalogKeys={youtube:'youtubePlaylist',facebook:'facebookServices',originals:'lldbOriginals',affiliates:'affiliateVideos'};
 let mediaConfig=null;
 let mediaConfigFailed=false;
+let facebookPlaylistRequested=false;
 let selectedCinemaSource=null;
 let selectedCinemaVideo=null;
 const cinemaPageSize=5;
@@ -2727,6 +2734,23 @@ function renderCinemaWindow() {
  });
 }
 
+function refreshFacebookPlaylist() {
+ if (facebookPlaylistRequested || !mediaConfig?.videos?.facebookServices?.playlistId) return;
+ facebookPlaylistRequested=true;
+ fetch('/api/facebook-playlist')
+  .then(response=>response.ok?response.json():null)
+  .then(result=>{
+   if (!Array.isArray(result?.items)) return;
+   const facebook=mediaConfig.videos.facebookServices;
+   if (JSON.stringify(facebook.items)===JSON.stringify(result.items)) return;
+   facebook.items=result.items;
+   if (selectedCinemaSource==='facebook'||(!selectedCinemaSource&&cinemaSearchInput.value.trim())) {
+    renderCinemaCatalog();
+   }
+  })
+  .catch(()=>{});
+}
+
 function renderCinemaCatalog() {
  const query=normalizeCinemaTitle(cinemaSearchInput.value);
  const terms=query?query.split(/\s+/):[];
@@ -2735,6 +2759,7 @@ function renderCinemaCatalog() {
  cinemaOffset=0;
 
  const keys=key?[key]:(query?Object.keys(catalogKeys):[]);
+ if (keys.includes('facebook')) refreshFacebookPlaylist();
  for (const sourceKey of keys) {
   const entries=mediaConfig?.videos?.[catalogKeys[sourceKey]]?.items;
   if (!Array.isArray(entries)) continue;
