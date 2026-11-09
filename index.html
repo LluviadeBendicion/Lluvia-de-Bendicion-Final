@@ -2148,7 +2148,12 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 </style>
 <style id="lldb-media-projector">
 .media-video-art{isolation:isolate}
-.media-video-backdrop{position:relative}
+.media-video-backdrop{
+  position:relative;
+  transition:filter .95s ease-in-out;
+}
+.media-video-art.is-projecting .media-video-backdrop{filter:brightness(.16)}
+.media-video-art.is-projecting .media-video-carousel{box-shadow:0 0 4px #00a4ff55}
 .media-video-backdrop>img{display:block;width:100%;height:auto;border-radius:10px}
 .media-video-backdrop::before,
 .media-video-backdrop::after{content:"";position:absolute;pointer-events:none}
@@ -2166,7 +2171,22 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 }
 .media-video-arrow-mask::before{left:21.05%}
 .media-video-arrow-mask::after{left:84.4%}
-#media-projector{overflow:hidden}
+#media-projector{overflow:hidden;transition:box-shadow .55s ease-out}
+.media-video-art.is-projecting #media-projector{
+  box-shadow:0 0 14px #d8eaff99,0 0 34px #8dbbff70;
+}
+.media-video-art.is-projecting #media-projector>:is(iframe,video){
+  animation:lldb-projector-ignite .55s ease-out both;
+}
+@keyframes lldb-projector-ignite{
+  0%{opacity:.12;filter:brightness(.4)}
+  40%{opacity:1;filter:brightness(1.22)}
+  100%{opacity:1;filter:brightness(1)}
+}
+@media(prefers-reduced-motion:reduce){
+  .media-video-backdrop,#media-projector{transition:none}
+  .media-video-art.is-projecting #media-projector>:is(iframe,video){animation:none}
+}
 .media-video-search{
   display:flex;gap:4px;align-items:center;
   padding:2px;border:1px solid #ac8a52;border-radius:999px;background:#090d13;
@@ -2597,6 +2617,7 @@ document.querySelectorAll('[data-wall]').forEach(b=>b.onclick=()=>{document.quer
 const cinema=document.getElementById('videos');
 const cinemaSources=[...cinema.querySelectorAll('[data-video-source]')];
 const projector=document.getElementById('media-projector');
+const cinemaArt=cinema.querySelector('.media-video-art');
 const cinemaItems=cinema.querySelector('.media-video-items');
 const cinemaStatus=document.getElementById('media-video-status');
 const cinemaControls=cinema.querySelector('.media-video-controls');
@@ -2642,8 +2663,17 @@ function playCinemaVideo(item,video,button) {
   player.controls=true;
   player.playsInline=true;
   player.setAttribute('aria-label',item.title);
+  player.addEventListener('play',()=>{
+   if (projector.firstElementChild===player) cinemaArt.classList.add('is-projecting');
+  });
+  for (const eventName of ['ended','error']) {
+   player.addEventListener(eventName,()=>{
+    if (projector.firstElementChild===player) cinemaArt.classList.remove('is-projecting');
+   });
+  }
  }
  projector.replaceChildren(player);
+ cinemaArt.classList.add('is-projecting');
  selectedCinemaVideo=video.url;
  cinemaItems.querySelectorAll('button').forEach(card=>{
   card.setAttribute('aria-pressed',String(card===button));
@@ -2738,6 +2768,7 @@ function showCinemaCatalog(key) {
  cinemaSearchInput.value='';
  cinemaSearchInput.placeholder=key?'Buscar en esta fuente…':'Buscar videos…';
  projector.replaceChildren();
+ cinemaArt.classList.remove('is-projecting');
  cinemaSources.forEach(button=>{
   button.setAttribute('aria-pressed',String(button.dataset.videoSource===key));
  });
