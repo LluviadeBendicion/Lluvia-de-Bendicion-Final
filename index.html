@@ -2156,27 +2156,47 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 #media-projector{background:radial-gradient(ellipse at 50% 38%,#14191e,#05070a 78%)}
 .media-video-backdrop::before{left:24.65%;top:11.05%;width:58.5%;height:40.1%}
 .media-video-backdrop::after{
-  left:20.7%;top:53.4%;width:67.5%;height:25.9%;
-  background:linear-gradient(165deg,#111e2a,#080d14 65%);
-  border-bottom:1px solid #bd8d45;
+  left:25%;top:53.5%;width:59%;height:25.7%;
+  background:linear-gradient(#0b1017,#080b10);
 }
+.media-video-arrow-mask::before,
+.media-video-arrow-mask::after{
+  content:"";position:absolute;top:65.65%;width:3.55%;aspect-ratio:1;
+  z-index:1;border-radius:50%;background:#0a0e14;pointer-events:none;
+}
+.media-video-arrow-mask::before{left:21.05%}
+.media-video-arrow-mask::after{left:84.4%}
 #media-projector{overflow:hidden}
+.media-video-search{
+  display:flex;gap:4px;align-items:center;
+  padding:2px;border:1px solid #ac8a52;border-radius:999px;background:#090d13;
+}
+.media-video-search input{
+  min-width:0;flex:1;padding:4px 9px;border:0;border-radius:999px;
+  background:transparent;color:#fff0d4;font:inherit;
+}
+.media-video-search input::placeholder{color:#c4bcaf}
+.media-video-search button{
+  border:1px solid #987443;border-radius:999px;padding:4px 10px;
+  background:#191712;color:#ffdc92;cursor:pointer;font:inherit;
+}
+.media-video-search :is(input,button):focus-visible{outline:2px solid #ffe1a5;outline-offset:1px}
 #media-projector :is(iframe,video){
   display:block;width:100%;height:100%;border:0;background:#000;object-fit:contain;
 }
 .media-video-carousel{
   display:grid;
   align-content:center;
-  gap:6px;
+  gap:4px;
   color:#f9edd6;
-  font:14px/1.25 system-ui,sans-serif;
+  font:13px/1.2 system-ui,sans-serif;
 }
 #media-video-status{margin:0}
 .media-video-carousel-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .media-video-controls{display:flex;gap:4px}
 .media-video-controls button{
-  border:1px solid var(--line);border-radius:5px;background:#111c2d;color:#ffe1a5;
-  padding:2px 8px;cursor:pointer;
+  width:30px;height:30px;padding:0;border:1px solid #d3ad70;border-radius:50%;
+  background:#0b111a;color:#ffe1a5;font:22px/1 system-ui,sans-serif;cursor:pointer;
 }
 .media-video-items{
   display:flex;
@@ -2188,15 +2208,16 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 }
 .media-video-items:empty{display:none}
 .media-video-items button{
-  flex:0 0 clamp(112px,14vw,170px);
+  flex:0 0 clamp(102px,11vw,146px);
   scroll-snap-align:start;
   display:grid;
   gap:5px;
-  padding:6px;
+  padding:4px;
   border:1px solid #b18445;
   border-radius:7px;
-  background:#102035;
+  background:#10141b;
   color:#fff0c9;
+  font:600 12px/1.15 system-ui,sans-serif;
   cursor:pointer;
 }
 .media-video-items button[aria-pressed="true"]{border-color:#ffe0a1;background:#263b54}
@@ -2205,7 +2226,15 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 @media(min-width:701px){
   #media-projector{position:absolute;left:24.65%;top:11.05%;width:58.5%;height:40.1%}
   #media-projector:not(:empty){min-height:200px;z-index:1}
-  .media-video-carousel{position:absolute;left:22.3%;right:13.3%;top:55%;bottom:22%;overflow:auto}
+  .media-video-search{position:absolute;left:36%;right:24%;top:54%;font:clamp(11px,1.05vw,14px) system-ui,sans-serif}
+  .media-video-carousel{position:absolute;left:25.3%;right:16.2%;top:61%;bottom:21%;z-index:2}
+  .media-video-controls{
+    position:absolute;left:-6.8%;right:-6.8%;top:37%;
+    justify-content:space-between;pointer-events:none;
+  }
+  .media-video-controls button{pointer-events:auto;width:clamp(22px,2.8vw,32px);height:clamp(22px,2.8vw,32px)}
+  .media-video-items{padding-bottom:4px;scrollbar-width:none}
+  .media-video-items img{height:clamp(29px,4.35vw,56px);aspect-ratio:auto}
 }
 @media(max-width:700px){
   #media-projector{height:max(200px,52vw);border:1px solid var(--line);border-radius:7px}
@@ -2434,6 +2463,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   <div class="media-video-art">
     <div class="media-video-backdrop">
       <img src="/assets/videos-nitida.jpg" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
+      <span class="media-video-arrow-mask" aria-hidden="true"></span>
     </div>
     <div class="media-video-sources" role="group" aria-label="Fuentes de video">
       <button type="button" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
@@ -2442,7 +2472,12 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
       <button type="button" data-video-source="affiliates" aria-pressed="false"><span>Videos de afiliados</span></button>
     </div>
     <div id="media-projector" aria-label="Pantalla del cine"></div>
-    <div class="media-video-carousel hidden" aria-label="Videos de la fuente seleccionada">
+    <form class="media-video-search" role="search" aria-label="Buscar videos del cine">
+      <label class="sr-only" for="media-video-query">Buscar por título</label>
+      <input type="search" id="media-video-query" placeholder="Buscar videos…" autocomplete="off">
+      <button type="submit">Buscar</button>
+    </form>
+    <div class="media-video-carousel hidden" aria-label="Carrusel de videos">
       <div class="media-video-carousel-head">
         <p id="media-video-status" role="status"></p>
         <div class="media-video-controls hidden" aria-label="Desplazar el carrusel">
@@ -2553,10 +2588,13 @@ const cinemaCarousel=cinema.querySelector('.media-video-carousel');
 const cinemaItems=cinema.querySelector('.media-video-items');
 const cinemaStatus=document.getElementById('media-video-status');
 const cinemaControls=cinema.querySelector('.media-video-controls');
+const cinemaSearch=cinema.querySelector('.media-video-search');
+const cinemaSearchInput=document.getElementById('media-video-query');
 const catalogKeys={youtube:'youtubePlaylist',facebook:'facebookServices',originals:'lldbOriginals',affiliates:'affiliateVideos'};
 let mediaConfig=null;
 let mediaConfigFailed=false;
 let selectedCinemaSource=null;
+let selectedCinemaVideo=null;
 
 function cinemaVideo(url) {
  let source;
@@ -2591,37 +2629,46 @@ function playCinemaVideo(item,video,button) {
   player.setAttribute('aria-label',item.title);
  }
  projector.replaceChildren(player);
+ selectedCinemaVideo=video.url;
  cinemaItems.querySelectorAll('button').forEach(card=>{
   card.setAttribute('aria-pressed',String(card===button));
  });
  if (!video.embed) player.play().catch(()=>{});
 }
 
-function showCinemaCatalog(key) {
- selectedCinemaSource=key;
- projector.replaceChildren();
- cinemaItems.replaceChildren();
- cinemaSources.forEach(button=>{
-  button.setAttribute('aria-pressed',String(button.dataset.videoSource===key));
- });
- cinemaCarousel.classList.toggle('hidden',!key);
- cinemaControls.classList.add('hidden');
- if (!key) return;
+function normalizeCinemaTitle(value) {
+ return value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+}
 
- const label=cinemaSources.find(button=>button.dataset.videoSource===key).textContent.trim();
+function renderCinemaCatalog() {
+ const query=normalizeCinemaTitle(cinemaSearchInput.value);
+ const terms=query?query.split(/\s+/):[];
+ const key=selectedCinemaSource;
+ cinemaItems.replaceChildren();
+ cinemaCarousel.classList.toggle('hidden',!key&&!query);
+ cinemaControls.classList.add('hidden');
+ if (!key&&!query) return;
+
+ const label=key?cinemaSources.find(button=>button.dataset.videoSource===key).textContent.trim():'';
  if (!mediaConfig) {
-  cinemaStatus.textContent=mediaConfigFailed?'No se pudo cargar el catálogo.':'Cargando videos de '+label+'…';
+  cinemaStatus.textContent=mediaConfigFailed?'No se pudo cargar el catálogo.':'Cargando videos…';
   return;
  }
- const entries=mediaConfig.videos?.[catalogKeys[key]]?.items;
- if (Array.isArray(entries)) {
-  entries.forEach(item=>{
-   if (!item || typeof item.title!=='string' || !item.title.trim() || typeof item.url!=='string') return;
+
+ const keys=query?Object.keys(catalogKeys):[key];
+ for (const sourceKey of keys) {
+  const entries=mediaConfig.videos?.[catalogKeys[sourceKey]]?.items;
+  if (!Array.isArray(entries)) continue;
+  for (const item of entries) {
+   if (!item || typeof item.title!=='string' || !item.title.trim() || typeof item.url!=='string') continue;
+   const titleText=normalizeCinemaTitle(item.title);
+   if (!terms.every(term=>titleText.includes(term))) continue;
    const video=cinemaVideo(item.url);
-   if (!video) return;
+   if (!video) continue;
+
    const button=document.createElement('button');
    button.type='button';
-   button.setAttribute('aria-pressed','false');
+   button.setAttribute('aria-pressed',String(video.url===selectedCinemaVideo));
    if (typeof item.thumbnail==='string' && /^(?:https:\/\/|\/(?!\/))/.test(item.thumbnail)) {
     const thumbnail=document.createElement('img');
     thumbnail.src=item.thumbnail;
@@ -2634,15 +2681,32 @@ function showCinemaCatalog(key) {
    button.append(title);
    button.addEventListener('click',()=>playCinemaVideo(item,video,button));
    cinemaItems.append(button);
-  });
+  }
  }
  cinemaItems.scrollLeft=0;
- cinemaStatus.textContent=cinemaItems.childElementCount
-  ? label+' · elige un video para proyectarlo.'
-  : label+' · todavía no hay videos publicados.';
- cinemaControls.classList.toggle('hidden',cinemaItems.childElementCount<2);
+ const count=cinemaItems.childElementCount;
+ cinemaStatus.textContent=query
+  ? (count ? (count===1?'1 video encontrado':count+' videos encontrados') : 'No se encontraron videos.')
+  : (count ? label+' · elige un video.' : label+' · todavía no hay videos publicados.');
+ cinemaControls.classList.toggle('hidden',count<2);
 }
 
+function showCinemaCatalog(key) {
+ selectedCinemaSource=key;
+ selectedCinemaVideo=null;
+ cinemaSearchInput.value='';
+ projector.replaceChildren();
+ cinemaSources.forEach(button=>{
+  button.setAttribute('aria-pressed',String(button.dataset.videoSource===key));
+ });
+ renderCinemaCatalog();
+}
+
+cinemaSearch.addEventListener('submit',event=>{
+ event.preventDefault();
+ renderCinemaCatalog();
+});
+cinemaSearchInput.addEventListener('input',renderCinemaCatalog);
 cinemaSources.forEach(button=>{
  button.addEventListener('click',()=>showCinemaCatalog(button.dataset.videoSource));
 });
@@ -2658,11 +2722,11 @@ fetch('/api/media-config.json',{cache:'no-store'})
  })
  .then(config=>{
   mediaConfig=config;
-  if (selectedCinemaSource) showCinemaCatalog(selectedCinemaSource);
+  renderCinemaCatalog();
  })
  .catch(()=>{
   mediaConfigFailed=true;
-  if (selectedCinemaSource) showCinemaCatalog(selectedCinemaSource);
+  renderCinemaCatalog();
  });
 const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
