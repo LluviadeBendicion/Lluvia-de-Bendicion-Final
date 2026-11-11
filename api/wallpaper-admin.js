@@ -1,6 +1,56 @@
-const { createHash } = require('node:crypto');
+const { createHash, createHmac, timingSafeEqual } = require('node:crypto');
 
-const ownerId = 305439423;
+const admins = {
+  'omar-rivera': { name: 'Omar Rivera', passwordKey: 'LLDB_OMAR_PASSWORD' },
+  'ever-caraballo': { name: 'Ever Caraballo', passwordKey: 'LLDB_EVER_PASSWORD' }
+};
+const allowedOrigins = new Set(['https://www.lluviadebendicion.com', 'https://lluviadebendicion.com']);
+const sessionCookie = '__Host-lldb-admin';
+const sessionSeconds = 3600;
+const attempts = new Map();
+
+function signature(secret, value) {
+  return createHmac('sha256', secret).update(value).digest();
+}
+
+function passwordMatches(secret, supplied, expected) {
+  return timingSafeEqual(signature(secret, supplied), signature(secret, expected));
+}
+
+function cookie(res, value, lifetime) {
+  res.setHeader('Set-Cookie', sessionCookie + '=' + value +
+    '; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=' + lifetime);
+}
+
+function sessionUser(req, token) {
+  const value = (req.headers.cookie || '').split('; ').find(entry => entry.startsWith(sessionCookie + '='));
+  const parts = value?.slice(sessionCookie.length + 1).split('.') || [];
+  const [user, expiry, signed] = parts;
+  if (parts.length !== 3 || !Object.hasOwn(admins, user) ||
+      !/^\d{10}$/.test(expiry) || Number(expiry) <= Math.floor(Date.now() / 1000) ||
+      !/^[A-Za-z0-9_-]{43}$/.test(signed)) return null;
+  const password = process.env[admins[user].passwordKey];
+  if (!password) return null;
+  const expected = signature(token, 'session:' + user + '.' + expiry + ':' + password);
+  return timingSafeEqual(expected, Buffer.from(signed, 'base64url')) ? user : null;
+}
+
+function allowAttempt(req) {
+  const now = Date.now();
+  const address = (req.headers['x-vercel-forwarded-for'] || req.socket?.remoteAddress || '').split(',')[0].trim();
+  const previous = attempts.get(address);
+  if (previous && previous.until > now) {
+    if (++previous.count > 8) throw new RequestError(429, 'Demasiados intentos. Espera un minuto.');
+    return;
+  }
+  if (attempts.size >= 1000) {
+    for (const [key, value] of attempts) {
+      if (value.until <= now) attempts.delete(key);
+    }
+    if (attempts.size >= 1000) throw new RequestError(429, 'Espera un minuto e intenta de nuevo.');
+  }
+  attempts.set(address, { count: 1, until: now + 60000 });
+}
 const repository = '/repos/LluviadeBendicion/Lluvia-de-Bendicion-Final';
 const configPath = 'api/media-config.json';
 const collections = { christian: 'cristianos', originals: 'originales', affiliates: 'afiliados' };
@@ -29,9 +79,9 @@ async function github(path, token, method = 'GET', payload) {
   if (!response.ok) {
     const status = response.status;
     await response.body?.cancel();
-    if (status === 401) throw new RequestError(401, 'La clave de GitHub es inválida o venció.');
+    if (status === 401) throw new RequestError(503, 'La credencial de publicación de GitHub necesita actualizarse.');
     if (status === 403 || status === 404) {
-      throw new RequestError(403, 'Revisa que la clave tenga acceso al repositorio y permiso Contents: Read and write.');
+      throw new RequestError(502, 'GitHub rechazó el acceso de publicación. Revisa la configuración en Vercel.');
     }
     throw new RequestError(status === 409 || status === 422 ? 409 : 502, 'GitHub no pudo completar la publicación.');
   }
@@ -76,7 +126,20 @@ function parseUpload(body) {
   return { collection, item, image };
 }
 
-async function publish(token, upload) {
+function parseEdit(body) {
+  const { collection, title, verse = '', reference = '', url } = body;
+  if (!Object.hasOwn(collections, collection) || typeof title !== 'string' || !title.trim() ||
+      title.length > 100 || typeof verse !== 'string' || verse.length > 250 ||
+      typeof reference !== 'string' || reference.length > 90 || typeof url !== 'string' ||
+      !url.startsWith('/assets/wallpapers/' + collections[collection] + '/') ||
+      !/^[A-Za-z0-9%-][A-Za-z0-9_%.+-]*\.(?:jpe?g|png|webp|avif)$/i.test(url.split('/').pop()) ||
+      url.split('/').length !== 5 || /%2f|%5c/i.test(url)) {
+    throw new RequestError(400, 'Selecciona un fondo válido y escribe un título.');
+  }
+  return { collection, item: { title: title.trim(), verse: verse.trim(), reference: reference.trim(), url } };
+}
+
+async function publish(token, upload, adminName) {
   const { collection, item, image } = upload;
   let imageSha;
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -88,21 +151,32 @@ async function publish(token, upload) {
     ]);
     const config = JSON.parse(Buffer.from(configFile.content, 'base64').toString('utf8'));
     const entries = config.wallpapers[collection] || [];
-    if (entries.some(entry => entry.url === item.url)) return item;
-    config.wallpapers[collection] = [item, ...entries];
-    if (!imageSha) {
+    const existing = entries.find(entry => entry.url === item.url);
+    if (image && existing) return existing;
+    if (!image && !existing) {
+      if (collection === 'christian') throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
+      const path = item.url.slice(1);
+      const file = await github(repository + '/contents/' + path + '?ref=' + parent, token);
+      if (file.type !== 'file' || file.path !== decodeURIComponent(path)) {
+        throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
+      }
+    }
+    config.wallpapers[collection] = image || !existing
+      ? [item, ...entries]
+      : entries.map(entry => entry.url === item.url ? { ...entry, ...item } : entry);
+    if (image && !imageSha) {
       const blob = await github(repository + '/git/blobs', token, 'POST', { content: image, encoding: 'base64' });
       imageSha = blob.sha;
     }
     const tree = await github(repository + '/git/trees', token, 'POST', {
       base_tree: base.tree.sha,
       tree: [
-        { path: item.url.slice(1), mode: '100644', type: 'blob', sha: imageSha },
+        ...(imageSha ? [{ path: item.url.slice(1), mode: '100644', type: 'blob', sha: imageSha }] : []),
         { path: configPath, mode: '100644', type: 'blob', content: JSON.stringify(config, null, 2) + '\n' }
       ]
     });
     const commit = await github(repository + '/git/commits', token, 'POST', {
-      message: 'Publicar fondo en ' + collections[collection],
+      message: (image ? 'Publicar' : 'Editar') + ' fondo en ' + collections[collection] + ' · ' + adminName,
       tree: tree.sha,
       parents: [parent]
     });
@@ -122,18 +196,39 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return res.status(405).end();
   }
-  const token = /^Bearer (github_pat_[A-Za-z0-9_]{20,240})$/.exec(req.headers.authorization || '')?.[1];
-  if (!token) return res.status(401).json({ error: 'Usa una clave de GitHub de acceso limitado.' });
+  if (!allowedOrigins.has(req.headers.origin)) return res.status(403).json({ error: 'Origen no autorizado.' });
   try {
     const body = req.body;
-    if (!body || !['login', 'publish'].includes(body.action)) throw new RequestError(400, 'Acción inválida.');
-    const account = await github('/user', token);
-    if (account.id !== ownerId) throw new RequestError(403, 'El acceso está reservado para la cuenta propietaria.');
-    if (body.action === 'login') {
-      await github(repository + '/git/ref/heads/main', token);
+    if (!body || !['login', 'logout', 'session', 'publish', 'edit'].includes(body.action)) {
+      throw new RequestError(400, 'Acción inválida.');
+    }
+    if (body.action === 'logout') {
+      cookie(res, '', 0);
       return res.status(200).json({ ok: true });
     }
-    const item = await publish(token, parseUpload(body));
+    const token = process.env.LLDB_WALLPAPER_GITHUB_TOKEN;
+    if (!token) throw new RequestError(503, 'Falta activar el panel en Vercel.');
+    if (body.action === 'login') {
+      allowAttempt(req);
+      const { user, password } = body;
+      if (!Object.hasOwn(admins, user) || typeof password !== 'string' || !password || password.length > 256) {
+        throw new RequestError(401, 'Usuario o contraseña incorrectos.');
+      }
+      const expected = process.env[admins[user].passwordKey];
+      if (!expected || !passwordMatches(token, password, expected)) {
+        throw new RequestError(401, 'Usuario o contraseña incorrectos.');
+      }
+      const expiry = Math.floor(Date.now() / 1000) + sessionSeconds;
+      const value = user + '.' + expiry;
+      const signed = signature(token, 'session:' + value + ':' + expected).toString('base64url');
+      cookie(res, value + '.' + signed, sessionSeconds);
+      return res.status(200).json({ name: admins[user].name });
+    }
+    const user = sessionUser(req, token);
+    if (!user) throw new RequestError(401, 'Inicia sesión con tu usuario y contraseña.');
+    const name = admins[user].name;
+    if (body.action === 'session') return res.status(200).json({ name });
+    const item = await publish(token, body.action === 'publish' ? parseUpload(body) : parseEdit(body), name);
     return res.status(202).json({ item });
   } catch (error) {
     return res.status(error.status || 502).json({

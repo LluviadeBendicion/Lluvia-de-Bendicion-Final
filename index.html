@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-admin">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-admin-login">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2621,15 +2621,25 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
 <div id="private-admin" class="hidden" role="dialog" aria-modal="true" aria-labelledby="admin-title" style="position:fixed;inset:8%;z-index:60;background:#06101a;border:1px solid var(--gold);border-radius:18px;padding:24px;overflow:auto;box-shadow:0 20px 80px #000"><button class="exit" id="admin-close">×</button><h2 id="admin-title">LLDB · Panel administrativo</h2><section class="card wallpaper-admin" aria-labelledby="wallpaper-admin-title">
   <h3 id="wallpaper-admin-title">Publicar fondos de pantalla</h3>
   <form id="wallpaper-admin-login" class="lldb-form" method="post">
-    <label>Clave de GitHub de acceso limitado
-      <input id="wallpaper-admin-key" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+    <label>Usuario
+      <select name="user" autocomplete="username" required>
+        <option value="" selected disabled>Selecciona tu usuario</option>
+        <option value="omar-rivera">Omar Rivera</option>
+        <option value="ever-caraballo">Ever Caraballo</option>
+      </select>
     </label>
-    <small>Usa la cuenta propietaria, selecciona solo Lluvia-de-Bendicion-Final y asigna <strong>Contents: Read and write</strong>.
-      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Crear clave en GitHub</a>
-    </small>
+    <label>Contraseña
+      <input id="wallpaper-admin-key" type="password" autocomplete="current-password" required maxlength="256">
+    </label>
     <button type="submit">Entrar</button>
   </form>
   <form id="wallpaper-admin-upload" class="lldb-form" method="post" hidden>
+    <label>Acción
+      <select name="mode">
+        <option value="publish">Subir un fondo</option>
+        <option value="edit">Editar un fondo publicado</option>
+      </select>
+    </label>
     <label>Colección
       <select name="collection" required>
         <option value="christian">Cristianos</option>
@@ -2637,19 +2647,23 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
         <option value="affiliates">Nuestros Afiliados</option>
       </select>
     </label>
+    <label id="wallpaper-admin-existing" hidden>Fondo publicado
+      <select name="existing" disabled></select>
+    </label>
     <label>Título <input name="title" maxlength="100" required></label>
-    <label>Imagen <input name="image" type="file" accept="image/jpeg,image/png,image/webp" required></label>
-    <small>JPG, PNG o WebP, hasta 3 MB. El formato vertical 9:16 encaja en el teléfono de la galería.</small>
+    <label id="wallpaper-admin-file">Imagen (JPG, PNG o WebP, hasta 3 MB)
+      <input name="image" type="file" accept="image/jpeg,image/png,image/webp" required>
+    </label>
     <label>Versículo para el zoom (opcional) <input name="verse" maxlength="250"></label>
     <label>Referencia bíblica (opcional) <input name="reference" maxlength="90"></label>
     <div class="wallpaper-admin-actions">
-      <button type="submit">Publicar fondo</button>
+      <button type="submit">Guardar y publicar</button>
       <button type="button" id="wallpaper-admin-logout">Cerrar sesión</button>
     </div>
   </form>
   <p id="wallpaper-admin-status" role="status"></p>
 </section>
-<div class="cards"><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div>
+<div class="cards" id="wallpaper-admin-other-tools" hidden><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div>
 <footer aria-label="Pie de página"><button id="secret-admin-trigger" class="secret-mark" type="button" aria-label="Lluvia de Bendición">LLDB</button><span id="secret">Lluvia de Bendición .Com</span> · Todos los derechos reservados.</footer>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
@@ -3102,6 +3116,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=accounts" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

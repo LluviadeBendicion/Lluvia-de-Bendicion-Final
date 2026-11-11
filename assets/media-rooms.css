@@ -146,7 +146,7 @@
 @media(prefers-reduced-motion:reduce){.podcast-stage::before{transition:none}}
 
 .wallpaper-admin{max-width:40rem;margin-bottom:18px}
-.wallpaper-admin form[hidden]{display:none}
+.wallpaper-admin [hidden],#wallpaper-admin-other-tools[hidden]{display:none}
 .wallpaper-admin small{color:#e0cca7;line-height:1.4}
 .wallpaper-admin small a{color:#ffda91}
 .wallpaper-admin-actions{display:flex;gap:8px;flex-wrap:wrap}
