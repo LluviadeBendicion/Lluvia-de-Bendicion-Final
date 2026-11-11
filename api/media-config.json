@@ -97,51 +97,75 @@
     "christian": [
       {
         "title": "Luz del amanecer",
-        "url": "/assets/wallpapers/cristianos/luz-del-amanecer-versiculo.jpg"
+        "url": "/assets/wallpapers/cristianos/luz-del-amanecer-versiculo.jpg",
+        "verse": "Jehová es mi luz y mi salvación.",
+        "reference": "Salmos 27:1"
       },
       {
         "title": "Camino de oración",
-        "url": "/assets/wallpapers/cristianos/camino-de-oracion-versiculo.jpg"
+        "url": "/assets/wallpapers/cristianos/camino-de-oracion-versiculo.jpg",
+        "verse": "Orad sin cesar.",
+        "reference": "1 Tesalonicenses 5:17"
       },
       {
         "title": "Junto a aguas tranquilas",
-        "url": "/assets/wallpapers/cristianos/junto-a-aguas-tranquilas.jpg"
+        "url": "/assets/wallpapers/cristianos/junto-a-aguas-tranquilas.jpg",
+        "verse": "Jehová es mi pastor; nada me faltará.",
+        "reference": "Salmos 23:1"
       },
       {
         "title": "La cruz en la cumbre",
-        "url": "/assets/wallpapers/cristianos/la-cruz-en-la-cumbre.jpg"
+        "url": "/assets/wallpapers/cristianos/la-cruz-en-la-cumbre.jpg",
+        "verse": "La cruz de nuestro Señor Jesucristo",
+        "reference": "Gálatas 6:14"
       },
       {
         "title": "Refugio en la tormenta",
-        "url": "/assets/wallpapers/cristianos/refugio-en-la-tormenta.jpg"
+        "url": "/assets/wallpapers/cristianos/refugio-en-la-tormenta.jpg",
+        "verse": "Dios es nuestro amparo y fortaleza.",
+        "reference": "Salmos 46:1"
       },
       {
         "title": "Fe como semilla",
-        "url": "/assets/wallpapers/cristianos/fe-como-semilla.jpg"
+        "url": "/assets/wallpapers/cristianos/fe-como-semilla.jpg",
+        "verse": "Si tuviereis fe como un grano de mostaza…",
+        "reference": "Mateo 17:20"
       },
       {
         "title": "En sus manos",
-        "url": "/assets/wallpapers/cristianos/en-sus-manos.jpg"
+        "url": "/assets/wallpapers/cristianos/en-sus-manos.jpg",
+        "verse": "Más valéis vosotros que muchos pajarillos.",
+        "reference": "Mateo 10:31"
       },
       {
         "title": "Sendero de esperanza",
-        "url": "/assets/wallpapers/cristianos/sendero-de-esperanza.jpg"
+        "url": "/assets/wallpapers/cristianos/sendero-de-esperanza.jpg",
+        "verse": "Reconócelo en todos tus caminos, y él enderezará tus veredas.",
+        "reference": "Proverbios 3:6"
       },
       {
         "title": "La Palabra es luz",
-        "url": "/assets/wallpapers/cristianos/la-palabra-es-luz.jpg"
+        "url": "/assets/wallpapers/cristianos/la-palabra-es-luz.jpg",
+        "verse": "Lámpara es a mis pies tu palabra, y lumbrera a mi camino.",
+        "reference": "Salmos 119:105"
       },
       {
         "title": "Cielo de promesas",
-        "url": "/assets/wallpapers/cristianos/cielo-de-promesas.jpg"
+        "url": "/assets/wallpapers/cristianos/cielo-de-promesas.jpg",
+        "verse": "Mi arco pondré en las nubes.",
+        "reference": "Génesis 9:13"
       },
       {
         "title": "Paz en el desierto",
-        "url": "/assets/wallpapers/cristianos/paz-en-el-desierto.jpg"
+        "url": "/assets/wallpapers/cristianos/paz-en-el-desierto.jpg",
+        "verse": "Tú le guardarás en completa paz.",
+        "reference": "Isaías 26:3"
       },
       {
         "title": "Ancla del alma",
-        "url": "/assets/wallpapers/cristianos/ancla-del-alma.jpg"
+        "url": "/assets/wallpapers/cristianos/ancla-del-alma.jpg",
+        "verse": "Segura y firme ancla del alma",
+        "reference": "Hebreos 6:19"
       }
     ]
   },

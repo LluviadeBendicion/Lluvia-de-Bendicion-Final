@@ -13,6 +13,8 @@
   position:absolute;left:36.65%;top:26.2%;width:13.45%;height:41.75%;overflow:hidden;
   display:grid;place-items:center;background:#071422;border-radius:9% / 4%;
 }
+.wallpaper-stage .wallpaper-phone{padding:0;border:0;cursor:zoom-in;opacity:1}
+.wallpaper-stage .wallpaper-phone:disabled{cursor:default}
 .wallpaper-phone img{display:block;width:100%;height:100%;object-fit:cover}
 .wallpaper-phone p{margin:0;padding:8px;color:#ffe1a5;text-align:center;font-size:clamp(10px,1.15vw,16px)}
 .wallpaper-covers span{
@@ -61,6 +63,40 @@
   .wallpaper-stage[data-collection="christian"] [data-wallpaper-board="christian"].wallpaper-options,
   .wallpaper-stage[data-collection="originals"] [data-wallpaper-board="originals"].wallpaper-options,
   .wallpaper-stage[data-collection="affiliates"] [data-wallpaper-board="affiliates"].wallpaper-options{display:flex}
+}
+.wallpaper-hover,.wallpaper-dialog{
+  color:#fff2d9;background:linear-gradient(145deg,#132232,#080e17 75%);
+  border:1px solid #bc9558;border-radius:12px;box-shadow:0 10px 36px #000a;
+}
+.wallpaper-hover{
+  position:fixed;z-index:1000;width:min(280px,calc(100vw - 24px));padding:10px;
+  text-align:center;pointer-events:none;
+}
+.wallpaper-hover img{
+  display:block;width:auto;max-width:100%;height:min(45vh,390px);object-fit:contain;margin:auto;border-radius:5px;
+}
+.wallpaper-verse{margin:.55em 0 .25em;color:#fff4df;font:italic 21px/1.25 Georgia,serif}
+.wallpaper-reference{margin:0;color:#f7d99a;font:600 14px/1.3 Georgia,serif}
+.wallpaper-verse:empty,.wallpaper-reference:empty{display:none}
+.wallpaper-dialog{position:fixed;max-width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:18px}
+.wallpaper-dialog::backdrop{background:#02060de0}
+.wallpaper-dialog-content{display:flex;align-items:center;gap:22px}
+.wallpaper-dialog-content img{
+  display:block;max-width:100%;height:min(70dvh,650px);object-fit:contain;border-radius:6px;
+}
+.wallpaper-dialog-details{text-align:center;max-width:300px;padding:22px 8px 8px}
+.wallpaper-dialog-details h3{margin:0;color:#ffe2a8}
+.wallpaper-dialog-details .wallpaper-verse{font-size:clamp(22px,3vw,30px)}
+.wallpaper-close,.wallpaper-dialog-download{
+  border:1px solid #c89c57;border-radius:8px;color:#ffe7b5;background:#142235;font:inherit;cursor:pointer;
+}
+.wallpaper-close{position:absolute;right:8px;top:8px;width:36px;height:36px;font-size:25px;line-height:1}
+.wallpaper-dialog-download{display:inline-block;margin-top:14px;padding:8px 13px;text-decoration:none}
+.wallpaper-dialog-download:hover,.wallpaper-close:hover{background:#253950}
+@media(max-width:640px){
+  .wallpaper-dialog-content{flex-direction:column;gap:0}
+  .wallpaper-dialog-content img{height:min(52dvh,490px)}
+  .wallpaper-dialog-details{padding-top:10px}
 }
 .podcast-stage{
   display:grid;align-content:space-between;gap:clamp(145px,24vw,355px);

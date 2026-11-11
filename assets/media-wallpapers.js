@@ -8,7 +8,12 @@
   const share = stage.querySelector('[data-wallpaper-share]');
   const favorite = stage.querySelector('[data-wallpaper-favorite]');
   const status = document.getElementById('wallpaper-status');
+  const view = stage.closest('.view');
+  const hover = view.querySelector('.wallpaper-hover');
+  const dialog = view.querySelector('.wallpaper-dialog');
+  const dialogDownload = dialog.querySelector('.wallpaper-dialog-download');
   const favoriteKey = 'lldb-wallpaper-favorites';
+  const wallpapersByTile = new WeakMap();
   let catalogRequest;
   let catalogReady = false;
   let selected;
@@ -35,12 +40,12 @@
 
   function selectWallpaper(item, button) {
     selected = item;
+    phone.disabled = false;
     const image = document.createElement('img');
     image.src = item.url;
     image.alt = item.title;
     phone.replaceChildren(image);
-    download.href = item.url;
-    download.download = decodeURIComponent(item.url.split('/').pop());
+    setDownload(download, item);
     download.removeAttribute('aria-disabled');
     share.disabled = false;
     favorite.disabled = false;
@@ -51,6 +56,46 @@
     status.textContent = item.title + ' · listo para descargar.';
   }
 
+  function setDownload(link, item) {
+    link.href = item.url;
+    link.download = decodeURIComponent(item.url.split('/').pop());
+  }
+
+  function fillPreview(panel, item) {
+    const image = panel.querySelector('img');
+    image.src = item.url;
+    if (panel === dialog) image.alt = item.title;
+    panel.querySelector('.wallpaper-verse').textContent = item.verse || '';
+    panel.querySelector('.wallpaper-reference').textContent = item.reference || '';
+  }
+
+  function hideHover() {
+    hover.hidden = true;
+  }
+
+  function showHover(event, item) {
+    if (!item || event.pointerType !== 'mouse' || dialog.open) return;
+    fillPreview(hover, item);
+    hover.hidden = false;
+    const anchor = event.currentTarget.getBoundingClientRect();
+    const { width, height } = hover.getBoundingClientRect();
+    const gap = 12;
+    const left = anchor.right + width + gap <= window.innerWidth
+      ? anchor.right + gap
+      : Math.max(gap, anchor.left - width - gap);
+    const top = Math.max(gap, Math.min(anchor.top, window.innerHeight - height - gap));
+    hover.style.left = left + 'px';
+    hover.style.top = top + 'px';
+  }
+
+  function openPreview(item) {
+    hideHover();
+    fillPreview(dialog, item);
+    dialog.querySelector('h3').textContent = item.title;
+    setDownload(dialogDownload, item);
+    dialog.showModal();
+  }
+
   function activateCollection(button) {
     stage.dataset.collection = button.dataset.wallpaperGroup;
     groups.forEach(group => group.setAttribute('aria-pressed', String(group === button)));
@@ -58,6 +103,8 @@
 
   function clearSelection() {
     selected = null;
+    phone.disabled = true;
+    hideHover();
     phone.replaceChildren();
     download.removeAttribute('href');
     download.setAttribute('aria-disabled', 'true');
@@ -80,16 +127,21 @@
             !item.url.startsWith('/assets/wallpapers/')) continue;
         const tile = document.createElement('button');
         tile.type = 'button';
-        tile.setAttribute('aria-label', item.title);
+        tile.setAttribute('aria-label', 'Ampliar ' + item.title);
+        tile.setAttribute('aria-haspopup', 'dialog');
         tile.setAttribute('aria-pressed', 'false');
         const thumbnail = document.createElement('img');
         thumbnail.src = item.url;
         thumbnail.alt = '';
         thumbnail.loading = 'lazy';
         tile.append(thumbnail);
+        tile.addEventListener('pointerenter', event => showHover(event, item));
+        tile.addEventListener('pointerleave', hideHover);
+        wallpapersByTile.set(tile, item);
         tile.addEventListener('click', () => {
           activateCollection(group);
           selectWallpaper(item, tile);
+          openPreview(item);
         });
         board.append(tile);
       }
@@ -116,14 +168,24 @@
     if (stage.dataset.collection !== key) return;
     const board = boards.find(panel => panel.dataset.wallpaperBoard === key);
     const first = board.querySelector('button');
-    if (first) first.click();
+    if (first) selectWallpaper(wallpapersByTile.get(first), first);
     else status.textContent = button.textContent.trim() + ' · todavía no hay fondos publicados.';
   }
 
   groups.forEach(button => button.addEventListener('click', () => chooseCollection(button)));
-  const view = stage.closest('.view');
+  phone.addEventListener('pointerenter', event => showHover(event, selected));
+  phone.addEventListener('pointerleave', hideHover);
+  phone.addEventListener('click', () => { if (selected) openPreview(selected); });
+  window.addEventListener('scroll', hideHover, { capture: true, passive: true });
+  window.addEventListener('resize', hideHover);
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') hideHover(); });
   function openGallery() {
-    if (view.classList.contains('active') && !stage.dataset.collection) chooseCollection(groups[0]);
+    if (view.classList.contains('active')) {
+      if (!stage.dataset.collection) chooseCollection(groups[0]);
+    } else {
+      hideHover();
+      if (dialog.open) dialog.close();
+    }
   }
   new MutationObserver(openGallery).observe(view, { attributes: true, attributeFilter: ['class'] });
   openGallery();
