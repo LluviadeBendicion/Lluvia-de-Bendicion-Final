@@ -10,8 +10,7 @@
   const status = document.getElementById('wallpaper-status');
   const view = stage.closest('.view');
   const hover = view.querySelector('.wallpaper-hover');
-  const dialog = view.querySelector('.wallpaper-dialog');
-  const dialogDownload = dialog.querySelector('.wallpaper-dialog-download');
+  const selectedVerse = view.querySelector('.wallpaper-selection-verse');
   const favoriteKey = 'lldb-wallpaper-favorites';
   const wallpapersByTile = new WeakMap();
   let catalogRequest;
@@ -40,7 +39,7 @@
 
   function selectWallpaper(item, button) {
     selected = item;
-    phone.disabled = false;
+    hideHover();
     const image = document.createElement('img');
     image.src = item.url;
     image.alt = item.title;
@@ -54,6 +53,7 @@
       tile.setAttribute('aria-pressed', String(tile === button));
     });
     status.textContent = item.title + ' · listo para descargar.';
+    selectedVerse.textContent = [item.verse, item.reference].filter(Boolean).join(' · ');
   }
 
   function setDownload(link, item) {
@@ -61,21 +61,15 @@
     link.download = decodeURIComponent(item.url.split('/').pop());
   }
 
-  function fillPreview(panel, item) {
-    const image = panel.querySelector('img');
-    image.src = item.url;
-    if (panel === dialog) image.alt = item.title;
-    panel.querySelector('.wallpaper-verse').textContent = item.verse || '';
-    panel.querySelector('.wallpaper-reference').textContent = item.reference || '';
-  }
-
   function hideHover() {
     hover.hidden = true;
   }
 
   function showHover(event, item) {
-    if (!item || event.pointerType !== 'mouse' || dialog.open) return;
-    fillPreview(hover, item);
+    if (!item || (event.type === 'pointerenter' && event.pointerType !== 'mouse')) return;
+    hover.querySelector('img').src = item.url;
+    hover.querySelector('.wallpaper-verse').textContent = item.verse || '';
+    hover.querySelector('.wallpaper-reference').textContent = item.reference || '';
     hover.hidden = false;
     const anchor = event.currentTarget.getBoundingClientRect();
     const { width, height } = hover.getBoundingClientRect();
@@ -88,14 +82,6 @@
     hover.style.top = top + 'px';
   }
 
-  function openPreview(item) {
-    hideHover();
-    fillPreview(dialog, item);
-    dialog.querySelector('h3').textContent = item.title;
-    setDownload(dialogDownload, item);
-    dialog.showModal();
-  }
-
   function activateCollection(button) {
     stage.dataset.collection = button.dataset.wallpaperGroup;
     groups.forEach(group => group.setAttribute('aria-pressed', String(group === button)));
@@ -103,7 +89,7 @@
 
   function clearSelection() {
     selected = null;
-    phone.disabled = true;
+    selectedVerse.textContent = '';
     hideHover();
     phone.replaceChildren();
     download.removeAttribute('href');
@@ -127,8 +113,7 @@
             !item.url.startsWith('/assets/wallpapers/')) continue;
         const tile = document.createElement('button');
         tile.type = 'button';
-        tile.setAttribute('aria-label', 'Ampliar ' + item.title);
-        tile.setAttribute('aria-haspopup', 'dialog');
+        tile.setAttribute('aria-label', item.title);
         tile.setAttribute('aria-pressed', 'false');
         const thumbnail = document.createElement('img');
         thumbnail.src = item.url;
@@ -137,11 +122,14 @@
         tile.append(thumbnail);
         tile.addEventListener('pointerenter', event => showHover(event, item));
         tile.addEventListener('pointerleave', hideHover);
+        tile.addEventListener('focus', event => {
+          if (tile.matches(':focus-visible')) showHover(event, item);
+        });
+        tile.addEventListener('blur', hideHover);
         wallpapersByTile.set(tile, item);
         tile.addEventListener('click', () => {
           activateCollection(group);
           selectWallpaper(item, tile);
-          openPreview(item);
         });
         board.append(tile);
       }
@@ -175,7 +163,6 @@
   groups.forEach(button => button.addEventListener('click', () => chooseCollection(button)));
   phone.addEventListener('pointerenter', event => showHover(event, selected));
   phone.addEventListener('pointerleave', hideHover);
-  phone.addEventListener('click', () => { if (selected) openPreview(selected); });
   window.addEventListener('scroll', hideHover, { capture: true, passive: true });
   window.addEventListener('resize', hideHover);
   document.addEventListener('keydown', event => { if (event.key === 'Escape') hideHover(); });
@@ -184,7 +171,6 @@
       if (!stage.dataset.collection) chooseCollection(groups[0]);
     } else {
       hideHover();
-      if (dialog.open) dialog.close();
     }
   }
   new MutationObserver(openGallery).observe(view, { attributes: true, attributeFilter: ['class'] });

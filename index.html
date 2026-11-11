@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-zoom">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-fit">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2544,7 +2544,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
         <span data-wallpaper-board="originals"></span>
         <span data-wallpaper-board="affiliates"></span>
       </div>
-      <button type="button" class="wallpaper-phone" aria-label="Ampliar fondo en el celular" aria-haspopup="dialog" disabled></button>
+      <div class="wallpaper-phone" aria-label="Vista previa en el celular"></div>
     </div>
     <div class="wallpaper-groups" role="group" aria-label="Colecciones de Wallpapers">
       <button type="button" data-wallpaper-group="christian" aria-pressed="false">Cristianos</button>
@@ -2560,24 +2560,13 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
       <button type="button" data-wallpaper-favorite aria-pressed="false" disabled>Favorito</button>
     </div>
   </div>
-  <p class="wallpaper-status" id="wallpaper-status" role="status">Selecciona un fondo para ampliarlo, leer el versículo y descargarlo.</p>
+  <p class="wallpaper-status" id="wallpaper-status" role="status">Selecciona un fondo para verlo en el celular.</p>
+  <p class="wallpaper-selection-verse"></p>
   <div class="wallpaper-hover" hidden aria-hidden="true">
     <img alt="">
     <p class="wallpaper-verse"></p>
     <p class="wallpaper-reference"></p>
   </div>
-  <dialog class="wallpaper-dialog" aria-labelledby="wallpaper-dialog-title">
-    <form method="dialog"><button type="submit" class="wallpaper-close" aria-label="Cerrar vista ampliada" autofocus>×</button></form>
-    <div class="wallpaper-dialog-content">
-      <img alt="">
-      <div class="wallpaper-dialog-details">
-        <h3 id="wallpaper-dialog-title"></h3>
-        <p class="wallpaper-verse"></p>
-        <p class="wallpaper-reference"></p>
-        <a class="wallpaper-dialog-download" download>Descargar fondo</a>
-      </div>
-    </div>
-  </dialog>
   <button type="button" class="media-back" data-go="media">‹ Volver a Media</button>
 </section>
 <section id="podcasts" class="view media-subpage" aria-labelledby="media-podcasts-title">
@@ -3079,6 +3068,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-zoom" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-fit" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>
