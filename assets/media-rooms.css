@@ -70,20 +70,29 @@
   border:1px solid #bc9558;border-radius:12px;box-shadow:0 10px 36px #000a;
 }
 .wallpaper-hover{
-  position:fixed;z-index:1000;width:min(280px,calc(100vw - 24px));padding:10px;
+  position:fixed;z-index:1000;width:min(320px,calc(100vw - 24px));padding:12px 15px;box-sizing:border-box;
   text-align:center;pointer-events:none;
 }
 .wallpaper-hover img{
-  display:block;width:auto;max-width:100%;height:min(45vh,390px);object-fit:contain;margin:auto;border-radius:5px;
+  display:block;width:auto;max-width:100%;height:min(42vh,380px);object-fit:contain;margin:auto;border-radius:5px;
 }
-.wallpaper-verse{margin:.55em 0 .25em;color:#fff4df;font:italic 21px/1.25 Georgia,serif}
-.wallpaper-reference{margin:0;color:#f7d99a;font:600 14px/1.3 Georgia,serif}
+.wallpaper-verse{
+  margin:.52em 0 .22em;color:#ffe7af;
+  font:italic 600 clamp(23px,2.1vw,28px)/1.22 Georgia,serif;
+  text-shadow:0 2px 2px #020408,0 4px 10px #000d,0 0 15px #ca8e3d3d;
+  text-wrap:balance;
+}
+.wallpaper-reference{
+  margin:0;color:#edc67c;font:600 16px/1.3 Georgia,serif;
+  letter-spacing:.025em;text-shadow:0 2px 4px #000e;
+}
 .wallpaper-verse:empty,.wallpaper-reference:empty{display:none}
 .wallpaper-selection-verse{display:none}
 @media(hover:none){
-  .wallpaper-selection-verse:not(:empty){
-    display:block;margin:4px 0 12px;color:#fff4df;font:italic 18px/1.35 Georgia,serif;
+  .wallpaper-selection-verse:not([hidden]){
+    display:block;margin:6px auto 15px;padding:0 12px;max-width:36rem;text-align:center;
   }
+  .wallpaper-selection-verse .wallpaper-verse{font-size:clamp(24px,5.8vw,29px)}
 }
 .podcast-stage{
   display:grid;align-content:space-between;gap:clamp(145px,24vw,355px);

@@ -53,12 +53,18 @@
       tile.setAttribute('aria-pressed', String(tile === button));
     });
     status.textContent = item.title + ' · listo para descargar.';
-    selectedVerse.textContent = [item.verse, item.reference].filter(Boolean).join(' · ');
+    setVerse(selectedVerse, item);
+    selectedVerse.hidden = !item.verse;
   }
 
   function setDownload(link, item) {
     link.href = item.url;
     link.download = decodeURIComponent(item.url.split('/').pop());
+  }
+
+  function setVerse(panel, item) {
+    panel.querySelector('.wallpaper-verse').textContent = item.verse || '';
+    panel.querySelector('.wallpaper-reference').textContent = item.reference || '';
   }
 
   function hideHover() {
@@ -68,8 +74,7 @@
   function showHover(event, item) {
     if (!item || (event.type === 'pointerenter' && event.pointerType !== 'mouse')) return;
     hover.querySelector('img').src = item.url;
-    hover.querySelector('.wallpaper-verse').textContent = item.verse || '';
-    hover.querySelector('.wallpaper-reference').textContent = item.reference || '';
+    setVerse(hover, item);
     hover.hidden = false;
     const anchor = event.currentTarget.getBoundingClientRect();
     const { width, height } = hover.getBoundingClientRect();
@@ -89,7 +94,7 @@
 
   function clearSelection() {
     selected = null;
-    selectedVerse.textContent = '';
+    selectedVerse.hidden = true;
     hideHover();
     phone.replaceChildren();
     download.removeAttribute('href');

@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-fit">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-verses">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2561,7 +2561,10 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
     </div>
   </div>
   <p class="wallpaper-status" id="wallpaper-status" role="status">Selecciona un fondo para verlo en el celular.</p>
-  <p class="wallpaper-selection-verse"></p>
+  <div class="wallpaper-selection-verse" hidden>
+    <p class="wallpaper-verse"></p>
+    <p class="wallpaper-reference"></p>
+  </div>
   <div class="wallpaper-hover" hidden aria-hidden="true">
     <img alt="">
     <p class="wallpaper-verse"></p>
@@ -3068,6 +3071,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-fit" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>
