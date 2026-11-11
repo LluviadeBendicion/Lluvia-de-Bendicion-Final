@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-verses">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-admin">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2618,7 +2618,38 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
 <section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" /><div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div></section>
 <section id="contacto" class="view"><h2>Contacto</h2><div class="cards"><article class="card"><h3>✉ Contacto</h3><form class="lldb-form" data-form="contact"><small class="form-note">No envíes información sensible hasta que el formulario indique que el envío seguro está activo.</small><label>Nombre<input name="name" autocomplete="name"></label><label>Correo<input name="email" type="email" autocomplete="email"></label><label>Mensaje<textarea name="message" rows="4"></textarea></label><button type="submit">Preparar mensaje</button><small class="form-status"></small></form></article><article class="card"><h3>🙏 Peticiones</h3><form class="lldb-form" data-form="prayer"><label>Nombre (opcional)<input name="name"></label><label>Petición<textarea name="request" rows="4"></textarea></label><button type="submit">Preparar petición</button><small class="form-status"></small></form></article></div></section>
 </main>
-<div id="private-admin" class="hidden" role="dialog" aria-modal="true" aria-labelledby="admin-title" style="position:fixed;inset:8%;z-index:60;background:#06101a;border:1px solid var(--gold);border-radius:18px;padding:24px;overflow:auto;box-shadow:0 20px 80px #000"><button class="exit" id="admin-close">×</button><h2 id="admin-title">LLDB · Panel administrativo</h2><p class="admin-warning">Acceso visual reservado. La secuencia de 5 clics no sustituye autenticación; no guardar datos sensibles aquí hasta conectar seguridad real.</p><div class="cards"><article class="card"><h3>Wallpapers</h3><p>Aprobación previa antes de publicar.</p></article><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div>
+<div id="private-admin" class="hidden" role="dialog" aria-modal="true" aria-labelledby="admin-title" style="position:fixed;inset:8%;z-index:60;background:#06101a;border:1px solid var(--gold);border-radius:18px;padding:24px;overflow:auto;box-shadow:0 20px 80px #000"><button class="exit" id="admin-close">×</button><h2 id="admin-title">LLDB · Panel administrativo</h2><section class="card wallpaper-admin" aria-labelledby="wallpaper-admin-title">
+  <h3 id="wallpaper-admin-title">Publicar fondos de pantalla</h3>
+  <form id="wallpaper-admin-login" class="lldb-form" method="post">
+    <label>Clave de GitHub de acceso limitado
+      <input id="wallpaper-admin-key" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+    </label>
+    <small>Usa la cuenta propietaria, selecciona solo Lluvia-de-Bendicion-Final y asigna <strong>Contents: Read and write</strong>.
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Crear clave en GitHub</a>
+    </small>
+    <button type="submit">Entrar</button>
+  </form>
+  <form id="wallpaper-admin-upload" class="lldb-form" method="post" hidden>
+    <label>Colección
+      <select name="collection" required>
+        <option value="christian">Cristianos</option>
+        <option value="originals">LLDB Originales</option>
+        <option value="affiliates">Nuestros Afiliados</option>
+      </select>
+    </label>
+    <label>Título <input name="title" maxlength="100" required></label>
+    <label>Imagen <input name="image" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+    <small>JPG, PNG o WebP, hasta 3 MB. El formato vertical 9:16 encaja en el teléfono de la galería.</small>
+    <label>Versículo para el zoom (opcional) <input name="verse" maxlength="250"></label>
+    <label>Referencia bíblica (opcional) <input name="reference" maxlength="90"></label>
+    <div class="wallpaper-admin-actions">
+      <button type="submit">Publicar fondo</button>
+      <button type="button" id="wallpaper-admin-logout">Cerrar sesión</button>
+    </div>
+  </form>
+  <p id="wallpaper-admin-status" role="status"></p>
+</section>
+<div class="cards"><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div>
 <footer aria-label="Pie de página"><button id="secret-admin-trigger" class="secret-mark" type="button" aria-label="Lluvia de Bendición">LLDB</button><span id="secret">Lluvia de Bendición .Com</span> · Todos los derechos reservados.</footer>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
@@ -3071,6 +3102,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

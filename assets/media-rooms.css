@@ -144,3 +144,15 @@
 .podcast-episodes{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0}
 .podcast-episodes button[aria-pressed="true"]{border-color:#8ed9ff;background:#203e59}
 @media(prefers-reduced-motion:reduce){.podcast-stage::before{transition:none}}
+
+.wallpaper-admin{max-width:40rem;margin-bottom:18px}
+.wallpaper-admin form[hidden]{display:none}
+.wallpaper-admin small{color:#e0cca7;line-height:1.4}
+.wallpaper-admin small a{color:#ffda91}
+.wallpaper-admin-actions{display:flex;gap:8px;flex-wrap:wrap}
+.wallpaper-admin button{
+  justify-self:start;padding:8px 14px;border:1px solid #b38a4b;border-radius:7px;
+  color:#ffe5ad;background:#142334;font:inherit;cursor:pointer;
+}
+.wallpaper-admin button:disabled{opacity:.55;cursor:wait}
+#wallpaper-admin-status:empty{display:none}

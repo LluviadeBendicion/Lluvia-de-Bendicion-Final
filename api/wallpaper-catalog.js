@@ -23,6 +23,11 @@ async function listWallpapers(collection) {
     }));
 }
 
+function mergeWallpapers(configured, discovered) {
+  const seen = new Set(configured.map(item => item.url));
+  return [...configured, ...discovered.filter(item => !seen.has(item.url))];
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.setHeader('Allow', 'GET, HEAD');
@@ -34,7 +39,11 @@ module.exports = async function handler(req, res) {
       listWallpapers('afiliados')
     ]);
     res.setHeader('Vercel-CDN-Cache-Control', 's-maxage=60');
-    return res.status(200).json({ christian: wallpapers.christian, originals, affiliates });
+    return res.status(200).json({
+      christian: wallpapers.christian,
+      originals: mergeWallpapers(wallpapers.originals || [], originals),
+      affiliates: mergeWallpapers(wallpapers.affiliates || [], affiliates)
+    });
   } catch {
     return res.status(500).json({ error: 'No se pudo cargar el catálogo de fondos.' });
   }
