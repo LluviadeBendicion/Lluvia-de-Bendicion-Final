@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-catalog">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2539,14 +2539,21 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   <div class="wallpaper-stage">
     <div class="wallpaper-scene">
       <img class="media-gallery-art" src="/assets/wallpapers-nitida.jpg" alt="Galería de Wallpapers de LLDB con un teléfono central" width="1536" height="1024" decoding="async" loading="lazy">
-      <div class="wallpaper-phone hidden" aria-label="Vista previa en el celular"></div>
+      <div class="wallpaper-covers" aria-hidden="true">
+        <span data-wallpaper-board="christian"></span>
+        <span data-wallpaper-board="originals"></span>
+        <span data-wallpaper-board="affiliates"></span>
+      </div>
+      <div class="wallpaper-phone" aria-label="Vista previa en el celular"></div>
     </div>
     <div class="wallpaper-groups" role="group" aria-label="Colecciones de Wallpapers">
       <button type="button" data-wallpaper-group="christian" aria-pressed="false">Cristianos</button>
       <button type="button" data-wallpaper-group="originals" aria-pressed="false">LLDB Originales</button>
       <button type="button" data-wallpaper-group="affiliates" aria-pressed="false">Nuestros Afiliados</button>
     </div>
-    <div class="wallpaper-options hidden" role="group" aria-label="Fondos de la colección"></div>
+    <div class="wallpaper-options" data-wallpaper-board="christian" role="group" aria-label="Cristianos"></div>
+    <div class="wallpaper-options" data-wallpaper-board="originals" role="group" aria-label="LLDB Originales"></div>
+    <div class="wallpaper-options" data-wallpaper-board="affiliates" role="group" aria-label="Nuestros Afiliados"></div>
     <div class="wallpaper-actions" role="group" aria-label="Acciones del fondo seleccionado">
       <a data-wallpaper-download aria-disabled="true">Descargar</a>
       <button type="button" data-wallpaper-share disabled>Compartir</button>
@@ -3055,6 +3062,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-catalog" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

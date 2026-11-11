@@ -3,14 +3,14 @@
   if (!stage) return;
   const groups = [...stage.querySelectorAll('[data-wallpaper-group]')];
   const phone = stage.querySelector('.wallpaper-phone');
-  const options = stage.querySelector('.wallpaper-options');
+  const boards = [...stage.querySelectorAll('.wallpaper-options')];
   const download = stage.querySelector('[data-wallpaper-download]');
   const share = stage.querySelector('[data-wallpaper-share]');
   const favorite = stage.querySelector('[data-wallpaper-favorite]');
   const status = document.getElementById('wallpaper-status');
   const favoriteKey = 'lldb-wallpaper-favorites';
   let catalogRequest;
-  let activeGroup;
+  let catalogReady = false;
   let selected;
   let favorites = [];
   try {
@@ -45,64 +45,88 @@
     share.disabled = false;
     favorite.disabled = false;
     favorite.setAttribute('aria-pressed', String(favorites.includes(item.url)));
-    options.querySelectorAll('button').forEach(tile => {
+    stage.querySelectorAll('.wallpaper-options button').forEach(tile => {
       tile.setAttribute('aria-pressed', String(tile === button));
     });
     status.textContent = item.title + ' · listo para descargar.';
   }
 
-  async function chooseCollection(button) {
-    const key = button.dataset.wallpaperGroup;
-    activeGroup = key;
-    stage.dataset.collection = key;
+  function activateCollection(button) {
+    stage.dataset.collection = button.dataset.wallpaperGroup;
     groups.forEach(group => group.setAttribute('aria-pressed', String(group === button)));
+  }
+
+  function clearSelection() {
     selected = null;
-    phone.classList.remove('hidden');
-    options.classList.remove('hidden');
     phone.replaceChildren();
-    options.replaceChildren();
     download.removeAttribute('href');
     download.setAttribute('aria-disabled', 'true');
     share.disabled = true;
     favorite.disabled = true;
     favorite.setAttribute('aria-pressed', 'false');
-    status.textContent = 'Cargando colección…';
+    stage.querySelectorAll('.wallpaper-options button[aria-pressed="true"]').forEach(tile => {
+      tile.setAttribute('aria-pressed', 'false');
+    });
+  }
 
-    let items;
+  function populateBoards(catalog) {
+    if (catalogReady) return;
+    for (const board of boards) {
+      const key = board.dataset.wallpaperBoard;
+      const group = groups.find(button => button.dataset.wallpaperGroup === key);
+      const items = Array.isArray(catalog[key]) ? catalog[key] : [];
+      for (const item of items) {
+        if (typeof item?.title !== 'string' || typeof item.url !== 'string' ||
+            !item.url.startsWith('/assets/wallpapers/')) continue;
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.setAttribute('aria-label', item.title);
+        tile.setAttribute('aria-pressed', 'false');
+        const thumbnail = document.createElement('img');
+        thumbnail.src = item.url;
+        thumbnail.alt = '';
+        thumbnail.loading = 'lazy';
+        tile.append(thumbnail);
+        tile.addEventListener('click', () => {
+          activateCollection(group);
+          selectWallpaper(item, tile);
+        });
+        board.append(tile);
+      }
+      if (!board.firstChild) {
+        const message = document.createElement('p');
+        message.textContent = 'Sin fondos publicados';
+        board.append(message);
+      }
+    }
+    catalogReady = true;
+  }
+
+  async function chooseCollection(button) {
+    const key = button.dataset.wallpaperGroup;
+    activateCollection(button);
+    clearSelection();
+    status.textContent = 'Cargando colección…';
     try {
-      const catalog = await loadCatalog();
-      items = Array.isArray(catalog[key]) ? catalog[key] : [];
+      populateBoards(await loadCatalog());
     } catch {
-      if (activeGroup === key) status.textContent = 'No pudimos cargar esta colección. Intenta de nuevo.';
+      if (stage.dataset.collection === key) status.textContent = 'No pudimos cargar esta colección. Intenta de nuevo.';
       return;
     }
-    if (activeGroup !== key) return;
-    for (const item of items) {
-      if (typeof item?.title !== 'string' || typeof item.url !== 'string' ||
-          !item.url.startsWith('/assets/wallpapers/')) continue;
-      const tile = document.createElement('button');
-      tile.type = 'button';
-      tile.setAttribute('aria-label', item.title);
-      const thumbnail = document.createElement('img');
-      thumbnail.src = item.url;
-      thumbnail.alt = '';
-      thumbnail.loading = 'lazy';
-      tile.append(thumbnail);
-      tile.addEventListener('click', () => selectWallpaper(item, tile));
-      options.append(tile);
-    }
-    const first = options.querySelector('button');
+    if (stage.dataset.collection !== key) return;
+    const board = boards.find(panel => panel.dataset.wallpaperBoard === key);
+    const first = board.querySelector('button');
     if (first) first.click();
-    else {
-      const message = document.createElement('p');
-      message.textContent = 'Próximamente';
-      phone.append(message);
-      options.classList.add('hidden');
-      status.textContent = button.textContent.trim() + ' · todavía no hay fondos publicados.';
-    }
+    else status.textContent = button.textContent.trim() + ' · todavía no hay fondos publicados.';
   }
 
   groups.forEach(button => button.addEventListener('click', () => chooseCollection(button)));
+  const view = stage.closest('.view');
+  function openGallery() {
+    if (view.classList.contains('active') && !stage.dataset.collection) chooseCollection(groups[0]);
+  }
+  new MutationObserver(openGallery).observe(view, { attributes: true, attributeFilter: ['class'] });
+  openGallery();
   share.addEventListener('click', async () => {
     if (!selected) return;
     const url = new URL(selected.url, location.origin).href;
