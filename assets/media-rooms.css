@@ -156,3 +156,7 @@
 }
 .wallpaper-admin button:disabled{opacity:.55;cursor:wait}
 #wallpaper-admin-status:empty{display:none}
+
+#wallpaper-admin-other-tools [hidden], #wallpaper-admin-title[hidden]{display:none}
+#private-admin .wallpaper-admin-actions [aria-pressed="true"]{background:#ffe1a0;color:#102032;border-color:#ffe1a0}
+#private-admin nav.wallpaper-admin-actions{margin:14px 0;max-width:none}

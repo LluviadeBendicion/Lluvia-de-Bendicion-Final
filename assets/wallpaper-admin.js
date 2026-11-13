@@ -9,6 +9,20 @@
   const fileField = document.getElementById('wallpaper-admin-file');
   const fields = upload.elements;
   const otherTools = document.getElementById('wallpaper-admin-other-tools');
+  const sectionButtons = [...otherTools.querySelectorAll('[data-admin-section]')];
+
+  function selectSection(section) {
+    for (const button of sectionButtons) {
+      const active = button.dataset.adminSection === section;
+      button.setAttribute('aria-pressed', String(active));
+      document.getElementById(button.getAttribute('aria-controls')).hidden = !active;
+    }
+  }
+
+  for (const button of sectionButtons) {
+    button.addEventListener('click', () => selectSection(button.dataset.adminSection));
+  }
+
   const mediaForm = document.getElementById('media-admin-form');
   const mediaStatus = document.getElementById('media-admin-status');
   const mediaFields = mediaForm.elements;
@@ -21,6 +35,7 @@
   function showLogin() {
     login.reset();
     login.hidden = false;
+    document.getElementById('wallpaper-admin-title').hidden = false;
     upload.reset();
     upload.hidden = true;
     otherTools.hidden = true;
@@ -33,10 +48,12 @@
 
   function showEditor(name) {
     login.hidden = true;
+    document.getElementById('wallpaper-admin-title').hidden = true;
     upload.hidden = false;
     otherTools.hidden = false;
     refreshMode();
-    if (!panel.classList.contains('hidden')) fields.mode.focus();
+    selectSection('media');
+    if (!panel.classList.contains('hidden')) sectionButtons[0].focus();
     status.textContent = 'Sesión iniciada como ' + name + '.';
   }
 
