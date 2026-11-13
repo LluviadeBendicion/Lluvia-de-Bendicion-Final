@@ -215,10 +215,19 @@ async function openAI(path, payload) {
     signal: AbortSignal.timeout(165000)
   });
   if (!response.ok) {
+    if (response.status === 429) {
+      const details = (await response.json().catch(() => null))?.error;
+      const billingErrors = ['insufficient_quota', 'credit_balance_exhausted', 'billing_hard_limit_reached'];
+      if (billingErrors.includes(details?.code) || billingErrors.includes(details?.type)) {
+        throw new RequestError(429, 'La API de OpenAI no tiene saldo disponible o alcanzó su límite de gasto. Revisa Facturación en OpenAI Platform.');
+      }
+      if (details?.type === 'rate_limit_error' || ['rate_limit_exceeded', 'slow_down'].includes(details?.code)) {
+        throw new RequestError(429, 'OpenAI limitó temporalmente las solicitudes. Espera un momento y vuelve a crear el borrador.');
+      }
+      throw new RequestError(429, 'OpenAI alcanzó un límite. Revisa el saldo de la API o intenta más tarde.');
+    }
     await response.body?.cancel();
-    throw new RequestError(502, response.status === 429
-      ? 'OpenAI alcanzó un límite. Revisa el saldo de la API o intenta más tarde.'
-      : 'OpenAI no pudo completar la solicitud. Revisa el acceso al modelo o intenta de nuevo.');
+    throw new RequestError(502, 'OpenAI no pudo completar la solicitud. Revisa el acceso al modelo o intenta de nuevo.');
   }
   return response.json();
 }
