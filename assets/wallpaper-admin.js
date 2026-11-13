@@ -284,6 +284,7 @@
   const assistantStatus = document.getElementById('assistant-status');
   let draft;
   let draftVersion = 0;
+  const manual = document.getElementById('assistant-manual');
 
   function resetAssistant() {
     draftVersion++;
@@ -296,9 +297,40 @@
     document.getElementById('assistant-photo').hidden = true;
   }
 
+  manual.addEventListener('click', () => {
+    const kind = assistant.elements.kind.value;
+    if (kind === 'wallpaper') {
+      sectionButtons.find(button => button.dataset.adminSection === 'wallpapers').click();
+      return;
+    }
+    draftVersion++;
+    showDraft(kind, {});
+    assistantStatus.textContent = 'Pega tu texto, revísalo y pulsa Aprobar y publicar.';
+    review.elements.text.focus();
+  });
+
   assistant.elements.kind.addEventListener('change', () => {
     document.getElementById('assistant-photo').hidden = assistant.elements.kind.value !== 'wallpaper';
   });
+
+  function showDraft(kind, result) {
+    draft = { kind, image: result.image };
+    const wallpaper = kind === 'wallpaper';
+    review.reset();
+    for (const key of ['title', 'reference', 'text', 'note']) review.elements[key].value = result[key] || '';
+    preview.hidden = !wallpaper;
+    if (wallpaper) preview.src = 'data:image/jpeg;base64,' + result.image;
+    else preview.removeAttribute('src');
+    document.getElementById('assistant-collection').hidden = !wallpaper;
+    for (const field of ['reference', 'text', 'note']) {
+      document.getElementById('assistant-' + field).hidden = wallpaper;
+    }
+    review.elements.title.required = wallpaper || kind === 'testimonies';
+    review.elements.text.required = !wallpaper;
+    review.hidden = false;
+    assistantStatus.textContent = result.message || 'Revisa el borrador antes de aprobarlo.';
+    review.elements.title.focus();
+  }
 
   assistant.addEventListener('submit', async event => {
     event.preventDefault();
@@ -322,22 +354,7 @@
         assistantStatus.textContent = result.message || 'Añade más detalles y vuelve a intentar.';
         return;
       }
-      draft = { kind, image: result.image };
-      const wallpaper = kind === 'wallpaper';
-      review.reset();
-      for (const key of ['title', 'reference', 'text', 'note']) review.elements[key].value = result[key] || '';
-      preview.hidden = !wallpaper;
-      if (wallpaper) preview.src = 'data:image/jpeg;base64,' + result.image;
-      else preview.removeAttribute('src');
-      document.getElementById('assistant-collection').hidden = !wallpaper;
-      for (const field of ['reference', 'text', 'note']) {
-        document.getElementById('assistant-' + field).hidden = wallpaper;
-      }
-      review.elements.title.required = wallpaper || kind === 'testimonies';
-      review.elements.text.required = !wallpaper;
-      review.hidden = false;
-      assistantStatus.textContent = result.message || 'Revisa el borrador antes de aprobarlo.';
-      review.elements.title.focus();
+      showDraft(kind, result);
     } catch (error) {
       if (version === draftVersion) assistantStatus.textContent = error.message;
     } finally {

@@ -2686,7 +2686,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
     <label id="assistant-photo" hidden>Foto del celular (opcional, hasta 3 MB)
       <input name="photo" type="file" accept="image/jpeg,image/png,image/webp">
     </label>
-    <button type="submit">Crear borrador</button>
+    <div class="wallpaper-admin-actions"><button type="submit">Crear borrador con IA</button><button id="assistant-manual" type="button">Pegar texto preparado</button></div>
   </form>
   <p id="assistant-status" role="status"></p>
   <form id="assistant-review" class="lldb-form" method="post" hidden>
@@ -3181,6 +3181,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=assistant" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=manual" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>
