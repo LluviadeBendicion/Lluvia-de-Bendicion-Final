@@ -121,6 +121,6 @@
       "includeFiles": "assets/wallpapers/{originales,afiliados}/**"
     }
   },
-  "buildCommand": "npm install --no-save --package-lock=false --ignore-scripts @ffmpeg-installer/linux-x64@4.1.0 && node scripts/build-site.cjs",
+  "buildCommand": "node scripts/build-site.cjs",
   "outputDirectory": "dist"
 }

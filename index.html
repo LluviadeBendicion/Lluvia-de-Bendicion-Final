@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=wallpaper-admin-login">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=media">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2663,7 +2663,20 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   </form>
   <p id="wallpaper-admin-status" role="status"></p>
 </section>
-<div class="cards" id="wallpaper-admin-other-tools" hidden><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div>
+<div id="wallpaper-admin-other-tools" hidden>
+<section class="card wallpaper-admin" aria-labelledby="media-admin-title">
+  <h3 id="media-admin-title">Publicar contenido</h3>
+  <form id="media-admin-form" class="lldb-form" method="post">
+    <label>Sección <select name="kind"><option value="originals">LLDB Originales</option><option value="podcasts">Podcasts</option><option value="facebook">Facebook</option></select></label>
+    <label>Título <input name="title" required maxlength="100"></label>
+    <label id="media-admin-source">Cómo agregarlo <select name="source"><option value="file">Subir archivo</option><option value="url">Enlace directo al archivo</option></select></label>
+    <label id="media-admin-file">Archivo <input name="file" type="file" accept=".mp4,video/mp4"></label>
+    <label id="media-admin-url" hidden>Enlace <input name="url" type="url" maxlength="2048" disabled></label>
+    <button type="submit">Publicar</button>
+  </form>
+  <p id="media-admin-status" role="status"></p>
+</section>
+<div class="cards"><article class="card"><h3>Afiliados</h3><p>Directorio y administración.</p><select id="affiliate-status" aria-label="Estado administrativo"><option value="active">Activo</option><option value="disabled">Deshabilitado / No disponible temporalmente</option><option value="banned">Customer is BAN / Cliente bloqueado</option><option value="discontinued">Descontinuar cliente</option></select><div id="affiliate-status-note" class="admin-note">Cliente activo.</div><div class="admin-fields"><label>Razón / nota<input id="affiliate-reason" placeholder="Motivo administrativo"></label><label>Fecha<input id="affiliate-date" type="date"></label><label>Administrador<input id="affiliate-admin" placeholder="Nombre del administrador"></label><label>Reactivación<input id="affiliate-reactivate" type="date"></label></div><small class="local-only">Campos preparados para el expediente. No se guardan hasta conectar el sistema administrativo seguro.</small></article><article class="card"><h3>Contenido</h3><p>Oración, versículos, devocional, sermones, estudios y testimonios.</p></article><article class="card"><h3>Radio</h3><p>Estado y programación.</p></article></div></div></div>
 <footer aria-label="Pie de página"><button id="secret-admin-trigger" class="secret-mark" type="button" aria-label="Lluvia de Bendición">LLDB</button><span id="secret">Lluvia de Bendición .Com</span> · Todos los derechos reservados.</footer>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
@@ -3116,6 +3129,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=accounts" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=media" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

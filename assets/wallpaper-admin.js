@@ -9,6 +9,10 @@
   const fileField = document.getElementById('wallpaper-admin-file');
   const fields = upload.elements;
   const otherTools = document.getElementById('wallpaper-admin-other-tools');
+  const mediaForm = document.getElementById('media-admin-form');
+  const mediaStatus = document.getElementById('media-admin-status');
+  const mediaFields = mediaForm.elements;
+  let pendingUpload;
   let clicks = 0;
   let lastClick = 0;
   let catalog = {};
@@ -20,6 +24,10 @@
     upload.reset();
     upload.hidden = true;
     otherTools.hidden = true;
+    mediaForm.reset();
+    mediaStatus.textContent = '';
+    pendingUpload = null;
+    updateMediaFields();
     if (!panel.classList.contains('hidden')) login.elements.user.focus();
   }
 
@@ -185,6 +193,69 @@
     } catch (error) {
       if (error.status === 401) showLogin();
       status.textContent = error.message;
+    } finally {
+      submit.disabled = false;
+    }
+  });
+  function updateMediaFields() {
+    const facebook = mediaFields.kind.value === 'facebook';
+    const useFile = !facebook && mediaFields.source.value === 'file';
+    document.getElementById('media-admin-source').hidden = facebook;
+    document.getElementById('media-admin-file').hidden = !useFile;
+    document.getElementById('media-admin-url').hidden = useFile;
+    mediaFields.file.required = useFile;
+    mediaFields.file.disabled = !useFile;
+    const video = mediaFields.kind.value === 'originals';
+    mediaFields.file.accept = video ? '.mp4' : '.mp3,.m4a';
+    mediaFields.file.parentElement.firstChild.textContent = video ? 'Video MP4 (hasta 250 MB) ' : 'Audio MP3 o M4A (hasta 250 MB) ';
+    mediaFields.url.required = !useFile;
+    mediaFields.url.disabled = useFile;
+    mediaFields.url.placeholder = facebook ? 'https://www.facebook.com/…/videos/…' : 'https://…';
+  }
+
+  mediaFields.kind.addEventListener('change', updateMediaFields);
+  mediaFields.source.addEventListener('change', updateMediaFields);
+  updateMediaFields();
+
+  mediaForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const kind = mediaFields.kind.value;
+    const title = mediaFields.title.value;
+    const file = mediaFields.file.disabled ? null : mediaFields.file.files[0];
+    const submit = mediaForm.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    try {
+      let url = mediaFields.url.value;
+      if (file) {
+        if (pendingUpload?.file !== file || pendingUpload.kind !== kind) {
+          mediaStatus.textContent = 'Preparando la subida…';
+          const options = await request({
+            action: 'media-upload', kind, size: file.size, extension: file.name.split('.').pop().toLowerCase()
+          });
+          const { put } = await import('/assets/media-blob-client.js');
+          const blob = await put(options.pathname, file, {
+            access: 'public', token: options.clientToken, contentType: options.contentType,
+            multipart: file.size > 16 * 1024 * 1024,
+            onUploadProgress: ({ percentage }) => { mediaStatus.textContent = 'Subiendo archivo… ' + Math.round(percentage) + '%'; }
+          });
+          pendingUpload = { file, kind, url: blob.url };
+        }
+        url = pendingUpload.url;
+      }
+      mediaStatus.textContent = 'Guardando en el catálogo…';
+      await request({ action: 'media-publish', kind, title, url });
+      mediaForm.reset();
+      mediaFields.kind.value = kind;
+      pendingUpload = null;
+      updateMediaFields();
+      mediaStatus.textContent = 'Guardado. Aparecerá en su sección cuando termine la publicación del sitio.';
+    } catch (error) {
+      if (error.status === 401) {
+        showLogin();
+        status.textContent = error.message;
+      } else {
+        mediaStatus.textContent = error.message;
+      }
     } finally {
       submit.disabled = false;
     }

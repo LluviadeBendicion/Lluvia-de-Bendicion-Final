@@ -1,4 +1,4 @@
-const { createHash, createHmac, timingSafeEqual } = require('node:crypto');
+const { randomUUID, createHash, createHmac, timingSafeEqual } = require('node:crypto');
 
 const admins = {
   'omar-rivera': { name: 'Omar Rivera', passwordKey: 'LLDB_OMAR_PASSWORD' },
@@ -54,6 +54,58 @@ function allowAttempt(req) {
 const repository = '/repos/LluviadeBendicion/Lluvia-de-Bendicion-Final';
 const configPath = 'api/media-config.json';
 const collections = { christian: 'cristianos', originals: 'originales', affiliates: 'afiliados' };
+const mediaTypes = {
+  originals: { mp4: ['video/mp4'] },
+  podcasts: { mp3: ['audio/mpeg'], m4a: ['audio/mp4', 'audio/x-m4a'] }
+};
+const mediaLimit = 250 * 1024 * 1024;
+
+function mediaUrl(value, kind) {
+  let url;
+  try { url = new URL(value); } catch {}
+  if (!url || url.protocol !== 'https:' || url.username || url.password || url.port || value.length > 2048) {
+    throw new RequestError(400, 'Ingresa un enlace HTTPS válido.');
+  }
+  if (kind === 'facebook') {
+    if (!['facebook.com', 'www.facebook.com', 'm.facebook.com'].includes(url.hostname) ||
+        !(/\/(?:videos|reel)\/\d+(?:\/|$)/i.test(url.pathname) ||
+          (['/watch', '/watch/', '/video.php'].includes(url.pathname) && /^\d+$/.test(url.searchParams.get('v') || '')))) {
+      throw new RequestError(400, 'Pega el enlace público de Facebook con /videos/, /reel/ o watch/?v=.');
+    }
+  } else if (!Object.hasOwn(mediaTypes[kind], url.pathname.split('.').pop().toLowerCase())) {
+    throw new RequestError(400, 'El enlace debe apuntar directamente al archivo de video o audio.');
+  }
+  url.hash = '';
+  return url.href;
+}
+
+async function mediaUpload(body) {
+  const { kind, extension, size } = body;
+  if (!Object.hasOwn(mediaTypes, kind) || !Object.hasOwn(mediaTypes[kind], extension) ||
+      !Number.isSafeInteger(size) || size < 1 || size > mediaLimit) {
+    throw new RequestError(400, 'Selecciona un archivo permitido de hasta 250 MB.');
+  }
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!token) throw new RequestError(503, 'Falta conectar Vercel Blob. Puedes publicar con un enlace directo mientras tanto.');
+  const { generateClientTokenFromReadWriteToken } = await import('@vercel/blob/client');
+  const pathname = 'lldb-media/' + kind + '/' + randomUUID() + '.' + extension;
+  const clientToken = await generateClientTokenFromReadWriteToken({
+    token, pathname, allowedContentTypes: mediaTypes[kind][extension],
+    maximumSizeInBytes: size, validUntil: Date.now() + 30 * 60 * 1000,
+    addRandomSuffix: false, allowOverwrite: false
+  });
+  return { pathname, clientToken, contentType: mediaTypes[kind][extension][0] };
+}
+
+function parseMedia(body) {
+  const { kind, title, url } = body;
+  if (!(kind === 'facebook' || Object.hasOwn(mediaTypes, kind)) ||
+      typeof title !== 'string' || !title.trim() || title.length > 100 || typeof url !== 'string') {
+    throw new RequestError(400, 'Selecciona una sección, un título y un archivo o enlace.');
+  }
+  return { collection: kind, item: { title: title.trim(), url: mediaUrl(url.trim(), kind) }, media: true };
+}
+
 const maxBytes = 3 * 1024 * 1024;
 
 class RequestError extends Error {
@@ -140,7 +192,7 @@ function parseEdit(body) {
 }
 
 async function publish(token, upload, adminName) {
-  const { collection, item, image } = upload;
+  const { collection, item, image, media } = upload;
   let imageSha;
   for (let attempt = 0; attempt < 3; attempt++) {
     const ref = await github(repository + '/git/ref/heads/main', token);
@@ -150,10 +202,14 @@ async function publish(token, upload, adminName) {
       github(repository + '/contents/' + configPath + '?ref=' + parent, token)
     ]);
     const config = JSON.parse(Buffer.from(configFile.content, 'base64').toString('utf8'));
-    const entries = config.wallpapers[collection] || [];
+    const target = media
+      ? collection === 'podcasts' ? config.podcasts : config.videos[collection === 'facebook' ? 'facebookServices' : 'lldbOriginals']
+      : config.wallpapers;
+    const key = media ? 'items' : collection;
+    const entries = target[key] || [];
     const existing = entries.find(entry => entry.url === item.url);
-    if (image && existing) return existing;
-    if (!image && !existing) {
+    if ((image || media) && existing) return existing;
+    if (!media && !image && !existing) {
       if (collection === 'christian') throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
       const path = item.url.slice(1);
       const file = await github(repository + '/contents/' + path + '?ref=' + parent, token);
@@ -161,7 +217,7 @@ async function publish(token, upload, adminName) {
         throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
       }
     }
-    config.wallpapers[collection] = image || !existing
+    target[key] = image || media || !existing
       ? [item, ...entries]
       : entries.map(entry => entry.url === item.url ? { ...entry, ...item } : entry);
     if (image && !imageSha) {
@@ -176,7 +232,7 @@ async function publish(token, upload, adminName) {
       ]
     });
     const commit = await github(repository + '/git/commits', token, 'POST', {
-      message: (image ? 'Publicar' : 'Editar') + ' fondo en ' + collections[collection] + ' · ' + adminName,
+      message: (media ? 'Publicar contenido en ' + collection : (image ? 'Publicar' : 'Editar') + ' fondo en ' + collections[collection]) + ' · ' + adminName,
       tree: tree.sha,
       parents: [parent]
     });
@@ -199,7 +255,7 @@ module.exports = async function handler(req, res) {
   if (!allowedOrigins.has(req.headers.origin)) return res.status(403).json({ error: 'Origen no autorizado.' });
   try {
     const body = req.body;
-    if (!body || !['login', 'logout', 'session', 'publish', 'edit'].includes(body.action)) {
+    if (!body || !['login', 'logout', 'session', 'publish', 'edit', 'media-upload', 'media-publish'].includes(body.action)) {
       throw new RequestError(400, 'Acción inválida.');
     }
     if (body.action === 'logout') {
@@ -228,7 +284,9 @@ module.exports = async function handler(req, res) {
     if (!user) throw new RequestError(401, 'Inicia sesión con tu usuario y contraseña.');
     const name = admins[user].name;
     if (body.action === 'session') return res.status(200).json({ name });
-    const item = await publish(token, body.action === 'publish' ? parseUpload(body) : parseEdit(body), name);
+    if (body.action === 'media-upload') return res.status(200).json(await mediaUpload(body));
+    const item = await publish(token, body.action === 'media-publish' ? parseMedia(body)
+      : body.action === 'publish' ? parseUpload(body) : parseEdit(body), name);
     return res.status(202).json({ item });
   } catch (error) {
     return res.status(error.status || 502).json({

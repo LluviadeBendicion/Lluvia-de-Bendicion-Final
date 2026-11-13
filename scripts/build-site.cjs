@@ -12,6 +12,12 @@ for (const entry of [
   cpSync(join(root, entry), join(output, entry), { recursive: true });
 }
 
+require('esbuild').buildSync({
+  stdin: { contents: "export { put } from '@vercel/blob/client';", resolveDir: root },
+  bundle: true, format: 'esm', minify: true,
+  outfile: join(output, 'assets', 'media-blob-client.js')
+});
+
 const intro = join(root, 'assets', 'intro-cinematografica-lldb.mp4');
 const target = join(output, 'assets', 'intro-cinematografica-1080p.mp4');
 if (!existsSync(target)) {

@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "dependencies": {
+    "@vercel/blob": "2.9.0",
+    "@ffmpeg-installer/linux-x64": "4.1.0",
+    "esbuild": "0.28.2"
+  }
+}
