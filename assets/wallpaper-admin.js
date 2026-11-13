@@ -42,6 +42,7 @@
     mediaForm.reset();
     mediaStatus.textContent = '';
     pendingUpload = null;
+    resetAssistant();
     updateMediaFields();
     if (!panel.classList.contains('hidden')) login.elements.user.focus();
   }
@@ -273,6 +274,96 @@
       } else {
         mediaStatus.textContent = error.message;
       }
+    } finally {
+      submit.disabled = false;
+    }
+  });
+  const assistant = document.getElementById('assistant-request');
+  const review = document.getElementById('assistant-review');
+  const preview = document.getElementById('assistant-image');
+  const assistantStatus = document.getElementById('assistant-status');
+  let draft;
+  let draftVersion = 0;
+
+  function resetAssistant() {
+    draftVersion++;
+    draft = null;
+    assistant.reset();
+    review.reset();
+    review.hidden = true;
+    preview.removeAttribute('src');
+    assistantStatus.textContent = '';
+    document.getElementById('assistant-photo').hidden = true;
+  }
+
+  assistant.elements.kind.addEventListener('change', () => {
+    document.getElementById('assistant-photo').hidden = assistant.elements.kind.value !== 'wallpaper';
+  });
+
+  assistant.addEventListener('submit', async event => {
+    event.preventDefault();
+    const kind = assistant.elements.kind.value;
+    const file = kind === 'wallpaper' ? assistant.elements.photo.files[0] : null;
+    if (file?.size > 3 * 1024 * 1024) {
+      assistantStatus.textContent = 'Selecciona una foto de hasta 3 MB.';
+      return;
+    }
+    const version = ++draftVersion;
+    const submit = assistant.querySelector('button[type=submit]');
+    submit.disabled = true;
+    review.hidden = true;
+    draft = null;
+    assistantStatus.textContent = 'Preparando tu borrador…';
+    try {
+      const prompt = assistant.elements.prompt.value;
+      const result = await request({ action: 'ai-draft', kind, prompt, ...(file ? { image: await encode(file) } : {}) });
+      if (version !== draftVersion) return;
+      if (!result.image && !result.text?.trim()) {
+        assistantStatus.textContent = result.message || 'Añade más detalles y vuelve a intentar.';
+        return;
+      }
+      draft = { kind, image: result.image };
+      const wallpaper = kind === 'wallpaper';
+      review.reset();
+      for (const key of ['title', 'reference', 'text', 'note']) review.elements[key].value = result[key] || '';
+      preview.hidden = !wallpaper;
+      if (wallpaper) preview.src = 'data:image/jpeg;base64,' + result.image;
+      else preview.removeAttribute('src');
+      document.getElementById('assistant-collection').hidden = !wallpaper;
+      for (const field of ['reference', 'text', 'note']) {
+        document.getElementById('assistant-' + field).hidden = wallpaper;
+      }
+      review.elements.title.required = wallpaper || kind === 'testimonies';
+      review.elements.text.required = !wallpaper;
+      review.hidden = false;
+      assistantStatus.textContent = result.message || 'Revisa el borrador antes de aprobarlo.';
+      review.elements.title.focus();
+    } catch (error) {
+      if (version === draftVersion) assistantStatus.textContent = error.message;
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  review.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!draft) return;
+    const version = draftVersion;
+    const submit = review.querySelector('button[type=submit]');
+    const fields = review.elements;
+    const payload = draft.image
+      ? { action: 'publish', image: draft.image, collection: fields.collection.value, title: fields.title.value }
+      : { action: 'editorial-publish', kind: draft.kind, title: fields.title.value, reference: fields.reference.value,
+          text: fields.text.value, note: fields.note.value };
+    submit.disabled = true;
+    assistantStatus.textContent = 'Publicando…';
+    try {
+      await request(payload);
+      if (version !== draftVersion) return;
+      resetAssistant();
+      assistantStatus.textContent = 'Aprobado. Aparecerá en su sección cuando termine la publicación del sitio.';
+    } catch (error) {
+      if (version === draftVersion) assistantStatus.textContent = error.message;
     } finally {
       submit.disabled = false;
     }

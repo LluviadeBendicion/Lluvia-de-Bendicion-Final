@@ -52,7 +52,7 @@ function allowAttempt(req) {
   attempts.set(address, { count: 1, until: now + 60000 });
 }
 const repository = '/repos/LluviadeBendicion/Lluvia-de-Bendicion-Final';
-const configPath = 'api/media-config.json';
+
 const collections = { christian: 'cristianos', originals: 'originales', affiliates: 'afiliados' };
 const mediaTypes = {
   originals: { mp4: ['video/mp4'] },
@@ -191,8 +191,89 @@ function parseEdit(body) {
   return { collection, item: { title: title.trim(), verse: verse.trim(), reference: reference.trim(), url } };
 }
 
+
+const editorial = {
+  dailyPrayer: 'Oración del día', dailyVerse: 'Versículo del día', memoryVerse: 'Versículo para memorizar',
+  weeklyDevotional: 'Devocional', weeklySermons: 'Sermón', studies: 'Estudio bíblico', testimonies: 'Testimonio'
+};
+
+function clean(value, max, required = false) {
+  if (typeof value !== 'string' || value.length > max || (required && !value.trim())) {
+    throw new RequestError(400, 'Completa los campos requeridos y revisa la longitud del texto.');
+  }
+  return value.trim();
+}
+
+async function openAI(path, payload) {
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) throw new RequestError(503, 'Falta la clave de OpenAI en Vercel.');
+  const multipart = payload instanceof FormData;
+  const response = await fetch('https://api.openai.com/v1/' + path, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + key, ...(multipart ? {} : { 'Content-Type': 'application/json' }) },
+    body: multipart ? payload : JSON.stringify(payload),
+    signal: AbortSignal.timeout(165000)
+  });
+  if (!response.ok) {
+    await response.body?.cancel();
+    throw new RequestError(502, response.status === 429
+      ? 'OpenAI alcanzó un límite. Revisa el saldo de la API o intenta más tarde.'
+      : 'OpenAI no pudo completar la solicitud. Revisa el acceso al modelo o intenta de nuevo.');
+  }
+  return response.json();
+}
+
+async function draftContent(body) {
+  const { kind } = body;
+  const prompt = clean(body.prompt, 5000, true);
+  if (kind === 'wallpaper') {
+    const options = {
+      model: 'gpt-image-1.5', size: '1024x1536', quality: 'medium', output_format: 'jpeg',
+      output_compression: 82, prompt: 'Crea un wallpaper vertical siguiendo la solicitud. Usa texto legible y respeta literalmente las palabras que indique. Si hay una foto, conserva el sujeto y composición salvo petición explícita. Solicitud: ' + prompt
+    };
+    let result;
+    if (body.image) {
+      const image = Buffer.from(clean(body.image, 4194304, true), 'base64');
+      const extension = detectExtension(image);
+      if (!extension || image.length > maxBytes) throw new RequestError(400, 'Usa una foto JPG, PNG o WebP de hasta 3 MB.');
+      const form = new FormData();
+      for (const [key, value] of Object.entries(options)) form.set(key, String(value));
+      form.set('image', new Blob([image], { type: extension === 'jpg' ? 'image/jpeg' : 'image/' + extension }), 'foto.' + extension);
+      result = await openAI('images/edits', form);
+    } else result = await openAI('images/generations', options);
+    const image = result.data?.[0]?.b64_json;
+    if (!image || image.length > 4194304) throw new RequestError(502, 'La imagen superó el tamaño admitido. Intenta de nuevo.');
+    return { image };
+  }
+  if (!Object.hasOwn(editorial, kind)) throw new RequestError(400, 'Selecciona el tipo de contenido.');
+  const result = await openAI('responses', {
+    model: 'gpt-5-mini', store: false, reasoning: { effort: 'minimal' }, max_output_tokens: 2600,
+    instructions: 'Redacta en español para el ministerio LLDB. Devuelve un borrador de ' + editorial[kind] +
+      '. Para versículos, usa una cita breve de Reina-Valera 1909 y su referencia. Si no estás seguro de la cita, pide que el usuario la proporcione. ' +
+      'Para testimonios usa solo hechos narrados por el usuario, sin inventar experiencias, personas ni datos. Si faltan hechos, pide la historia en el campo message y deja text vacío. El texto debe ser de hasta 6000 caracteres.',
+    input: prompt,
+    text: { format: { type: 'json_schema', name: 'lldb_draft', strict: true, schema: {
+      type: 'object', additionalProperties: false, required: ['title', 'reference', 'text', 'note', 'message'],
+      properties: Object.fromEntries(['title', 'reference', 'text', 'note', 'message'].map(key => [key, { type: 'string' }]))
+    } } }
+  });
+  const content = result.output?.flatMap(item => item.content || []).find(item => item.type === 'output_text');
+  if (!content || result.status !== 'completed') throw new RequestError(502, 'No se pudo preparar el borrador. Intenta con una solicitud más breve.');
+  return JSON.parse(content.text);
+}
+
+function parseEditorial(body) {
+  if (!Object.hasOwn(editorial, body.kind)) throw new RequestError(400, 'Selecciona el tipo de contenido.');
+  const item = {
+    title: clean(body.title, 150), reference: clean(body.reference, 150),
+    text: clean(body.text, 6000, true), note: clean(body.note, 600)
+  };
+  return { collection: body.kind, item, editorialContent: true };
+}
+
 async function publish(token, upload, adminName) {
-  const { collection, item, image, media } = upload;
+  const { collection, item, image, media, editorialContent } = upload;
+  const configPath = editorialContent ? 'api/content-config.json' : 'api/media-config.json';
   let imageSha;
   for (let attempt = 0; attempt < 3; attempt++) {
     const ref = await github(repository + '/git/ref/heads/main', token);
@@ -202,24 +283,30 @@ async function publish(token, upload, adminName) {
       github(repository + '/contents/' + configPath + '?ref=' + parent, token)
     ]);
     const config = JSON.parse(Buffer.from(configFile.content, 'base64').toString('utf8'));
-    const target = media
+    const target = editorialContent ? config : media
       ? collection === 'podcasts' ? config.podcasts : config.videos[collection === 'facebook' ? 'facebookServices' : 'lldbOriginals']
       : config.wallpapers;
     const key = media ? 'items' : collection;
-    const entries = target[key] || [];
-    const existing = entries.find(entry => entry.url === item.url);
-    if ((image || media) && existing) return existing;
-    if (!media && !image && !existing) {
-      if (collection === 'christian') throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
-      const path = item.url.slice(1);
-      const file = await github(repository + '/contents/' + path + '?ref=' + parent, token);
-      if (file.type !== 'file' || file.path !== decodeURIComponent(path)) {
-        throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
+    if (editorialContent) {
+      target[key] = collection === 'testimonies'
+        ? { ...target[key], items: [item, ...(target[key]?.items || []).filter(entry => entry.title !== item.title || entry.text !== item.text)] }
+        : { ...target[key], ...item };
+    } else {
+      const entries = target[key] || [];
+      const existing = entries.find(entry => entry.url === item.url);
+      if ((image || media) && existing) return existing;
+      if (!media && !image && !existing) {
+        if (collection === 'christian') throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
+        const path = item.url.slice(1);
+        const file = await github(repository + '/contents/' + path + '?ref=' + parent, token);
+        if (file.type !== 'file' || file.path !== decodeURIComponent(path)) {
+          throw new RequestError(404, 'No se encontró ese fondo en el catálogo.');
+        }
       }
+      target[key] = image || media || !existing
+        ? [item, ...entries]
+        : entries.map(entry => entry.url === item.url ? { ...entry, ...item } : entry);
     }
-    target[key] = image || media || !existing
-      ? [item, ...entries]
-      : entries.map(entry => entry.url === item.url ? { ...entry, ...item } : entry);
     if (image && !imageSha) {
       const blob = await github(repository + '/git/blobs', token, 'POST', { content: image, encoding: 'base64' });
       imageSha = blob.sha;
@@ -232,7 +319,7 @@ async function publish(token, upload, adminName) {
       ]
     });
     const commit = await github(repository + '/git/commits', token, 'POST', {
-      message: (media ? 'Publicar contenido en ' + collection : (image ? 'Publicar' : 'Editar') + ' fondo en ' + collections[collection]) + ' · ' + adminName,
+      message: (editorialContent ? 'Publicar ' + editorial[collection] : media ? 'Publicar contenido en ' + collection : (image ? 'Publicar' : 'Editar') + ' fondo en ' + collections[collection]) + ' · ' + adminName,
       tree: tree.sha,
       parents: [parent]
     });
@@ -255,7 +342,7 @@ module.exports = async function handler(req, res) {
   if (!allowedOrigins.has(req.headers.origin)) return res.status(403).json({ error: 'Origen no autorizado.' });
   try {
     const body = req.body;
-    if (!body || !['login', 'logout', 'session', 'publish', 'edit', 'media-upload', 'media-publish'].includes(body.action)) {
+    if (!body || !['login', 'logout', 'session', 'publish', 'edit', 'media-upload', 'media-publish', 'ai-draft', 'editorial-publish'].includes(body.action)) {
       throw new RequestError(400, 'Acción inválida.');
     }
     if (body.action === 'logout') {
@@ -284,6 +371,13 @@ module.exports = async function handler(req, res) {
     if (!user) throw new RequestError(401, 'Inicia sesión con tu usuario y contraseña.');
     const name = admins[user].name;
     if (body.action === 'session') return res.status(200).json({ name });
+    if (body.action === 'ai-draft') {
+      allowAttempt(req);
+      return res.status(200).json(await draftContent(body));
+    }
+    if (body.action === 'editorial-publish') {
+      return res.status(202).json({ item: await publish(token, parseEditorial(body), name) });
+    }
     if (body.action === 'media-upload') return res.status(200).json(await mediaUpload(body));
     const item = await publish(token, body.action === 'media-publish' ? parseMedia(body)
       : body.action === 'publish' ? parseUpload(body) : parseEdit(body), name);

@@ -119,6 +119,9 @@
   "functions": {
     "api/wallpaper-catalog.js": {
       "includeFiles": "assets/wallpapers/{originales,afiliados}/**"
+    },
+    "api/wallpaper-admin.js": {
+      "maxDuration": 180
     }
   },
   "buildCommand": "node scripts/build-site.cjs",

@@ -2285,7 +2285,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=media-menu">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2639,6 +2639,7 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
   <nav class="wallpaper-admin wallpaper-admin-actions" aria-label="Secciones del panel">
     <button type="button" data-admin-section="media" aria-controls="admin-media" aria-pressed="true">Videos y podcasts</button>
     <button type="button" data-admin-section="wallpapers" aria-controls="admin-wallpapers" aria-pressed="false">Wallpapers</button>
+    <button type="button" data-admin-section="assistant" aria-controls="admin-assistant" aria-pressed="false">Asistente IA</button>
     <button type="button" data-admin-section="affiliates" aria-controls="admin-affiliates" aria-pressed="false">Afiliados</button>
     <button type="button" id="wallpaper-admin-logout">Cerrar sesión</button>
   </nav>
@@ -2670,6 +2671,35 @@ header #main-nav button{display:inline-flex!important;align-items:center!importa
     <div class="wallpaper-admin-actions">
       <button type="submit">Guardar y publicar</button>
     </div>
+  </form>
+</section>
+<section id="admin-assistant" class="card wallpaper-admin" hidden>
+  <h3>Asistente IA</h3>
+  <form id="assistant-request" class="lldb-form" method="post">
+    <label>¿Qué quieres preparar? <select name="kind">
+      <option value="dailyPrayer">Oración del día</option><option value="dailyVerse">Versículo del día</option>
+      <option value="memoryVerse">Versículo para memorizar</option><option value="weeklyDevotional">Devocional</option>
+      <option value="weeklySermons">Sermones</option><option value="studies">Estudios bíblicos</option>
+      <option value="testimonies">Testimonios</option><option value="wallpaper">Wallpaper</option>
+    </select></label>
+    <label>Cuéntale qué quieres <textarea name="prompt" rows="4" maxlength="5000" required placeholder="Prepara una oración corta sobre la esperanza."></textarea></label>
+    <label id="assistant-photo" hidden>Foto del celular (opcional, hasta 3 MB)
+      <input name="photo" type="file" accept="image/jpeg,image/png,image/webp">
+    </label>
+    <button type="submit">Crear borrador</button>
+  </form>
+  <p id="assistant-status" role="status"></p>
+  <form id="assistant-review" class="lldb-form" method="post" hidden>
+    <h4>Revisa tu borrador</h4>
+    <img id="assistant-image" alt="Vista previa del wallpaper" hidden>
+    <label id="assistant-collection" hidden>Colección <select name="collection">
+      <option value="christian">Cristianos</option><option value="originals">LLDB Originales</option><option value="affiliates">Nuestros Afiliados</option>
+    </select></label>
+    <label>Título <input name="title" maxlength="100"></label>
+    <label id="assistant-reference">Referencia bíblica <input name="reference" maxlength="150"></label>
+    <label id="assistant-text">Texto <textarea name="text" rows="9" maxlength="6000"></textarea></label>
+    <label id="assistant-note">Nota <input name="note" maxlength="600"></label>
+    <button type="submit">Aprobar y publicar</button>
   </form>
 </section>
 <section id="admin-media" class="card wallpaper-admin" aria-labelledby="media-admin-title">
@@ -2746,7 +2776,7 @@ function selectAbout(section){
 }
 document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.addEventListener('click',()=>{selectAbout(btn.dataset.nosotrosChoice);aboutPanel.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>aboutPanel.scrollIntoView({behavior:'smooth',block:'start'}),100);}));
 document.getElementById('about-close').onclick=()=>{aboutPanel.classList.add('hidden');document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
-let officialContent={};fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>officialContent=c).catch(()=>{});
+let officialContent={};fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{officialContent=c;renderTestimony()}).catch(()=>{});
 const resourcePanel=document.getElementById('resource-panel'),resourceTitle=document.getElementById('resource-title');document.querySelectorAll('[data-resource]').forEach(b=>b.onclick=()=>{if(b.dataset.resource==='oracion'){const stage=document.querySelector('#especial .lldb-photo-stage');const board=document.getElementById('lldb-prayer-board');const cfg=officialContent.dailyPrayer||{};const actual=cfg.text||cfg.content;if(actual)document.getElementById('lldb-prayer-text').textContent=actual;document.getElementById('lldb-resource-board').hidden=true;board.hidden=false;stage.classList.add('prayer-open');board.style.animation='none';void board.offsetWidth;board.style.animation='';resourcePanel.classList.add('hidden');return;}resourceTitle.textContent=(b.querySelector('h3')?.textContent||b.getAttribute('aria-label')||'Recurso');const key=b.dataset.resource,map={oracion:'dailyPrayer',versiculo:'dailyVerse',memorizar:'memoryVerse',devocional:'weeklyDevotional',sermones:'weeklySermons',estudios:'studies',peticiones:'prayerRequests'},cfg=officialContent[map[key]]||{};document.getElementById('resource-body').textContent=[cfg.title,cfg.reference,cfg.text||cfg.content||b.dataset.copy||'Contenido LLDB',cfg.note].filter(Boolean).join('\n\n');const prayerForm=document.getElementById('prayer-form');prayerForm?.classList.toggle('hidden',key!=='peticiones');if(['versiculo','memorizar','devocional','sermones','estudios'].includes(key)){document.getElementById('lldb-prayer-board').hidden=true;document.getElementById('lldb-resource-title').textContent=resourceTitle.textContent;document.getElementById('lldb-resource-text').textContent=document.getElementById('resource-body').textContent;document.getElementById('lldb-resource-board').hidden=false;document.querySelector('#especial .lldb-photo-stage').classList.add('prayer-open');resourcePanel.classList.add('hidden')}else{resourcePanel.classList.remove('hidden')}});document.getElementById('resource-close').onclick=()=>resourcePanel.classList.add('hidden');document.getElementById('lldb-resource-back').onclick=()=>{document.getElementById('lldb-resource-board').hidden=true;document.querySelector('#especial .lldb-photo-stage').classList.remove('prayer-open')};document.getElementById('lldb-prayer-back').onclick=()=>{document.getElementById('lldb-prayer-board').hidden=true;document.querySelector('#especial .lldb-photo-stage').classList.remove('prayer-open')};
 document.querySelectorAll('[data-wall]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-wall]').forEach(x=>x.classList.toggle('selected',x===b));document.getElementById('wall-preview').textContent='Wallpaper LLDB '+b.dataset.wall});
 const cinema=document.getElementById('videos');
@@ -2960,7 +2990,21 @@ fetch('/api/media-config.json',{cache:'no-store'})
 const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
 document.getElementById('bible-search-btn')?.addEventListener('click',()=>{const q=document.getElementById('bible-query').value.trim();document.getElementById('bible-status').textContent=q?'Búsqueda preparada para “'+q+'”. Falta conectar la fuente bíblica oficial.':'Escribe una palabra, tema o referencia.'});
-document.querySelectorAll('[data-testimony]').forEach(b=>b.onclick=()=>{document.getElementById('testimony-title').textContent='Testimonios LLDB';document.getElementById('testimony-meta').textContent='Contenido aprobado pendiente';document.getElementById('testimony-body').textContent='El carrusel está preparado para mostrar testimonios oficiales sin inventar información.'});
+let testimonyIndex=0;
+function renderTestimony(){
+  const items=officialContent.testimonies?.items;
+  if(!items?.length)return;
+  const item=items[testimonyIndex];
+  document.getElementById('testimony-title').textContent=item.title||'Testimonio';
+  document.getElementById('testimony-meta').textContent=[item.reference,item.note].filter(Boolean).join(' · ');
+  document.getElementById('testimony-body').textContent=item.text;
+}
+document.querySelectorAll('[data-testimony]').forEach(button=>button.onclick=()=>{
+  const count=officialContent.testimonies?.items?.length;
+  if(!count)return;
+  testimonyIndex=(testimonyIndex+Number(button.dataset.testimony)+count)%count;
+  renderTestimony();
+});
 let formsConfig={};fetch('/api/forms-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>formsConfig=c).catch(()=>{});document.querySelectorAll('.lldb-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const status=f.querySelector('.form-status'),cfg=formsConfig[f.dataset.form]||{};status.textContent=cfg.destinationConfigured?'Destino configurado; falta implementar el envío seguro del formulario.':'Formulario preparado. Falta conectar el destino oficial para enviar.'}));
 fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('a.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.removeAttribute('aria-disabled');a.removeAttribute('title')}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
 fetch('/api/donations-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.donation-link').forEach(b=>{const m=c.methods?.[b.dataset.method];if(m?.enabled&&m.url){b.disabled=false;b.textContent='Abrir';b.onclick=()=>window.open(m.url,'_blank','noopener')}})}).catch(()=>{});
@@ -3137,6 +3181,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=media-menu" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=assistant" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

@@ -160,3 +160,7 @@
 #wallpaper-admin-other-tools [hidden], #wallpaper-admin-title[hidden]{display:none}
 #private-admin .wallpaper-admin-actions [aria-pressed="true"]{background:#ffe1a0;color:#102032;border-color:#ffe1a0}
 #private-admin nav.wallpaper-admin-actions{margin:14px 0;max-width:none}
+
+#assistant-image{display:block;width:min(100%,320px);height:auto;border-radius:8px;border:1px solid #b38a4b}
+#assistant-review{margin-top:18px}
+#testimony-body{white-space:pre-wrap}
