@@ -44,7 +44,9 @@ module.exports = async function bible(req, res) {
     return res.status(405).end();
   }
   const { ref, q } = req.query;
-  if (!(typeof ref === 'string' && /^[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}(?:\.[1-9]\d{0,2})?$/.test(ref)) &&
+  const chapterOrVerse = /^[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}(?:\.[1-9]\d{0,2})?$/;
+  const passage = /^[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}\.[1-9]\d{0,2}-[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}\.[1-9]\d{0,2}$/;
+  if (!(typeof ref === 'string' && (chapterOrVerse.test(ref) || passage.test(ref))) &&
       !(typeof q === 'string' && q.trim() && q.length <= 160 && ref === undefined)) {
     return res.status(400).json({ error: 'Escribe una referencia o una palabra válida.' });
   }
@@ -53,7 +55,11 @@ module.exports = async function bible(req, res) {
     return res.status(503).json({ error: 'La lectura en Reina-Valera 1960 está pendiente de activación.' });
   }
 
-  const route = ref ? (ref.split('.').length === 3 ? '/verses/' : '/chapters/') + ref : '/search';
+  let route = '/search';
+  if (ref) {
+    if (passage.test(ref)) route = '/passages/' + ref;
+    else route = (ref.split('.').length === 3 ? '/verses/' : '/chapters/') + ref;
+  }
   const params = ref ? { 'content-type': 'text', 'include-verse-numbers': 'true' } : { query: q.trim(), limit: '20' };
   const copyright = 'Reina-Valera 1960® © Sociedades Bíblicas en América Latina, 1960. Renovado © Sociedades Bíblicas Unidas, 1988.';
   try {

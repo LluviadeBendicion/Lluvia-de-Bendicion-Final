@@ -280,29 +280,6 @@ body:has(#inicio.active) .lldb-side-icon{font-size:34px}
 
 /* LLDB Inicio desktop edition — layout aprobado, controles HTML reales */
 @media(min-width:901px){
-body:not(:has(#inicio.active, #radio.active)) header #menu-toggle{display:none!important}
-body:not(:has(#inicio.active, #radio.active)) header{margin-bottom:28px!important}
-body:not(:has(#inicio.active, #radio.active)) header #main-nav{
-  position:absolute!important;
-  top:100%!important;
-  bottom:auto!important;
-  left:50%!important;
-  display:flex!important;
-  justify-content:center!important;
-  width:max-content!important;
-  height:auto!important;
-  min-height:0!important;
-  margin:4px 0 0!important;
-  padding:0!important;
-  transform:translateX(-50%)!important;
-  border:0!important;
-  background:transparent!important;
-}
-body:not(:has(#inicio.active, #radio.active)) header #main-nav button{
-  border:1px solid #c89c58!important;
-  background:linear-gradient(#14263d,#080f1d)!important;
-  color:#ffe1a5!important;
-}
 body:has(#donaciones.active) #donaciones{margin-top:0!important}
 body:not(:has(#radio.active)) header{background:linear-gradient(100deg,#030914,#06182a 58%,#02060d);border-bottom:1px solid #52657b}
 body:not(:has(#radio.active)) .top{max-width:1600px;min-height:102px;gap:18px;padding:10px 20px}
@@ -2080,15 +2057,6 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 }
 </style>
 <style id="lldb-media-subpages">
-body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header{margin-bottom:0!important}
-body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
-  top:auto!important;
-  bottom:2px!important;
-  margin:0!important;
-}
-@media(max-width:900px){
-  body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header .top{padding-bottom:24px!important}
-}
 .media-video-art{position:relative}
 .media-video-art>img,
 .media-gallery-art{display:block;width:100%;height:auto;border-radius:10px}
@@ -2286,8 +2254,8 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 }
 </style>
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
-<link rel="stylesheet" href="/assets/recursos.css?v=lectura-local">
-<script src="/assets/recursos.js" defer></script>
+<link rel="stylesheet" href="/assets/recursos.css?v=televisor">
+<script src="/assets/recursos.js?v=televisor" defer></script>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2307,42 +2275,68 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
  <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">☰ Menú</button>
  <nav id="main-nav" aria-label="Volver al inicio"><button data-go="inicio">⌂ Inicio</button></nav>
 <style id="lldb-header-donations-tuning">
-@media(min-width:701px){header{position:relative!important;padding-bottom:3px!important}header .top{min-height:75px!important;padding-bottom:0!important}header #main-nav{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;margin:0!important;width:auto!important;background:transparent!important;border:0!important;padding:0!important;z-index:3}header #main-nav button{font-size:12px!important;padding:4px 12px!important;min-height:25px!important}header .lldb-official-header-logo{width:clamp(85px,8vw,120px)!important;height:auto!important}header .brand{align-self:center!important}}
 #donaciones{margin-top:-8px!important;width:calc(100% + 24px)!important;margin-left:-12px!important}
 #donaciones .lldb-donation-board>img{width:100%!important;height:auto!important;max-width:none!important}
 </style><style id="lldb-donations-fine-adjustments">
-@media(min-width:701px){header #main-nav{top:auto!important;bottom:2px!important;transform:translateX(-50%)!important}header #main-nav button{font-size:10px!important;padding:2px 6px!important;min-height:20px!important;line-height:1.1!important}header .lldb-official-header-logo{transform:translateY(-5px)!important}}
 #donaciones{margin-top:-8px!important;overflow:hidden!important}
 #donaciones .lldb-donation-board>img{display:block!important;transform:translateY(-1.4%)!important;margin-bottom:-1.4%!important}
 </style><style id="lldb-donations-final-alignment">
-@media(min-width:701px){header #main-nav{bottom:-4px!important}header #main-nav button{padding:1px 4px!important;min-height:18px!important;width:max-content!important;line-height:1!important}}
 #donaciones{margin-top:-15px!important;overflow:hidden!important}
 #donaciones .lldb-donation-board>img{clip-path:inset(2.2% 0 0 0)!important;transform:translateY(-2.2%)!important;margin-bottom:-2.2%!important}
-</style><style id="lldb-inicio-horizontal-button">
-@media(min-width:701px){
-header #main-nav{position:absolute!important;left:50%!important;top:auto!important;bottom:3px!important;transform:translateX(-50%)!important;width:auto!important;height:auto!important;min-height:0!important;padding:0!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
-header #main-nav button{display:inline-flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;width:66px!important;min-width:66px!important;max-width:66px!important;height:20px!important;min-height:20px!important;max-height:20px!important;padding:0 5px!important;margin:0!important;white-space:nowrap!important;font-size:10px!important;line-height:1!important;border-radius:4px!important}
+</style><style id="lldb-shared-header-alignment">
+body:not(:has(#radio.active)) header{
+  position:relative!important;
+  margin-bottom:0!important;
+  padding-bottom:3px!important;
 }
-/* Biblia y concordancia: el acceso a Inicio forma parte del encabezado. */
-body:has(#estudios.active) header{margin-bottom:0!important}
-body:has(#estudios.active) header #menu-toggle{display:none!important}
-body:has(#estudios.active) header #main-nav{
+body:not(:has(#radio.active)) header .top .brand>.lldb-official-header-logo{
+  transform:none!important;
+}
+body:not(:has(#radio.active)) header #menu-toggle{display:none!important}
+body:not(:has(#inicio.active,#radio.active)) header #main-nav{
   position:static!important;
   display:flex!important;
   align-items:center;
   justify-content:center!important;
   width:fit-content!important;
+  height:auto!important;
   min-height:0!important;
   margin:0 auto!important;
-  padding:3px 0 8px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
   transform:none!important;
 }
-body:has(#estudios.active) header #main-nav>button{
+body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
   width:66px!important;
   min-width:66px!important;
-  padding:3px 5px!important;
-  text-align:center;
-  white-space:nowrap;
+  height:22px!important;
+  min-height:22px!important;
+  margin:0!important;
+  padding:0 5px!important;
+  border:1px solid #c89c58!important;
+  border-radius:4px!important;
+  background:linear-gradient(#14263d,#080f1d)!important;
+  color:#ffe1a5!important;
+  font-size:10px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+@media(min-width:1001px){
+  body:not(:has(#radio.active)) header .top{padding-top:6px!important;padding-bottom:0!important}
+  body:not(:has(#inicio.active,#radio.active)) header #main-nav{
+    position:absolute!important;
+    inset:auto auto 3px 50%!important;
+    transform:translateX(-50%)!important;
+    z-index:3;
+  }
+}
+@media(max-width:1000px){
+  body:not(:has(#radio.active)) header .top{height:auto!important;padding-top:6px!important;padding-bottom:3px!important}
 }
 </style><style id="lldb-donations-qr-crop">
 #donaciones{position:relative!important}
@@ -2640,38 +2634,83 @@ body:has(#estudios.active) header #main-nav>button{
 </section>
 <section id="estudios" class="view" aria-labelledby="resources-title">
   <div class="resources-library">
-    <div class="resources-scene"><img src="/assets/biblioteca-recursos.jpg" alt=""><h2 id="resources-title">Recursos</h2></div>
-    <div class="resources-panels">
-      <details class="resources-panel"><summary><span aria-hidden="true">📖</span> Biblia Reina-Valera 1960</summary>
+    <div class="resources-scene">
+      <img src="/assets/biblioteca-televisor-pared.jpg" width="1536" height="1024" loading="lazy" alt="">
+      <div class="resources-sign">
+        <h2 id="resources-title"><span aria-hidden="true">📖</span><span>Recursos</span></h2>
+        <p>Estudia · Profundiza · Aplica · Crece</p>
+      </div>
+      <button type="button" id="resources-power" aria-controls="resources-screen" aria-expanded="false">
+        <span class="resources-power-icon" aria-hidden="true"></span><span id="resources-power-label">Encender pantalla</span>
+      </button>
+    </div>
+    <div class="resources-screen" id="resources-screen" hidden>
+      <button id="resources-back" type="button" hidden>‹ Ver los cuatro recursos</button>
+      <p class="resources-welcome" tabindex="-1">Elige un recurso para comenzar</p>
+      <div class="resources-panels">
+      <section class="resources-panel" id="library-bible">
+        <h3>Biblia Reina-Valera 1960</h3>
+        <p class="resources-intro" hidden>Elige el libro, el capítulo y los versículos que quieres leer.</p>
+        <button type="button" class="resources-expand" aria-label="Ampliar Biblia">Ampliar</button>
         <form id="resources-reading" method="post">
           <div class="resources-fields">
             <label>Libro <select name="book"><option value="GEN">Génesis</option><option value="EXO">Éxodo</option><option value="LEV">Levítico</option><option value="NUM">Números</option><option value="DEU">Deuteronomio</option><option value="JOS">Josué</option><option value="JDG">Jueces</option><option value="RUT">Rut</option><option value="1SA">1 Samuel</option><option value="2SA">2 Samuel</option><option value="1KI">1 Reyes</option><option value="2KI">2 Reyes</option><option value="1CH">1 Crónicas</option><option value="2CH">2 Crónicas</option><option value="EZR">Esdras</option><option value="NEH">Nehemías</option><option value="EST">Ester</option><option value="JOB">Job</option><option value="PSA">Salmos</option><option value="PRO">Proverbios</option><option value="ECC">Eclesiastés</option><option value="SNG">Cantares</option><option value="ISA">Isaías</option><option value="JER">Jeremías</option><option value="LAM">Lamentaciones</option><option value="EZK">Ezequiel</option><option value="DAN">Daniel</option><option value="HOS">Oseas</option><option value="JOL">Joel</option><option value="AMO">Amós</option><option value="OBA">Abdías</option><option value="JON">Jonás</option><option value="MIC">Miqueas</option><option value="NAM">Nahúm</option><option value="HAB">Habacuc</option><option value="ZEP">Sofonías</option><option value="HAG">Hageo</option><option value="ZEC">Zacarías</option><option value="MAL">Malaquías</option><option value="MAT">Mateo</option><option value="MRK">Marcos</option><option value="LUK">Lucas</option><option value="JHN">Juan</option><option value="ACT">Hechos</option><option value="ROM">Romanos</option><option value="1CO">1 Corintios</option><option value="2CO">2 Corintios</option><option value="GAL">Gálatas</option><option value="EPH">Efesios</option><option value="PHP">Filipenses</option><option value="COL">Colosenses</option><option value="1TH">1 Tesalonicenses</option><option value="2TH">2 Tesalonicenses</option><option value="1TI">1 Timoteo</option><option value="2TI">2 Timoteo</option><option value="TIT">Tito</option><option value="PHM">Filemón</option><option value="HEB">Hebreos</option><option value="JAS">Santiago</option><option value="1PE">1 Pedro</option><option value="2PE">2 Pedro</option><option value="1JN">1 Juan</option><option value="2JN">2 Juan</option><option value="3JN">3 Juan</option><option value="JUD">Judas</option><option value="REV">Apocalipsis</option></select></label>
             <label>Capítulo <input name="chapter" type="number" min="1" max="150" value="1" required></label>
-            <label>Versículo <input name="verse" type="number" min="1" max="176" placeholder="Opcional"></label>
+            <label>Versículo(s) <input name="verse" type="text" value="1" placeholder="Ej. 1–3" maxlength="9"></label>
           </div>
-          <button type="submit">Leer aquí</button>
+          <button type="submit">Leer</button>
         </form>
-      </details>
-      <details class="resources-panel"><summary><span aria-hidden="true">⌕</span> Concordancia bíblica</summary>
+        <div class="resources-passage">
+          <h4 id="resources-results-title">Génesis 1:1</h4>
+          <div id="resources-output" aria-live="polite">En el principio creó Dios los cielos y la tierra.</div>
+        </div>
+        <div class="resources-actions" aria-label="Acciones del pasaje">
+          <button type="button" data-passage-action="copy">Copiar</button>
+          <button type="button" data-passage-action="share">Compartir</button>
+          <button type="button" data-passage-action="favorite" aria-pressed="false">Favorito</button>
+          <button type="button" data-passage-action="note" aria-controls="resources-note-form" aria-expanded="false">Agregar nota</button>
+        </div>
+        <form id="resources-note-form" hidden>
+          <label>Nota personal <textarea name="note" rows="3" maxlength="3000"></textarea></label>
+          <button type="submit">Guardar nota</button>
+        </form>
+        <p id="resources-credit">Reina-Valera 1960® © 1960 Sociedades Bíblicas en América Latina; © renovado 1988 Sociedades Bíblicas Unidas.</p>
+        <p id="resources-passage-status" class="resources-status" role="status"></p>
+      </section>
+      <section class="resources-panel" id="library-search">
+        <h3>Concordancia bíblica</h3>
+        <p class="resources-intro" hidden>Busca una palabra o frase y abre los versículos que la contienen.</p>
+        <button type="button" class="resources-expand" aria-label="Ampliar Concordancia">Ampliar</button>
         <form id="resources-search" method="post">
           <label>Palabra o frase <input type="search" name="quicksearch" placeholder="Ej. esperanza" maxlength="160" required></label>
-          <button type="submit">Buscar aquí</button>
+          <button type="submit">Buscar</button>
         </form>
-      </details>
-      <details class="resources-panel" id="library-studies" data-library-content="studies">
-        <summary>Estudios bíblicos</summary>
-        <div class="resources-reading" aria-live="polite">Cargando estudio…</div>
-      </details>
-      <details class="resources-panel" id="library-sermons" data-library-content="weeklySermons">
-        <summary>Sermones</summary>
-        <div class="resources-reading" aria-live="polite">Cargando sermón…</div>
-      </details>
+        <div id="resources-search-output" class="resources-crossrefs" aria-live="polite">
+          <p>Referencias relacionadas con Génesis 1:1</p>
+          <button type="button" data-bible-ref="HEB.11.3">Hebreos 11:3</button>
+          <button type="button" data-bible-ref="JHN.1.1-JHN.1.3">Juan 1:1–3</button>
+          <button type="button" data-bible-ref="PSA.33.6">Salmos 33:6</button>
+        </div>
+        <p id="resources-search-credit" class="resources-credit"></p>
+      </section>
+      <section class="resources-panel" id="library-studies" data-library-content="studies">
+        <h3>Estudios bíblicos</h3>
+        <p class="resources-intro" hidden>Lee un pasaje, reflexiona y aplica lo que aprendas esta semana.</p>
+        <button type="button" class="resources-expand" aria-label="Ampliar Estudios bíblicos">Ampliar</button>
+        <p class="resources-content-title" aria-live="polite">Cargando estudio…</p>
+        <p class="resources-reference"></p>
+        <div class="resources-reading" hidden></div>
+      </section>
+      <section class="resources-panel" id="library-sermons" data-library-content="weeklySermons">
+        <h3>Sermones</h3>
+        <p class="resources-intro" hidden>Abre el mensaje de la semana y sigue su lectura, aplicación y oración.</p>
+        <button type="button" class="resources-expand" aria-label="Ampliar Sermones">Ampliar</button>
+        <p class="resources-content-title" aria-live="polite">Cargando sermón…</p>
+        <p class="resources-reference"></p>
+        <div class="resources-reading" hidden></div>
+      </section>
+      </div>
     </div>
-    <section class="resources-panel" id="resources-results" aria-labelledby="resources-results-title" hidden>
-      <h3 id="resources-results-title">Lectura bíblica</h3>
-      <div class="resources-reading" id="resources-output" aria-live="polite"></div>
-      <p id="resources-credit"></p>
-    </section>
   </div>
 </section>
 <section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" /><div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div></section>
@@ -2839,22 +2878,12 @@ let officialContent={};fetch('/api/content-config.json',{cache:'no-store'}).then
 function renderLibrary(){
   document.querySelectorAll('[data-library-content]').forEach(panel=>{
     const entry=officialContent[panel.dataset.libraryContent];
-    const output=panel.querySelector('.resources-reading');
-    output.textContent=entry?.enabled!==false&&entry?.text
-      ? [entry.title,entry.reference,entry.text].filter(Boolean).join('\n\n')
-      : 'Contenido no disponible.';
+    const available=entry?.enabled!==false&&entry?.text;
+    panel.querySelector('.resources-content-title').textContent=available ? entry.title||'' : 'Contenido no disponible.';
+    panel.querySelector('.resources-reference').textContent=available ? entry.reference||'' : '';
+    panel.querySelector('.resources-reading').textContent=available ? entry.text : '';
   });
 }
-document.querySelectorAll('[data-library-entry]').forEach(button=>{
-  button.addEventListener('click',()=>{
-    const panel=document.getElementById(button.dataset.libraryEntry);
-    requestAnimationFrame(()=>{
-      panel.open=true;
-      panel.querySelector('summary').focus({preventScroll:true});
-      panel.scrollIntoView({block:'nearest'});
-    });
-  });
-});
 const resourcePanel=document.getElementById('resource-panel'),resourceTitle=document.getElementById('resource-title');document.querySelectorAll('[data-resource]').forEach(b=>b.onclick=()=>{if(b.dataset.resource==='oracion'){const stage=document.querySelector('#especial .lldb-photo-stage');const board=document.getElementById('lldb-prayer-board');const cfg=officialContent.dailyPrayer||{};const actual=cfg.text||cfg.content;if(actual)document.getElementById('lldb-prayer-text').textContent=actual;document.getElementById('lldb-resource-board').hidden=true;board.hidden=false;stage.classList.add('prayer-open');board.style.animation='none';void board.offsetWidth;board.style.animation='';resourcePanel.classList.add('hidden');return;}resourceTitle.textContent=(b.querySelector('h3')?.textContent||b.getAttribute('aria-label')||'Recurso');const key=b.dataset.resource,map={oracion:'dailyPrayer',versiculo:'dailyVerse',memorizar:'memoryVerse',devocional:'weeklyDevotional',sermones:'weeklySermons',estudios:'studies',peticiones:'prayerRequests'},cfg=officialContent[map[key]]||{};document.getElementById('resource-body').textContent=[cfg.title,cfg.reference,cfg.text||cfg.content||b.dataset.copy||'Contenido LLDB',cfg.note].filter(Boolean).join('\n\n');const prayerForm=document.getElementById('prayer-form');prayerForm?.classList.toggle('hidden',key!=='peticiones');if(['versiculo','memorizar','devocional','sermones','estudios'].includes(key)){document.getElementById('lldb-prayer-board').hidden=true;document.getElementById('lldb-resource-title').textContent=resourceTitle.textContent;document.getElementById('lldb-resource-text').textContent=document.getElementById('resource-body').textContent;document.getElementById('lldb-resource-board').hidden=false;document.querySelector('#especial .lldb-photo-stage').classList.add('prayer-open');resourcePanel.classList.add('hidden')}else{resourcePanel.classList.remove('hidden')}});document.getElementById('resource-close').onclick=()=>resourcePanel.classList.add('hidden');document.getElementById('lldb-resource-back').onclick=()=>{document.getElementById('lldb-resource-board').hidden=true;document.querySelector('#especial .lldb-photo-stage').classList.remove('prayer-open')};document.getElementById('lldb-prayer-back').onclick=()=>{document.getElementById('lldb-prayer-board').hidden=true;document.querySelector('#especial .lldb-photo-stage').classList.remove('prayer-open')};
 document.querySelectorAll('[data-wall]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-wall]').forEach(x=>x.classList.toggle('selected',x===b));document.getElementById('wall-preview').textContent='Wallpaper LLDB '+b.dataset.wall});
 const cinema=document.getElementById('videos');
