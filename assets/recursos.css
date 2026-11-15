@@ -30,3 +30,6 @@
 .resources-panel :focus-visible {outline:2px solid #99d9ff;outline-offset:3px}
 @media(max-width:740px){.resources-panels{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:360px){.resources-fields label:first-child{grid-column:1/-1}.resources-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.resources-panel summary{color:#fff2d8;font:700 clamp(20px,2.4vw,28px)/1.2 Georgia,serif;cursor:pointer}
+.resources-reading{margin-top:16px;color:#f6e6ca;white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}
