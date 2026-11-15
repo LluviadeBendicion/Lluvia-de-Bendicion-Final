@@ -2434,7 +2434,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
  <div class="inicio-grid">
   <aside class="inicio-tree" aria-label="Menú de Inicio">
    <details>
-    <summary data-home-section="nosotros"><span class="inicio-icon" aria-hidden="true">♣</span>Nosotros</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">♣</span>Nosotros</summary>
     <div class="inicio-branch">
      <button type="button" data-go="nosotros">Ver Nosotros</button>
      <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='mision']">Misión</button>
@@ -2444,7 +2444,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
    </details>
    <button type="button" data-go="radio"><span class="inicio-icon" aria-hidden="true">♫</span>Radio</button>
    <details>
-    <summary data-home-section="media"><span class="inicio-icon" aria-hidden="true">▶</span>Media</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">▶</span>Media</summary>
     <div class="inicio-branch">
      <button type="button" data-go="media">Ver Media</button>
      <button type="button" data-go="videos">Videos</button>
@@ -2454,8 +2454,9 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
    </details>
    <details>
-    <summary data-home-section="especial"><span class="inicio-icon" aria-hidden="true">▤</span>Especialmente para ti</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">▤</span>Especialmente para ti</summary>
     <div class="inicio-branch">
+     <button type="button" data-go="especial">Ver Especialmente para ti</button>
      <button type="button" data-go="especial" data-resource-link="oracion">Oración del día</button>
      <button type="button" data-go="especial" data-resource-link="versiculo">Versículo del día</button>
      <button type="button" data-go="especial" data-resource-link="memorizar">Versículo para memorizar</button>
@@ -2463,19 +2464,32 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
    </details>
    <details>
-    <summary data-home-section="estudios"><span class="inicio-icon" aria-hidden="true">▥</span>Recursos</summary>
+    <summary><span class="inicio-icon" aria-hidden="true">▥</span>Recursos</summary>
     <div class="inicio-branch">
+     <button type="button" data-go="estudios">Ver Recursos</button>
      <button type="button" data-go="estudios" data-library-entry="library-bible">Biblia</button>
      <button type="button" data-go="estudios" data-library-entry="library-search">Concordancia</button>
      <button type="button" data-go="estudios" data-library-entry="library-studies">Estudios bíblicos</button>
      <button type="button" data-go="estudios" data-library-entry="library-sermons">Sermones</button>
     </div>
    </details>
-   <button type="button" data-go="testimonios"><span class="inicio-icon" aria-hidden="true">☷</span>Testimonios</button>
-   <button type="button" data-go="contacto" data-home-focus="#contacto [data-form='prayer'] input"><span class="inicio-icon" aria-hidden="true">✦</span>Peticiones de Oración</button>
+   <details>
+    <summary><span class="inicio-icon" aria-hidden="true">☷</span>Testimonios</summary>
+    <div class="inicio-branch"><button type="button" data-go="testimonios">Ver Testimonios</button></div>
+   </details>
+   <details>
+    <summary><span class="inicio-icon" aria-hidden="true">✦</span>Peticiones de Oración</summary>
+    <div class="inicio-branch"><button type="button" data-go="contacto" data-home-focus="#contacto [data-form='prayer'] input">Ver Peticiones de Oración</button></div>
+   </details>
    <button type="button" data-go="donaciones"><span class="inicio-icon" aria-hidden="true">♥</span>Donaciones</button>
-   <button type="button" data-go="afiliados"><span class="inicio-icon" aria-hidden="true">◇</span>Afiliados</button>
-   <button type="button" data-go="contacto"><span class="inicio-icon" aria-hidden="true">✉</span>Contacto</button>
+   <details>
+    <summary><span class="inicio-icon" aria-hidden="true">◇</span>Afiliados</summary>
+    <div class="inicio-branch"><button type="button" data-go="afiliados">Ver Afiliados</button></div>
+   </details>
+   <details>
+    <summary><span class="inicio-icon" aria-hidden="true">✉</span>Contacto</summary>
+    <div class="inicio-branch"><button type="button" data-go="contacto">Ver Contacto</button></div>
+   </details>
    <p class="inicio-verse">“Todo lo puedo en Cristo que me fortalece.”<small>Filipenses 4:13</small></p>
   </aside>
   <div class="inicio-scene">
@@ -3097,13 +3111,6 @@ fetch('/api/media-config.json',{cache:'no-store'})
  });
 const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
-document.querySelectorAll('#inicio [data-home-section]').forEach(summary => {
-  summary.addEventListener('click', event => {
-    event.preventDefault();
-    summary.parentElement.open = true;
-    showView(summary.dataset.homeSection);
-  });
-});
 let testimonyIndex=0;
 function renderTestimony(){
   const items=officialContent.testimonies?.items;
