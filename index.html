@@ -2321,6 +2321,27 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 header #main-nav{position:absolute!important;left:50%!important;top:auto!important;bottom:3px!important;transform:translateX(-50%)!important;width:auto!important;height:auto!important;min-height:0!important;padding:0!important;margin:0!important;display:flex!important;align-items:center!important;justify-content:center!important}
 header #main-nav button{display:inline-flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;width:66px!important;min-width:66px!important;max-width:66px!important;height:20px!important;min-height:20px!important;max-height:20px!important;padding:0 5px!important;margin:0!important;white-space:nowrap!important;font-size:10px!important;line-height:1!important;border-radius:4px!important}
 }
+/* Biblia y concordancia: el acceso a Inicio forma parte del encabezado. */
+body:has(#estudios.active) header{margin-bottom:0!important}
+body:has(#estudios.active) header #menu-toggle{display:none!important}
+body:has(#estudios.active) header #main-nav{
+  position:static!important;
+  display:flex!important;
+  align-items:center;
+  justify-content:center!important;
+  width:fit-content!important;
+  min-height:0!important;
+  margin:0 auto!important;
+  padding:3px 0 8px!important;
+  transform:none!important;
+}
+body:has(#estudios.active) header #main-nav>button{
+  width:66px!important;
+  min-width:66px!important;
+  padding:3px 5px!important;
+  text-align:center;
+  white-space:nowrap;
+}
 </style><style id="lldb-donations-qr-crop">
 #donaciones{position:relative!important}
 #donaciones .lldb-qr-overlays{position:absolute;inset:0;pointer-events:none}
