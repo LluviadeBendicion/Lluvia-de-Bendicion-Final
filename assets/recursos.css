@@ -1,0 +1,32 @@
+.resources-library {
+  max-width:1160px; margin:auto; padding:clamp(20px,4vw,56px) clamp(14px,4vw,54px) clamp(105px,19vw,260px);
+  border:1px solid #a87e42; border-radius:16px;
+  background:linear-gradient(180deg,#050a13ad 0%,#070b1270 54%,transparent 85%),url('/assets/biblioteca-recursos.jpg') center bottom/cover no-repeat,#111522;
+  box-shadow:0 18px 52px #0009;
+}
+#resources-title {
+  margin:0 0 clamp(20px,4vw,44px); text-align:center; text-transform:uppercase;
+  font:700 clamp(35px,6vw,76px)/1.05 Georgia,serif; letter-spacing:.05em;
+  color:#ffdb91; text-shadow:0 2px #5d381c,0 5px 18px #000;
+}
+.resources-panels {display:grid;grid-template-columns:1.12fr 1fr;gap:18px;align-items:stretch}
+.resources-panel {
+  min-width:0;padding:clamp(14px,2.5vw,26px);border:1px solid #bc9554;border-radius:12px;
+  background:linear-gradient(145deg,#12233a,#07111feF 74%);box-shadow:0 8px 24px #0009,inset 0 1px #ffe2ab30;
+}
+.resources-panel h3 {margin:0 0 18px;color:#fff2d8;font:700 clamp(20px,2.4vw,28px)/1.2 Georgia,serif}
+.resources-panel form,.resources-panel label {display:grid;gap:8px}
+.resources-panel form {gap:16px}
+.resources-panel label {color:#f6e6ca;font-size:14px}
+.resources-fields {display:grid;grid-template-columns:minmax(0,1.6fr) repeat(2,minmax(0,1fr));gap:9px}
+.resources-panel input,.resources-panel select {
+  box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:7px;
+  color:#fff7e7;background:#061323;border:1px solid #59728c;border-radius:7px;font:inherit;font-size:16px;
+}
+.resources-panel button {
+  justify-self:start;min-height:44px;padding:9px 14px;border:1px solid #ffe0a3;border-radius:8px;
+  background:linear-gradient(#ffe3a1,#d7a552);color:#211505;font:700 15px Georgia,serif;cursor:pointer;
+}
+.resources-panel :focus-visible {outline:2px solid #99d9ff;outline-offset:3px}
+@media(max-width:740px){.resources-panels{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:360px){.resources-fields label:first-child{grid-column:1/-1}.resources-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}

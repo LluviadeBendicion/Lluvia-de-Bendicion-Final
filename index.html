@@ -2286,6 +2286,7 @@ body:has(:is(#media,#videos,#wallpapers,#podcasts).active) header #main-nav{
 }
 </style>
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
+<link rel="stylesheet" href="/assets/recursos.css">
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2635,7 +2636,34 @@ body:has(#estudios.active) header #main-nav>button{
 <img src="/assets/Donaciones_back.jpg" alt="Diseño oficial de Donaciones" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain;filter:none;opacity:1;image-rendering:auto" /><div class="lldb-donation-panel" aria-label="Métodos para donar"><article class="lldb-pay-card lldb-pay-zelle"><h3>Zelle</h3><p>Una manera segura y directa de apoyar.</p><img src="/assets/Screenshot_20261029_143952_USAA.jpg" alt="Código QR oficial de Zelle"><div class="lldb-pay-label">Donar con Zelle</div></article><article class="lldb-pay-card lldb-pay-cash"><h3>Cash App</h3><p>Tu apoyo hace la diferencia.</p><img src="/assets/Screenshot_20261029_143524_Cash%20App.jpg" alt="Código QR oficial de Cash App"><div class="lldb-pay-label">Donar con Cash App</div></article><article class="lldb-pay-card lldb-pay-venmo"><h3>Venmo</h3><p>Juntos podemos llegar más lejos.</p><img src="/assets/Screenshot_20261029_143657_Print%20Spooler.jpg" alt="Código QR oficial de Venmo"><div class="lldb-pay-label">Donar con Venmo</div></article><article class="lldb-pay-card lldb-pay-paypal"><h3>PayPal</h3><p>Apoya de forma segura desde cualquier lugar.</p><img src="/assets/Screenshot_20261029_143841_PayPal.jpg" alt="Código QR oficial de PayPal"><div class="lldb-pay-label">Donar con PayPal</div></article><article class="lldb-pay-card lldb-pay-card"><h3>Tarjeta</h3><p>Crédito o débito</p><div class="lldb-card-symbol">💳</div><div class="lldb-card-brands"><span class="pay-brand"><img src="https://cdn.simpleicons.org/visa/1434CB" alt="Visa"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/mastercard" alt="Mastercard"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/americanexpress/006FCF" alt="American Express"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/discover" alt="Discover"></span></div><a class="lldb-pay-label lldb-stripe-pay-link" href="https://buy.stripe.com/28EeVe7TU55B17Y8wbawo00" target="_blank" rel="noopener noreferrer" aria-label="Donar con tarjeta de forma segura a través de Stripe">Donar con tarjeta</a><small>Enlace seguro por conectar</small></article></div>
 </div>
 </section>
-<section id="estudios" class="view"><div class="crumb">Especialmente para ti › Estudio bíblico</div><button class="exit" data-go="especial" aria-label="Regresar a Especialmente para ti">×</button><h2>Estudio bíblico</h2><div class="bible-search"><label for="bible-query">Buscar en Biblia / concordancia</label><div><input id="bible-query" placeholder="Palabra, tema o referencia"><button id="bible-search-btn">Buscar</button></div><small id="bible-status">Reina-Valera 1960 · fuente de búsqueda pendiente de integración.</small></div><div class="cards"><article class="card"><h3>📖 Biblia</h3><p>Área preparada para búsqueda y concordancia bíblica Reina-Valera 1960.</p></article><article class="card"><h3>▤ Estudios</h3><p>Biblioteca de estudios bíblicos con navegación de regreso a esta sección.</p></article><article class="card"><h3>🎙 Sermones</h3><p>Acceso a sermones conservando el flujo de navegación LLDB.</p></article></div></section>
+<section id="estudios" class="view" aria-labelledby="resources-title">
+  <div class="resources-library">
+    <h2 id="resources-title">Recursos</h2>
+    <div class="resources-panels">
+      <section class="resources-panel" aria-labelledby="resources-bible">
+        <h3 id="resources-bible">Biblia Reina-Valera 1960</h3>
+        <form id="resources-reading" action="https://www.biblegateway.com/passage/" target="_blank" rel="noopener noreferrer">
+          <input type="hidden" name="version" value="RVR1960">
+          <input type="hidden" name="search" value="Génesis 1">
+          <div class="resources-fields">
+            <label>Libro <select name="book"><option>Génesis</option><option>Éxodo</option><option>Levítico</option><option>Números</option><option>Deuteronomio</option><option>Josué</option><option>Jueces</option><option>Rut</option><option>1 Samuel</option><option>2 Samuel</option><option>1 Reyes</option><option>2 Reyes</option><option>1 Crónicas</option><option>2 Crónicas</option><option>Esdras</option><option>Nehemías</option><option>Ester</option><option>Job</option><option>Salmos</option><option>Proverbios</option><option>Eclesiastés</option><option>Cantares</option><option>Isaías</option><option>Jeremías</option><option>Lamentaciones</option><option>Ezequiel</option><option>Daniel</option><option>Oseas</option><option>Joel</option><option>Amós</option><option>Abdías</option><option>Jonás</option><option>Miqueas</option><option>Nahúm</option><option>Habacuc</option><option>Sofonías</option><option>Hageo</option><option>Zacarías</option><option>Malaquías</option><option>Mateo</option><option>Marcos</option><option>Lucas</option><option>Juan</option><option>Hechos</option><option>Romanos</option><option>1 Corintios</option><option>2 Corintios</option><option>Gálatas</option><option>Efesios</option><option>Filipenses</option><option>Colosenses</option><option>1 Tesalonicenses</option><option>2 Tesalonicenses</option><option>1 Timoteo</option><option>2 Timoteo</option><option>Tito</option><option>Filemón</option><option>Hebreos</option><option>Santiago</option><option>1 Pedro</option><option>2 Pedro</option><option>1 Juan</option><option>2 Juan</option><option>3 Juan</option><option>Judas</option><option>Apocalipsis</option></select></label>
+            <label>Capítulo <input name="chapter" type="number" min="1" max="150" value="1" required></label>
+            <label>Versículo <input name="verse" type="number" min="1" max="176" placeholder="Opcional"></label>
+          </div>
+          <button type="submit">Leer en Bible Gateway ↗</button>
+        </form>
+      </section>
+      <section class="resources-panel" aria-labelledby="resources-concordance">
+        <h3 id="resources-concordance">Concordancia bíblica</h3>
+        <form action="https://www.biblegateway.com/quicksearch/" target="_blank" rel="noopener noreferrer">
+          <input type="hidden" name="version" value="RVR1960">
+          <label>Palabra o frase <input type="search" name="quicksearch" placeholder="Ej. esperanza" maxlength="160" required></label>
+          <button type="submit">Buscar en Bible Gateway ↗</button>
+        </form>
+      </section>
+    </div>
+  </div>
+</section>
 <section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" /><div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div></section>
 <section id="contacto" class="view"><h2>Contacto</h2><div class="cards"><article class="card"><h3>✉ Contacto</h3><form class="lldb-form" data-form="contact"><small class="form-note">No envíes información sensible hasta que el formulario indique que el envío seguro está activo.</small><label>Nombre<input name="name" autocomplete="name"></label><label>Correo<input name="email" type="email" autocomplete="email"></label><label>Mensaje<textarea name="message" rows="4"></textarea></label><button type="submit">Preparar mensaje</button><small class="form-status"></small></form></article><article class="card"><h3>🙏 Peticiones</h3><form class="lldb-form" data-form="prayer"><label>Nombre (opcional)<input name="name"></label><label>Petición<textarea name="request" rows="4"></textarea></label><button type="submit">Preparar petición</button><small class="form-status"></small></form></article></div></section>
 </main>
@@ -3010,7 +3038,10 @@ fetch('/api/media-config.json',{cache:'no-store'})
  });
 const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
-document.getElementById('bible-search-btn')?.addEventListener('click',()=>{const q=document.getElementById('bible-query').value.trim();document.getElementById('bible-status').textContent=q?'Búsqueda preparada para “'+q+'”. Falta conectar la fuente bíblica oficial.':'Escribe una palabra, tema o referencia.'});
+document.getElementById('resources-reading').addEventListener('submit', event => {
+  const fields = event.currentTarget.elements;
+  fields.search.value = fields.book.value + ' ' + fields.chapter.value + (fields.verse.value ? ':' + fields.verse.value : '');
+});
 let testimonyIndex=0;
 function renderTestimony(){
   const items=officialContent.testimonies?.items;
