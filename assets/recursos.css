@@ -25,7 +25,12 @@ main:has(> #estudios.active) {
   letter-spacing: .05em;
   text-transform: uppercase;
 }
-#resources-title span:first-child { font-size: .54em; filter: sepia(1) saturate(1.8) drop-shadow(0 3px 6px #000); }
+#resources-title .resources-bible-art {
+  flex: none;
+  width: clamp(64px, 10vw, 142px);
+  height: auto;
+  filter: drop-shadow(0 4px 7px #000b);
+}
 #resources-title span:last-child {
   color: transparent;
   background: linear-gradient(#fff 4%, #fff4d5 32%, #f9d68e 63%, #b57120);
@@ -42,11 +47,14 @@ main:has(> #estudios.active) {
 #resources-power {
   position: absolute;
   z-index: 1;
-  left: 50%;
-  top: 70.25%;
-  transform: translate(-50%, -50%);
-  min-height: 30px;
-  padding: 5px 12px;
+  right: calc(23.8% - 15px);
+  top: 67.95%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 25px;
+  padding: 3px 8px 3px 10px;
   border: 1px solid #bb9158;
   border-radius: 30px;
   background: linear-gradient(#1d2835, #080e16);
@@ -61,7 +69,6 @@ main:has(> #estudios.active) {
   display: inline-block;
   width: 12px;
   height: 12px;
-  margin-right: 4px;
   border: 1.5px solid currentColor;
   border-top-color: transparent;
   border-radius: 50%;
@@ -217,13 +224,17 @@ main:has(> #estudios.active) {
 }
 @media (max-width: 980px) {
   #estudios { padding: 0; }
-  #resources-power { top: 46%; min-height: 44px; }
+  #resources-power { min-height: 36px; }
   .resources-screen { position: static; overflow: visible; }
   .resources-panel :is(input, select, textarea), .resources-panel button, #resources-back { min-height: 42px; }
   .resources-panel :is(input, select, textarea) { font-size: 16px; }
   .resources-panel h3 { padding-block: 7px; }
 }
 @media (max-width: 620px) {
+  .resources-sign { top: 4.5%; }
+  #resources-title { font-size: clamp(19px, 6.2vw, 34px); }
+  #resources-title .resources-bible-art { width: clamp(44px, 13vw, 74px); }
+  .resources-sign p { margin-top: 4px; }
   .resources-panels, .resources-screen[data-focused] :is(#resources-reading,#resources-search) { grid-template-columns: minmax(0,1fr); }
 }
 .special-topics{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 auto 14px}

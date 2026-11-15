@@ -2254,7 +2254,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 }
 </style>
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
-<link rel="stylesheet" href="/assets/recursos.css?v=televisor">
+<link rel="stylesheet" href="/assets/recursos.css?v=televisor-ajustes">
 <script src="/assets/recursos.js?v=televisor" defer></script>
 </head>
 <body>
@@ -2434,7 +2434,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
  <div class="inicio-grid">
   <aside class="inicio-tree" aria-label="Menú de Inicio">
    <details>
-    <summary><span class="inicio-icon" aria-hidden="true">♣</span>Nosotros</summary>
+    <summary data-home-section="nosotros"><span class="inicio-icon" aria-hidden="true">♣</span>Nosotros</summary>
     <div class="inicio-branch">
      <button type="button" data-go="nosotros">Ver Nosotros</button>
      <button type="button" data-go="nosotros" data-home-target="#nosotros [data-nosotros-choice='mision']">Misión</button>
@@ -2444,7 +2444,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
    </details>
    <button type="button" data-go="radio"><span class="inicio-icon" aria-hidden="true">♫</span>Radio</button>
    <details>
-    <summary><span class="inicio-icon" aria-hidden="true">▶</span>Media</summary>
+    <summary data-home-section="media"><span class="inicio-icon" aria-hidden="true">▶</span>Media</summary>
     <div class="inicio-branch">
      <button type="button" data-go="media">Ver Media</button>
      <button type="button" data-go="videos">Videos</button>
@@ -2454,7 +2454,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
    </details>
    <details>
-    <summary id="special-tree-summary"><span class="inicio-icon" aria-hidden="true">▤</span>Especialmente para ti</summary>
+    <summary data-home-section="especial"><span class="inicio-icon" aria-hidden="true">▤</span>Especialmente para ti</summary>
     <div class="inicio-branch">
      <button type="button" data-go="especial" data-resource-link="oracion">Oración del día</button>
      <button type="button" data-go="especial" data-resource-link="versiculo">Versículo del día</button>
@@ -2463,7 +2463,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
    </details>
    <details>
-    <summary><span class="inicio-icon" aria-hidden="true">▥</span>Recursos</summary>
+    <summary data-home-section="estudios"><span class="inicio-icon" aria-hidden="true">▥</span>Recursos</summary>
     <div class="inicio-branch">
      <button type="button" data-go="estudios">Biblia y concordancia</button>
      <button type="button" data-go="estudios" data-library-entry="library-studies">Estudios bíblicos</button>
@@ -2637,11 +2637,11 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     <div class="resources-scene">
       <img src="/assets/biblioteca-televisor-pared.jpg" width="1536" height="1024" loading="lazy" alt="">
       <div class="resources-sign">
-        <h2 id="resources-title"><span aria-hidden="true">📖</span><span>Recursos</span></h2>
+        <h2 id="resources-title"><img class="resources-bible-art" src="/assets/biblia-abierta-recursos.png" width="360" height="202" loading="lazy" alt=""><span>Recursos</span></h2>
         <p>Estudia · Profundiza · Aplica · Crece</p>
       </div>
       <button type="button" id="resources-power" aria-controls="resources-screen" aria-expanded="false">
-        <span class="resources-power-icon" aria-hidden="true"></span><span id="resources-power-label">Encender pantalla</span>
+        <span id="resources-power-label">Encender pantalla</span><span class="resources-power-icon" aria-hidden="true"></span>
       </button>
     </div>
     <div class="resources-screen" id="resources-screen" hidden>
@@ -3096,10 +3096,12 @@ fetch('/api/media-config.json',{cache:'no-store'})
  });
 const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){resourcePanel?.classList.add('hidden');aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
-document.getElementById('special-tree-summary').addEventListener('click', event => {
-  event.preventDefault();
-  event.currentTarget.parentElement.open = true;
-  showView('especial');
+document.querySelectorAll('#inicio [data-home-section]').forEach(summary => {
+  summary.addEventListener('click', event => {
+    event.preventDefault();
+    summary.parentElement.open = true;
+    showView(summary.dataset.homeSection);
+  });
 });
 let testimonyIndex=0;
 function renderTestimony(){
