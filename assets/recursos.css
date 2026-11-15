@@ -1,15 +1,15 @@
 .resources-library {
-  max-width:1160px; margin:auto; padding:clamp(20px,4vw,56px) clamp(14px,4vw,54px) clamp(105px,19vw,260px);
+  max-width:1160px; margin:auto; padding:0 0 20px;overflow:hidden;
   border:1px solid #a87e42; border-radius:16px;
-  background:linear-gradient(180deg,#050a13ad 0%,#070b1270 54%,transparent 85%),url('/assets/biblioteca-recursos.jpg') center bottom/cover no-repeat,#111522;
+  background:#0b1423;
   box-shadow:0 18px 52px #0009;
 }
 #resources-title {
-  margin:0 0 clamp(20px,4vw,44px); text-align:center; text-transform:uppercase;
+  position:absolute;inset:clamp(12px,4vw,50px) 0 auto;margin:0; text-align:center; text-transform:uppercase;
   font:700 clamp(35px,6vw,76px)/1.05 Georgia,serif; letter-spacing:.05em;
   color:#ffdb91; text-shadow:0 2px #5d381c,0 5px 18px #000;
 }
-.resources-panels {display:grid;grid-template-columns:1.12fr 1fr;gap:18px;align-items:stretch}
+.resources-panels {display:grid;grid-template-columns:1.12fr 1fr;gap:12px;align-items:start;padding:clamp(12px,2.5vw,24px)}
 .resources-panel {
   min-width:0;padding:clamp(14px,2.5vw,26px);border:1px solid #bc9554;border-radius:12px;
   background:linear-gradient(145deg,#12233a,#07111feF 74%);box-shadow:0 8px 24px #0009,inset 0 1px #ffe2ab30;
@@ -33,3 +33,16 @@
 
 .resources-panel summary{color:#fff2d8;font:700 clamp(20px,2.4vw,28px)/1.2 Georgia,serif;cursor:pointer}
 .resources-reading{margin-top:16px;color:#f6e6ca;white-space:pre-wrap;line-height:1.6;overflow-wrap:anywhere}
+
+.resources-scene{position:relative}
+.resources-scene img{width:100%;height:auto;display:block}
+.resources-panel details,.resources-panel form{margin-top:14px}
+#resources-results{margin:0 clamp(12px,2.5vw,24px)}
+#resources-results[hidden]{display:none}
+#resources-output{margin-top:0}
+#resources-output button{display:block;margin:0 0 4px}
+#resources-output p{margin:0 0 16px}
+#resources-credit{color:#baa884;font-size:.8rem}
+.special-topics{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 auto 14px}
+.special-topics button{min-height:44px;padding:8px 15px;color:#ffedca;background:linear-gradient(#17304a,#080f1d);border:1px solid #b38a4b;border-radius:8px;cursor:pointer}
+.special-topics button:focus-visible{outline:2px solid #99d9ff;outline-offset:2px}
