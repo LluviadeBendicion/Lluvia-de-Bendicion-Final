@@ -1,3 +1,42 @@
+const provider = 'https://rest.api.bible/v1/bibles';
+let editionLookup;
+let editionExpires = 0;
+
+function isRvr1960(edition) {
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const names = [edition.name, edition.nameLocal, edition.abbreviation, edition.abbreviationLocal].map(normalize);
+  return typeof edition.id === 'string' && /^[a-zA-Z0-9-]+$/.test(edition.id) &&
+    names.some(name => /\b(?:rvr[\s-]*1960|rvr[\s-]*60)\b|reina[\s-]+valera.{0,28}\b1960\b/.test(name));
+}
+
+async function discoverEdition(key) {
+  const response = await fetch(provider + '?language=spa', {
+    headers: { 'api-key': key }, redirect: 'error', signal: AbortSignal.timeout(10000)
+  });
+  if (response.status === 401 || response.status === 403) {
+    await response.body?.cancel();
+    return { rejected: true };
+  }
+  if (!response.ok) {
+    await response.body?.cancel();
+    throw new Error('Catalog unavailable');
+  }
+  const { data } = await response.json();
+  if (!Array.isArray(data)) throw new Error('Invalid catalog');
+  return { id: data.find(isRvr1960)?.id };
+}
+
+function getEdition(key) {
+  if (!editionLookup || Date.now() >= editionExpires) {
+    editionExpires = Date.now() + 5 * 60 * 1000;
+    editionLookup = discoverEdition(key).catch(error => {
+      editionLookup = undefined;
+      throw error;
+    });
+  }
+  return editionLookup;
+}
+
 module.exports = async function bible(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method !== 'GET') {
@@ -10,8 +49,7 @@ module.exports = async function bible(req, res) {
     return res.status(400).json({ error: 'Escribe una referencia o una palabra válida.' });
   }
   const key = process.env.API_BIBLE_KEY;
-  const bibleId = process.env.API_BIBLE_RVR1960_ID;
-  if (!key || !bibleId || !/^[a-zA-Z0-9-]+$/.test(bibleId)) {
+  if (!key) {
     return res.status(503).json({ error: 'La lectura en Reina-Valera 1960 está pendiente de activación.' });
   }
 
@@ -19,7 +57,10 @@ module.exports = async function bible(req, res) {
   const params = ref ? { 'content-type': 'text', 'include-verse-numbers': 'true' } : { query: q.trim(), limit: '20' };
   const copyright = 'Reina-Valera 1960® © Sociedades Bíblicas en América Latina, 1960. Renovado © Sociedades Bíblicas Unidas, 1988.';
   try {
-    const response = await fetch('https://rest.api.bible/v1/bibles/' + bibleId + route + '?' + new URLSearchParams(params), {
+    const edition = await getEdition(key);
+    if (edition.rejected) return res.status(503).json({ error: 'API.Bible rechazó la clave guardada.' });
+    if (!edition.id) return res.status(503).json({ error: 'La cuenta de API.Bible todavía no tiene acceso a Reina-Valera 1960.' });
+    const response = await fetch(provider + '/' + edition.id + route + '?' + new URLSearchParams(params), {
       headers: { 'api-key': key }, redirect: 'error', signal: AbortSignal.timeout(10000)
     });
     if (!response.ok) {
