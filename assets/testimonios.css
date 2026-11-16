@@ -35,7 +35,7 @@ body:has(#testimonios.active) main {
   padding: 0 1cqw;
   text-align: center;
   color: #fff5e5;
-  font: 400 clamp(12px, 2.3cqw, 39px)/1.16 Kalam, "Segoe Print", "Chalkboard SE", cursive;
+  font: 400 clamp(11px, 1.88cqw, 33px)/1.28 "Permanent Marker", Kalam, "Segoe Print", "Chalkboard SE", cursive;
   text-shadow: 0 2px 3px #000, 0 0 8px #000;
   scrollbar-width: thin;
   scrollbar-color: #c28126 transparent;
@@ -43,6 +43,18 @@ body:has(#testimonios.active) main {
 .testimonio-relato h3 { margin: 0 0 .18em; font: inherit; color: #ffcc6f; }
 .testimonio-relato p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 #testimony-meta { align-self: end; margin-top: .35em; font-size: .62em; }
+@supports (background-clip: text) {
+  #testimony-title, #testimony-body, #testimony-meta {
+    --paint: #fff4df;
+    --paint-grain: #d8c7a5;
+    color: transparent;
+    background: repeating-linear-gradient(171deg, var(--paint) 0 2.8px, var(--paint-grain) 3.3px, var(--paint) 4px);
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 2px 2px #000);
+  }
+  #testimony-title, #testimony-meta { --paint: #ffd179; --paint-grain: #be862c; }
+}
 .testimonio-carrusel {
   position: absolute;
   inset: 60% 11.4% auto;
@@ -116,7 +128,7 @@ body:has(#testimonios.active) main {
 .testimonio-puntos span { width: .9cqw; aspect-ratio: 1; border-radius: 50%; background: #b8b2a3; opacity: .55; }
 .testimonio-puntos .activo { background: #ffe0a0; opacity: 1; box-shadow: 0 0 8px 2px #ffae29; }
 @media (max-width: 600px) {
-  .testimonio-relato { inset-inline: 22%; font-size: clamp(10px, 3cqw, 17px); }
+  .testimonio-relato { inset-inline: 22%; font-size: clamp(10px, 2.8cqw, 17px); }
   .testimonio-carrusel { inset-inline: 7%; gap: 1.4cqw; }
   .testimonio-temas { gap: 1.05cqw; }
 }
