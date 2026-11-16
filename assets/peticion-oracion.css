@@ -11,7 +11,8 @@ body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
   display: grid;
   align-items: start;
   min-height: clamp(570px, 60vw, 925px);
-  background: linear-gradient(170deg, transparent 45%, #0b151a 80%), #0b151a var(--oracion-fondo) center top / 100% auto no-repeat;
+  background: linear-gradient(90deg, transparent 33%, #0b151a66 62%, #0b151a80),
+    #0b151a var(--oracion-fondo) left top / cover no-repeat;
 }
 
 .peticion-panel {
@@ -95,10 +96,22 @@ body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
 
 @media (max-width: 720px) {
   .peticion-escena {
+    --oracion-altura-escena: clamp(245px, 68vw, 490px);
+    position: relative;
+    isolation: isolate;
     min-height: 0;
     padding-top: clamp(200px, 56vw, 345px);
-    background: linear-gradient(180deg, #14212000 48%, #142120 100%) center top / 100% max(245px, 68vw) no-repeat,
-      #142120 var(--oracion-fondo) 20% top / auto max(245px, 68vw) no-repeat;
+    background: linear-gradient(#0b151a3d, #0b151a5c),
+      #0b151a var(--oracion-fondo) right center / auto max(100%, 65rem) no-repeat;
+  }
+  .peticion-escena::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0 0 auto;
+    height: var(--oracion-altura-escena);
+    background: var(--oracion-fondo) 20% top / cover no-repeat;
+    mask-image: linear-gradient(#000 67%, transparent);
   }
   .peticion-panel { margin: 0; padding: .75rem max(1rem, 6%) 4.6rem; }
 }
