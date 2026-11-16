@@ -2254,8 +2254,8 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 }
 </style>
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
-<link rel="stylesheet" href="/assets/recursos.css?v=titulo-centrado">
-<script src="/assets/recursos.js?v=televisor" defer></script>
+<link rel="stylesheet" href="/assets/recursos.css?v=menu-televisor">
+<script src="/assets/recursos.js?v=menu-televisor" defer></script>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2660,13 +2660,30 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       </button>
     </div>
     <div class="resources-screen" id="resources-screen" hidden>
-      <button id="resources-back" type="button" hidden>‹ Ver los cuatro recursos</button>
-      <p class="resources-welcome" tabindex="-1">Elige un recurso para comenzar</p>
-      <div class="resources-panels">
+      <p class="resources-welcome" role="status" hidden>Bienvenidos</p>
+      <div class="resources-launcher" role="group" aria-label="Menú del televisor">
+        <button type="button" aria-controls="library-bible">
+          <img class="resources-icon resources-icon-bible" src="/assets/biblia-abierta-recursos.png" alt="" width="360" height="202" loading="lazy">
+          <span>Biblia</span>
+        </button>
+        <button type="button" aria-controls="library-search">
+          <span class="resources-icon resources-icon-search" aria-hidden="true"></span>
+          <span>Concordancia</span>
+        </button>
+        <button type="button" aria-controls="library-studies">
+          <span class="resources-icon resources-icon-studies" aria-hidden="true"></span>
+          <span>Estudios bíblicos</span>
+        </button>
+        <button type="button" aria-controls="library-sermons">
+          <span class="resources-icon resources-icon-sermons" aria-hidden="true"></span>
+          <span>Sermones</span>
+        </button>
+      </div>
+      <button id="resources-back" type="button" hidden>‹ Volver a los iconos</button>
+      <div class="resources-panels" hidden>
       <section class="resources-panel" id="library-bible">
         <h3>Biblia Reina-Valera 1960</h3>
-        <p class="resources-intro" hidden>Elige el libro, el capítulo y los versículos que quieres leer.</p>
-        <button type="button" class="resources-expand" aria-label="Ampliar Biblia">Ampliar</button>
+        <p class="resources-intro">Elige el libro, el capítulo y los versículos que quieres leer.</p>
         <form id="resources-reading" method="post">
           <div class="resources-fields">
             <label>Libro <select name="book"><option value="GEN">Génesis</option><option value="EXO">Éxodo</option><option value="LEV">Levítico</option><option value="NUM">Números</option><option value="DEU">Deuteronomio</option><option value="JOS">Josué</option><option value="JDG">Jueces</option><option value="RUT">Rut</option><option value="1SA">1 Samuel</option><option value="2SA">2 Samuel</option><option value="1KI">1 Reyes</option><option value="2KI">2 Reyes</option><option value="1CH">1 Crónicas</option><option value="2CH">2 Crónicas</option><option value="EZR">Esdras</option><option value="NEH">Nehemías</option><option value="EST">Ester</option><option value="JOB">Job</option><option value="PSA">Salmos</option><option value="PRO">Proverbios</option><option value="ECC">Eclesiastés</option><option value="SNG">Cantares</option><option value="ISA">Isaías</option><option value="JER">Jeremías</option><option value="LAM">Lamentaciones</option><option value="EZK">Ezequiel</option><option value="DAN">Daniel</option><option value="HOS">Oseas</option><option value="JOL">Joel</option><option value="AMO">Amós</option><option value="OBA">Abdías</option><option value="JON">Jonás</option><option value="MIC">Miqueas</option><option value="NAM">Nahúm</option><option value="HAB">Habacuc</option><option value="ZEP">Sofonías</option><option value="HAG">Hageo</option><option value="ZEC">Zacarías</option><option value="MAL">Malaquías</option><option value="MAT">Mateo</option><option value="MRK">Marcos</option><option value="LUK">Lucas</option><option value="JHN">Juan</option><option value="ACT">Hechos</option><option value="ROM">Romanos</option><option value="1CO">1 Corintios</option><option value="2CO">2 Corintios</option><option value="GAL">Gálatas</option><option value="EPH">Efesios</option><option value="PHP">Filipenses</option><option value="COL">Colosenses</option><option value="1TH">1 Tesalonicenses</option><option value="2TH">2 Tesalonicenses</option><option value="1TI">1 Timoteo</option><option value="2TI">2 Timoteo</option><option value="TIT">Tito</option><option value="PHM">Filemón</option><option value="HEB">Hebreos</option><option value="JAS">Santiago</option><option value="1PE">1 Pedro</option><option value="2PE">2 Pedro</option><option value="1JN">1 Juan</option><option value="2JN">2 Juan</option><option value="3JN">3 Juan</option><option value="JUD">Judas</option><option value="REV">Apocalipsis</option></select></label>
@@ -2694,8 +2711,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       </section>
       <section class="resources-panel" id="library-search">
         <h3>Concordancia bíblica</h3>
-        <p class="resources-intro" hidden>Busca una palabra o frase y abre los versículos que la contienen.</p>
-        <button type="button" class="resources-expand" aria-label="Ampliar Concordancia">Ampliar</button>
+        <p class="resources-intro">Busca una palabra o frase y abre los versículos que la contienen.</p>
         <form id="resources-search" method="post">
           <label>Palabra o frase <input type="search" name="quicksearch" placeholder="Ej. esperanza" maxlength="160" required></label>
           <button type="submit">Buscar</button>
@@ -2710,19 +2726,17 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       </section>
       <section class="resources-panel" id="library-studies" data-library-content="studies">
         <h3>Estudios bíblicos</h3>
-        <p class="resources-intro" hidden>Lee un pasaje, reflexiona y aplica lo que aprendas esta semana.</p>
-        <button type="button" class="resources-expand" aria-label="Ampliar Estudios bíblicos">Ampliar</button>
+        <p class="resources-intro">Lee un pasaje, reflexiona y aplica lo que aprendas esta semana.</p>
         <p class="resources-content-title" aria-live="polite">Cargando estudio…</p>
         <p class="resources-reference"></p>
-        <div class="resources-reading" hidden></div>
+        <div class="resources-reading"></div>
       </section>
       <section class="resources-panel" id="library-sermons" data-library-content="weeklySermons">
         <h3>Sermones</h3>
-        <p class="resources-intro" hidden>Abre el mensaje de la semana y sigue su lectura, aplicación y oración.</p>
-        <button type="button" class="resources-expand" aria-label="Ampliar Sermones">Ampliar</button>
+        <p class="resources-intro">Abre el mensaje de la semana y sigue su lectura, aplicación y oración.</p>
         <p class="resources-content-title" aria-live="polite">Cargando sermón…</p>
         <p class="resources-reference"></p>
-        <div class="resources-reading" hidden></div>
+        <div class="resources-reading"></div>
       </section>
       </div>
     </div>

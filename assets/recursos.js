@@ -5,7 +5,10 @@
   const powerLabel = document.getElementById('resources-power-label');
   const back = document.getElementById('resources-back');
   const welcome = screen.querySelector('.resources-welcome');
-  const panels = [...screen.querySelectorAll('.resources-panel')];
+  const launcher = screen.querySelector('.resources-launcher');
+  const launchButtons = [...launcher.querySelectorAll('button')];
+  const panelGroup = screen.querySelector('.resources-panels');
+  const panels = [...panelGroup.querySelectorAll('.resources-panel')];
   const bible = document.getElementById('library-bible');
   const concordance = document.getElementById('library-search');
   const reading = document.getElementById('resources-reading');
@@ -22,6 +25,7 @@
   const actions = [...bible.querySelectorAll('[data-passage-action]')];
   const openingVerse = { reference: heading.textContent, text: output.textContent, credit: credit.textContent };
   let activePanel = null;
+  let welcomeTimer;
   let passageId = 'GEN.1.1';
   let readingRevision = 0;
   let searchRevision = 0;
@@ -33,6 +37,8 @@
   }
 
   function project(selected, focus = true) {
+    window.clearTimeout(welcomeTimer);
+    welcome.hidden = true;
     const previous = activePanel;
     activePanel = selected;
     if (selected) {
@@ -41,18 +47,15 @@
     } else {
       delete screen.dataset.focused;
     }
-    welcome.hidden = Boolean(selected);
+    launcher.hidden = Boolean(selected);
     back.hidden = !selected;
+    panelGroup.hidden = !selected;
     for (const panel of panels) {
-      panel.hidden = Boolean(selected && selected !== panel);
-      panel.querySelector('.resources-expand').hidden = Boolean(selected);
-      panel.querySelector('.resources-intro').hidden = selected !== panel;
-      const body = panel.querySelector('.resources-reading');
-      if (body) body.hidden = selected !== panel;
+      panel.hidden = selected !== panel;
     }
     screen.scrollTop = 0;
     if (focus && !screen.hidden) {
-      const target = selected ? back : previous?.querySelector('.resources-expand') || welcome;
+      const target = selected ? back : launchButtons.find(button => button.getAttribute('aria-controls') === previous?.id) || launchButtons[0];
       target.focus({ preventScroll: getComputedStyle(screen).position === 'absolute' });
     }
   }
@@ -62,17 +65,26 @@
     project(null, false);
   }
 
+  function showWelcome(focus = false) {
+    setPower(true);
+    welcome.hidden = false;
+    launcher.hidden = true;
+    welcomeTimer = window.setTimeout(() => {
+      project(null, focus && document.activeElement === power);
+    }, 1450);
+  }
+
   power.addEventListener('click', () => {
     if (screen.hidden) {
-      setPower(true);
-      project(null);
+      showWelcome(true);
     } else {
       turnOff();
     }
   });
   back.addEventListener('click', () => project(null));
-  for (const panel of panels) {
-    panel.querySelector('.resources-expand').addEventListener('click', () => project(panel));
+  for (const button of launchButtons) {
+    const panel = document.getElementById(button.getAttribute('aria-controls'));
+    button.addEventListener('click', () => project(panel));
   }
   document.querySelectorAll('[data-library-entry]').forEach(button => {
     button.addEventListener('click', () => {
@@ -83,8 +95,13 @@
     });
   });
   new MutationObserver(() => {
-    if (!view.classList.contains('active') && !screen.hidden) turnOff();
+    if (view.classList.contains('active')) {
+      if (screen.hidden) showWelcome();
+    } else if (!screen.hidden) {
+      turnOff();
+    }
   }).observe(view, { attributes: true, attributeFilter: ['class'] });
+  if (view.classList.contains('active')) showWelcome();
 
   async function request(params) {
     const response = await fetch('/api/bible?' + new URLSearchParams(params), { cache: 'no-store' });
