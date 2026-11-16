@@ -1,0 +1,111 @@
+body:has(#contacto.active) main {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+
+#contacto {
+  padding: clamp(1.6rem, 5vw, 5rem) max(1rem, 5vw);
+  color: #fff3df;
+  color-scheme: dark;
+  background: linear-gradient(90deg, #07121bec 8%, #07121bac 61%, #07121b5c),
+    #08121c url('./contacto-estudio.jpg') right center / cover no-repeat;
+  border-bottom: 1px solid #ae81474f;
+}
+
+.contacto-layout {
+  max-width: 1160px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1rem, 2.5vw, 2.4rem);
+}
+
+.contacto-heading { grid-column: 1 / -1; }
+.contacto-heading h2 {
+  width: fit-content;
+  margin: 0;
+  color: #ffe8b3;
+  font: 700 clamp(2.6rem, 6vw, 5.1rem)/1 'Baskervville', Georgia, serif;
+  background: linear-gradient(#fff8e6 10%, #ffe1a3 54%, #d39e48);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.contacto-heading p { margin: .7rem 0 0; font: italic 1.17rem/1.4 Georgia, serif; }
+.contacto-panel {
+  min-width: 0;
+  padding: clamp(1.05rem, 2.5vw, 2.15rem);
+  border: 1px solid #b68f578c;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #122537f0, #07121bf5);
+  box-shadow: 0 16px 40px #0005, inset 0 1px #ffe0a22b;
+}
+.contacto-panel h3 { margin: 0; color: #ffe1a6; font: 700 1.55rem/1.2 Georgia, serif; }
+#contacto-form, .contacto-pair { display: grid; gap: .9rem; }
+.contacto-pair { grid-template-columns: minmax(0, 1.24fr) minmax(0, 1fr); }
+#contacto-form label:not([hidden]) { display: block; }
+#contacto-form small { font-size: .83em; color: #d9d1c3; }
+#contacto-form :is(input:not([type=checkbox]), select, textarea) {
+  display: block;
+  width: 100%;
+  min-height: 42px;
+  margin-top: .34rem;
+  padding: .63rem .72rem;
+  border: 1px solid #b397646b;
+  border-radius: 8px;
+  background: #081521;
+  color: #fff3df;
+  font: inherit;
+}
+#contacto-form textarea { resize: vertical; }
+#contacto-form [hidden], #contacto-resultado:empty { display: none; }
+.contacto-privacidad { font-size: .9rem; line-height: 1.4; }
+#contacto-form .contacto-privacidad label { display: flex; gap: .5rem; align-items: baseline; }
+.contacto-privacidad input { margin: 0; accent-color: #f2c776; }
+.contacto-privacidad a { display: inline-block; margin: .35rem 0 0 1.35rem; color: #ffe1a6; text-decoration: underline; }
+.contacto-trampa { position: absolute; inset-inline-start: -10000px; }
+.contacto-button {
+  justify-self: start;
+  display: inline-block;
+  padding: .67rem 1.2rem;
+  border: 1px solid #ffe1a6;
+  border-radius: 9px;
+  background: linear-gradient(#ffe6b3, #dda54a);
+  color: #171005;
+  font: 700 1rem/1.25 Georgia, serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+.contacto-button:hover { background: #ffe1a6; }
+.contacto-button:disabled { opacity: .65; cursor: wait; }
+#contacto :is(a, button, input, select, textarea):focus-visible, .contacto-afiliados a:focus-visible {
+  outline: 2px solid #ffe1a6;
+  outline-offset: 3px;
+}
+#contacto-resultado { margin: 0; color: #ffe3ae; overflow-wrap: anywhere; }
+.contacto-info p { margin: .65rem 0 1rem; line-height: 1.55; }
+.contacto-info nav { display: flex; flex-wrap: wrap; gap: .45rem; }
+.contacto-info a[href] {
+  font-size: .93rem;
+  display: inline-block;
+  padding: .48rem .7rem;
+  color: #ffe1a6;
+  border: 1px solid #b397646b;
+  border-radius: 7px;
+  background: #091724;
+  text-decoration: underline;
+}
+.contacto-info a:not([href]) { display: none; }
+.contacto-afiliados { padding: 1rem; text-align: center; }
+
+@media (max-width: 780px) {
+  body:has(#contacto.active) header { padding-bottom: 11px !important; }
+  body:has(#contacto.active) header #main-nav { margin-top: 5px !important; }
+  #contacto { background-position: center, 70% top; }
+  .contacto-layout { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .contacto-pair { grid-template-columns: minmax(0, 1fr); }
+}

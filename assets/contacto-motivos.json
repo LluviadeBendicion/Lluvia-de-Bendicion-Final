@@ -1,0 +1,10 @@
+{
+  "general": { "label": "Información general" },
+  "affiliate-info": { "label": "Información sobre el Programa de Afiliados", "commercial": true },
+  "affiliate-join": { "label": "Quiero afiliar mi negocio", "commercial": true },
+  "radio": { "label": "Publicidad en la radio", "commercial": true },
+  "video": { "label": "Publicidad en videos", "commercial": true },
+  "production": { "label": "Producción de comerciales", "commercial": true },
+  "support": { "label": "Soporte técnico" },
+  "other": { "label": "Otro motivo" }
+}

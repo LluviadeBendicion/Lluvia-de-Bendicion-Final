@@ -2317,6 +2317,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
 <link rel="stylesheet" href="/assets/testimonios.css?v=firma-en-linea">
 <link rel="stylesheet" href="/assets/peticion-oracion.css?v=fondo-continuo">
+<link rel="stylesheet" href="/assets/contacto.css">
 <link rel="stylesheet" href="/assets/peticion-admin.css">
 <link rel="stylesheet" href="/assets/panel-maestro.css">
 <script src="/assets/testimonios.js?v=firma-en-linea" defer></script>
@@ -2864,7 +2865,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
   </div>
 </section>
-<section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" /><div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div></section>
+<section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" /><div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div><div class="contacto-afiliados"><a class="contacto-button" href="#contacto" data-contact-affiliate>Solicitar más información</a></div></section>
 <section id="peticiones" class="view" aria-labelledby="peticion-titulo">
   <div class="peticion-escena">
     <div class="peticion-panel">
@@ -2933,7 +2934,41 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
   </div>
 </section>
-<section id="contacto" class="view"><h2>Contacto</h2><div class="cards"><article class="card"><h3>✉ Contacto</h3><form class="lldb-form" data-form="contact"><small class="form-note">No envíes información sensible hasta que el formulario indique que el envío seguro está activo.</small><label>Nombre<input name="name" autocomplete="name"></label><label>Correo<input name="email" type="email" autocomplete="email"></label><label>Mensaje<textarea name="message" rows="4"></textarea></label><button type="submit">Preparar mensaje</button><small class="form-status"></small></form></article></div></section>
+<section id="contacto" class="view" aria-labelledby="contacto-titulo">
+  <div class="contacto-layout">
+    <div class="contacto-heading">
+      <h2 id="contacto-titulo">Contacto</h2>
+      <p>Escríbenos para comunicarte con el ministerio o conversar sobre tu negocio.</p>
+    </div>
+    <form id="contacto-form" class="contacto-panel" method="post" action="/api/prayer">
+      <h3>Envíanos un mensaje</h3>
+      <label>Nombre completo <input name="name" autocomplete="name" maxlength="160" required></label>
+      <div class="contacto-pair">
+        <label>Correo electrónico <input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+        <label>Teléfono <small>(opcional)</small><input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+      </div>
+      <label>Motivo del contacto <select name="reason" required><option value="">Selecciona un motivo</option></select></label>
+      <label id="contacto-negocio" hidden>Nombre del negocio <input name="business" autocomplete="organization" maxlength="160" disabled></label>
+      <label>Mensaje <textarea name="message" rows="5" maxlength="4000" required></textarea></label>
+      <div class="contacto-privacidad">
+        <label><input name="consent" type="checkbox" required><span>Autorizo el uso de mis datos exclusivamente para responder y gestionar mi solicitud.</span></label>
+        <a href="/privacidad-contacto.html" target="_blank" rel="noopener">Política de privacidad</a>
+      </div>
+      <div class="contacto-trampa" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" aria-label="Dejar en blanco"></div>
+      <button type="submit" class="contacto-button" disabled>Enviar mensaje</button>
+      <p id="contacto-resultado" role="status" tabindex="-1"></p>
+    </form>
+    <aside class="contacto-panel contacto-info" aria-labelledby="contacto-info-titulo">
+      <h3 id="contacto-info-titulo">Lluvia de Bendición</h3>
+      <p>Para consultas sobre el ministerio, el Programa de Afiliados, publicidad o soporte técnico, elige el motivo en el formulario.</p>
+      <nav aria-label="Redes de Lluvia de Bendición">
+        <a class="social-link" data-social="instagram">Instagram</a>
+        <a class="social-link" data-social="facebook">Facebook</a>
+        <a class="social-link" data-social="youtube">YouTube</a>
+      </nav>
+    </aside>
+  </div>
+</section>
 </main>
 <div id="private-admin" class="hidden" role="dialog" aria-modal="true" aria-labelledby="admin-title">
   <div class="master-header">
@@ -2952,7 +2987,8 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
         <button data-master="wallpapers" type="button">Wallpapers</button>
         <button data-master="testimonies" type="button">Testimonios</button>
       </details>
-      <button data-master="affiliates" type="button"><span>♟</span>Afiliados / Clientes</button>
+      <button data-master="affiliates" type="button"><span>♟</span>Afiliados / Clientes <small id="master-affiliate-contact-count" hidden></small></button>
+      <button data-master="contact" type="button"><span aria-hidden="true">✉</span>Mensajes de Contacto <small id="master-contact-count" hidden></small></button>
       <button data-master="proposals" type="button"><span>▤</span>Propuestas</button>
       <button data-master="billing" type="button"><span>$</span>Facturación</button>
       <button data-master="donations" type="button"><span>♡</span>Donaciones</button>
@@ -3117,8 +3153,9 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <footer aria-label="Pie de página"><button id="secret-admin-trigger" class="secret-mark" type="button" aria-label="Lluvia de Bendición">LLDB</button><span id="secret">Lluvia de Bendición .Com</span> · Todos los derechos reservados.</footer>
 <script src="/assets/peticion-oracion.js"></script>
 <script src="/assets/peticion-form.js?v=topicos-compactos" defer></script>
+<script src="/assets/contacto.js" defer></script>
 <script src="/assets/peticion-admin.js?v=topicos" defer></script>
-<script src="/assets/panel-maestro.js?v=acceso-simple" defer></script>
+<script src="/assets/panel-maestro.js?v=contacto-maestro" defer></script>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
 function enter(){if(introExited)return;introExited=true;if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.1s ease';intro.style.opacity='0';setTimeout(()=>intro.remove(),1150)}
@@ -3397,7 +3434,6 @@ fetch('/api/media-config.json',{cache:'no-store'})
  });
 const admin=document.getElementById('private-admin'),adminClose=document.getElementById('admin-close');adminClose.onclick=()=>admin.classList.add('hidden');document.addEventListener('keydown',e=>{if(e.key==='Escape'){aboutPanel?.classList.add('hidden');admin?.classList.add('hidden')}});
 const affiliateStatus=document.getElementById('affiliate-status'),affiliateNote=document.getElementById('affiliate-status-note');affiliateStatus?.addEventListener('change',()=>{const notes={active:'Cliente activo.',disabled:'Conserva historial. Suspende temporalmente propuestas, servicios y publicaciones. Registrar motivo y fecha de reactivación.',banned:'Conserva permanentemente el expediente. Bloquea acciones nuevas. Requiere razón, fecha y administrador.',discontinued:'Conserva historial. Debe generar tarea para retirar menciones/comerciales de ZaraRadio y retirar flyer/video de la plataforma.'};affiliateNote.textContent=notes[affiliateStatus.value]});
-let formsConfig={};fetch('/api/forms-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>formsConfig=c).catch(()=>{});document.querySelectorAll('.lldb-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const status=f.querySelector('.form-status'),cfg=formsConfig[f.dataset.form]||{};status.textContent=cfg.destinationConfigured?'Destino configurado; falta implementar el envío seguro del formulario.':'Formulario preparado. Falta conectar el destino oficial para enviar.'}));
 fetch('/api/social-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('a.social-link').forEach(a=>{const url=c[a.dataset.social];if(url){a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.removeAttribute('aria-disabled');a.removeAttribute('title')}else{a.setAttribute('aria-disabled','true')}})}).catch(()=>{});
 fetch('/api/donations-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{document.querySelectorAll('.donation-link').forEach(b=>{const m=c.methods?.[b.dataset.method];if(m?.enabled&&m.url){b.disabled=false;b.textContent='Abrir';b.onclick=()=>window.open(m.url,'_blank','noopener')}})}).catch(()=>{});
 let deferred;document.querySelectorAll('.resource,.about').forEach(x=>{x.tabIndex=0;x.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();x.click()}})});

@@ -21,6 +21,7 @@
   let current = 'overview';
   let navigation = 0;
   let wasHidden = true;
+  let contactTimer;
 
   $('master-login-slot').append(login, $('prayer-admin-status'));
   $('master-prayer-slot').append(prayer);
@@ -105,6 +106,7 @@
     const payload = await api('master-save', { module, operation, ...fields });
     overview = await api('master-overview');
     applySettings();
+    showContactAlerts(overview.contactAlerts);
     await open(module);
     message.textContent = 'Cambios guardados.';
     return payload;
@@ -112,7 +114,7 @@
 
   function home() {
     const quick = n('div', '', 'master-actions');
-    for (const section of ['prayers','donations','affiliates','billing','users']) {
+    for (const section of ['prayers','contact','donations','affiliates','billing','users']) {
       const target = nav.find(item => item.dataset.master === section);
       if (!target.hidden) quick.append(button(labels[section], () => open(section)));
     }
@@ -184,23 +186,94 @@
   }
 
   function affiliates(data, edit) {
+    const linked = new Map();
+    for (const item of data.messages) {
+      if (!linked.has(item.clientId)) linked.set(item.clientId, []);
+      linked.get(item.clientId).push(item);
+    }
     const rows = data.rows.map(item => {
       const notes = [note(item.contact || 'Sin contacto registrado'), ...item.history.map(event =>
         note(`${when(event.at)} · ${affiliateLabels[event.status]} · ${event.by} · ${event.reason}`))];
+      const messages = linked.get(item.id);
+      if (messages) notes.push(card('Solicitudes de contacto vinculadas', ...messages.map(message => contactRecord(message, data, edit, 'affiliates'))));
       if (edit) notes.push(form('Guardar estado', [input('status','Nuevo estado',{choices:Object.entries(affiliateLabels),value:item.status}),
         input('reason','Motivo')], values=>save('status',{id:item.id,...values})));
       for (const task of item.tasks) {
         notes.push(note(`${task.label} · ${task.done ? 'Registrada ' + when(task.done.at) : 'Pendiente'}`));
         if (overview.master && !task.done) notes.push(form('Registrar cumplimiento', [input('note','Constancia del retiro')], v=>save('task',{id:item.id,task:task.id,...v})));
       }
-      return history(`${item.name} · ${affiliateLabels[item.status]}`,notes);
+      const row = history(`${item.name} · ${affiliateLabels[item.status]}`,notes);
+      row.dataset.affiliateId = item.id;
+      return row;
     });
     const log = card('Expedientes e historial', ...(rows.length ? rows : [note('No hay clientes registrados en este entorno.')]));
     return edit ? group(card('Añadir prospecto', form('Guardar prospecto', [input('name','Nombre o negocio'),
       input('contact','Contacto interno',{required:false})], values=>save('create',values))),log) : log;
   }
 
-  function proposals(data, edit) {
+  function contactRecord(item, data, edit, section) {
+    const reason = data.contactReasons[item.reason].label;
+    const ownerName = id => data.staff.find(account => account.id === id)?.name || id || 'Sin asignar';
+    const details = [note(`${when(item.created)} · ${item.email}`), ...(item.phone ? [note(item.phone)] : []),
+      ...(item.business ? [note(item.business)] : []), n('pre', item.text), note(`Responsable · ${ownerName(item.owner)}`)];
+    if (section === 'contact' && item.clientId && overview.access.affiliates) {
+      details.push(button('Abrir expediente en Afiliados', () => open('affiliates', true, { clientId: item.clientId })));
+    }
+    if (item.clientId && (overview.master || overview.access.proposals === 'edit')) {
+      details.push(button('Preparar propuesta', () => open('proposals', true, {
+        clientId: item.clientId, title: `Propuesta para ${item.business || item.name}`.slice(0, 160),
+        text: `Solicitud de ${item.name}\nMotivo: ${reason}\n\n${item.text}`
+      })));
+    }
+    if (edit) {
+      const staff = data.staff.filter(account => item.clientId || account.general);
+      const choices = [['','Sin asignar'], ...staff.map(account => [account.id, account.name])];
+      if (item.owner && !choices.some(([id]) => id === item.owner)) choices.push([item.owner, ownerName(item.owner)]);
+      details.push(form('Guardar seguimiento', [input('status','Estado',{choices:Object.entries(data.contactStates),value:item.status}),
+        input('owner','Responsable',{choices,value:item.owner,required:false}),
+        input('note','Nota privada',{long:true,required:false})],
+      values => save('follow-up', { id:item.id, revision:item.revision, ...values }, section)));
+    }
+    if (item.notes.length) details.push(history('Notas privadas', item.notes.map(entry => note(`${when(entry.at)} · ${entry.by} · ${entry.text}`))));
+    details.push(history('Historial de seguimiento', item.history.map(entry =>
+      note(`${when(entry.at)} · ${entry.by} · ${data.contactStates[entry.status]} · ${ownerName(entry.owner)}${entry.noteAdded ? ' · Nota guardada' : ''}`))));
+    return history(`${item.name} · ${reason} · ${data.contactStates[item.status]}`, details);
+  }
+
+  function contact(data, edit) {
+    const filters = n('div', '', 'master-form');
+    const query = input('query','Buscar por nombre, correo, negocio o mensaje',{type:'search',required:false});
+    const state = input('filter','Estado',{choices:[['','Todos los estados'], ...Object.entries(data.contactStates)]});
+    const reason = input('reason','Motivo',{choices:[['','Todos los motivos'], ...Object.entries(data.contactReasons).map(([id, item]) => [id, item.label])]});
+    filters.append(query, state, reason);
+    const list = n('div');
+    const read = holder => holder.lastElementChild.value;
+    const normalize = value => value.toLocaleLowerCase('es').normalize('NFD').replace(/\p{Diacritic}/gu, '');
+    const records = data.rows.map(item => ({ item,
+      searchable: normalize([item.name,item.email,item.business,item.phone,item.text].join(' ')),
+      element: contactRecord(item,data,edit,'contact') }));
+    const empty = note(data.rows.length ? 'No hay mensajes que coincidan con la búsqueda.' : 'Todavía no hay mensajes.');
+    function refresh() {
+      const term = normalize(read(query).trim());
+      const hits = records.filter(({item, searchable}) => searchable.includes(term) &&
+        (!read(state) || item.status === read(state)) && (!read(reason) || item.reason === read(reason)));
+      list.replaceChildren(...(hits.length ? hits.map(({element}) => element) : [empty]));
+    }
+    filters.addEventListener('input', refresh);
+    filters.addEventListener('change', refresh);
+    refresh();
+    return card('Bandeja de mensajes', filters, list);
+  }
+
+  function showContactAlerts(alerts) {
+    for (const [id, count] of [['master-contact-count', alerts.pending], ['master-affiliate-contact-count', alerts.affiliatePending]]) {
+      const badge = $(id);
+      badge.hidden = !count;
+      badge.textContent = count ? `· ${count} ${count === 1 ? 'nuevo' : 'nuevos'}` : '';
+    }
+  }
+
+  function proposals(data, edit, draft) {
     const flow = n('div','','master-flow');
     flow.append(...steps.map((step,index)=>n('span',`${index+1}. ${step}`)));
     const list = data.rows.map(item => history(`${item.title} · ${item.clientName} · ${steps[item.step]}`, [n('pre',item.text),
@@ -210,8 +283,11 @@
     content.append(flow);
     const log = card('Propuestas y contratos', ...(list.length ? list : [note('No hay propuestas registradas.')]));
     if (!edit) return log;
-    return group(card('Crear propuesta', data.clients.length ? form('Guardar propuesta',[input('clientId','Cliente',{choices:data.clients.map(c=>[c.id,c.name])}),
-      input('title','Título'),input('text','Detalle de la propuesta',{long:true})],v=>save('create',v)) : note('Añade un prospecto primero en Afiliados / Clientes.')),log);
+    if (draft && !data.clients.some(client => client.id === draft.clientId)) {
+      return group(card('Crear propuesta', note('El expediente vinculado ya no está habilitado para propuestas.')), log);
+    }
+    return group(card('Crear propuesta', data.clients.length ? form('Guardar propuesta',[input('clientId','Cliente',{choices:data.clients.map(c=>[c.id,c.name]),value:draft?.clientId}),
+      input('title','Título',{value:draft?.title}),input('text','Detalle de la propuesta',{long:true,value:draft?.text})],v=>save('create',v)) : note('Añade un prospecto primero en Afiliados / Clientes.')),log);
   }
 
   function billing(data, edit) {
@@ -323,7 +399,7 @@
     message.textContent = 'Respaldo cifrado descargado.';
   }
 
-  async function open(section, focus = true) {
+  async function open(section, focus = true, context) {
     const request = ++navigation;
     const tab = nav.find(item=>item.dataset.master===section);
     if (!user || !tab || tab.hidden) return;
@@ -352,11 +428,15 @@
     const result = await api('master-list',{module:section});
     if (request !== navigation || !user) return;
     const edit = overview.master || overview.access[section] === 'edit';
-    const renderers = { donations:donation, affiliates, proposals, billing, users:userSettings, configuration, reports, incidents };
+    const renderers = { donations:donation, affiliates, proposals, billing, users:userSettings, configuration, reports, incidents, contact };
     if (['editorial','wallpapers','testimonies'].includes(section)) content.append(queue(result,edit,section));
     else if (section==='audit') content.append(card('Actividad y respaldos',note('Respaldo de código local: respaldo/panel-maestro-2026-11-16.'),button('Descargar respaldo cifrado',downloadBackup),
       ...(result.rows.length?result.rows.map(item=>note(`${when(item.at)} · ${item.by} · ${item.operation}`)):[note('No hay cambios registrados.')])));
-    else content.append(renderers[section](result,edit));
+    else content.append(renderers[section](result,edit,context));
+    if (context?.clientId && section === 'affiliates') {
+      const row = [...content.querySelectorAll('[data-affiliate-id]')].find(node => node.dataset.affiliateId === context.clientId);
+      if (row) { row.open = true; row.scrollIntoView({ block: 'nearest' }); }
+    }
     if (focus) content.focus({preventScroll:true});
   }
 
@@ -373,6 +453,19 @@
       const key = tab.dataset.master;
       tab.hidden = !(['overview','help'].includes(key) || overview.master || overview.access[key]);
     }
+    showContactAlerts(overview.contactAlerts);
+    clearInterval(contactTimer);
+    if (overview.access.contact || overview.access.affiliates) {
+      contactTimer = setInterval(async () => {
+        const account = user;
+        try {
+          const alerts = await api('contact-alerts');
+          if (account && user === account) showContactAlerts(alerts);
+        } catch (error) {
+          if (error.status === 401 && account && user === account) clearSession(error.message);
+        }
+      }, 30000);
+    }
     await open('overview',false);
   }
 
@@ -384,6 +477,7 @@
 
   function clearSession(reason = '') {
     navigation++;
+    clearInterval(contactTimer);
     user = null;
     overview = null;
     login.hidden = false;

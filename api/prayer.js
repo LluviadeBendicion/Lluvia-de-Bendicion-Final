@@ -39,6 +39,17 @@ module.exports = async function prayer(req, res) {
     const token = auth.sessionToken(req, local);
     const action = body.action;
 
+    if (action === 'contact-submit') {
+      const input = master.contactInput(body);
+      await store.change(state => {
+        if (!Object.hasOwn(state.master?.contact || {}, input.id) && !auth.rate(state, 'contact:' + hash(address), 6, 3600000)) {
+          throw new Invalid('Se alcanzó el límite de envíos. Inténtalo más tarde.', 429);
+        }
+        master.saveContact(state, input, allUsers(state, configuredUsers));
+      });
+      return res.status(201).json({ received: true });
+    }
+
     if (action === 'submit') {
       if (body.website) throw new Invalid('No se pudo recibir la petición.');
       const item = submission(body);
@@ -97,7 +108,7 @@ module.exports = async function prayer(req, res) {
       if (backup.length > 2_500_000) throw new Invalid('El respaldo supera el límite de descarga del panel.', 413);
       return res.status(200).json({ filename: `lldb-respaldo-${iso().slice(0,10)}.snapshot`, encrypted: backup.toString('base64') });
     }
-    if (action === 'master-overview' || action === 'master-list') return res.status(200).json(master.list(state, user, action, body, users));
+    if (['master-overview', 'master-list', 'contact-alerts'].includes(action)) return res.status(200).json(master.list(state, user, action, body, users));
     if (action === 'session') return res.status(200).json({ user: safeUser(user) });
     if (action === 'presentation') {
       if (!permitted(user, 'present')) throw new Invalid('No tienes permiso de presentación.', 403);
