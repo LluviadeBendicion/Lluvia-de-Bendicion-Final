@@ -2078,15 +2078,38 @@ body:has(#inicio.active) footer #secret-admin-trigger{
     background:transparent;
     cursor:pointer;
   }
-  .media-video-sources button{left:2.4%;width:14.5%;height:12%}
-  .media-video-sources button:nth-child(1){top:8%}
-  .media-video-sources button:nth-child(2){top:20.7%}
-  .media-video-sources button:nth-child(3){top:33%}
-  .media-video-sources button:nth-child(4){top:46%}
-  .media-video-exit{top:1%;right:2.4%;width:7%;height:11%}
-  .media-video-sources button:hover,
-  .media-video-sources button[aria-pressed="true"],
-  .media-video-exit:hover{background:#f4ce7a22}
+  .media-video-sources [data-video-source="youtube"] {
+    left: 2.995%; top: 7.227%; width: 13.607%; height: 13.965%;
+    --media-sign-outline: polygon(evenodd, 1.435% 0.000%, 100.000% 23.776%, 98.565% 100.000%, 0.000% 84.615%, 1.435% 0.000%, 3.349% 2.797%, 1.914% 81.818%, 96.651% 97.203%, 98.086% 26.573%, 3.349% 2.797%);
+  }
+  .media-video-sources [data-video-source="facebook"] {
+    left: 2.865%; top: 20.703%; width: 13.607%; height: 12.012%;
+    --media-sign-outline: polygon(evenodd, 0.957% 0.000%, 100.000% 18.699%, 100.000% 100.000%, 0.000% 90.244%, 0.957% 0.000%, 2.871% 3.252%, 1.914% 86.992%, 98.086% 96.748%, 98.086% 21.951%, 2.871% 3.252%);
+  }
+  .media-video-sources [data-video-source="originals"] {
+    left: 2.669%; top: 33.203%; width: 13.802%; height: 11.816%;
+    --media-sign-outline: polygon(evenodd, 1.415% 0.000%, 100.000% 9.091%, 100.000% 100.000%, 0.000% 98.347%, 1.415% 0.000%, 3.302% 3.306%, 1.887% 95.041%, 98.113% 96.694%, 98.113% 12.397%, 3.302% 3.306%);
+  }
+  .media-video-sources [data-video-source="affiliates"] {
+    left: 2.474%; top: 46.289%; width: 13.997%; height: 13.379%;
+    --media-sign-outline: polygon(evenodd, 1.860% 0.000%, 100.000% 0.730%, 100.000% 95.620%, 0.000% 100.000%, 1.860% 0.000%, 3.721% 2.920%, 1.860% 97.080%, 98.140% 92.701%, 98.140% 3.650%, 3.721% 2.920%);
+  }
+  .media-video-sources button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: var(--media-sign-outline);
+    background: #ffe38b;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .media-video-sources button:is(:hover, :focus-visible, [aria-pressed="true"])::before { opacity: 1; }
+  .media-video-sources button[aria-pressed="true"] { filter: drop-shadow(0 0 6px #ffbb47); }
+  #videos .media-video-sources button:focus-visible { outline: none; }
+  .media-video-exit{top:1.17%;right:2.8%;width:6.51%;height:11.04%}
+  .media-video-art:has(.media-video-exit:is(:hover, :focus-visible)) .media-video-exit-light {
+    filter: brightness(1.35) drop-shadow(0 0 8px #ff3b2f);
+  }
   .media-video-sources button span,
   .media-video-exit span{
     position:absolute;
@@ -2116,6 +2139,22 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 </style>
 <style id="lldb-media-projector">
 .media-video-art{isolation:isolate}
+.media-video-room{position:relative}
+.media-video-exit-light{
+  position:absolute;
+  inset:1.172% auto auto 90.69%;
+  width:6.51%;
+  height:11.035%;
+  pointer-events:none;
+  filter:drop-shadow(0 0 5px #f53c3480);
+}
+.media-video-exit-light::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('/assets/videos-nitida.jpg') 97.006% 1.317% / 1536% 906.195% no-repeat;
+  clip-path:polygon(5% 40%, 95% 4%, 95% 68%, 5% 95%);
+}
 .media-video-backdrop{
   position:relative;
   transition:filter .95s ease-in-out;
@@ -2561,9 +2600,12 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <section id="videos" class="view media-subpage" aria-labelledby="media-videos-title">
   <h2 id="media-videos-title" class="sr-only">Videos</h2>
   <div class="media-video-art">
-    <div class="media-video-backdrop">
-      <img src="/assets/videos-nitida.jpg" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
-      <span class="media-video-arrow-mask" aria-hidden="true"></span>
+    <div class="media-video-room">
+      <div class="media-video-backdrop">
+        <img src="/assets/videos-nitida.jpg" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
+        <span class="media-video-arrow-mask" aria-hidden="true"></span>
+      </div>
+      <span class="media-video-exit-light" aria-hidden="true"></span>
     </div>
     <div class="media-video-sources" role="group" aria-label="Fuentes de video">
       <button type="button" data-go="youtube" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
