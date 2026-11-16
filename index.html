@@ -2315,8 +2315,8 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
-<link rel="stylesheet" href="/assets/testimonios.css?v=autor">
-<script src="/assets/testimonios.js?v=autor" defer></script>
+<link rel="stylesheet" href="/assets/testimonios.css?v=burbujas">
+<script src="/assets/testimonios.js?v=burbujas" defer></script>
 <link rel="stylesheet" href="/assets/especial.css">
 <script src="/assets/especial.js" defer></script>
 <link rel="stylesheet" href="/assets/recursos.css?v=iconos-ilustrados">
@@ -2728,6 +2728,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     <article class="testimonio-relato" aria-label="Relato del testimonio" aria-live="polite" tabindex="0">
       <h3 id="testimony-title" hidden></h3>
       <p id="testimony-location" hidden></p>
+      <p id="testimony-theme" hidden></p>
       <p id="testimony-example-label" hidden>Ejemplo ficticio</p>
       <p id="testimony-body">Pronto compartiremos testimonios de nuestra comunidad.</p>
       <p id="testimony-meta" hidden></p>
@@ -2744,6 +2745,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       </div>
       <button type="button" class="testimonio-flecha" data-testimony="1" aria-label="Testimonio siguiente" disabled>›</button>
       <div class="testimonio-puntos" aria-hidden="true"><span class="activo"></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="testimonio-personas" role="group" aria-label="Elige a la persona cuyo testimonio quieres leer" hidden></div>
     </div>
   </div>
 </section>

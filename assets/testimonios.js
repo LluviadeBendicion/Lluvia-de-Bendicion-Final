@@ -2,6 +2,8 @@
   const mural = document.querySelector('.testimonio-mural');
   const title = mural.querySelector('#testimony-title');
   const location = mural.querySelector('#testimony-location');
+  const theme = mural.querySelector('#testimony-theme');
+  const people = mural.querySelector('.testimonio-personas');
   const exampleLabel = mural.querySelector('#testimony-example-label');
   const body = mural.querySelector('#testimony-body');
   const attribution = mural.querySelector('#testimony-meta');
@@ -17,6 +19,38 @@
       .trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   }
 
+  function authorName(item) {
+    return item?.author && item?.initial ? `${item.author} ${item.initial}.` : '';
+  }
+
+  function renderPeople() {
+    const focused = people.contains(document.activeElement) ? document.activeElement.dataset.position : null;
+    people.hidden = !category || visibleItems.length === 0;
+    mural.toggleAttribute('data-people', !people.hidden);
+    people.replaceChildren();
+    if (people.hidden) return;
+    visibleItems.forEach((item, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.position = index;
+      button.setAttribute('aria-pressed', String(index === position));
+      const name = document.createElement('strong');
+      name.textContent = authorName(item) || item.title || `Testimonio ${index + 1}`;
+      button.append(name);
+      if (item.location) {
+        const place = document.createElement('span');
+        place.textContent = item.location;
+        button.append(place);
+      }
+      button.addEventListener('click', () => {
+        position = index;
+        render();
+      });
+      people.append(button);
+      if (focused === String(index)) button.focus({preventScroll:true});
+    });
+  }
+
   function render() {
     const testimony = officialContent.testimonies;
     const enabled = testimony?.enabled !== false;
@@ -29,13 +63,16 @@
     position = Math.min(position, Math.max(0, visibleItems.length - 1));
     const item = visibleItems[position];
     const isExample = showingExamples && Boolean(item);
-    const author = item?.author && item?.initial ? item.author + ' ' + item.initial + '.' : '';
+    const author = authorName(item);
     const details = item && !isExample && !author ? [item.reference, item.note].filter(Boolean).join(' · ') : '';
     mural.toggleAttribute('data-example', isExample);
     title.textContent = author || item?.title || '';
     title.hidden = !title.textContent;
     location.textContent = item?.location ? 'Desde ' + item.location : '';
     location.hidden = !location.textContent;
+    const itemTheme = themes.find(button => button.dataset.testimonyCategory === categoryKey(item?.category || item?.note));
+    theme.textContent = itemTheme?.innerText.replace(/\s+/g, ' ').trim() || '';
+    theme.hidden = !theme.textContent;
     exampleLabel.hidden = !isExample;
     body.textContent = item?.text || (category
       ? 'Aún no hay testimonios publicados para este tema.'
@@ -47,6 +84,7 @@
     const selected = themes.findIndex(button => button.dataset.testimonyCategory === category);
     dots.forEach((dot, index) => dot.classList.toggle('activo', index === (selected >= 0 ? selected : position % dots.length)));
     themes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.testimonyCategory === category)));
+    renderPeople();
   }
 
   themes.forEach(button => button.addEventListener('click', () => {

@@ -5,13 +5,14 @@ body:has(#testimonios.active) main {
 }
 #testimonios { padding: 0; scroll-margin-top: 200px; }
 .testimonio-mural {
+  --testimonio-escena: url("./testimonios-mural-ajustado.jpg");
   position: relative;
   isolation: isolate;
   max-width: 1800px;
   margin: 0 auto;
   aspect-ratio: 3 / 2;
   container-type: inline-size;
-  background: #18100b url("./testimonios-mural.jpg") center / cover no-repeat;
+  background: #18100b var(--testimonio-escena) center / cover no-repeat;
 }
 .testimonio-marca {
   position: absolute;
@@ -27,7 +28,7 @@ body:has(#testimonios.active) main {
 .testimonio-marca small { display: block; margin-top: .18em; color: #fff5de; font-size: .55em; }
 .testimonio-relato {
   position: absolute;
-  inset: 40.2% 24% 40% 24%;
+  inset: 39% 22% 36% 22%;
   display: flex;
   flex-direction: column;
   justify-content: safe center;
@@ -43,6 +44,7 @@ body:has(#testimonios.active) main {
 .testimonio-relato h3 { margin: 0 0 .18em; font: inherit; color: #ffcc6f; }
 .testimonio-relato p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .testimonio-relato #testimony-location { font-size: .68em; margin-bottom: .25em; color: #ffda9b; }
+.testimonio-relato #testimony-theme { font-size: .68em; margin-bottom: .25em; color: #ffda9b; }
 .testimonio-relato #testimony-example-label { font-size: max(7px, .48em); margin-bottom: .3em; color: #ffda9b; }
 #testimony-meta { align-self: end; margin-top: .35em; font-size: .62em; }
 @supports (background-clip: text) {
@@ -59,7 +61,7 @@ body:has(#testimonios.active) main {
 }
 .testimonio-carrusel {
   position: absolute;
-  inset: 60% 11.4% auto;
+  inset: 64% 11.4% auto;
   display: grid;
   grid-template-columns: 4.3% minmax(0, 1fr) 4.3%;
   gap: 1.3cqw;
@@ -129,8 +131,59 @@ body:has(#testimonios.active) main {
 }
 .testimonio-puntos span { width: .9cqw; aspect-ratio: 1; border-radius: 50%; background: #b8b2a3; opacity: .55; }
 .testimonio-puntos .activo { background: #ffe0a0; opacity: 1; box-shadow: 0 0 8px 2px #ffae29; }
+.testimonio-personas:not([hidden]) {
+  grid-column: 2;
+  display: flex;
+  gap: max(8px, 1cqw);
+  max-width: 100%;
+  padding: 5px 5px 8px;
+  overflow-x: auto;
+  justify-content: safe center;
+  scrollbar-width: thin;
+}
+.testimonio-personas button {
+  flex: none;
+  min-width: 6.8em;
+  padding: .35em .8em;
+  border: 1px solid #dda75f;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at top, #4f3451, #180f16 80%);
+  color: #fff0d7;
+  font: 400 clamp(11px,1.3cqw,22px)/1.05 Kalam, "Segoe Print", cursive;
+  cursor: pointer;
+}
+.testimonio-personas button span { display: block; color: #ffd993; }
+.testimonio-personas button:is(:hover,[aria-pressed="true"]) {
+  border-color: #fff0b3;
+  background: radial-gradient(ellipse at top,#774c7d,#28182c 80%);
+  box-shadow: 0 0 7px #efbb7d;
+}
+.testimonio-mural[data-people] .testimonio-puntos { display: none; }
 @media (max-width: 600px) {
-  .testimonio-relato { inset-inline: 22%; font-size: clamp(10px, 2.8cqw, 17px); }
-  .testimonio-carrusel { inset-inline: 7%; gap: 1.4cqw; }
+  .testimonio-mural {
+    aspect-ratio: auto;
+    padding-top: 26%;
+    padding-bottom: 14%;
+    background: repeating-linear-gradient(to bottom, transparent 0 11px, #9b654132 11px 12px), radial-gradient(ellipse at center, #261712, #130e0c);
+  }
+  .testimonio-mural::before, .testimonio-mural::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    z-index: -1;
+    background: #18100b var(--testimonio-escena) center top / 100% auto no-repeat;
+    pointer-events: none;
+  }
+  .testimonio-mural::before { top: 0; height: 32cqw; mask-image: linear-gradient(#000 82%, transparent); }
+  .testimonio-mural::after { bottom: 0; height: 20cqw; background-position: center bottom; mask-image: linear-gradient(transparent, #000 30%); }
+  .testimonio-relato {
+    position: relative;
+    inset: auto;
+    padding: .75rem 0;
+    margin: 0 9%;
+    font-size: clamp(13px, 3.3cqw, 17px);
+  }
+  .testimonio-carrusel { position: relative; inset: auto; margin-inline: 5%; gap: 1.4cqw; }
   .testimonio-temas { gap: 1.05cqw; }
+  .testimonio-marca { inset-block-start: 1.3cqw; }
 }
