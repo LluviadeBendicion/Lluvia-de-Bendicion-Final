@@ -178,7 +178,8 @@
       group.append(element('summary', label), list);
       detail.append(group);
     }
-    if (!can('edit')) return;
+    const allowed = operation => Boolean(inbox.user.prayerActions?.[operation]);
+    if (!Object.entries(inbox.user.prayerActions || {}).some(([key, value]) => key !== 'export' && value)) return;
     async function update(operation, fields = {}, message = 'Cambios guardados.') {
       const data = await api('modify', { id: item.id, version: item.version, operation, ...fields });
       await loadInbox();
@@ -200,6 +201,7 @@
       detail.append(form);
     }
 
+    if (allowed('state')) {
     const shortcuts = element('div');
     shortcuts.className = 'prayer-actions';
     shortcuts.append(action('Aprobar internamente', () => update('state', { state: 'approved' })),
@@ -226,9 +228,10 @@
     if (item.method) smallForm('Registrar contacto', [field('Fecha de contacto', 'occurred', 'date'),
       field('Resultado', 'result', 'text', '', { required: true, maxLength: 500 }), field('Notas privadas', 'note', 'textarea', '', { maxLength: 2000 }),
       field('Próximo contacto', 'next', 'date', item.next)], values => update('follow', { ...values, medium: item.method }));
+    }
     if (item.consent && !item.restricted && !item.urgent && !['rejected','archived'].includes(item.state)) {
       detail.append(element('h4', 'Presentación para la iglesia'));
-      smallForm('Guardar borrador para presentar', [field('Versión sin datos personales', 'text', 'textarea', item.draft?.text || '',
+      if (allowed('draft')) smallForm('Guardar borrador para presentar', [field('Versión sin datos personales', 'text', 'textarea', item.draft?.text || '',
         { required: true, maxLength: 2000 })], values => update('draft', values));
       if (item.draft) {
         const preview = element('details');
@@ -240,12 +243,12 @@
           const exact = { draftId: item.draft.id, attest: true };
           const checks = () => [field('Confirmo que revisé esta versión exacta y no contiene datos que identifiquen a nadie.',
             'attest', 'checkbox', '', { required: true })];
-          if (!item.draft.requested) smallForm('Solicitar autorización de Omar', checks(), () => update('request', exact));
-          else detail.append(element('p', `Autorización solicitada el ${displayDate(item.draft.requested.at)}.`));
-          if (inbox.user.role === 'master' && item.draft.requested && !item.draft.approved) {
+          if (!item.draft.requested && allowed('request')) smallForm('Solicitar autorización', checks(), () => update('request', exact));
+          if (item.draft.requested) detail.append(element('p', `Autorización solicitada el ${displayDate(item.draft.requested.at)}.`));
+          if (allowed('authorize') && item.draft.requested && !item.draft.approved) {
             smallForm('Autorizar versión exacta', checks(), () => update('authorize', exact));
           }
-          if (inbox.user.role === 'master' && item.draft.approved) {
+          if (allowed('publish') && item.draft.approved) {
             detail.append(element('p', `Autorizada el ${displayDate(item.draft.approved.at)} por ${staff(item.draft.approved.by)}.`),
               action('Publicar en pantalla de iglesia', () => update('publish', exact, 'La versión autorizada ya está disponible para presentar.')));
           }
@@ -253,9 +256,9 @@
       }
     }
     if (item.active) {
-      if (can('present')) smallForm('Guardar orden', [field('Orden de presentación', 'order', 'number', item.active.order,
+      if (can('present') && allowed('order')) smallForm('Guardar orden', [field('Orden de presentación', 'order', 'number', item.active.order,
         { required: true, min: 0, max: 9999 })], values => update('order', { order: Number(values.order) }));
-      if (inbox.user.role === 'master') detail.append(action('Retirar de la presentación', () => update('withdraw')));
+      if (allowed('withdraw')) detail.append(action('Retirar de la presentación', () => update('withdraw')));
     }
   }
 

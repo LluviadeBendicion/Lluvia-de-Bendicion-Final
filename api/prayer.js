@@ -1,32 +1,21 @@
-const { openStore } = require('../lib/prayer-store.cjs');
+const { context, allowedOrigin } = require('../lib/panel-session.cjs');
 const { Invalid, submission, permitted, visible, mutate, eligible, prayerStatusOf, hash, iso } = require('../lib/prayer-domain.cjs');
 const auth = require('../lib/prayer-auth.cjs');
 const master = require('../lib/master-domain.cjs');
 
-const acceptedOrigins = new Set(['https://www.lluviadebendicion.com', 'https://lluviadebendicion.com']);
-const safeUser = user => ({ id: user.id, name: user.name, role: user.role, permissions: user.permissions });
-const allUsers = (state, configured) => Object.assign(Object.create(null), configured, state.master?.users || {});
-
-function config() {
-  const local = process.env.LLDB_PRAYER_LOCAL === '1' && !process.env.VERCEL;
-  if (!local && process.env.LLDB_PRAYER_ENABLED !== '1') throw new Invalid('La recepción de peticiones aún no está habilitada.', 503);
-  return {
-    local, store: openStore({ key: process.env.LLDB_PRAYER_KEY,
-      token: process.env.LLDB_PRAYER_PRIVATE_BLOB_READ_WRITE_TOKEN || process.env.LLDB_PRAYER_PRIVATE_BLOB_TOKEN,
-      file: local ? process.env.LLDB_PRAYER_LOCAL_FILE : null }),
-    users: auth.parseUsers(process.env.LLDB_PRAYER_USERS)
-  };
-}
+const safeUser = user => ({ id: user.id, name: user.name, role: user.role, permissions: user.permissions,
+  prayerActions: Object.fromEntries(Object.entries(master.operationActions.prayers)
+    .map(([operation, action]) => [operation, master.can(user, 'prayers', action)])) });
+const allUsers = auth.loadUsers;
 
 module.exports = async function prayer(req, res) {
   res.setHeader('Cache-Control', 'private, no-store, max-age=0');
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   try {
-    const { local, store, users: configuredUsers } = config();
+    const { local, store, users: configuredUsers } = context();
     if (req.method !== 'POST') throw new Invalid('Método no permitido.', 405);
     const origin = req.headers.origin;
-    const loopback = `http://127.0.0.1:${process.env.LLDB_PRAYER_LOCAL_PORT || '4179'}`;
-    if (!acceptedOrigins.has(origin) && !(local && origin === loopback)) throw new Invalid('Origen no permitido.', 403);
+    if (!allowedOrigin(origin, local)) throw new Invalid('Origen no permitido.', 403);
     if (Number(req.headers['content-length']) > 20_000 || !(req.headers['content-type'] || '').startsWith('application/json')) {
       throw new Invalid('Solicitud inválida.', 400);
     }
@@ -76,13 +65,28 @@ module.exports = async function prayer(req, res) {
       return res.status(200).json({ ok: true });
     }
 
+    if (action === 'profile-password' || action === 'issue-recovery' || action === 'recover') {
+      const result = await store.change(state => {
+        const users = allUsers(state, configuredUsers);
+        if (action === 'recover') return auth.recover(state, users, body, address);
+        const user = auth.sessionUser(state, users, token);
+        if (action === 'profile-password') return auth.changePassword(state, user, body, address);
+        const target = typeof body.user === 'string' && Object.hasOwn(users, body.user) ? users[body.user] : null;
+        return auth.issueRecovery(state, user, target, body, address);
+      });
+      if (!result) throw new Invalid(action === 'recover' ? 'El código no es válido o venció.' : 'No se pudo confirmar la contraseña actual.');
+      if (action === 'issue-recovery') return res.status(200).json({ code: result });
+      auth.setCookie(res, '', local);
+      return res.status(200).json({ ok: true });
+    }
+
     if (action === 'modify' || action === 'export' || action === 'master-save') {
       const result = await store.change(state => {
         const users = allUsers(state, configuredUsers);
         const user = auth.sessionUser(state, users, token);
         if (action === 'master-save') return master.save(state, user, body, users);
         if (action === 'export') {
-          if (!permitted(user, 'export')) throw new Invalid('No tienes permiso para exportar.', 403);
+          if (!master.can(user, 'prayers', 'export')) throw new Invalid('No tienes permiso para exportar.', 403);
           const selected = Array.isArray(body.ids) ? new Set(body.ids.slice(0, 100)) : new Set();
           const cases = Object.values(state.cases).filter(item => selected.has(item.id) && visible(user, item));
           if (!cases.length) throw new Invalid('Selecciona los expedientes autorizados para exportar.');
@@ -91,6 +95,10 @@ module.exports = async function prayer(req, res) {
         }
         const item = Object.hasOwn(state.cases, body.id) && state.cases[body.id];
         if (!item || !visible(user, item)) throw new Invalid('Expediente no disponible.', 404);
+        const permission = master.operationActions.prayers[body.operation];
+        if (!master.can(user, 'prayers', permission)) throw new Invalid('No tienes permiso para esta acción.', 403);
+        if (item.active && body.operation === 'state' && ['archived', 'rejected'].includes(body.state) &&
+            !master.can(user, 'prayers', 'publish')) throw new Invalid('Retira primero la presentación con una cuenta autorizada.', 403);
         mutate(item, body, user, users);
         auth.log(state, body.operation, user.id, item.id);
         // Marking a case as urgent can remove an editor's own visibility.

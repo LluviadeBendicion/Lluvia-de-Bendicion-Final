@@ -1,10 +1,8 @@
 (() => {
   const panel = document.getElementById('private-admin');
   const trigger = document.getElementById('secret-admin-trigger');
-  const login = document.getElementById('wallpaper-admin-login');
   const upload = document.getElementById('wallpaper-admin-upload');
   const status = document.getElementById('wallpaper-admin-status');
-  const password = document.getElementById('wallpaper-admin-key');
   const existingField = document.getElementById('wallpaper-admin-existing');
   const fileField = document.getElementById('wallpaper-admin-file');
   const fields = upload.elements;
@@ -31,11 +29,10 @@
   let lastClick = 0;
   let catalog = {};
   let catalogRequest;
+  let permissions = {};
 
-  function showLogin() {
-    login.reset();
-    login.hidden = false;
-    document.getElementById('wallpaper-admin-title').hidden = false;
+  function clearTools() {
+    permissions = {};
     upload.reset();
     upload.hidden = true;
     otherTools.hidden = true;
@@ -44,19 +41,22 @@
     pendingUpload = null;
     resetAssistant();
     updateMediaFields();
-    if (!panel.classList.contains('hidden')) login.elements.user.focus();
   }
 
-  function showEditor(name) {
-    login.hidden = true;
-    document.getElementById('wallpaper-admin-title').hidden = true;
-    upload.hidden = false;
+  document.addEventListener('lldb:master-tools', ({ detail }) => {
+    const { name, section, capabilities } = detail;
+    permissions = capabilities;
+    const allowed = (module, action) => capabilities[module]?.includes(action);
+    for (const button of sectionButtons) button.hidden = !allowed(button.dataset.adminSection, 'read');
     otherTools.hidden = false;
-    refreshMode();
-    selectSection('media');
-    if (!panel.classList.contains('hidden')) sectionButtons[0].focus();
+    upload.hidden = !allowed('wallpapers', 'publish');
+    mediaForm.hidden = !allowed('media', 'publish');
+    document.getElementById('assistant-request').hidden = !allowed('assistant', 'create');
+    if (!upload.hidden && section === 'wallpapers') refreshMode();
+    selectSection(section);
     status.textContent = 'Sesión iniciada como ' + name + '.';
-  }
+  });
+  document.addEventListener('lldb:master-logout', clearTools);
 
   async function request(body) {
     const response = await fetch('/api/wallpaper-admin', {
@@ -75,7 +75,7 @@
     return result;
   }
 
-  trigger.addEventListener('click', async () => {
+  trigger.addEventListener('click', () => {
     if (!document.querySelector('#inicio.active')) return;
     const now = Date.now();
     if (now - lastClick > 1600) clicks = 0;
@@ -83,49 +83,14 @@
     if (++clicks !== 5) return;
     clicks = 0;
     panel.classList.remove('hidden');
-    showLogin();
-    status.textContent = '';
-    try {
-      const { name } = await request({ action: 'session' });
-      if (!panel.classList.contains('hidden')) showEditor(name);
-    } catch (error) {
-      if (error.status !== 401 && !panel.classList.contains('hidden')) status.textContent = error.message;
-    }
   });
 
   new MutationObserver(() => {
     if (!panel.classList.contains('hidden')) return;
-    showLogin();
+    clearTools();
     status.textContent = '';
     trigger.focus({ preventScroll: true });
   }).observe(panel, { attributes: true, attributeFilter: ['class'] });
-
-  document.getElementById('wallpaper-admin-logout').addEventListener('click', async () => {
-    try {
-      await request({ action: 'logout' });
-      showLogin();
-      status.textContent = 'Sesión cerrada.';
-    } catch (error) {
-      status.textContent = error.message;
-    }
-  });
-
-  login.addEventListener('submit', async event => {
-    event.preventDefault();
-    const submit = login.querySelector('[type="submit"]');
-    submit.disabled = true;
-    const body = { action: 'login', user: login.elements.user.value, password: password.value };
-    password.value = '';
-    status.textContent = 'Verificando acceso…';
-    try {
-      const { name } = await request(body);
-      if (!panel.classList.contains('hidden')) showEditor(name);
-    } catch (error) {
-      status.textContent = error.message;
-    } finally {
-      submit.disabled = false;
-    }
-  });
 
   async function loadCatalog() {
     if (!catalogRequest) {
@@ -209,7 +174,7 @@
       }
       status.textContent = 'Cambios guardados. La galería se actualizará cuando termine la publicación.';
     } catch (error) {
-      if (error.status === 401) showLogin();
+      if (error.status === 401) document.dispatchEvent(new Event('lldb:master-session-expired'));
       status.textContent = error.message;
     } finally {
       submit.disabled = false;
@@ -269,7 +234,7 @@
       mediaStatus.textContent = 'Guardado. Aparecerá en su sección cuando termine la publicación del sitio.';
     } catch (error) {
       if (error.status === 401) {
-        showLogin();
+        document.dispatchEvent(new Event('lldb:master-session-expired'));
         status.textContent = error.message;
       } else {
         mediaStatus.textContent = error.message;
@@ -332,6 +297,8 @@
     }
     review.elements.title.required = wallpaper;
     review.elements.text.required = !wallpaper;
+    const module = wallpaper ? 'wallpapers' : testimony ? 'testimonies' : 'editorial';
+    review.querySelector('button[type=submit]').hidden = !permissions[module]?.includes('publish');
     review.hidden = false;
     assistantStatus.textContent = result.message || 'Revisa el borrador antes de aprobarlo.';
     review.elements.title.focus();

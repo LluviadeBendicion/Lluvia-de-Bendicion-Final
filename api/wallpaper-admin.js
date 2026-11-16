@@ -1,56 +1,8 @@
-const { randomUUID, createHash, createHmac, timingSafeEqual } = require('node:crypto');
+const { randomUUID, createHash } = require('node:crypto');
+const { context, allowedOrigin } = require('../lib/panel-session.cjs');
+const auth = require('../lib/prayer-auth.cjs');
+const { can } = require('../lib/master-domain.cjs');
 
-const admins = {
-  'omar-rivera': { name: 'Omar Rivera', passwordKey: 'LLDB_OMAR_PASSWORD' },
-  'ever-caraballo': { name: 'Ever Caraballo', passwordKey: 'LLDB_EVER_PASSWORD' }
-};
-const allowedOrigins = new Set(['https://www.lluviadebendicion.com', 'https://lluviadebendicion.com']);
-const sessionCookie = '__Host-lldb-admin';
-const sessionSeconds = 3600;
-const attempts = new Map();
-
-function signature(secret, value) {
-  return createHmac('sha256', secret).update(value).digest();
-}
-
-function passwordMatches(secret, supplied, expected) {
-  return timingSafeEqual(signature(secret, supplied), signature(secret, expected));
-}
-
-function cookie(res, value, lifetime) {
-  res.setHeader('Set-Cookie', sessionCookie + '=' + value +
-    '; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=' + lifetime);
-}
-
-function sessionUser(req, token) {
-  const value = (req.headers.cookie || '').split('; ').find(entry => entry.startsWith(sessionCookie + '='));
-  const parts = value?.slice(sessionCookie.length + 1).split('.') || [];
-  const [user, expiry, signed] = parts;
-  if (parts.length !== 3 || !Object.hasOwn(admins, user) ||
-      !/^\d{10}$/.test(expiry) || Number(expiry) <= Math.floor(Date.now() / 1000) ||
-      !/^[A-Za-z0-9_-]{43}$/.test(signed)) return null;
-  const password = process.env[admins[user].passwordKey];
-  if (!password) return null;
-  const expected = signature(token, 'session:' + user + '.' + expiry + ':' + password);
-  return timingSafeEqual(expected, Buffer.from(signed, 'base64url')) ? user : null;
-}
-
-function allowAttempt(req) {
-  const now = Date.now();
-  const address = (req.headers['x-vercel-forwarded-for'] || req.socket?.remoteAddress || '').split(',')[0].trim();
-  const previous = attempts.get(address);
-  if (previous && previous.until > now) {
-    if (++previous.count > 8) throw new RequestError(429, 'Demasiados intentos. Espera un minuto.');
-    return;
-  }
-  if (attempts.size >= 1000) {
-    for (const [key, value] of attempts) {
-      if (value.until <= now) attempts.delete(key);
-    }
-    if (attempts.size >= 1000) throw new RequestError(429, 'Espera un minuto e intenta de nuevo.');
-  }
-  attempts.set(address, { count: 1, until: now + 60000 });
-}
 const repository = '/repos/LluviadeBendicion/Lluvia-de-Bendicion-Final';
 
 const collections = { christian: 'cristianos', originals: 'originales', affiliates: 'afiliados' };
@@ -362,42 +314,38 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return res.status(405).end();
   }
-  if (!allowedOrigins.has(req.headers.origin)) return res.status(403).json({ error: 'Origen no autorizado.' });
   try {
+    const { local, store, users } = context();
+    if (!allowedOrigin(req.headers.origin, local)) throw new RequestError(403, 'Origen no autorizado.');
     const body = req.body;
-    if (!body || !['login', 'logout', 'session', 'publish', 'edit', 'media-upload', 'media-publish', 'ai-draft', 'editorial-publish'].includes(body.action)) {
+    if (!body || !['session', 'publish', 'edit', 'media-upload', 'media-publish', 'ai-draft', 'editorial-publish'].includes(body.action)) {
       throw new RequestError(400, 'Acción inválida.');
     }
-    if (body.action === 'logout') {
-      cookie(res, '', 0);
-      return res.status(200).json({ ok: true });
-    }
-    const token = process.env.LLDB_WALLPAPER_GITHUB_TOKEN;
-    if (!token) throw new RequestError(503, 'Falta activar el panel en Vercel.');
-    if (body.action === 'login') {
-      allowAttempt(req);
-      const { user, password } = body;
-      if (!Object.hasOwn(admins, user) || typeof password !== 'string' || !password || password.length > 256) {
-        throw new RequestError(401, 'Usuario o contraseña incorrectos.');
-      }
-      const expected = process.env[admins[user].passwordKey];
-      if (!expected || !passwordMatches(token, password, expected)) {
-        throw new RequestError(401, 'Usuario o contraseña incorrectos.');
-      }
-      const expiry = Math.floor(Date.now() / 1000) + sessionSeconds;
-      const value = user + '.' + expiry;
-      const signed = signature(token, 'session:' + value + ':' + expected).toString('base64url');
-      cookie(res, value + '.' + signed, sessionSeconds);
-      return res.status(200).json({ name: admins[user].name });
-    }
-    const user = sessionUser(req, token);
-    if (!user) throw new RequestError(401, 'Inicia sesión con tu usuario y contraseña.');
-    const name = admins[user].name;
+    const session = auth.sessionToken(req, local);
+    const state = await store.read();
+    const account = auth.sessionUser(state, auth.loadUsers(state, users), session);
+    const name = account.name;
     if (body.action === 'session') return res.status(200).json({ name });
+    const [module, action] = {
+      'ai-draft': ['assistant', 'create'],
+      'media-upload': ['media', 'publish'],
+      'media-publish': ['media', 'publish'],
+      'editorial-publish': [body.kind === 'testimonies' ? 'testimonies' : 'editorial', 'publish'],
+      'publish': ['wallpapers', 'publish'],
+      'edit': ['wallpapers', 'publish']
+    }[body.action];
+    if (!can(account, module, action)) throw new RequestError(403, 'No tienes permiso para esta acción.');
     if (body.action === 'ai-draft') {
-      allowAttempt(req);
+      const allowed = await store.change(current => {
+        const currentAccount = auth.sessionUser(current, auth.loadUsers(current, users), session);
+        if (!can(currentAccount, module, action)) throw new RequestError(403, 'No tienes permiso para esta acción.');
+        return auth.rate(current, 'assistant:' + currentAccount.id, 8, 60000);
+      });
+      if (!allowed) throw new RequestError(429, 'Demasiadas solicitudes. Espera un minuto.');
       return res.status(200).json(await draftContent(body));
     }
+    const token = process.env.LLDB_WALLPAPER_GITHUB_TOKEN;
+    if (!token && body.action !== 'media-upload') throw new RequestError(503, 'La publicación no está configurada.');
     if (body.action === 'editorial-publish') {
       return res.status(202).json({ item: await publish(token, parseEditorial(body), name) });
     }

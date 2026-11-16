@@ -61,6 +61,7 @@
     if (error.status === 401) clearSession(error.message);
     else message.textContent = error.message;
   }
+  function can(module, action) { return Boolean(overview.capabilities[module]?.includes(action)); }
 
   async function api(action, fields = {}) {
     const response = await fetch('/api/prayer', { method:'POST', headers:{'Content-Type':'application/json'},
@@ -78,6 +79,7 @@
     if (opts.choices) element.append(...opts.choices.map(item => new Option(Array.isArray(item) ? item[1] : item, Array.isArray(item) ? item[0] : item)));
     else if (opts.long) { element.rows = 4; holder.classList.add('wide'); }
     else element.type = opts.type || 'text';
+    if (opts.autocomplete) element.autocomplete = opts.autocomplete;
     if (opts.value !== undefined) element.value = opts.value;
     if (opts.check) { element.type = 'checkbox'; element.checked = Boolean(opts.value); element.required = false; }
     holder.append(element);
@@ -101,6 +103,31 @@
     record.append(n('summary', title), ...rows);
     return record;
   }
+
+  const recoveryStatus = n('p');
+  recoveryStatus.setAttribute('role', 'status');
+  const recovery = history('Recuperar acceso', [note('Pide a otro administrador un código de recuperación de un solo uso.'),
+    form('Restablecer contraseña', [
+      input('user','Usuario',{autocomplete:'username'}),
+      input('code','Código de recuperación',{type:'password',autocomplete:'off'}),
+      input('newPassword','Nueva contraseña (mínimo 15 caracteres)',{type:'password',autocomplete:'new-password'}),
+      input('confirmation','Confirmar nueva contraseña',{type:'password',autocomplete:'new-password'})
+    ], async ({ confirmation, ...values }) => {
+      recoveryStatus.textContent = '';
+      if (confirmation !== values.newPassword) {
+        recoveryStatus.textContent = 'Las contraseñas nuevas no coinciden.';
+        return;
+      }
+      try {
+        await api('recover', values);
+        recovery.querySelector('form').reset();
+        recovery.open = false;
+        clearSession('Contraseña restablecida. Entra con la nueva contraseña.');
+      } catch (error) {
+        recoveryStatus.textContent = error.message;
+      }
+    }), recoveryStatus]);
+  $('master-login-slot').append(recovery);
 
   async function save(operation, fields = {}, module = current) {
     const payload = await api('master-save', { module, operation, ...fields });
@@ -175,10 +202,10 @@
   function donation(data, edit) {
     const rows = data.rows.map(item => history(`${item.date} · ${currency(item.amount, item.currency)} · ${item.method}${item.voided ? ' · Anulada' : ''}`, [
       note(item.reference || 'Sin referencia externa'), note(item.voided?.reason || item.note || 'Sin nota'),
-      ...(edit && !item.voided ? [form('Anular registro', [input('reason','Motivo de anulación')], values => save('void',{ id:item.id,...values }))] : [])
+      ...(can('donations','delete') && !item.voided ? [form('Anular registro', [input('reason','Motivo de anulación')], values => save('void',{ id:item.id,...values }))] : [])
     ]));
     const log = card('Donaciones registradas', ...(rows.length ? rows : [note('No hay donaciones registradas en este entorno.')]));
-    if (!edit) return log;
+    if (!can('donations','create')) return log;
     return group(card('Registrar una donación', note('Registro manual de pagos ya confirmados. No realiza cobros.'),
       form('Guardar donación', [input('date','Fecha',{type:'date',value:today()}),input('amount','Importe'),input('currency','Moneda',{choices:currencies}),
         input('method','Medio',{choices:['Zelle','Cash App','Venmo','PayPal','Tarjeta','Efectivo','Cheque','Otro']}),
@@ -196,18 +223,18 @@
         note(`${when(event.at)} · ${affiliateLabels[event.status]} · ${event.by} · ${event.reason}`))];
       const messages = linked.get(item.id);
       if (messages) notes.push(card('Solicitudes de contacto vinculadas', ...messages.map(message => contactRecord(message, data, edit, 'affiliates'))));
-      if (edit) notes.push(form('Guardar estado', [input('status','Nuevo estado',{choices:Object.entries(affiliateLabels),value:item.status}),
+      if (can('affiliates','edit')) notes.push(form('Guardar estado', [input('status','Nuevo estado',{choices:Object.entries(affiliateLabels),value:item.status}),
         input('reason','Motivo')], values=>save('status',{id:item.id,...values})));
       for (const task of item.tasks) {
         notes.push(note(`${task.label} · ${task.done ? 'Registrada ' + when(task.done.at) : 'Pendiente'}`));
-        if (overview.master && !task.done) notes.push(form('Registrar cumplimiento', [input('note','Constancia del retiro')], v=>save('task',{id:item.id,task:task.id,...v})));
+        if (can('affiliates','configure') && !task.done) notes.push(form('Registrar cumplimiento', [input('note','Constancia del retiro')], v=>save('task',{id:item.id,task:task.id,...v})));
       }
       const row = history(`${item.name} · ${affiliateLabels[item.status]}`,notes);
       row.dataset.affiliateId = item.id;
       return row;
     });
     const log = card('Expedientes e historial', ...(rows.length ? rows : [note('No hay clientes registrados en este entorno.')]));
-    return edit ? group(card('Añadir prospecto', form('Guardar prospecto', [input('name','Nombre o negocio'),
+    return can('affiliates','create') ? group(card('Añadir prospecto', form('Guardar prospecto', [input('name','Nombre o negocio'),
       input('contact','Contacto interno',{required:false})], values=>save('create',values))),log) : log;
   }
 
@@ -219,7 +246,7 @@
     if (section === 'contact' && item.clientId && overview.access.affiliates) {
       details.push(button('Abrir expediente en Afiliados', () => open('affiliates', true, { clientId: item.clientId })));
     }
-    if (item.clientId && (overview.master || overview.access.proposals === 'edit')) {
+    if (item.clientId && can('proposals','create')) {
       details.push(button('Preparar propuesta', () => open('proposals', true, {
         clientId: item.clientId, title: `Propuesta para ${item.business || item.name}`.slice(0, 160),
         text: `Solicitud de ${item.name}\nMotivo: ${reason}\n\n${item.text}`
@@ -278,11 +305,11 @@
     flow.append(...steps.map((step,index)=>n('span',`${index+1}. ${step}`)));
     const list = data.rows.map(item => history(`${item.title} · ${item.clientName} · ${steps[item.step]}`, [n('pre',item.text),
       ...item.history.map(event=>note(`${when(event.at)} · ${steps[event.step]} · ${event.reference}`)),
-      ...(edit && item.step < 3 ? [form(`Registrar ${steps[item.step+1].toLowerCase()}`, [input('reference','Constancia de la etapa')],
+      ...(can('proposals','edit') && item.step < 3 ? [form(`Registrar ${steps[item.step+1].toLowerCase()}`, [input('reference','Constancia de la etapa')],
         v=>save('advance',{id:item.id,step:item.step,...v}))] : [])]));
     content.append(flow);
     const log = card('Propuestas y contratos', ...(list.length ? list : [note('No hay propuestas registradas.')]));
-    if (!edit) return log;
+    if (!can('proposals','create')) return log;
     if (draft && !data.clients.some(client => client.id === draft.clientId)) {
       return group(card('Crear propuesta', note('El expediente vinculado ya no está habilitado para propuestas.')), log);
     }
@@ -293,10 +320,10 @@
   function billing(data, edit) {
     const list = data.rows.map(item => history(`Factura ${item.number} · ${item.clientName} · ${currency(item.amount,item.currency)}`, [
       note(item.payment ? `Pagada el ${item.payment.date} · ${item.payment.reference}` : `Pendiente · Vence el ${item.due}`),
-      ...(edit && item.status === 'open' ? [form('Registrar pago recibido',[input('date','Fecha del pago',{type:'date',value:today()}),
+      ...(can('billing','edit') && item.status === 'open' ? [form('Registrar pago recibido',[input('date','Fecha del pago',{type:'date',value:today()}),
         input('reference','Referencia del pago')],v=>save('pay',{id:item.id,...v}))] : [])]));
     const log = card('Facturas registradas', ...(list.length ? list : [note('No hay facturas registradas.')]));
-    if (!edit) return log;
+    if (!can('billing','create')) return log;
     const ready = data.contracts.filter(contract=>data.clients.some(client=>client.id===contract.clientId));
     return group(card('Crear factura interna', ready.length ? form('Guardar factura',[input('proposalId','Contrato',{choices:ready.map(row=>[row.id,row.title])}),
       input('number','Número de factura'),input('amount','Importe'),input('currency','Moneda',{choices:currencies}),input('due','Vencimiento',{type:'date'})],
@@ -305,18 +332,59 @@
 
   function userSettings(data) {
     const section = card('Usuarios y permisos', note('Las contraseñas nuevas se muestran una sola vez.'));
+    function matrix(account, locked = false) {
+      const wrapper = n('div', '', 'master-permission-scroll');
+      const table = n('table', '', 'master-permission-table');
+      const head = n('tr');
+      head.append(n('th', 'Sección'));
+      for (const label of Object.values(data.actionLabels)) head.append(n('th', label));
+      const thead = n('thead');
+      thead.append(head);
+      table.append(thead);
+      const rows = n('tbody');
+      for (const [module, title] of Object.entries(data.labels)) {
+        const row = n('tr');
+        const heading = n('th', title);
+        heading.scope = 'row';
+        row.append(heading);
+        for (const [action, label] of Object.entries(data.actionLabels)) {
+          const cell = n('td');
+          if (data.availableActions[module].includes(action)) {
+            const control = n('input');
+            control.type = 'checkbox';
+            control.name = `cap_${module}_${action}`;
+            control.checked = Boolean(account.capabilities?.[module]?.includes(action));
+            control.disabled = locked;
+            control.setAttribute('aria-label', `${title} · ${label}`);
+            control.addEventListener('change', () => {
+              const controls = [...row.querySelectorAll('input')];
+              if (action === 'read' && !control.checked) controls.forEach(box => box.checked = false);
+              else if (control.checked) controls[0].checked = true;
+            });
+            cell.append(control);
+          } else cell.textContent = '—';
+          row.append(cell);
+        }
+        rows.append(row);
+      }
+      table.append(rows);
+      wrapper.append(table);
+      return wrapper;
+    }
     function editor(account = {}) {
       const fields = [input('id','Usuario',{value:account.id}),input('name','Nombre',{value:account.name}),
         input('role','Rol',{choices:Object.entries(data.roles),value:account.role}),
         input('expires','Vence (para acceso temporal)',{type:'date',required:false,value:account.expires?.slice(0,10)}),
-        ...Object.entries(data.labels).map(([key,label])=>input('module_' + key,label,{choices:[['','Sin acceso'],['read','Lectura'],['edit','Edición']],value:account.modules?.[key]})),
-        ...[['restricted','Ver peticiones restringidas'],['export','Exportar expedientes'],['present','Presentar en la iglesia']].map(([key,label])=>
+        matrix(account),
+        ...[['restricted','Ver peticiones restringidas'],['present','Presentar en la iglesia']].map(([key,label])=>
           input('permission_' + key,label,{check:true,value:account.permissions?.includes(key)}))];
       if (account.id) { fields[0].lastChild.readOnly = true; fields.push(input('reset','Generar credenciales nuevas',{check:true})); }
-      return form(account.id ? 'Guardar usuario' : 'Crear usuario',fields,async v=>{
-        const modules = Object.fromEntries(Object.keys(data.labels).map(key=>[key,v['module_'+key] || '']));
-        const permissions = ['restricted','export','present'].filter(key=>v['permission_'+key]);
-        const { enrollment } = await save('save-user',{...v,modules,permissions,reset:Boolean(v.reset)});
+      const label = account.disabled ? 'Activar cuenta y guardar permisos' : account.id ? 'Guardar usuario' : 'Crear usuario';
+      return form(label,fields,async v=>{
+        const capabilities = Object.fromEntries(Object.entries(data.availableActions).map(([module, actions]) =>
+          [module, actions.filter(action => v[`cap_${module}_${action}`])]));
+        const permissions = ['restricted','present'].filter(key=>v['permission_'+key]);
+        const { enrollment } = await save('save-user',{id:v.id,name:v.name,role:v.role,expires:v.expires,capabilities,permissions,reset:Boolean(v.reset)});
         if (enrollment) {
           const box = n('div','','master-enrollment');
           box.append(n('strong','Credenciales nuevas'),n('code',`Contraseña: ${enrollment.password}`),
@@ -326,9 +394,25 @@
       });
     }
     for (const account of data.rows) {
-      if (account.role === 'master') section.append(note(`${account.name} · Director Administrativo`));
+      if (account.needsActivation) section.append(note(`${account.name} · Pendiente de activar como administrador`));
+      else if (account.role === 'master') section.append(history(`${account.name} · Administración completa`, [matrix(account, true)]));
       else section.append(history(`${account.name} · ${data.roles[account.role]}${account.disabled ? ' · Suspendido' : ''}`,[editor(account),
         ...(!account.disabled ? [button('Suspender acceso',()=>save('disable-user',{id:account.id}))] : [])]));
+    }
+    const accessAccounts = data.rows.filter(account => (!account.disabled || account.needsActivation) && account.id !== user.id);
+    if (overview.master && accessAccounts.length) {
+      const result = n('p');
+      result.setAttribute('role', 'status');
+      const password = input('currentPassword','Tu contraseña actual',{type:'password',autocomplete:'current-password'});
+      section.append(card('Activar o recuperar otra cuenta', form('Generar código de acceso', [
+        input('user','Cuenta',{choices:accessAccounts.map(account => [account.id,account.name])}),
+        password
+      ], async values => {
+        result.textContent = '';
+        password.lastElementChild.value = '';
+        const { code } = await api('issue-recovery', values);
+        result.textContent = 'Comparte este código en privado con el titular. Dura 30 minutos y sirve una vez. ' + code;
+      }), result));
     }
     return group(card('Añadir usuario',editor()),section);
   }
@@ -337,21 +421,21 @@
     const rows = data.rows.map(item => {
       const exact = { id:item.id, revision:item.revision };
       const children = [n('pre',item.text),note(item.scheduled ? `Fecha prevista: ${item.scheduled}` : '')];
-      if (edit) {
+      if (can(section,'edit')) {
         children.push(form('Guardar nueva versión',[input('title','Título',{value:item.title}),input('text','Contenido',{long:true,value:item.text})],v=>save('edit',{...exact,...v})));
         if (item.status === 'draft') children.push(button('Enviar a revisión',()=>save('submit',exact)));
-        if (item.status === 'review') {
-          children.push(button('Rechazar',()=>save('reject',exact)));
-          if (overview.master) children.push(form('Autorizar versión mostrada',[input('reviewed','Revisé esta vista previa',{check:true})],
-            v=>save('approve',{...exact,reviewed:Boolean(v.reviewed)})));
-        }
-        if (item.status === 'approved' && overview.master) children.push(form('Guardar fecha prevista',[input('scheduled','Fecha',{type:'date',value:item.scheduled})],v=>save('schedule',{...exact,...v})));
         if (item.history.length) children.push(form('Restaurar como borrador nuevo',[input('from','Versión anterior',{choices:item.history.map(row=>[row.revision,`${when(row.at)} · ${row.title}`])})],v=>save('restore',{...exact,...v})));
       }
+      if (item.status === 'review' && can(section,'approve')) {
+          children.push(button('Rechazar',()=>save('reject',exact)));
+          children.push(form('Autorizar versión mostrada',[input('reviewed','Revisé esta vista previa',{check:true})],
+            v=>save('approve',{...exact,reviewed:Boolean(v.reviewed)})));
+      }
+      if (item.status === 'approved' && can(section,'configure')) children.push(form('Guardar fecha prevista',[input('scheduled','Fecha',{type:'date',value:item.scheduled})],v=>save('schedule',{...exact,...v})));
       return history(`${item.title} · ${workflowLabels[item.status]}`,children);
     });
     const log = card('Borradores y revisión',...(rows.length ? rows : [note('No hay borradores guardados.') ]));
-    if (!edit) return log;
+    if (!can(section,'create')) return log;
     const fields = [input('title','Título'),input('text',section==='wallpapers'?'Descripción o enlace para revisión':'Texto',{long:true})];
     if (section === 'editorial') fields.unshift(input('kind','Sección',{choices:editorial}));
     return group(card('Crear borrador',note('Guarda, revisa y registra la autorización aquí.'),form('Guardar borrador',fields,v=>save('create',v,section))),log);
@@ -361,7 +445,7 @@
     const cfg = data.settings;
     const logo = n('img');
     Object.assign(logo,{src:'/assets/logo-oficial-definitivo.png',width:100,alt:'Logo oficial de LLDB'});
-    const info = card('Información general',edit ? form('Guardar ajustes del panel',[input('name','Nombre',{value:cfg.name || 'Lluvia de Bendición .Com'}),
+    const info = card('Información general',can('configuration','configure') ? form('Guardar ajustes del panel',[input('name','Nombre',{value:cfg.name || 'Lluvia de Bendición .Com'}),
       input('slogan','Lema',{value:cfg.slogan || 'Porque queremos que el Señor llueva en ti.'}),input('timezone','Zona horaria',{choices:['America/Chicago','America/New_York','America/Puerto_Rico','America/Los_Angeles','UTC'],value:cfg.timezone || 'America/Chicago'}),
       input('compact','Modo compacto',{check:true,value:cfg.compact})],v=>save('save',{...v,compact:Boolean(v.compact)})) : note(cfg.name || 'Lluvia de Bendición .Com'));
     const roles = n('div','','master-flow');
@@ -383,9 +467,9 @@
 
   function incidents(data, edit) {
     const rows = data.rows.map(item=>history(item.title,[note(item.detail),note(item.resolved ? item.resolved.note : 'Abierto'),
-      ...(edit && !item.resolved ? [form('Registrar resolución',[input('note','Resolución')],v=>save('resolve',{id:item.id,...v}))] : [])]));
+      ...(can('incidents','edit') && !item.resolved ? [form('Registrar resolución',[input('note','Resolución')],v=>save('resolve',{id:item.id,...v}))] : [])]));
     return group(card('Incidentes',...(rows.length?rows:[note('No hay incidentes registrados.')])),
-      ...(edit?[card('Nuevo incidente',form('Guardar incidente',[input('title','Título'),input('text','Descripción',{long:true})],v=>save('create',v)))]:[]));
+      ...(can('incidents','create')?[card('Nuevo incidente',form('Guardar incidente',[input('title','Título'),input('text','Descripción',{long:true})],v=>save('create',v)))]:[]));
   }
 
   async function downloadBackup() {
@@ -408,17 +492,28 @@
     content.replaceChildren();
     message.textContent = '';
     $('master-prayer-slot').hidden = section !== 'prayers';
-    $('master-legacy-slot').hidden = !['assistant','media'].includes(section);
+    const toolSection = ['assistant','media','wallpapers'].includes(section);
+    $('master-legacy-slot').hidden = !toolSection;
     legacy.hidden = $('master-legacy-slot').hidden;
+    if (toolSection) document.dispatchEvent(new CustomEvent('lldb:master-tools', { detail: { name:user.name, section, capabilities:overview.capabilities } }));
     if (section === 'prayers') { prayer.open = true; return; }
     prayer.open = false;
     if (section === 'overview') { home(); return; }
     content.append(n('h2',labels[section]));
-    if (['assistant','media'].includes(section)) {
-      content.append(card(labels[section],note('Herramienta existente. El acceso a este editor conserva su inicio de sesión.')));
-      legacy.querySelector(`[data-admin-section="${section}"]`)?.click();
+    if (section === 'profile') {
+      content.append(card('Cambiar contraseña', form('Guardar contraseña', [
+        input('currentPassword','Contraseña actual',{type:'password',autocomplete:'current-password'}),
+        input('newPassword','Nueva contraseña (mínimo 15 caracteres)',{type:'password',autocomplete:'new-password'}),
+        input('confirmation','Confirmar nueva contraseña',{type:'password',autocomplete:'new-password'})
+      ], async ({ confirmation, ...values }) => {
+        if (confirmation !== values.newPassword) throw new Error('Las contraseñas nuevas no coinciden.');
+        await api('profile-password', values);
+        document.dispatchEvent(new Event('lldb:master-logout'));
+        clearSession('La contraseña cambió. Vuelve a iniciar sesión.');
+      })));
       return;
     }
+    if (['assistant','media'].includes(section)) return;
     if (section === 'help') { content.append(card('Revisión del panel',note('Usa datos de prueba. Las acciones guardan registros privados y no realizan cobros, envíos externos ni despliegues.'))); return; }
     if (section === 'radio') {
       content.append(card('Radio Interactiva',note('La configuración de la emisora conserva su reproductor original.'),
@@ -451,7 +546,7 @@
     applySettings();
     for (const tab of nav) {
       const key = tab.dataset.master;
-      tab.hidden = !(['overview','help'].includes(key) || overview.master || overview.access[key]);
+      tab.hidden = !(['overview','help','profile'].includes(key) || overview.master || overview.access[key]);
     }
     showContactAlerts(overview.contactAlerts);
     clearInterval(contactTimer);
@@ -481,6 +576,9 @@
     user = null;
     overview = null;
     login.hidden = false;
+    recovery.querySelector('form').reset();
+    recovery.open = false;
+    recoveryStatus.textContent = '';
     auth.hidden = false;
     shell.hidden = true;
     $('master-logout').hidden = true;
@@ -490,6 +588,7 @@
     prayer.open = false;
   }
   document.addEventListener('lldb:master-login', event=>start(event.detail).catch(error=>clearSession(error.message)));
+  document.addEventListener('lldb:master-session-expired', () => clearSession('Tu sesión terminó. Vuelve a iniciar sesión.'));
   nav.forEach(tab=>tab.addEventListener('click',()=>open(tab.dataset.master).catch(showError)));
   $('master-logout').onclick = async () => { try { await api('logout'); document.dispatchEvent(new Event('lldb:master-logout')); clearSession('Sesión cerrada.'); } catch (error) { showError(error); } };
   new MutationObserver(() => {

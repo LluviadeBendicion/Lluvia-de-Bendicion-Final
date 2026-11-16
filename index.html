@@ -2319,7 +2319,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="/assets/peticion-oracion.css?v=fondo-continuo">
 <link rel="stylesheet" href="/assets/contacto.css?v=texto-panel">
 <link rel="stylesheet" href="/assets/peticion-admin.css">
-<link rel="stylesheet" href="/assets/panel-maestro.css">
+<link rel="stylesheet" href="/assets/panel-maestro.css?v=acceso-permisos">
 <script src="/assets/testimonios.js?v=firma-en-linea" defer></script>
 <link rel="stylesheet" href="/assets/especial.css">
 <script src="/assets/especial.js" defer></script>
@@ -2994,6 +2994,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <button data-master="prayers" type="button"><span>✦</span>Peticiones de Oración</button>
       <button data-master="reports" type="button"><span>▦</span>Reportes</button>
       <button data-master="users" type="button"><span>♙</span>Usuarios / Permisos</button>
+      <button data-master="profile" type="button"><span>♙</span>Mi perfil</button>
       <button data-master="configuration" type="button"><span>⚙</span>Configuración</button>
       <button data-master="incidents" type="button"><span>⚑</span>Control de incidentes</button>
       <button data-master="audit" type="button"><span>▧</span>Actividad y respaldos</button>
@@ -3010,20 +3011,6 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   <div class="master-footer"><strong>Lluvia de Bendición .Com</strong><span>Panel Maestro Privado</span><em>Más que una emisora, una misión.</em></div>
   <div id="master-legacy" hidden>
   <section class="card wallpaper-admin">
-  <h3 id="wallpaper-admin-title">Iniciar sesión</h3>
-  <form id="wallpaper-admin-login" class="lldb-form" method="post">
-    <label>Usuario
-      <select name="user" autocomplete="username" required>
-        <option value="" selected disabled>Selecciona tu usuario</option>
-        <option value="omar-rivera">Omar Rivera</option>
-        <option value="ever-caraballo">Ever Caraballo</option>
-      </select>
-    </label>
-    <label>Contraseña
-      <input id="wallpaper-admin-key" type="password" autocomplete="current-password" required maxlength="256">
-    </label>
-    <button type="submit">Entrar</button>
-  </form>
   <p id="wallpaper-admin-status" role="status"></p>
 </section>
 <details class="card prayer-admin" id="admin-peticiones">
@@ -3059,7 +3046,6 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     <button type="button" data-admin-section="wallpapers" aria-controls="admin-wallpapers" aria-pressed="false">Wallpapers</button>
     <button type="button" data-admin-section="assistant" aria-controls="admin-assistant" aria-pressed="false">Asistente IA</button>
     <button type="button" data-admin-section="affiliates" aria-controls="admin-affiliates" aria-pressed="false">Afiliados</button>
-    <button type="button" id="wallpaper-admin-logout">Cerrar sesión</button>
   </nav>
   <section id="admin-wallpapers" class="card wallpaper-admin" hidden>
   <h3>Publicar fondos de pantalla</h3>
@@ -3152,8 +3138,8 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <script src="/assets/peticion-oracion.js"></script>
 <script src="/assets/peticion-form.js?v=topicos-compactos" defer></script>
 <script src="/assets/contacto.js" defer></script>
-<script src="/assets/peticion-admin.js?v=topicos" defer></script>
-<script src="/assets/panel-maestro.js?v=contacto-maestro" defer></script>
+<script src="/assets/peticion-admin.js?v=acceso-permisos" defer></script>
+<script src="/assets/panel-maestro.js?v=acceso-permisos" defer></script>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
 function enter(){if(introExited)return;introExited=true;if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.1s ease';intro.style.opacity='0';setTimeout(()=>intro.remove(),1150)}
@@ -3511,6 +3497,6 @@ const lldbStartupVideo=document.getElementById('lldb-radio-startup-video');if(ll
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=testimonio-autor" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=acceso-permisos" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

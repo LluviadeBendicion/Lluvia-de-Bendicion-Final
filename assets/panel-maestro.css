@@ -102,3 +102,8 @@
   .master-columns, .master-primary { grid-template-columns: minmax(0,1fr); }
 }
 @media (max-width: 420px) { .master-form { grid-template-columns: minmax(0,1fr); } }
+.master-permission-scroll { grid-column: 1 / -1; max-width: 100%; overflow-x: auto; }
+.master-permission-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.master-permission-table :is(th, td) { padding: .5rem; border-bottom: 1px solid #8b735542; text-align: center; }
+.master-permission-table th[scope=row] { text-align: left; }
+.master-permission-table input[type=checkbox] { width: auto; accent-color: #e0b46b; }

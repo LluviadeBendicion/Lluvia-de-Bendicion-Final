@@ -10,15 +10,20 @@ if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Pue
 process.env.LLDB_PRAYER_LOCAL_PORT = String(port);
 const full = true;
 let prayer;
+let toolsAdmin;
 let demoUsers;
 if (full) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'lldb-peticiones-'));
   process.env.LLDB_PRAYER_LOCAL = '1';
   process.env.LLDB_PRAYER_LOCAL_FILE = path.join(directory, 'prayer.snapshot');
   process.env.LLDB_PRAYER_KEY = crypto.randomBytes(32).toString('base64');
+  delete process.env.LLDB_WALLPAPER_GITHUB_TOKEN;
+  delete process.env.BLOB_READ_WRITE_TOKEN;
+  delete process.env.OPENAI_API_KEY;
   demoUsers = [
     { id: 'omar-rivera', name: 'Omar · Vista previa', role: 'master', permissions: [] },
-    { id: 'editor-prueba', name: 'Editor · Vista previa', role: 'editor', permissions: ['read', 'edit', 'present'] }
+    { id: 'editor-prueba', name: 'Editor · Vista previa', role: 'editor', permissions: ['read', 'edit', 'present'] },
+    { id: 'ever-caraballo', name: 'Ever · Vista previa', role: 'master', permissions: [] }
   ].map(user => {
     const password = 'VistaPrevia-' + crypto.randomBytes(8).toString('hex');
     const salt = crypto.randomBytes(16).toString('hex');
@@ -26,6 +31,7 @@ if (full) {
   });
   process.env.LLDB_PRAYER_USERS = JSON.stringify(demoUsers.map(({ password, ...entry }) => entry));
   prayer = require(path.join(root, 'api/prayer.js'));
+  toolsAdmin = require(path.join(root, 'api/wallpaper-admin.js'));
 }
 const types = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
@@ -42,16 +48,17 @@ http.createServer(async (req, res) => {
       <html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Acceso de prueba · LLDB</title>
       <style>body{font:17px/1.5 system-ui;color:#fff0d8;background:#081524;max-width:640px;margin:auto;padding:2rem 1rem}a{color:#ffd78c}code{font-size:1.1em}</style>
       <h1>Panel Maestro · Acceso de prueba</h1><p>Utiliza este entorno con datos de prueba.</p>
-      <ol><li><a href="/#testimonios" target="_blank" rel="noopener">Abrir el sitio de prueba</a> y tocar <strong>Inicio</strong>.</li>
+      <ol><li><a href="/#inicio" target="_blank" rel="noopener">Abrir el sitio de prueba en Inicio</a>.</li>
       <li>Al pie de la página, hacer cinco clics seguidos en <strong>LLDB</strong>.</li><li>En el panel, entrar con estos datos de prueba.</li></ol>
+      <label>Cuenta de prueba <select id="account"><option value="omar-rivera">Omar Rivera</option><option value="ever-caraballo">Ever Caraballo</option></select></label>
       <p>Usuario: <code id="user"></code><br>Contraseña: <code id="password"></code></p>
-      <script>async function load(){const [demo]=await fetch('/preview-code').then(res=>res.json());for(const key of ['user','password'])document.getElementById(key).textContent=demo[key]}load()</script></html>`);
+      <script>async function load(){const accounts=await fetch('/preview-code').then(res=>res.json());const picker=document.getElementById('account');function show(){const demo=accounts.find(account=>account.user===picker.value);for(const key of ['user','password'])document.getElementById(key).textContent=demo[key]}picker.onchange=show;show()}load()</script></html>`);
   }
   if (full && route === '/preview-code') {
     const credentials = demoUsers.map(({ id, password }) => ({ user: id, password }));
     return res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }).end(JSON.stringify(credentials, null, 2));
   }
-  if (full && route === '/api/prayer') {
+  if (full && ['/api/prayer','/api/wallpaper-admin'].includes(route)) {
     let bytes = 0;
     const chunks = [];
     for await (const chunk of req) {
@@ -62,7 +69,9 @@ http.createServer(async (req, res) => {
     req.body = Buffer.concat(chunks).toString('utf8');
     res.status = code => { res.statusCode = code; return res; };
     res.json = payload => { res.setHeader('Content-Type', 'application/json; charset=utf-8'); return res.end(JSON.stringify(payload)); };
-    return prayer(req, res);
+    if (route === '/api/prayer') return prayer(req, res);
+    try { req.body = JSON.parse(req.body); } catch { req.body = null; }
+    return toolsAdmin(req, res);
   }
   if (req.method !== 'GET' || (route.startsWith('/api/') && !route.endsWith('.json')) || route.startsWith('/lib/') || route.startsWith('/scripts/')) {
     return res.writeHead(404).end();
