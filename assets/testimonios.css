@@ -41,8 +41,9 @@ body:has(#testimonios.active) main {
   scrollbar-color: #c28126 transparent;
 }
 .testimonio-relato h3 { margin: 0 0 .18em; font: inherit; color: #ffcc6f; }
-.testimonio-mural[data-example] #testimony-title { font-size: max(8px, .64em); }
 .testimonio-relato p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.testimonio-relato #testimony-location { font-size: .68em; margin-bottom: .25em; color: #ffda9b; }
+.testimonio-relato #testimony-example-label { font-size: max(7px, .48em); margin-bottom: .3em; color: #ffda9b; }
 #testimony-meta { align-self: end; margin-top: .35em; font-size: .62em; }
 @supports (background-clip: text) {
   #testimony-title, #testimony-body, #testimony-meta {

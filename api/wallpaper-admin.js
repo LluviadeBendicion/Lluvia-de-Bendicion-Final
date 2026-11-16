@@ -277,6 +277,20 @@ function parseEditorial(body) {
     title: clean(body.title, 150), reference: clean(body.reference, 150),
     text: clean(body.text, 6000, true), note: clean(body.note, 600)
   };
+  if (body.kind === 'testimonies') {
+    const author = clean(body.author, 60, true);
+    const initial = clean(body.initial, 1, true).toUpperCase();
+    const location = clean(body.location, 80, true);
+    const category = clean(body.category, 40, true);
+    const testimonyCategories = [
+      'restauracion-familiar', 'sanidad', 'nueva-oportunidad', 'paz-en-medio-de-la-prueba',
+      'provision', 'direccion-de-dios'
+    ];
+    if (!/^\p{L}$/u.test(initial) || !testimonyCategories.includes(category)) {
+      throw new RequestError(400, 'Ingresa una sola letra como inicial y selecciona un tema válido.');
+    }
+    Object.assign(item, { author, initial, location, category, reference: '', note: '' });
+  }
   return { collection: body.kind, item, editorialContent: true };
 }
 

@@ -1,6 +1,8 @@
 (() => {
   const mural = document.querySelector('.testimonio-mural');
   const title = mural.querySelector('#testimony-title');
+  const location = mural.querySelector('#testimony-location');
+  const exampleLabel = mural.querySelector('#testimony-example-label');
   const body = mural.querySelector('#testimony-body');
   const attribution = mural.querySelector('#testimony-meta');
   const themes = [...mural.querySelectorAll('[data-testimony-category]')];
@@ -27,10 +29,14 @@
     position = Math.min(position, Math.max(0, visibleItems.length - 1));
     const item = visibleItems[position];
     const isExample = showingExamples && Boolean(item);
-    const details = item && !isExample ? [item.reference, item.note].filter(Boolean).join(' · ') : '';
+    const author = item?.author && item?.initial ? item.author + ' ' + item.initial + '.' : '';
+    const details = item && !isExample && !author ? [item.reference, item.note].filter(Boolean).join(' · ') : '';
     mural.toggleAttribute('data-example', isExample);
-    title.textContent = isExample ? 'Ejemplo ficticio' : item?.title || '';
+    title.textContent = author || item?.title || '';
     title.hidden = !title.textContent;
+    location.textContent = item?.location ? 'Desde ' + item.location : '';
+    location.hidden = !location.textContent;
+    exampleLabel.hidden = !isExample;
     body.textContent = item?.text || (category
       ? 'Aún no hay testimonios publicados para este tema.'
       : 'Pronto compartiremos testimonios de nuestra comunidad.');

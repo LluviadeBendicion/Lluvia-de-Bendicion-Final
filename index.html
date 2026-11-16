@@ -2315,8 +2315,8 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
-<link rel="stylesheet" href="/assets/testimonios.css?v=ejemplos">
-<script src="/assets/testimonios.js?v=ejemplos" defer></script>
+<link rel="stylesheet" href="/assets/testimonios.css?v=autor">
+<script src="/assets/testimonios.js?v=autor" defer></script>
 <link rel="stylesheet" href="/assets/especial.css">
 <script src="/assets/especial.js" defer></script>
 <link rel="stylesheet" href="/assets/recursos.css?v=iconos-ilustrados">
@@ -2725,8 +2725,10 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <img src="/assets/logo-oficial-definitivo.png" alt="">
       <span>Lluvia de Bendición .Com<small>Porque queremos que el Señor llueva en ti.</small></span>
     </div>
-    <article class="testimonio-relato" aria-live="polite">
+    <article class="testimonio-relato" aria-label="Relato del testimonio" aria-live="polite" tabindex="0">
       <h3 id="testimony-title" hidden></h3>
+      <p id="testimony-location" hidden></p>
+      <p id="testimony-example-label" hidden>Ejemplo ficticio</p>
       <p id="testimony-body">Pronto compartiremos testimonios de nuestra comunidad.</p>
       <p id="testimony-meta" hidden></p>
     </article>
@@ -2937,6 +2939,21 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <option value="christian">Cristianos</option><option value="originals">LLDB Originales</option><option value="affiliates">Nuestros Afiliados</option>
     </select></label>
     <label>Título <input name="title" maxlength="100"></label>
+    <fieldset id="assistant-testimony-details" hidden disabled>
+      <legend>Datos públicos del testimonio</legend>
+      <label>Nombre <input name="author" maxlength="60" placeholder="María" required></label>
+      <label>Inicial del apellido <input name="initial" maxlength="1" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]" placeholder="R" required></label>
+      <label>Desde dónde <input name="location" maxlength="80" placeholder="Texas" required></label>
+      <label>Tema <select name="category" required>
+        <option value="">Selecciona un tema</option>
+        <option value="restauracion-familiar">Restauración familiar</option>
+        <option value="sanidad">Sanidad</option>
+        <option value="nueva-oportunidad">Nueva oportunidad</option>
+        <option value="paz-en-medio-de-la-prueba">Paz en medio de la prueba</option>
+        <option value="provision">Provisión</option>
+        <option value="direccion-de-dios">Dirección de Dios</option>
+      </select></label>
+    </fieldset>
     <label id="assistant-reference">Referencia bíblica <input name="reference" maxlength="150"></label>
     <label id="assistant-text">Texto <textarea name="text" rows="9" maxlength="6000"></textarea></label>
     <label id="assistant-note">Nota <input name="note" maxlength="600"></label>
@@ -3311,6 +3328,6 @@ const lldbStartupVideo=document.getElementById('lldb-radio-startup-video');if(ll
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
  show();
 })();
-</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=manual" defer></script>
+</script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=testimonio-autor" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
 </body></html>

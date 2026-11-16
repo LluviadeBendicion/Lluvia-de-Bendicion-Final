@@ -282,6 +282,7 @@
   const review = document.getElementById('assistant-review');
   const preview = document.getElementById('assistant-image');
   const assistantStatus = document.getElementById('assistant-status');
+  const testimonyDetails = document.getElementById('assistant-testimony-details');
   let draft;
   let draftVersion = 0;
   const manual = document.getElementById('assistant-manual');
@@ -292,6 +293,7 @@
     assistant.reset();
     review.reset();
     review.hidden = true;
+    testimonyDetails.hidden = testimonyDetails.disabled = true;
     preview.removeAttribute('src');
     assistantStatus.textContent = '';
     document.getElementById('assistant-photo').hidden = true;
@@ -316,16 +318,19 @@
   function showDraft(kind, result) {
     draft = { kind, image: result.image };
     const wallpaper = kind === 'wallpaper';
+    const testimony = kind === 'testimonies';
     review.reset();
+    testimonyDetails.hidden = !testimony;
+    testimonyDetails.disabled = !testimony;
     for (const key of ['title', 'reference', 'text', 'note']) review.elements[key].value = result[key] || '';
     preview.hidden = !wallpaper;
     if (wallpaper) preview.src = 'data:image/jpeg;base64,' + result.image;
     else preview.removeAttribute('src');
     document.getElementById('assistant-collection').hidden = !wallpaper;
     for (const field of ['reference', 'text', 'note']) {
-      document.getElementById('assistant-' + field).hidden = wallpaper;
+      document.getElementById('assistant-' + field).hidden = wallpaper || (testimony && field !== 'text');
     }
-    review.elements.title.required = wallpaper || kind === 'testimonies';
+    review.elements.title.required = wallpaper;
     review.elements.text.required = !wallpaper;
     review.hidden = false;
     assistantStatus.textContent = result.message || 'Revisa el borrador antes de aprobarlo.';
@@ -372,6 +377,9 @@
       ? { action: 'publish', image: draft.image, collection: fields.collection.value, title: fields.title.value }
       : { action: 'editorial-publish', kind: draft.kind, title: fields.title.value, reference: fields.reference.value,
           text: fields.text.value, note: fields.note.value };
+    if (draft.kind === 'testimonies') {
+      for (const key of ['author', 'initial', 'location', 'category']) payload[key] = fields[key].value;
+    }
     submit.disabled = true;
     assistantStatus.textContent = 'Publicando…';
     try {
