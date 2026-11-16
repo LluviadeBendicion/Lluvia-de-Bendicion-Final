@@ -1,0 +1,122 @@
+body:has(#testimonios.active) main {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+#testimonios { padding: 0; scroll-margin-top: 200px; }
+.testimonio-mural {
+  position: relative;
+  isolation: isolate;
+  max-width: 1800px;
+  margin: 0 auto;
+  aspect-ratio: 3 / 2;
+  container-type: inline-size;
+  background: #18100b url("./testimonios-mural.jpg") center / cover no-repeat;
+}
+.testimonio-marca {
+  position: absolute;
+  inset: 2.2% auto auto 6.3%;
+  display: flex;
+  align-items: center;
+  gap: .5cqw;
+  color: #ffe2a2;
+  font: italic 600 clamp(7px, 1.65cqw, 29px)/1 Georgia, serif;
+  text-shadow: 0 2px 3px #000;
+}
+.testimonio-marca img { width: 3.8cqw; height: 3.8cqw; object-fit: contain; }
+.testimonio-marca small { display: block; margin-top: .18em; color: #fff5de; font-size: .55em; }
+.testimonio-relato {
+  position: absolute;
+  inset: 40.2% 24% 40% 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  overflow: auto;
+  padding: 0 1cqw;
+  text-align: center;
+  color: #fff5e5;
+  font: 400 clamp(12px, 2.3cqw, 39px)/1.16 Kalam, "Segoe Print", "Chalkboard SE", cursive;
+  text-shadow: 0 2px 3px #000, 0 0 8px #000;
+  scrollbar-width: thin;
+  scrollbar-color: #c28126 transparent;
+}
+.testimonio-relato h3 { margin: 0 0 .18em; font: inherit; color: #ffcc6f; }
+.testimonio-relato p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+#testimony-meta { align-self: end; margin-top: .35em; font-size: .62em; }
+.testimonio-carrusel {
+  position: absolute;
+  inset: 60% 11.4% auto;
+  display: grid;
+  grid-template-columns: 4.3% minmax(0, 1fr) 4.3%;
+  gap: 1.3cqw;
+  align-items: center;
+  justify-items: stretch;
+}
+.testimonio-temas { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 1.2cqw; }
+.testimonio-temas button {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: max(33px, 7.1cqw);
+  padding: .3em .1em .2em;
+  border: 1.5px solid var(--neon);
+  border-radius: 48% 52% 48% 52% / 51% 47% 53% 49%;
+  color: var(--bubble-text, #fff9ee);
+  background: radial-gradient(ellipse at 43% 10%, var(--shine), var(--fill) 74%);
+  box-shadow: 0 0 .75cqw var(--neon), inset 0 0 .95cqw var(--shine);
+  font: 400 clamp(8px, 1.55cqw, 25px)/1.08 Kalam, "Segoe Print", "Chalkboard SE", cursive;
+  text-shadow: 0 1px 3px var(--shadow, #000);
+  cursor: pointer;
+}
+.testimonio-temas button::after {
+  content: "";
+  position: absolute;
+  right: 14%;
+  bottom: -12%;
+  z-index: -1;
+  width: 20%;
+  height: 28%;
+  background: linear-gradient(135deg, var(--fill) 51%, var(--neon) 58%);
+  clip-path: polygon(0 0, 78% 5%, 100% 100%);
+  transform: rotate(8deg);
+}
+.testimonio-temas button:nth-child(even)::after { right: auto; left: 14%; transform: scaleX(-1) rotate(8deg); }
+.testimonio-temas button:nth-child(1) { --neon:#ffd26c; --shine:#ffcf68; --fill:#ab550b; --bubble-text:#261305; --shadow:#ffcc5f; }
+.testimonio-temas button:nth-child(2) { --neon:#56c9ff; --shine:#166fb9; --fill:#062f61; }
+.testimonio-temas button:nth-child(3) { --neon:#ff667a; --shine:#bd314a; --fill:#650e19; }
+.testimonio-temas button:nth-child(4) { --neon:#54e8ab; --shine:#18795a; --fill:#073a2a; }
+.testimonio-temas button:nth-child(5) { --neon:#c271ff; --shine:#7932af; --fill:#3c165a; }
+.testimonio-temas button:nth-child(6) { --neon:#ffa557; --shine:#af541c; --fill:#6e290b; }
+.testimonio-temas button:is(:hover,[aria-pressed="true"]) {
+  filter: brightness(1.25);
+  box-shadow: 0 0 1.2cqw var(--neon), inset 0 0 1.2cqw var(--shine);
+}
+.testimonio-flecha {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid #fff5e0;
+  border-radius: 50%;
+  background: #100b08;
+  color: #fff5e0;
+  font: 700 clamp(10px, 2.6cqw, 38px)/.8 Georgia, serif;
+  cursor: pointer;
+}
+.testimonio-flecha:disabled { opacity: .68; cursor: default; }
+.testimonio-carrusel button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.testimonio-puntos {
+  grid-column: 2;
+  justify-self: center;
+  display: flex;
+  gap: .75cqw;
+  margin-top: .6cqw;
+  padding: .65cqw 1.35cqw;
+  border-radius: 20px;
+  background: #140d0ae6;
+}
+.testimonio-puntos span { width: .9cqw; aspect-ratio: 1; border-radius: 50%; background: #b8b2a3; opacity: .55; }
+.testimonio-puntos .activo { background: #ffe0a0; opacity: 1; box-shadow: 0 0 8px 2px #ffae29; }
+@media (max-width: 600px) {
+  .testimonio-relato { inset-inline: 22%; font-size: clamp(10px, 3cqw, 17px); }
+  .testimonio-carrusel { inset-inline: 7%; gap: 1.4cqw; }
+  .testimonio-temas { gap: 1.05cqw; }
+}
