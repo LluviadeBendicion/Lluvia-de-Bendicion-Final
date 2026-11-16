@@ -2315,7 +2315,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
-<link rel="stylesheet" href="/assets/testimonios.css?v=burbujas">
+<link rel="stylesheet" href="/assets/testimonios.css?v=mural-espacio">
 <script src="/assets/testimonios.js?v=burbujas" defer></script>
 <link rel="stylesheet" href="/assets/especial.css">
 <script src="/assets/especial.js" defer></script>
@@ -2726,10 +2726,16 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <span>Lluvia de Bendición .Com<small>Porque queremos que el Señor llueva en ti.</small></span>
     </div>
     <article class="testimonio-relato" aria-label="Relato del testimonio" aria-live="polite" tabindex="0">
-      <h3 id="testimony-title" hidden></h3>
-      <p id="testimony-location" hidden></p>
-      <p id="testimony-theme" hidden></p>
-      <p id="testimony-example-label" hidden>Ejemplo ficticio</p>
+      <div class="testimonio-detalles">
+        <div class="testimonio-firma">
+          <h3 id="testimony-title" hidden></h3>
+          <p id="testimony-location" hidden></p>
+        </div>
+        <div class="testimonio-etiquetas">
+          <p id="testimony-theme" hidden></p>
+          <p id="testimony-example-label" hidden>Ejemplo ficticio</p>
+        </div>
+      </div>
       <p id="testimony-body">Pronto compartiremos testimonios de nuestra comunidad.</p>
       <p id="testimony-meta" hidden></p>
     </article>
