@@ -123,6 +123,11 @@ module.exports = async function prayer(req, res) {
     throw new Invalid('Acción inválida.');
   } catch (error) {
     const status = error instanceof Invalid ? error.status : 503;
+    if (status === 503 && !(error instanceof Invalid)) {
+      const reason = /^PRAYER_[A-Z_]+$/.test(error.message) ? error.message : (error.constructor?.name || 'Error');
+      const upstreamStatus = /Failed to fetch blob: (\d{3})/.exec(error.message)?.[1];
+      console.error('Peticiones: almacenamiento no disponible', reason, upstreamStatus || '');
+    }
     return res.status(status).json({ error: error instanceof Invalid ? error.message : 'El servicio no está disponible. Inténtalo más tarde.' });
   }
 };
