@@ -1,0 +1,132 @@
+#especial { container-type: inline-size; padding: 0; }
+
+.special-classroom {
+  --classroom-image: url("./especialmente-para-ti.jpg");
+  --scene-height: calc(100cqw * 941 / 1671);
+  display: flow-root;
+  position: relative;
+  min-height: var(--scene-height);
+  background: #292722 var(--classroom-image) center top / 100% auto no-repeat;
+}
+
+.special-verse {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.special-choices {
+  position: absolute;
+  inset: calc(var(--scene-height) * .221) 18.8% auto 26.3%;
+  height: calc(var(--scene-height) * .204);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.15%;
+}
+
+.special-choices button {
+  min-width: 0;
+  border: 0;
+  border-radius: 10%;
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.special-choices button:hover { box-shadow: inset 0 0 16px #f4cf8770, 0 0 12px #e4b96e55; }
+.special-choices button:focus-visible, .special-board button:focus-visible, .special-return:focus-visible {
+  outline: 2px solid #ffe1a2;
+  outline-offset: 3px;
+}
+
+.special-classroom [hidden], .special-classroom[data-reading] .special-choices { display: none; }
+
+/* Reuse the blank texture below the illustrated cards to clear their row. */
+.special-classroom[data-reading]::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--scene-height) * .203) auto auto 24.7%;
+  width: 58.5%;
+  height: calc(var(--scene-height) * .24);
+  background: var(--classroom-image) 59.5% 66% / 170.94% 416.67% no-repeat;
+  mask-image: linear-gradient(to bottom, transparent, black 7%, black 93%, transparent),
+    linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+
+.special-card-selected { display: none; }
+.special-classroom[data-reading] .special-card-selected {
+  display: block;
+  position: absolute;
+  inset: calc(var(--scene-height) * .221) auto auto 26.3%;
+  width: 13.25%;
+  height: calc(var(--scene-height) * .204);
+  border-radius: 10%;
+  pointer-events: none;
+  background: var(--classroom-image) var(--card-x, 30.34%) 27.75% / 754.72% 490.2% no-repeat;
+}
+.special-classroom[data-reading="versiculo"] { --card-x: 46.32%; }
+.special-classroom[data-reading="memorizar"] { --card-x: 62.27%; }
+.special-classroom[data-reading="devocional"] { --card-x: 78.35%; }
+
+.special-return, .special-board button {
+  border: 1px solid #aa967347;
+  border-radius: 5px;
+  background: #201d16e3;
+  color: #fff2d2;
+  padding: 4px 10px;
+  font: 400 15px/1.2 Kalam, "Segoe Print", "Chalkboard SE", cursive;
+  cursor: pointer;
+}
+.special-return {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--scene-height) * .209);
+  right: 13.4%;
+}
+.special-board {
+  position: absolute;
+  inset: calc(var(--scene-height) * .267) 13.8% calc(var(--scene-height) * .226) 41.2%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 5px;
+  color: #fff4d9;
+  font: 400 clamp(16px, 1.76cqw, 31px)/1.24 Kalam, "Segoe Print", "Chalkboard SE", cursive;
+  text-shadow: 0 0 1px #f6efda80, 0 1px 2px #15120e;
+}
+.special-board h2 {
+  margin: 0;
+  color: #f6d99d;
+  font: inherit;
+  font-size: 1.26em;
+  outline: none;
+}
+.special-chalk-text { min-height: 0; white-space: pre-wrap; overflow: clip; overflow-wrap: anywhere; }
+.special-pages { display: flex; justify-content: center; align-items: center; gap: 10px; font-size: .76em; }
+.special-pages[data-single] { visibility: hidden; }
+.special-pages button:disabled { opacity: .45; cursor: default; }
+
+@media (max-width: 760px) {
+  .special-return { top: calc(var(--scene-height) * .25); min-height: 34px; }
+  .special-board {
+    position: relative;
+    inset: auto;
+    display: block;
+    margin: 25.35cqw 4% 12px;
+    padding: 12px 15px;
+    border: 2px solid #816142;
+    border-radius: 6px;
+    background: radial-gradient(ellipse at 40% 15%, #33322c, #24231f);
+    font-size: clamp(17px, 3.4cqw, 24px);
+  }
+  .special-board h2 { margin-bottom: 6px; }
+  .special-chalk-text { overflow: visible; padding-bottom: 4px; }
+  .special-pages { display: none; }
+}
