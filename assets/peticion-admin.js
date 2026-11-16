@@ -253,6 +253,9 @@
   });
   login.addEventListener('submit', async event => {
     event.preventDefault();
+    const submit = login.querySelector('button[type="submit"]');
+    if (submit.disabled) return;
+    submit.disabled = true;
     try {
       const { user } = await api('login', Object.fromEntries(new FormData(login)));
       login.reset();
@@ -260,6 +263,7 @@
       await loadInbox();
       status.textContent = 'Sesión iniciada.';
     } catch (error) { displayError(error); }
+    finally { submit.disabled = false; }
   });
   $('prayer-refresh').onclick = () => loadInbox().catch(displayError);
   document.addEventListener('lldb:master-logout', () => { clearPrivate(); dashboard.hidden = true; });
