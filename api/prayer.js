@@ -54,7 +54,7 @@ module.exports = async function prayer(req, res) {
     if (action === 'login') {
       const result = await store.change(state => auth.login(state, allUsers(state, configuredUsers), body, address));
       if (result.locked) throw new Invalid('Acceso temporalmente bloqueado. Espera 15 minutos.', 429);
-      if (result.failed) throw new Invalid('Revisa el usuario, la contraseña y el código de verificación.', 401);
+      if (result.failed) throw new Invalid('Revisa tu usuario y contraseña.', 401);
       auth.setCookie(res, result.token, local);
       return res.status(200).json({ user: safeUser(result.user) });
     }

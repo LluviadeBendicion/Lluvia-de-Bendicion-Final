@@ -22,8 +22,7 @@ if (full) {
   ].map(user => {
     const password = 'VistaPrevia-' + crypto.randomBytes(8).toString('hex');
     const salt = crypto.randomBytes(16).toString('hex');
-    return { ...user, password, salt, passwordHash: crypto.scryptSync(password, salt, 32).toString('hex'),
-      totpSecret: crypto.randomBytes(20).toString('hex') };
+    return { ...user, password, salt, passwordHash: crypto.scryptSync(password, salt, 32).toString('hex') };
   });
   process.env.LLDB_PRAYER_USERS = JSON.stringify(demoUsers.map(({ password, ...entry }) => entry));
   prayer = require(path.join(root, 'api/prayer.js'));
@@ -45,13 +44,11 @@ http.createServer(async (req, res) => {
       <h1>Panel Maestro · Acceso de prueba</h1><p>Utiliza este entorno con datos de prueba.</p>
       <ol><li><a href="/#testimonios" target="_blank" rel="noopener">Abrir el sitio de prueba</a> y tocar <strong>Inicio</strong>.</li>
       <li>Al pie de la página, hacer cinco clics seguidos en <strong>LLDB</strong>.</li><li>En el panel, entrar con estos datos de prueba.</li></ol>
-      <p>Usuario: <code id="user"></code><br>Contraseña: <code id="password"></code><br>Código de verificación: <code id="code"></code></p>
-      <p>El código cambia cada 30 segundos.</p>
-      <script>async function load(){const [demo]=await fetch('/preview-code').then(res=>res.json());for(const key of ['user','password','code'])document.getElementById(key).textContent=demo[key]}load();setInterval(load,2500)</script></html>`);
+      <p>Usuario: <code id="user"></code><br>Contraseña: <code id="password"></code></p>
+      <script>async function load(){const [demo]=await fetch('/preview-code').then(res=>res.json());for(const key of ['user','password'])document.getElementById(key).textContent=demo[key]}load()</script></html>`);
   }
   if (full && route === '/preview-code') {
-    const { codeFor } = require(path.join(root, 'lib/prayer-auth.cjs'));
-    const credentials = demoUsers.map(({ id, password, totpSecret }) => ({ user: id, password, code: codeFor(totpSecret, Math.floor(Date.now() / 30000)) }));
+    const credentials = demoUsers.map(({ id, password }) => ({ user: id, password }));
     return res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }).end(JSON.stringify(credentials, null, 2));
   }
   if (full && route === '/api/prayer') {

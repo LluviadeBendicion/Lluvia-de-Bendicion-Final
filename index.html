@@ -2984,10 +2984,9 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <details class="card prayer-admin" id="admin-peticiones">
   <summary>Peticiones de oración y presentación</summary>
   <form id="prayer-login" autocomplete="on">
-    <p>Acceso con contraseña y código de verificación.</p>
+    <p>Entra con tu usuario y contraseña.</p>
     <label>Usuario <input name="user" autocomplete="username" required maxlength="64"></label>
     <label>Contraseña <input name="password" type="password" autocomplete="current-password" required maxlength="256"></label>
-    <label>Código de verificación <input name="code" autocomplete="one-time-code" required inputmode="numeric" maxlength="6" pattern="[0-9]{6}"></label>
     <button type="submit">Entrar al Panel Maestro</button>
   </form>
   <div id="prayer-dashboard" hidden>
@@ -3108,7 +3107,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <script src="/assets/peticion-oracion.js"></script>
 <script src="/assets/peticion-form.js" defer></script>
 <script src="/assets/peticion-admin.js" defer></script>
-<script src="/assets/panel-maestro.js" defer></script>
+<script src="/assets/panel-maestro.js?v=acceso-simple" defer></script>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
 function enter(){if(introExited)return;introExited=true;if(!intro||!intro.isConnected)return;intro.style.transition='opacity 1.1s ease';intro.style.opacity='0';setTimeout(()=>intro.remove(),1150)}

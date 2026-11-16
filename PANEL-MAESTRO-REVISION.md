@@ -4,10 +4,10 @@ El respaldo `respaldo/panel-maestro-2026-11-16` contiene la vista funcional de P
 
 ## Qué se puede probar
 
-- Abrir el Panel Maestro con cinco clics en LLDB desde Inicio. Iniciar sesión con contraseña y código de autenticador.
+- Abrir el Panel Maestro con cinco clics en LLDB desde Inicio. Iniciar sesión con usuario y contraseña.
 - En Peticiones, enviar, localizar un expediente, controlar quién puede verlo, asignarlo, registrar notas y seguimiento, exportar con permiso y autorizar una versión exacta para la presentación privada de iglesia.
 - Registrar y anular donaciones manualmente. Los reportes separan monedas y excluyen registros anulados. En Afiliados, crear expedientes, registrar bloqueos y descontinuaciones y dejar constancias de las tareas de retiro. En Propuestas y Facturación, registrar las etapas, el contrato, la factura interna y el pago recibido.
-- Crear usuarios, limitar módulos, establecer vencimiento, generar credenciales de dos factores y suspender el acceso. La cuenta de director se configura fuera del panel.
+- Crear usuarios, limitar módulos, establecer vencimiento, generar contraseñas y suspender el acceso. La cuenta de director se configura fuera del panel.
 - Gestionar borradores y versiones internas, previsualizar, solicitar revisión y autorizar la revisión exacta. El panel permite guardar una fecha prevista; ningún proceso conectará esa fecha a una publicación automática en esta rama.
 - Ver actividad y descargar un respaldo cifrado del estado de prueba. Para recuperar un respaldo se necesita la misma clave de cifrado y un entorno aislado. No se debe subir el archivo a un repositorio público.
 

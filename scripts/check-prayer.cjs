@@ -33,7 +33,7 @@ async function main() {
   const [masterCredentials, editorCredentials] = await fetch(origin + '/preview-code').then(response => response.json());
   const { cookie: master } = await call('login', masterCredentials);
   const { cookie: editor } = await call('login', editorCredentials);
-  await call('login', editorCredentials, '', 401);
+  await call('login', { ...editorCredentials, password: 'incorrecta' }, '', 401);
   const records = (await call('inbox', {}, master)).cases.filter(item => item.last.includes(marker));
   assert.equal(records.length, 3);
   const normal = records.find(item => item.first === 'Celina');
@@ -78,7 +78,7 @@ async function main() {
   await call('login', { user: 'usuario-inexistente', password: 'incorrecta', code: '000000' }, '', 429);
   await call('logout', {}, master);
   await call('inbox', {}, master, 401);
-  console.log('Peticiones: envío concurrente, privacidad, TOTP, bloqueo, seguimiento, autorización por versión, presentación, retiro y exportación verificados.');
+  console.log('Peticiones: envío concurrente, privacidad, contraseña, bloqueo, seguimiento, autorización por versión, presentación, retiro y exportación verificados.');
 }
 
 main().catch(error => { console.error(error); process.exitCode = 1; });

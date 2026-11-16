@@ -228,7 +228,7 @@
   }
 
   function userSettings(data) {
-    const section = card('Usuarios y permisos', note('Las claves nuevas y el secreto del autenticador se muestran una sola vez.'));
+    const section = card('Usuarios y permisos', note('Las contraseñas nuevas se muestran una sola vez.'));
     function editor(account = {}) {
       const fields = [input('id','Usuario',{value:account.id}),input('name','Nombre',{value:account.name}),
         input('role','Rol',{choices:Object.entries(data.roles),value:account.role}),
@@ -243,7 +243,7 @@
         const { enrollment } = await save('save-user',{...v,modules,permissions,reset:Boolean(v.reset)});
         if (enrollment) {
           const box = n('div','','master-enrollment');
-          box.append(n('strong','Credenciales nuevas'),n('code',`Contraseña: ${enrollment.password}`),n('code',`Clave del autenticador: ${enrollment.authenticator}`),
+          box.append(n('strong','Credenciales nuevas'),n('code',`Contraseña: ${enrollment.password}`),
             button('Ocultar credenciales',()=>box.remove()));
           content.prepend(box);
         }

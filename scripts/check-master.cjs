@@ -48,7 +48,7 @@ async function call(action, fields, cookie = '', status = 200) {
   const { item:one, enrollment } = await save('users','save-user',{id:newId,name:'Lectura de prueba',role:'reader',modules:{prayers:'edit',billing:'edit'}});
   assert.equal(one.modules.billing,'read');
   assert.equal(one.permissions.includes('edit'),false);
-  assert.match(enrollment.authenticator,/^[A-Z2-7]{32}$/);
+  assert.ok(enrollment.password.length>=20);
   const users = await list('users');
   assert.ok(users.rows.some(row=>row.id===newId));
   assert.ok(!JSON.stringify(users).includes(enrollment.password));
