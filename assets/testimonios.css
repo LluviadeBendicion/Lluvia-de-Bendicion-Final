@@ -43,7 +43,7 @@ body:has(#testimonios.active) main {
 }
 .testimonio-relato h3 { margin: 0; font: inherit; color: #ffcc6f; overflow-wrap: anywhere; }
 .testimonio-relato p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-.testimonio-detalles, .testimonio-firma, .testimonio-etiquetas {
+.testimonio-detalles, .testimonio-firma {
   display: flex;
   align-items: baseline;
   min-width: 0;
@@ -63,8 +63,6 @@ body:has(#testimonios.active) main {
   content: "·" / "";
   margin-right: .45em;
 }
-.testimonio-etiquetas { font-size: .87em; }
-#testimony-example-label { opacity: .9; }
 #testimony-meta { align-self: end; margin-top: .35em; font-size: .62em; }
 @supports (background-clip: text) {
   #testimony-title, #testimony-body, #testimony-meta {

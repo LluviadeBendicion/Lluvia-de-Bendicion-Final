@@ -4,7 +4,6 @@
   const location = mural.querySelector('#testimony-location');
   const theme = mural.querySelector('#testimony-theme');
   const people = mural.querySelector('.testimonio-personas');
-  const exampleLabel = mural.querySelector('#testimony-example-label');
   const body = mural.querySelector('#testimony-body');
   const attribution = mural.querySelector('#testimony-meta');
   const themes = [...mural.querySelectorAll('[data-testimony-category]')];
@@ -73,7 +72,6 @@
     const itemTheme = themes.find(button => button.dataset.testimonyCategory === categoryKey(item?.category || item?.note));
     theme.textContent = itemTheme?.innerText.replace(/\s+/g, ' ').trim() || '';
     theme.hidden = !theme.textContent;
-    exampleLabel.hidden = !isExample;
     body.textContent = item?.text || (category
       ? 'Aún no hay testimonios publicados para este tema.'
       : 'Pronto compartiremos testimonios de nuestra comunidad.');
