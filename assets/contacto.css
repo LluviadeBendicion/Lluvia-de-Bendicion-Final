@@ -84,19 +84,7 @@ body:has(#contacto.active) main {
   outline-offset: 3px;
 }
 #contacto-resultado { margin: 0; color: #ffe3ae; overflow-wrap: anywhere; }
-.contacto-info p { margin: .65rem 0 1rem; line-height: 1.55; }
-.contacto-info nav { display: flex; flex-wrap: wrap; gap: .45rem; }
-.contacto-info a[href] {
-  font-size: .93rem;
-  display: inline-block;
-  padding: .48rem .7rem;
-  color: #ffe1a6;
-  border: 1px solid #b397646b;
-  border-radius: 7px;
-  background: #091724;
-  text-decoration: underline;
-}
-.contacto-info a:not([href]) { display: none; }
+.contacto-info p { margin: .65rem 0 0; line-height: 1.55; }
 .contacto-afiliados { padding: 1rem; text-align: center; }
 
 @media (max-width: 780px) {
