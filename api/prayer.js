@@ -1,5 +1,5 @@
 const { openStore } = require('../lib/prayer-store.cjs');
-const { Invalid, submission, permitted, visible, mutate, eligible, hash, iso } = require('../lib/prayer-domain.cjs');
+const { Invalid, submission, permitted, visible, mutate, eligible, prayerStatusOf, hash, iso } = require('../lib/prayer-domain.cjs');
 const auth = require('../lib/prayer-auth.cjs');
 const master = require('../lib/master-domain.cjs');
 
@@ -83,7 +83,7 @@ module.exports = async function prayer(req, res) {
         mutate(item, body, user, users);
         auth.log(state, body.operation, user.id, item.id);
         // Marking a case as urgent can remove an editor's own visibility.
-        return { item: visible(user, item) ? item : null };
+        return { item: visible(user, item) ? { ...item, prayerStatus: prayerStatusOf(item) } : null };
       });
       return res.status(200).json(result);
     }
@@ -109,8 +109,11 @@ module.exports = async function prayer(req, res) {
     if (action === 'inbox') {
       if (!permitted(user, 'read')) throw new Invalid('No tienes permiso para consultar peticiones.', 403);
       const cases = Object.values(state.cases).filter(item => visible(user, item));
-      const summaries = cases.map(({ id, first, last, received, category, state, owner, urgent, privacy, next, active }) =>
-        ({ id, first, last, received, category, state, owner, urgent, privacy, next, presented: !!active }));
+      const summaries = cases.map(item => {
+        const { id, first, last, requester, received, category, additional, state, owner, urgent, privacy, next, active } = item;
+        return { id, first, last, requester, received, category, additional, state, owner, urgent, privacy, next,
+          prayerStatus: prayerStatusOf(item), presented: !!active };
+      });
       const staff = Object.values(users).filter(auth.isActive).map(safeUser);
       const activity = user.role === 'master' ? state.activity.slice(-50).reverse() : [];
       return res.status(200).json({ cases: summaries, staff, activity, user: safeUser(user) });
@@ -118,7 +121,7 @@ module.exports = async function prayer(req, res) {
     if (action === 'detail') {
       const item = Object.hasOwn(state.cases, body.id) && state.cases[body.id];
       if (!item || !visible(user, item)) throw new Invalid('Expediente no disponible.', 404);
-      return res.status(200).json({ item });
+      return res.status(200).json({ item: { ...item, prayerStatus: prayerStatusOf(item) } });
     }
     throw new Invalid('Acción inválida.');
   } catch (error) {

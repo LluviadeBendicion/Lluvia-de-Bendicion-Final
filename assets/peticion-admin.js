@@ -57,6 +57,8 @@
   function can(permission) { return inbox.user.role === 'master' || inbox.user.permissions.includes(permission); }
   function staff(id) { return inbox.staff.find(user => user.id === id)?.name || id || 'Sin asignar'; }
   function displayDate(raw) { return raw ? new Date(raw).toLocaleString('es') : '—'; }
+  function requesterName(item) { return item.requester || [item.first, item.last].filter(Boolean).join(' ') || 'Anónimo'; }
+  function topicsOf(item) { return [item.category, ...(item.additional || [])].filter(Boolean); }
 
   function populate(select, entries) {
     const value = select.value;
@@ -65,7 +67,7 @@
   }
 
   async function loadInbox() {
-    options ||= await fetch('/assets/peticion-opciones.json').then(response => response.json());
+    options ||= await fetch('/assets/peticion-opciones.json?v=topicos').then(response => response.json());
     inbox = await api('inbox');
     dashboard.hidden = false;
     login.hidden = true;
@@ -73,8 +75,9 @@
     $('prayer-export').hidden = !can('export');
     const screen = dashboard.querySelector('a');
     screen.hidden = !can('present');
-    populate(filters.elements.category, [['', 'Todas'], ...options.categories.map(name => [name, name])]);
-    populate(filters.elements.state, [['', 'Todos'], ...Object.entries(options.states)]);
+    const topics = new Set([...options.categories, ...inbox.cases.flatMap(topicsOf)]);
+    populate(filters.elements.category, [['', 'Todos'], ...Array.from(topics, name => [name, name])]);
+    populate(filters.elements.state, [['', 'Todos'], ...Object.entries(options.prayerStatuses)]);
     populate(filters.elements.owner, [['', 'Todos'], ...inbox.staff.map(user => [user.id, user.name])]);
     renderInbox();
   }
@@ -82,21 +85,21 @@
   function renderInbox() {
     if (!inbox) return;
     const records = inbox.cases;
-    const stages = Object.entries(options.states).map(([code, label]) => [label, records.filter(item => item.state === code).length]);
+    const stages = Object.entries(options.prayerStatuses).map(([code, label]) => [label, records.filter(item => item.prayerStatus === code).length]);
     const counters = [['Total', records.length], ...stages, ['Urgentes', records.filter(item => item.urgent).length],
       ['Confidenciales', records.filter(item => item.privacy === 'confidential').length]];
     $('prayer-counts').replaceChildren(...counters.map(([label, count]) => element('span', `${label}: ${count}`)));
     const today = new Date().toISOString().slice(0, 10);
-    const due = records.filter(item => item.next && item.next <= today && !['complete','archived'].includes(item.state));
+    const due = records.filter(item => item.next && item.next <= today && item.prayerStatus !== 'answered' && item.state !== 'archived');
     $('prayer-reminders').replaceChildren(...(due.length ? [element('p', `${due.length} seguimientos programados para hoy o pendientes.`),
-      ...due.map(item => action(`${item.first} ${item.last} · ${item.next}`, () => openCase(item.id)))] : []));
+      ...due.map(item => action(`${requesterName(item)} · ${item.next}`, () => openCase(item.id)))] : []));
     const filter = Object.fromEntries(new FormData(filters));
     const query = filter.query.trim().toLocaleLowerCase('es');
     const filtered = records.filter(item => {
       const day = item.received.slice(0, 10);
-      return (!query || `${item.first} ${item.last} ${item.id}`.toLocaleLowerCase('es').includes(query)) &&
-        (!filter.from || day >= filter.from) && (!filter.to || day <= filter.to) && (!filter.category || item.category === filter.category) &&
-        (!filter.state || item.state === filter.state) && (!filter.owner || item.owner === filter.owner);
+      return (!query || `${requesterName(item)} ${item.id}`.toLocaleLowerCase('es').includes(query)) &&
+        (!filter.from || day >= filter.from) && (!filter.to || day <= filter.to) && (!filter.category || topicsOf(item).includes(filter.category)) &&
+        (!filter.state || item.prayerStatus === filter.state) && (!filter.owner || item.owner === filter.owner);
     }).sort((a, b) => Number(b.urgent) - Number(a.urgent) || b.received.localeCompare(a.received));
     const rows = filtered.map(item => {
       const row = element('div');
@@ -105,12 +108,12 @@
         const check = element('input');
         check.type = 'checkbox';
         check.checked = selected.has(item.id);
-        check.setAttribute('aria-label', `Marcar expediente de ${item.first} ${item.last} para exportación`);
+        check.setAttribute('aria-label', `Marcar expediente de ${requesterName(item)} para exportación`);
         check.onchange = () => check.checked ? selected.add(item.id) : selected.delete(item.id);
         row.append(check);
       }
-      row.append(element('strong', `${item.urgent ? 'Urgente · ' : ''}${item.first} ${item.last}`),
-        element('span', `${item.category} · ${options.states[item.state]} · ${staff(item.owner)}`),
+      row.append(element('strong', `${item.urgent ? 'Urgente · ' : ''}${requesterName(item)}`),
+        element('span', `${topicsOf(item).join(', ')} · ${options.prayerStatuses[item.prayerStatus]} · ${staff(item.owner)}`),
         action('Ver expediente', () => openCase(item.id)));
       return row;
     });
@@ -145,20 +148,27 @@
       'Número de caso': item.id, 'Recibida': displayDate(item.received),
       'Lugar': [item.city, item.region, item.country].filter(Boolean).join(', ') || '—',
       'Para quién': item.forWhom === 'self' ? 'La persona que solicita' : 'Otra persona',
-      'Motivos': [item.category, ...item.additional].join(', '), 'Privacidad': options.privacy[item.privacy],
+      ...(item.recipient ? { 'Nombre de la persona por quien se ora': item.recipient } : {}),
+      'Tópicos de oración': topicsOf(item).join(', '),
+      ...(item.otherTopic ? { 'Motivo especificado': item.otherTopic } : {}),
+      'Privacidad': options.privacy[item.privacy],
       'Consentimiento': item.consent ? displayDate(item.consent.at) : 'Sin consentimiento para presentar',
       'Seguimiento autorizado': item.method ? `${options.methods[item.method]} · ${item.contact}` : 'No solicitado',
-      'Estado': options.states[item.state], 'Responsable': staff(item.owner),
+      'Estado': options.prayerStatuses[item.prayerStatus], 'Revisión interna': options.states[item.state], 'Responsable': staff(item.owner),
       'Urgencia': item.urgent ? 'Urgente' : item.restricted ? 'Restringida' : 'Regular', 'Próximo seguimiento': item.next || '—'
     };
     for (const [key, value] of Object.entries(lines)) meta.append(element('dt', key), element('dd', value));
     const original = element('p', item.text);
     original.className = 'prayer-original';
-    detail.replaceChildren(element('h3', `${item.first} ${item.last}`), meta, element('h4','Texto original'), original);
+    detail.replaceChildren(element('h3', requesterName(item)), meta, element('h4','Texto original'), original);
     const history = [
       ['Notas internas', item.notes.map(entry => `${displayDate(entry.at)} · ${staff(entry.by)} · ${entry.text}`)],
       ['Historial de contacto', item.contacts.map(entry => `${entry.occurred} · ${staff(entry.by)} · ${options.methods[entry.medium]} · ${entry.result} ${entry.note} ${entry.next ? `· Próximo ${entry.next}` : ''}`)],
-      ['Historial de cambios y versiones', item.history.map(entry => `${displayDate(entry.at)} · ${staff(entry.by)} · ${entry.action} · ${options.states[entry.state]}${entry.draft ? ' · ' + entry.draft.text : ''}`)]
+      ['Historial de cambios y versiones', item.history.map(entry => {
+        const change = entry.action === 'prayer-status' ? 'Estado de oración' : entry.action;
+        const stage = entry.action === 'prayer-status' ? options.prayerStatuses[entry.prayerStatus] : options.states[entry.state];
+        return `${displayDate(entry.at)} · ${staff(entry.by)} · ${change} · ${stage}${entry.draft ? ' · ' + entry.draft.text : ''}`;
+      })]
     ];
     for (const [label, entries] of history) {
       if (!entries.length) continue;
@@ -197,10 +207,14 @@
       action('Archivar', () => update('state', { state: 'archived' })));
     if (!item.urgent) shortcuts.append(action('Marcar como urgente', () => update('urgent', { urgent: true })));
     detail.append(shortcuts);
-    const state = field('Estado', 'state', 'select');
+    const prayerStatus = field('Estado de oración', 'prayerStatus', 'select');
+    populate(prayerStatus.lastChild, Object.entries(options.prayerStatuses));
+    prayerStatus.lastChild.value = item.prayerStatus;
+    smallForm('Cambiar estado de oración', [prayerStatus], values => update('prayer-status', values));
+    const state = field('Revisión interna', 'state', 'select');
     populate(state.lastChild, Object.entries(options.states));
     state.lastChild.value = item.state;
-    smallForm('Cambiar estado', [state], values => update('state', values));
+    smallForm('Cambiar revisión interna', [state], values => update('state', values));
     const owner = field('Responsable', 'owner', 'select');
     const assigned = inbox.staff.filter(user => user.role === 'master' || (user.permissions.includes('read') && user.permissions.includes('edit') &&
       (!(item.restricted || item.privacy === 'confidential') || user.permissions.includes('restricted'))));

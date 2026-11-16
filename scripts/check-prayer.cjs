@@ -20,19 +20,46 @@ async function main() {
   const publicCase = { first: 'Celina', last: 'Prueba ' + marker, city: 'Waco', region: 'Texas', country: 'Estados Unidos',
     text: `Texto original de prueba ${marker}.`, category: 'Trabajo', additional: ['Familia'], privacy: 'anonymous', consent: true,
     forWhom: 'other', follow: true, method: 'email', contact: 'peticion@example.invalid' };
+  const anonymousCase = { topics: ['Vivienda', 'Otro'], otherTopic: 'Una mudanza', anonymous: true,
+    first: 'No guardar', last: 'No guardar', requester: 'No guardar', recipient: 'Graciela de prueba', text: 'Una petición anónima ' + marker,
+    forWhom: 'other', follow: false, confidential: true, consent: true };
   await call('inbox', {}, '', 401);
   await call('presentation', {}, '', 401);
   await call('submit', { ...publicCase, last: '' }, '', 400);
+  await call('submit', { ...anonymousCase, otherTopic: '' }, '', 400);
+  await call('submit', { ...anonymousCase, topics: ['Vivienda', 'Vivienda'] }, '', 400);
+  await call('submit', { ...anonymousCase, topics: [] }, '', 400);
   await call('submit', publicCase, '', 403, 'https://example.invalid');
   const created = await Promise.all([
     call('submit', publicCase, '', 201),
+    call('submit', anonymousCase, '', 201),
     call('submit', { ...publicCase, first: 'Caso sensible', additional: ['Pensamientos de suicidio'], privacy: 'church' }, '', 201),
-    call('submit', { ...publicCase, first: 'Confidencial', privacy: 'confidential', follow: false }, '', 201)
+    call('submit', { ...publicCase, first: 'Confidencial', topics: ['Trabajo'], confidential: true, follow: false }, '', 201)
   ]);
   created.forEach(data => assert.equal(data.received, true));
   const [masterCredentials, editorCredentials] = await fetch(origin + '/preview-code').then(response => response.json());
   const { cookie: master } = await call('login', masterCredentials);
   const { cookie: editor } = await call('login', editorCredentials);
+  const anonymous = (await call('inbox', {}, master)).cases.find(record => record.category === 'Vivienda');
+  assert.equal(anonymous.requester, '');
+  assert.equal(anonymous.first, '');
+  assert.equal(anonymous.last, '');
+  assert.equal(anonymous.prayerStatus, 'received');
+  assert.deepEqual(anonymous.additional, ['Otro']);
+  await call('detail', { id: anonymous.id }, editor, 404);
+  let privacyRecord = (await call('detail', { id: anonymous.id }, master)).item;
+  assert.equal(privacyRecord.recipient, anonymousCase.recipient);
+  assert.equal(privacyRecord.otherTopic, anonymousCase.otherTopic);
+  assert.equal(privacyRecord.consent, null);
+  for (const prayerStatus of ['praying', 'answered']) {
+    const { item } = await call('modify', { id: privacyRecord.id, version: privacyRecord.version,
+      operation: 'prayer-status', prayerStatus }, master);
+    assert.equal(item.prayerStatus, prayerStatus);
+    assert.equal(item.history.at(-1).prayerStatus, prayerStatus);
+    privacyRecord = item;
+  }
+  await call('modify', { id: privacyRecord.id, version: privacyRecord.version,
+    operation: 'draft', text: 'Una petición confidencial.' }, master, 400);
   await call('login', { ...editorCredentials, password: 'incorrecta' }, '', 401);
   const records = (await call('inbox', {}, master)).cases.filter(item => item.last.includes(marker));
   assert.equal(records.length, 3);

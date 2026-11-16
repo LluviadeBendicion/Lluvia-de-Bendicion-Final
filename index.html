@@ -2316,7 +2316,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
 <link rel="stylesheet" href="/assets/testimonios.css?v=firma-en-linea">
-<link rel="stylesheet" href="/assets/peticion-oracion.css">
+<link rel="stylesheet" href="/assets/peticion-oracion.css?v=topicos-compactos">
 <link rel="stylesheet" href="/assets/peticion-admin.css">
 <link rel="stylesheet" href="/assets/panel-maestro.css">
 <script src="/assets/testimonios.js?v=firma-en-linea" defer></script>
@@ -2875,32 +2875,43 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
         <span aria-hidden="true">♫</span><span data-sound-label>Activar música suave</span>
       </button>
       <form id="peticion-form" method="post" action="/api/prayer">
-        <fieldset>
-          <legend>Información del solicitante</legend>
-          <div class="peticion-campos">
-            <label>Nombre<input name="first" autocomplete="given-name" maxlength="80" required></label>
-            <label>Apellido<input name="last" autocomplete="family-name" maxlength="80" required></label>
-            <label>Ciudad<input name="city" autocomplete="address-level2" maxlength="100"></label>
-            <label>Estado<input name="region" autocomplete="address-level1" maxlength="100"></label>
-            <label>País<input name="country" autocomplete="country-name" maxlength="100"></label>
-          </div>
-        </fieldset>
         <label>¿Por quién solicitas oración?
           <select name="forWhom" required><option value="self">Por mí</option><option value="other">Por otra persona</option></select>
         </label>
-        <label>Motivo de oración <select name="category" required><option value="">Selecciona un motivo</option></select></label>
+        <fieldset>
+          <legend>Información del solicitante</legend>
+          <label class="peticion-check"><input type="checkbox" name="anonymous"> Deseo mantener mi anonimato</label>
+          <div class="peticion-campos" id="peticion-solicitante">
+            <label>Nombre<input name="first" autocomplete="given-name" maxlength="80"></label>
+            <label>Apellido<input name="last" autocomplete="family-name" maxlength="80"></label>
+          </div>
+          <div class="peticion-campos">
+            <label>Ciudad<input name="city" autocomplete="address-level2" maxlength="100"></label>
+            <label>Estado<input name="region" autocomplete="address-level1" maxlength="100"></label>
+          </div>
+        </fieldset>
+        <label id="peticion-beneficiario" hidden>Nombre de la persona por quien se ora
+          <input name="recipient" maxlength="160" disabled>
+        </label>
+        <fieldset>
+          <legend id="peticion-topicos-label">Motivo de oración</legend>
+          <details class="peticion-topicos">
+            <summary aria-labelledby="peticion-topicos-label peticion-topicos-resumen"><span id="peticion-topicos-resumen">Selecciona un tópico</span></summary>
+            <div class="peticion-lista-motivos" role="group" aria-labelledby="peticion-topicos-label"></div>
+          </details>
+          <p id="peticion-topicos-elegidos" role="status"></p>
+          <label id="peticion-otro" hidden>Especifique el motivo de oración <input name="otherTopic" maxlength="240" disabled></label>
+        </fieldset>
         <div id="peticion-apoyo" hidden role="status">
           <strong>No tienes que pasar por esto a solas.</strong>
-          <p>Si estás en Estados Unidos o sus territorios, puedes llamar al <a href="tel:988?oai_link_source=model_response_hotline">988</a> para recibir apoyo. Si hay peligro inmediato en Estados Unidos, llama al <a href="tel:911">911</a>. Si estás en otro país, llama a los servicios de emergencia de tu localidad.</p>
+          <p>Si estás en Estados Unidos o sus territorios, puedes llamar al <a href="tel:988">988</a> para recibir apoyo. Si hay peligro inmediato en Estados Unidos, llama al <a href="tel:911">911</a>. Si estás en otro país, llama a los servicios de emergencia de tu localidad.</p>
         </div>
-        <details class="peticion-adicionales"><summary>Añadir otros motivos (opcional)</summary><div class="peticion-lista-motivos"></div></details>
-        <label>Escribe aquí tu petición de oración<textarea name="text" rows="6" maxlength="6000" required></textarea></label>
+        <label>Tu petición de oración<textarea name="text" rows="4" maxlength="6000" required></textarea></label>
         <fieldset>
           <legend>Privacidad</legend>
-          <label>¿Con quién deseas compartirla? <select name="privacy" required></select></label>
+          <label class="peticion-check"><input type="checkbox" name="confidential" checked> Mantener mi petición en confidencialidad</label>
           <p>Respetamos tu privacidad. Tu información personal no será publicada.</p>
           <div id="peticion-consentimiento" hidden>
-            <p>La opción anónima no autoriza automáticamente una presentación pública.</p>
             <label class="peticion-check"><input type="checkbox" name="consent"> Autorizo que se comparta una versión sin datos personales, previa revisión y autorización del director.</label>
           </div>
         </fieldset>
@@ -2911,12 +2922,12 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
             <label><input name="follow" type="radio" value="yes"> Sí</label>
           </div>
           <div id="peticion-seguimiento" hidden>
-            <label>¿Cómo prefieres que nos comuniquemos? <select name="method" disabled><option value="">Selecciona un medio</option></select></label>
+            <label>Método de seguimiento <select name="method" disabled><option value="">Selecciona un medio</option></select></label>
             <label id="peticion-contacto" hidden><span></span><input name="contact" maxlength="150" disabled></label>
           </div>
         </fieldset>
         <div class="peticion-trampa" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>
-        <button type="submit" disabled>Enviar mi petición de oración</button>
+        <button type="submit" disabled>Enviar petición</button>
         <p class="peticion-resultado" role="status" tabindex="-1"></p>
       </form>
     </div>
@@ -2996,7 +3007,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <label>Buscar <input name="query" type="search" placeholder="Nombre o número de caso"></label>
       <label>Desde <input name="from" type="date"></label>
       <label>Hasta <input name="to" type="date"></label>
-      <label>Categoría <select name="category"><option value="">Todas</option></select></label>
+      <label>Tópico de oración <select name="category"><option value="">Todos</option></select></label>
       <label>Estado <select name="state"><option value="">Todos</option></select></label>
       <label>Responsable <select name="owner"><option value="">Todos</option></select></label>
     </form>
@@ -3105,8 +3116,8 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <div id="admin-affiliates" hidden><select id="affiliate-status" hidden><option value="active">Activo</option></select><div id="affiliate-status-note" hidden></div></div></div></div></div>
 <footer aria-label="Pie de página"><button id="secret-admin-trigger" class="secret-mark" type="button" aria-label="Lluvia de Bendición">LLDB</button><span id="secret">Lluvia de Bendición .Com</span> · Todos los derechos reservados.</footer>
 <script src="/assets/peticion-oracion.js"></script>
-<script src="/assets/peticion-form.js" defer></script>
-<script src="/assets/peticion-admin.js?v=acceso-actualizado" defer></script>
+<script src="/assets/peticion-form.js?v=topicos-compactos" defer></script>
+<script src="/assets/peticion-admin.js?v=topicos" defer></script>
 <script src="/assets/panel-maestro.js?v=acceso-simple" defer></script>
 <script>
 const intro=document.getElementById('intro'),introVideo=document.getElementById('intro-video'),introGate=document.getElementById('intro-gate'),introStart=document.getElementById('intro-start'),introSkip=document.getElementById('skip');let introExited=false;
