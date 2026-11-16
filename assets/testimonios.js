@@ -67,7 +67,7 @@
     mural.toggleAttribute('data-example', isExample);
     title.textContent = author || item?.title || '';
     title.hidden = !title.textContent;
-    location.textContent = item?.location ? 'Desde ' + item.location : '';
+    location.textContent = item?.location || '';
     location.hidden = !location.textContent;
     const itemTheme = themes.find(button => button.dataset.testimonyCategory === categoryKey(item?.category || item?.note));
     theme.textContent = itemTheme?.innerText.replace(/\s+/g, ' ').trim() || '';

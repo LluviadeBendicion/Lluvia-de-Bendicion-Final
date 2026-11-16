@@ -43,23 +43,21 @@ body:has(#testimonios.active) main {
 }
 .testimonio-relato h3 { margin: 0; font: inherit; color: #ffcc6f; overflow-wrap: anywhere; }
 .testimonio-relato p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-.testimonio-detalles, .testimonio-firma {
+.testimonio-detalles {
   display: flex;
   align-items: baseline;
-  min-width: 0;
   gap: .45em;
-}
-.testimonio-detalles {
-  flex-wrap: wrap;
-  justify-content: space-between;
-  row-gap: .2em;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
   margin-bottom: .55em;
   text-align: left;
   font-size: max(11px, .7em);
   color: #ffda9b;
 }
 .testimonio-detalles:not(:has(p:not([hidden]), h3:not([hidden]))) { display: none; }
-#testimony-title:not([hidden]) + #testimony-location:not([hidden])::before {
+.testimonio-detalles > :not([hidden]) { flex: none; white-space: nowrap; }
+.testimonio-detalles > :not([hidden]) ~ :not([hidden])::before {
   content: "·" / "";
   margin-right: .45em;
 }

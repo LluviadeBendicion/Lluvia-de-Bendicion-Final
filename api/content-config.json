@@ -34,28 +34,56 @@
         "author": "Elena",
         "initial": "M",
         "location": "Florida",
-        "text": "Después de meses sin hablar, mi hermano y yo oramos juntos. Pedirnos perdón fue el primer paso."
+        "text": "Mi hermano y yo dejamos de hablarnos por una pelea sobre el cuidado de mamá. En su cumpleaños me senté a su lado y le pedí perdón. Todavía tenemos cosas que hablar, pero ese domingo volvimos a comer juntos."
+      },
+      {
+        "category": "restauracion-familiar",
+        "author": "Noemí",
+        "initial": "P",
+        "location": "Nueva Jersey",
+        "text": "Mi hija se mudó y pasaron semanas sin que contestara mis mensajes. Una tarde le mandé una nota de voz y le dije que quería escucharla. El sábado vino a tomar café. Ahora me llama cuando sale del trabajo."
       },
       {
         "category": "sanidad",
         "author": "Daniel",
         "initial": "S",
         "location": "Puerto Rico",
-        "text": "Durante mi recuperación, mi iglesia oró conmigo. Aprendí a darle gracias a Dios por cada pequeño avance."
+        "text": "Después de la operación de rodilla me daba miedo bajar los tres escalones de casa. Mi esposa bajaba conmigo después de cada sesión de terapia. La primera vez que pude salir al balcón solo, me quedé allí un rato dándole gracias a Dios."
+      },
+      {
+        "category": "sanidad",
+        "author": "Manuel",
+        "initial": "R",
+        "location": "Michigan",
+        "text": "Me lastimé la mano en el trabajo y al principio ni podía abotonarme la camisa. En terapia practiqué con botones grandes. Todavía me cuesta, pero esta semana pude prepararle el desayuno a mi hijo. Eso era lo que más extrañaba."
+      },
+      {
+        "category": "sanidad",
+        "author": "Rosa",
+        "initial": "T",
+        "location": "Boston",
+        "text": "Cuando volví del hospital, me cansaba con solo llegar de la cama a la cocina. Mi vecina venía a sentarse conmigo y orábamos un rato. Después de varias semanas pude caminar con ella hasta el buzón. Ese día regresé sonriendo."
       },
       {
         "category": "nueva-oportunidad",
         "author": "Lucía",
         "initial": "V",
         "location": "Nueva York",
-        "text": "Tras perder mi empleo, una amiga me animó a estudiar. Hoy aprendo un oficio que me devuelve la esperanza."
+        "text": "Cerró la cafetería donde trabajaba y me quedé sin el último turno del mes. Una amiga me avisó de un curso de panadería por las tardes. La semana pasada vendí mis primeros tres panes a los vecinos del edificio. Volví a sentir que podía empezar."
       },
       {
         "category": "paz-en-medio-de-la-prueba",
         "author": "Ana",
         "initial": "C",
         "location": "California",
-        "text": "Mientras esperaba noticias de mi papá, una amiga oró conmigo. Aquella noche por fin pude descansar."
+        "text": "Mi papá estaba en observación y yo llevaba horas mirando el teléfono. Una amiga me llamó y oró conmigo. La noticia todavía no llegaba, pero por primera vez en toda la tarde pude dejar el teléfono en la mesa y comer algo."
+      },
+      {
+        "category": "paz-en-medio-de-la-prueba",
+        "author": "Joel",
+        "initial": "B",
+        "location": "Georgia",
+        "text": "La semana antes de mudarnos, tenía las cajas sin cerrar y no sabía quién me iba a ayudar. En la noche oré y luego llamé a mi primo. Acordamos sacar primero lo de los niños. Poder hacer una cosa a la vez me devolvió la calma."
       },
       {
         "category": "provision",
@@ -76,7 +104,7 @@
         "author": "Samuel",
         "initial": "L",
         "location": "Arizona",
-        "text": "Antes de tomar una decisión difícil, oré y pedí consejo. Poco a poco supe qué paso podía dar con paz."
+        "text": "Me ofrecieron un turno de noche justo cuando mi mamá necesitaba que alguien la llevara a sus citas. Oré, hablé con mi hermana y pregunté si había otro horario. Pude aceptar el turno de la mañana y seguir acompañando a mamá dos tardes a la semana."
       }
     ]
   },
