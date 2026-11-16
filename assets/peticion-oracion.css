@@ -1,0 +1,72 @@
+body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
+
+#peticiones {
+  --oracion-fondo: url('./peticion-de-oracion.jpg');
+  margin: 0;
+  padding: 0;
+  color: #fff4df;
+}
+
+.peticion-escena {
+  display: grid;
+  align-items: center;
+  min-height: clamp(570px, 60vw, 925px);
+  background: #142120 var(--oracion-fondo) center / cover no-repeat;
+}
+
+.peticion-panel { margin: 0 9% 0 53%; padding: 2.6rem 0; }
+
+.peticion-panel h2 {
+  margin: 0 0 .45em;
+  color: #ffdfa6;
+  font: 700 clamp(2.25rem, 4.8vw, 5.2rem)/1 Georgia, serif;
+  text-shadow: 0 2px 16px #0008;
+}
+
+.peticion-intro { margin: 0 0 1.6rem; font: italic 400 clamp(1.1rem, 1.7vw, 1.55rem)/1.4 Georgia, serif; }
+.peticion-panel .lldb-form { display: grid; gap: 1rem; }
+.peticion-panel label { display: grid; gap: .35rem; font-size: 1rem; }
+.peticion-panel small { color: #ebdbc0; }
+
+.peticion-panel :is(input, textarea) {
+  width: 100%;
+  min-width: 0;
+  padding: .75em;
+  border: 1px solid #d6b58699;
+  border-radius: .65em;
+  background: #111b1be8;
+  color: #fff4df;
+  font: inherit;
+}
+
+.peticion-panel textarea { resize: vertical; }
+.peticion-panel button { justify-self: start; }
+.peticion-sonido {
+  position: fixed;
+  z-index: 15;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: .55em;
+  padding: .45em .85em;
+  border: 1px solid #e6c69280;
+  border-radius: 2em;
+  background: #172728;
+  color: #ffebc7;
+  font-size: .86rem;
+  box-shadow: 0 2px 12px #0009;
+  cursor: pointer;
+}
+
+.peticion-panel :is(input, textarea, button):focus-visible { outline: 2px solid #ffda9b; outline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .peticion-escena {
+    min-height: 0;
+    padding-top: clamp(200px, 56vw, 345px);
+    background: linear-gradient(180deg, #14212000 48%, #142120 100%) center top / 100% max(245px, 68vw) no-repeat,
+      #142120 var(--oracion-fondo) 20% top / auto max(245px, 68vw) no-repeat;
+  }
+  .peticion-panel { margin: 0; padding: 1rem max(1.2rem, 6%) 4.6rem; }
+}
