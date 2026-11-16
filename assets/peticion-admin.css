@@ -1,0 +1,27 @@
+.prayer-admin { margin: 1rem 0; color: #fff2db; }
+.prayer-admin [hidden] { display: none !important; }
+.prayer-admin summary { cursor: pointer; color: #ffdc94; font-weight: 700; }
+.prayer-admin form, .prayer-toolbar { display: flex; align-items: end; flex-wrap: wrap; gap: .8rem; margin: 1rem 0; }
+.prayer-admin form label { display: grid; gap: .35rem; }
+.prayer-admin input:not([type=checkbox]), .prayer-admin select, .prayer-admin textarea {
+  min-width: 0; max-width: 100%; padding: .45rem .65rem; color: #fff5e5;
+  background: #102232; border: 1px solid #9d8051; border-radius: .3rem;
+}
+.prayer-admin textarea { width: 100%; resize: vertical; }
+.prayer-admin .prayer-wide { flex-basis: 100%; }
+.prayer-admin button, .prayer-admin a { color: #ffdc94; }
+#prayer-counts { display: flex; flex-wrap: wrap; gap: .5rem; }
+#prayer-counts span { display: inline-block; padding: .35rem .7rem; background: #10212c; border: 1px solid #86724e; border-radius: .5rem; }
+.prayer-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: .7rem; padding: .65rem 0; border-bottom: 1px solid #b399663c; }
+.prayer-row strong { flex: 1 1 12em; }
+#prayer-detail:not(:empty) { margin: 1.4rem 0; padding: 1rem; border: 1px solid #ab915d; border-radius: .6rem; }
+#prayer-detail dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .35rem .7rem; }
+#prayer-detail dd { margin: 0; overflow-wrap: anywhere; }
+.prayer-original { padding: .8rem; background: #111f29; border-left: 3px solid #d0ac6c; white-space: pre-wrap; overflow-wrap: anywhere; }
+.prayer-actions { display: flex; flex-wrap: wrap; gap: .55rem; margin: 1rem 0; }
+#prayer-admin-status { color: #ffdc94; }
+@media (max-width: 620px) {
+  #prayer-detail dl { grid-template-columns: minmax(0, 1fr); }
+  #prayer-detail dd { margin-bottom: .45em; }
+  .prayer-admin form label { width: 100%; }
+}

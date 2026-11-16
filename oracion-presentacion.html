@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Peticiones de oración · Presentación de iglesia</title>
+  <link rel="stylesheet" href="/assets/peticion-presentacion.css">
+  <script src="/assets/peticion-presentacion.js" defer></script>
+</head>
+<body>
+  <main>
+    <img src="/assets/logo-oficial-definitivo.png" alt="Lluvia de Bendición .Com" width="92" height="92">
+    <h1>Peticiones de oración</h1>
+    <form id="present-login" hidden>
+      <label>Usuario <input name="user" autocomplete="username" required maxlength="64"></label>
+      <label>Contraseña <input name="password" type="password" autocomplete="current-password" required maxlength="256"></label>
+      <label>Código de verificación <input name="code" autocomplete="one-time-code" inputmode="numeric" required maxlength="6" pattern="[0-9]{6}"></label>
+      <button type="submit">Entrar a la presentación</button>
+    </form>
+    <div id="present-controls" hidden>
+      <label>Elige una petición <select id="present-select"></select></label>
+      <button type="button" id="present-prev">Anterior</button>
+      <button type="button" id="present-next">Siguiente</button>
+      <button type="button" id="present-refresh">Actualizar lista</button>
+      <button type="button" id="present-exit">Cerrar sesión</button>
+    </div>
+    <p id="present-status" role="status"></p>
+    <blockquote id="present-quote" aria-live="polite" hidden></blockquote>
+  </main>
+</body>
+</html>

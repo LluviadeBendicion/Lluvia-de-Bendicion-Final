@@ -11,10 +11,10 @@ body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
   display: grid;
   align-items: center;
   min-height: clamp(570px, 60vw, 925px);
-  background: #142120 var(--oracion-fondo) center / cover no-repeat;
+  background: linear-gradient(170deg, transparent 45%, #0b151a 80%), #0b151a var(--oracion-fondo) center top / 100% auto no-repeat;
 }
 
-.peticion-panel { margin: 0 9% 0 53%; padding: 2.6rem 0; }
+.peticion-panel { margin: 0 7% 0 48%; padding: 3.5rem 0; }
 
 .peticion-panel h2 {
   margin: 0 0 .45em;
@@ -24,11 +24,11 @@ body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
 }
 
 .peticion-intro { margin: 0 0 1.6rem; font: italic 400 clamp(1.1rem, 1.7vw, 1.55rem)/1.4 Georgia, serif; }
-.peticion-panel .lldb-form { display: grid; gap: 1rem; }
+#peticion-form { display: grid; gap: 1.1rem; }
 .peticion-panel label { display: grid; gap: .35rem; font-size: 1rem; }
 .peticion-panel small { color: #ebdbc0; }
 
-.peticion-panel :is(input, textarea) {
+.peticion-panel :is(input:not([type=checkbox], [type=radio]), textarea, select) {
   width: 100%;
   min-width: 0;
   padding: .75em;
@@ -41,6 +41,22 @@ body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
 
 .peticion-panel textarea { resize: vertical; }
 .peticion-panel button { justify-self: start; }
+.peticion-panel fieldset { min-inline-size: 0; margin: 0; padding: .85rem; border: 1px solid #d6b58664; border-radius: .65rem; }
+.peticion-panel legend { padding-inline: .35em; color: #ffdfa6; }
+.peticion-panel fieldset p { margin: .7em 0 0; color: #eedac3; }
+.peticion-campos, .peticion-lista-motivos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+.peticion-panel [hidden] { display: none !important; }
+.peticion-panel :is(.peticion-check, .peticion-radios label, .peticion-lista-motivos label) { display: flex; align-items: baseline; gap: .45rem; }
+.peticion-radios { display: flex; gap: 1.1rem; }
+#peticion-seguimiento { display: grid; gap: .65rem; margin-top: .75rem; }
+.peticion-lista-motivos { margin-top: .6rem; }
+.peticion-adicionales summary { cursor: pointer; color: #ffdfa6; }
+.peticion-trampa { position: absolute; left: -100000px; }
+#peticion-apoyo { padding: .9rem; border-left: 3px solid #f3d399; background: #252c28; }
+#peticion-apoyo p { margin: .4rem 0 0; }
+#peticion-apoyo a { color: #ffe29b; }
+.peticion-resultado { margin: 0; color: #ffdfa6; }
+.peticion-resultado:empty { display: none; }
 .peticion-sonido {
   position: fixed;
   z-index: 15;
@@ -68,5 +84,10 @@ body:has(#peticiones.active) main { width: 100%; max-width: none; padding: 0; }
     background: linear-gradient(180deg, #14212000 48%, #142120 100%) center top / 100% max(245px, 68vw) no-repeat,
       #142120 var(--oracion-fondo) 20% top / auto max(245px, 68vw) no-repeat;
   }
-  .peticion-panel { margin: 0; padding: 1rem max(1.2rem, 6%) 4.6rem; }
+  .peticion-panel { margin: 0; padding: 1rem max(1.2rem, 6%) 2rem; }
+  .peticion-panel { padding-bottom: 4.6rem; }
+}
+
+@media (max-width: 410px) {
+  .peticion-campos, .peticion-lista-motivos { grid-template-columns: minmax(0, 1fr); }
 }

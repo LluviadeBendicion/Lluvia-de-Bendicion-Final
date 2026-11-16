@@ -1,0 +1,8 @@
+:root { color-scheme: dark; font: 17px system-ui, sans-serif; }
+body { margin: 0; background: radial-gradient(ellipse at 50% 12%,#192c39,#080e16 72%); color: #fff2df; min-height: 100vh; }
+main { width: min(92%, 78rem); margin-inline: auto; padding: 2rem 0 4rem; text-align: center; }
+h1 { font: 700 clamp(2.3rem, 6vw, 5rem)/1.1 Georgia,serif; color: #ffdea0; margin: .7em 0; }
+#present-controls:not([hidden]), form:not([hidden]) { display: flex; gap: .6rem; align-items: center; justify-content: center; flex-wrap: wrap; }
+input, select, button { padding: .55em .8em; font: inherit; color: #fff2df; background: #14222d; border: 1px solid #bc995a; border-radius: .45em; }
+button { cursor: pointer; }
+blockquote { margin: 1.3em auto; max-width: 32ch; font: 400 clamp(1.45rem, 4.4vw, 4.5rem)/1.28 Georgia,serif; white-space: pre-wrap; overflow-wrap: anywhere; }

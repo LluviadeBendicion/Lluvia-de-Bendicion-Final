@@ -1,0 +1,6 @@
+{
+  "categories": ["Salud", "Finanzas", "Familia", "Matrimonio", "Trabajo", "Cambios inesperados", "Bullying (acoso)", "Cyberbullying (acoso cibernético)", "Depresión", "Pensamientos negativos", "Pensamientos de suicidio", "Salvación", "Hijos", "Fortaleza espiritual", "Ansiedad", "Dirección de Dios", "Estudios", "Viajes", "Dar gracias", "Otro"],
+  "states": {"new":"Nueva", "review":"Pendiente de revisión", "approved":"Aprobada internamente", "rejected":"Rechazada para publicación", "following":"En seguimiento", "attended":"Atendida", "complete":"Completada", "archived":"Archivada"},
+  "privacy": {"church":"Compartir con la iglesia, previa revisión y autorización", "ministry":"Compartir solamente con el ministerio", "confidential":"Mantener confidencial", "anonymous":"Compartir de forma anónima, previa revisión y autorización"},
+  "methods": {"email":"Correo electrónico", "whatsapp":"WhatsApp", "phone":"Llamada telefónica"}
+}
