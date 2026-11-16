@@ -27,7 +27,33 @@
     "reference": "Filipenses 4:6-7"
   },
   "testimonies": {
-    "enabled": true
+    "enabled": true,
+    "examples": [
+      {
+        "category": "restauracion-familiar",
+        "text": "Después de meses sin hablar, mi hermano y yo oramos juntos. Pedirnos perdón fue el primer paso."
+      },
+      {
+        "category": "sanidad",
+        "text": "Durante mi recuperación, mi iglesia oró conmigo. Aprendí a darle gracias a Dios por cada pequeño avance."
+      },
+      {
+        "category": "nueva-oportunidad",
+        "text": "Tras perder mi empleo, una amiga me animó a estudiar. Hoy aprendo un oficio que me devuelve la esperanza."
+      },
+      {
+        "category": "paz-en-medio-de-la-prueba",
+        "text": "Mientras esperaba noticias de mi papá, una amiga oró conmigo. Aquella noche por fin pude descansar."
+      },
+      {
+        "category": "provision",
+        "text": "Cuando faltaba comida en casa, unos vecinos nos trajeron víveres. En ese gesto reconocí el cuidado de Dios."
+      },
+      {
+        "category": "direccion-de-dios",
+        "text": "Antes de tomar una decisión difícil, oré y pedí consejo. Poco a poco supe qué paso podía dar con paz."
+      }
+    ]
   },
   "studies": {
     "enabled": true,

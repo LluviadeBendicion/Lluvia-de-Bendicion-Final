@@ -17,13 +17,19 @@
 
   function render() {
     const testimony = officialContent.testimonies;
-    const entries = testimony?.enabled !== false && Array.isArray(testimony?.items) ? testimony.items : [];
-    visibleItems = entries.filter(item => item?.text &&
-      (!category || categoryKey(item.category || item.note) === category));
+    const enabled = testimony?.enabled !== false;
+    const entries = enabled && Array.isArray(testimony?.items) ? testimony.items : [];
+    const examples = enabled && Array.isArray(testimony?.examples) ? testimony.examples : [];
+    const matchesCategory = item => item?.text && (!category || categoryKey(item.category || item.note) === category);
+    const published = entries.filter(matchesCategory);
+    const showingExamples = published.length === 0;
+    visibleItems = showingExamples ? examples.filter(matchesCategory) : published;
     position = Math.min(position, Math.max(0, visibleItems.length - 1));
     const item = visibleItems[position];
-    const details = item ? [item.reference, item.note].filter(Boolean).join(' · ') : '';
-    title.textContent = item?.title || '';
+    const isExample = showingExamples && Boolean(item);
+    const details = item && !isExample ? [item.reference, item.note].filter(Boolean).join(' · ') : '';
+    mural.toggleAttribute('data-example', isExample);
+    title.textContent = isExample ? 'Ejemplo ficticio' : item?.title || '';
     title.hidden = !title.textContent;
     body.textContent = item?.text || (category
       ? 'Aún no hay testimonios publicados para este tema.'
