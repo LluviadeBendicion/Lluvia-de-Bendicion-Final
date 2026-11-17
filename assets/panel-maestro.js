@@ -106,7 +106,18 @@
 
   const recoveryStatus = n('p');
   recoveryStatus.setAttribute('role', 'status');
-  const recovery = history('Recuperar acceso', [note('Pide a otro administrador un código de recuperación de un solo uso.'),
+  const emailStatus = n('p');
+  emailStatus.setAttribute('role', 'status');
+  const emailRequest = form('Enviar enlace a mi correo', [input('user','Usuario',{autocomplete:'username'})], async values => {
+    emailStatus.textContent = 'Procesando solicitud…';
+    try {
+      await api('request-email-recovery', values);
+      emailStatus.textContent = 'Si tu cuenta tiene un correo de recuperación registrado, recibirás un enlace. Revisa también el correo no deseado.';
+    } catch (error) {
+      emailStatus.textContent = error.message;
+    }
+  });
+  const manualRecovery = history('Usar un código de recuperación', [
     form('Restablecer contraseña', [
       input('user','Usuario',{autocomplete:'username'}),
       input('code','Código de recuperación',{type:'password',autocomplete:'off'}),
@@ -127,6 +138,7 @@
         recoveryStatus.textContent = error.message;
       }
     }), recoveryStatus]);
+  const recovery = history('Recuperar acceso', [emailRequest, emailStatus, manualRecovery]);
   $('master-login-slot').append(recovery);
 
   async function save(operation, fields = {}, module = current) {
@@ -576,8 +588,10 @@
     user = null;
     overview = null;
     login.hidden = false;
-    recovery.querySelector('form').reset();
+    for (const form of recovery.querySelectorAll('form')) form.reset();
     recovery.open = false;
+    manualRecovery.open = false;
+    emailStatus.textContent = '';
     recoveryStatus.textContent = '';
     auth.hidden = false;
     shell.hidden = true;

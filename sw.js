@@ -18,6 +18,7 @@ self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url);
   if(url.origin!==location.origin) return;
   if(url.pathname==='/privacidad-contacto'||url.pathname==='/privacidad-contacto.html') return;
+  if(url.pathname==='/recuperar-acceso'||url.pathname==='/recuperar-acceso.html') return;
 
   if(event.request.mode==='navigate'||url.pathname==='/'||url.pathname==='/index.html'){
     event.respondWith(

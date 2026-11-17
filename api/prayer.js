@@ -2,6 +2,7 @@ const { context, allowedOrigin } = require('../lib/panel-session.cjs');
 const { Invalid, submission, permitted, visible, mutate, eligible, prayerStatusOf, hash, iso } = require('../lib/prayer-domain.cjs');
 const auth = require('../lib/prayer-auth.cjs');
 const master = require('../lib/master-domain.cjs');
+const { emailConfig, sendRecoveryEmail } = require('../lib/recovery-email.cjs');
 
 const safeUser = user => ({ id: user.id, name: user.name, role: user.role, permissions: user.permissions,
   prayerActions: Object.fromEntries(Object.entries(master.operationActions.prayers)
@@ -54,13 +55,37 @@ module.exports = async function prayer(req, res) {
     if (action === 'login') {
       const result = await store.change(state => auth.login(state, allUsers(state, configuredUsers), body, address));
       if (result.locked) throw new Invalid('Acceso temporalmente bloqueado. Espera 15 minutos.', 429);
-      if (result.failed) throw new Invalid('Revisa tu usuario y contraseña.', 401);
+      if (result.failed) throw new Invalid('Revisa tu usuario y contraseña o usa Recuperar acceso.', 401);
       auth.setCookie(res, result.token, local);
       return res.status(200).json({ user: safeUser(result.user) });
     }
 
     if (action === 'logout') {
       if (token) await store.change(state => { delete state.sessions[hash(token)]; });
+      auth.setCookie(res, '', local);
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'request-email-recovery' || action === 'redeem-email-recovery') {
+      const settings = emailConfig();
+      if (action === 'request-email-recovery') {
+        if (!settings || local) throw new Invalid('El envío automático de enlaces todavía no está disponible.', 503);
+        const ticket = await store.change(state => auth.requestEmailRecovery(state, allUsers(state, configuredUsers), settings, body.user, address));
+        await Promise.all([
+          new Promise(resolve => setTimeout(resolve, 3600)),
+          ticket && sendRecoveryEmail(settings, ticket).catch(error => {
+            console.error('Envío de recuperación no confirmado:', /^RECOVERY_MAIL_\d{3}$/.test(error.message) ? error.message : error.name);
+          })
+        ]);
+        return res.status(200).json({ ok: true });
+      }
+      const success = await store.change(state => {
+        const users = allUsers(state, configuredUsers);
+        if (!auth.rate(state, 'redeem-recovery:' + hash(address), 10, 900000)) return false;
+        return auth.recoverOmarOnce(state, users, local ? '' : process.env.LLDB_OMAR_RECOVERY_ONCE, body, address) ||
+          Boolean(settings && !local && auth.recoverByEmail(state, users, settings, body, address));
+      });
+      if (!success) throw new Invalid('El enlace no es válido o venció. Solicita uno nuevo.');
       auth.setCookie(res, '', local);
       return res.status(200).json({ ok: true });
     }

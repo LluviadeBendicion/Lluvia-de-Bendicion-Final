@@ -6,7 +6,7 @@ const root = resolve(__dirname, '..');
 const output = join(root, 'dist');
 mkdirSync(output, { recursive: true });
 for (const entry of [
-  'index.html', 'oracion-presentacion.html', 'privacidad-contacto.html', 'assets', 'donaciones', 'estudio', 'Logo-oficial-lldb.jpg',
+  'index.html', 'oracion-presentacion.html', 'privacidad-contacto.html', 'recuperar-acceso.html', 'assets', 'donaciones', 'estudio', 'Logo-oficial-lldb.jpg',
   'manifest.webmanifest', 'robots.txt', 'sitemap.xml', 'sw.js'
 ]) {
   cpSync(join(root, entry), join(output, entry), { recursive: true });
