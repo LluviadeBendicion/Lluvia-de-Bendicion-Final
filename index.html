@@ -1839,26 +1839,18 @@ body:not(:has(#radio.active)) header .quick .lldb-tt{background:#11131b;text-sha
   object-fit:cover;
   object-position:26% top;
 }
-#inicio .inicio-participa{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--home-side-gap)}
+#inicio .inicio-participa{display:grid;grid-template-columns:minmax(0,1fr);width:94%;justify-self:start;gap:calc(var(--home-side-gap) * .8)}
 #inicio .inicio-card{
   display:grid;
-  grid-template-rows:minmax(0,1fr) 3.3rem 2rem;
-  aspect-ratio:1;
+  grid-template-rows:minmax(0,1fr) auto;
+  gap:4px;
+  aspect-ratio:1.52;
   min-width:0;
   overflow:hidden;
   padding:6px;
   background:radial-gradient(ellipse at 50% 36%,#142a47,#030810 78%);
   text-align:center;
 }
-#inicio .inicio-card h2{
-  align-content:center;
-  margin:0;
-  padding:2px 5px;
-  color:#fff6e6;
-  font:700 clamp(17px,1.47vw,22px)/.97 "Cormorant Garamond",Georgia,serif;
-  text-shadow:0 2px 4px #000;
-}
-#inicio .inicio-card h2 strong{display:block;color:#ffda7d;font-size:1.1em}
 #inicio .inicio-card img{
   display:block;
   width:100%;
@@ -1870,19 +1862,19 @@ body:not(:has(#radio.active)) header .quick .lldb-tt{background:#11131b;text-sha
 }
 #inicio .inicio-card button{
   justify-self:center;
-  width:min(94%,220px);
+  width:min(92%,205px);
   border:1px solid #ffe3a0;
   border-radius:999px;
   padding:3px 6px;
   background:linear-gradient(#fff2b9 0%,#ffcc4b 45%,#e99a17 90%);
   box-shadow:inset 0 0 0 1px #9e5b1b70,0 2px 8px #0009;
   color:#281603;
-  font:700 16px Georgia,serif;
+  font:700 clamp(13px,1.12vw,16px)/1.08 Georgia,serif;
   cursor:pointer;
 }
 #inicio .inicio-card button:hover{background:#ffe9a3}
 #inicio .inicio-seed{position:relative;margin:0;overflow:hidden;text-align:right}
-#inicio .inicio-seed img{display:block;width:100%;aspect-ratio:1.7;object-fit:cover;object-position:center 43%}
+#inicio .inicio-seed img{display:block;width:100%;aspect-ratio:2.12;object-fit:cover;object-position:center 43%}
 #inicio .inicio-seed figcaption{
   position:absolute;
   inset:0;
@@ -1891,7 +1883,7 @@ body:not(:has(#radio.active)) header .quick .lldb-tt{background:#11131b;text-sha
   padding:9px 10px 8px 30%;
   background:linear-gradient(transparent 33%,#010509ef 100%);
   color:#fff6e6;
-  font:700 italic clamp(16px,1.5vw,22px)/1.02 Georgia,serif;
+  font:700 italic clamp(14px,1.35vw,19px)/1.02 Georgia,serif;
   text-shadow:0 2px 4px #000;
 }
 #inicio button:focus-visible,
@@ -1929,60 +1921,36 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 </style>
 <style id="lldb-donation-guide-style">
 #donaciones .lldb-donation-board{position:relative;display:flow-root}
-#donaciones .lldb-donation-guide{
+#donaciones .lldb-donation-banner{
   position:absolute;
   z-index:11;
-  inset:0 auto auto 1.55%;
-  box-sizing:border-box;
-  width:16.6%;
-  height:63%;
-  padding:clamp(11px,1.25vw,20px) clamp(12px,1.35vw,22px);
-  border:2px solid transparent;
-  border-radius:13px;
-  background:
-    radial-gradient(ellipse at 7% 0%,#534027 0%,transparent 43%) padding-box,
-    radial-gradient(ellipse at 105% 55%,#1b3047 0%,transparent 66%) padding-box,
-    linear-gradient(145deg,#17263b,#070e19 69%,#1b1514) padding-box,
-    linear-gradient(145deg,#ffdf9b 0%,#be874a 14%,#603d24 40%,#ad773e 69%,#ffe3a4 87%,#79502b) border-box;
-  box-shadow:inset 0 0 0 1px #fff3c136,inset 0 0 22px #0008,0 8px 18px #000a;
-  color:#fff6e5;
-  font:500 clamp(21px,1.65vw,26px)/1.1 'Caveat','Segoe Print',cursive;
+  top:29%;
+  left:2.2%;
+  width:14.1%;
+  margin:0;
+  padding:.72em .6em;
+  border:1px solid #ae844a;
+  border-radius:9px;
+  background:linear-gradient(135deg,#0a1928ed,#070e16e8);
+  color:#f4dfb4;
+  text-align:center;
+  box-shadow:0 3px 12px #0006;
+  font:italic clamp(13px,1.28vw,20px)/1.16 Georgia,serif;
 }
-#donaciones .lldb-donation-guide h2{
-  margin:0 0 .42em;
-  color:#ffe2a1;
-  font:700 clamp(24px,2.1vw,34px)/1.03 'Cormorant Garamond',Georgia,serif;
-  text-shadow:0 2px 2px #130b06,0 0 14px #ed9c373d;
-}
-#donaciones .lldb-donation-guide h3{
-  margin:.39em 0 .1em;
-  color:#f8d899;
-  font-size:clamp(24px,1.95vw,31px);
-  font-weight:600;
-  line-height:1.05;
-}
-#donaciones .lldb-donation-guide p{margin:0}
-#donaciones .lldb-donation-guide blockquote{
-  margin:.55em 0 0;
-  padding:.45em 0 0;
-  background:linear-gradient(90deg,#c59658,#e5b96e83,transparent) top left / 100% 1px no-repeat;
-  color:#ffe8bd;
-}
-#donaciones .lldb-donation-guide cite{
+#donaciones .lldb-donation-banner cite{
   display:block;
-  margin-top:.25em;
-  color:#f2ca8d;
-  font-size:.88em;
-  font-style:normal;
+  margin-top:.32em;
+  color:#d8bc87;
+  font:normal .76em/1.15 Georgia,serif;
 }
 @media(max-width:1050px){
-  #donaciones .lldb-donation-guide{
-    position:static;
-    width:auto;
-    height:auto;
-    margin:12px;
-    padding:18px;
-    font-size:24px;
+  #donaciones .lldb-donation-banner{
+    position:relative;
+    top:auto;
+    left:auto;
+    width:fit-content;
+    max-width:calc(100% - 36px);
+    margin:16px auto 12px;
   }
   #donaciones .lldb-donation-board{width:122%;margin-left:-22%}
 }
@@ -2480,7 +2448,45 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 #donaciones .lldb-donation-panel .lldb-card-brands{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:4px!important;width:94%!important;align-items:center!important}
 #donaciones .lldb-donation-panel .pay-brand{background:#fff!important;border-radius:4px!important;display:flex!important;align-items:center!important;justify-content:center!important;height:26px!important;padding:3px!important;box-sizing:border-box!important}
 #donaciones .lldb-donation-panel .pay-brand img{display:block!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important}
-</style><style id="lldb-donations-slightly-slimmer">#donaciones .lldb-donation-panel{left:20.0%!important;right:3.0%!important;gap:.85%!important}</style><style id="lldb-donations-align-board-edge">#donaciones .lldb-donation-panel{left:18.7%!important;right:4.3%!important}</style><style id="lldb-donations-card-emphasis">#donaciones .lldb-donation-panel{grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.16fr)!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child{border-width:2px!important;box-shadow:0 0 13px #e6b75a77,inset 0 0 14px #ffffff16!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child .lldb-pay-label{background:linear-gradient(90deg,#b77b24,#e0a849)!important;border-color:#ffe1a0!important;color:#15223a!important}</style><style id="lldb-donation-card-final-cover">#donaciones .lldb-donation-panel{right:0!important;background:#07152a!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child{position:relative!important;overflow:visible!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child:after{content:"";position:absolute;left:100%;top:-3px;width:16px;height:calc(100% + 6px);background:#07152a;z-index:-1}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child .lldb-pay-label{background:linear-gradient(90deg,#bd801f,#ffd166)!important;color:#241b0b!important;border:1px solid #ffe5a0!important;box-shadow:0 0 8px #ffd16666!important}</style><style id="lldb-donation-symmetry-tweak">#donaciones .lldb-donation-panel{left:18.2%!important;right:.5%!important}</style><style id="lldb-stripe-payment-link">#donaciones .lldb-stripe-pay-link{display:block!important;text-decoration:none!important;cursor:pointer!important;pointer-events:auto!important;position:relative!important;z-index:20!important}#donaciones .lldb-stripe-pay-link:hover{filter:brightness(1.12)!important}#donaciones .lldb-stripe-pay-link:focus-visible{outline:3px solid #fff!important;outline-offset:2px!important}</style><style id="lldb-affiliates-reset">#afiliados .lldb-afiliados-reset{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 20px;background:#07101d;color:#f6e5bd}#afiliados .lldb-afiliados-reset h2{font-size:clamp(26px,3vw,48px);color:#e9b75e;margin:0 0 16px}#afiliados .lldb-afiliados-reset p{max-width:580px;font-size:clamp(15px,1.3vw,20px)}</style><style id="lldb-affiliates-carousel-v1">
+</style><style id="lldb-donations-slightly-slimmer">#donaciones .lldb-donation-panel{left:20.0%!important;right:3.0%!important;gap:.85%!important}</style><style id="lldb-donations-align-board-edge">#donaciones .lldb-donation-panel{left:18.7%!important;right:4.3%!important}</style><style id="lldb-donations-card-emphasis">#donaciones .lldb-donation-panel{grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.16fr)!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child{border-width:2px!important;box-shadow:0 0 13px #e6b75a77,inset 0 0 14px #ffffff16!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child .lldb-pay-label{background:linear-gradient(90deg,#b77b24,#e0a849)!important;border-color:#ffe1a0!important;color:#15223a!important}</style><style id="lldb-donation-card-final-cover">#donaciones .lldb-donation-panel{right:0!important;background:#07152a!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child{position:relative!important;overflow:visible!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child:after{content:"";position:absolute;left:100%;top:-3px;width:16px;height:calc(100% + 6px);background:#07152a;z-index:-1}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child .lldb-pay-label{background:linear-gradient(90deg,#bd801f,#ffd166)!important;color:#241b0b!important;border:1px solid #ffe5a0!important;box-shadow:0 0 8px #ffd16666!important}</style><style id="lldb-donation-symmetry-tweak">#donaciones .lldb-donation-panel{left:18.2%!important;right:.5%!important}</style><style id="lldb-stripe-payment-link">#donaciones .lldb-stripe-pay-link{display:block!important;text-decoration:none!important;cursor:pointer!important;pointer-events:auto!important;position:relative!important;z-index:20!important}#donaciones .lldb-stripe-pay-link:hover{filter:brightness(1.12)!important}#donaciones .lldb-stripe-pay-link:focus-visible{outline:3px solid #fff!important;outline-offset:2px!important}</style>
+<style id="lldb-donation-qr-style">
+#donaciones .lldb-donation-art {
+  position:absolute; inset:0 0 auto; width:100%; max-width:none!important;
+  display:block!important; margin:0!important; padding:0!important; aspect-ratio:3616/2152;
+  transform:translateY(-2.2%); pointer-events:none;
+}
+#donaciones .lldb-donation-art .lldb-donation-retouch {
+  display:block; width:100%; height:100%; max-width:none;
+}
+#donaciones .lldb-donation-security {
+  position:absolute; top:63.0%; height:7.6%; display:flex; align-items:center;
+  padding-inline:.45%; text-align:left;
+  font:400 clamp(7px,.85vw,13px)/1.22 Georgia,serif; color:#c2c4c4;
+  background:linear-gradient(168deg,#040710 6%,#061018 87%);
+}
+#donaciones .lldb-donation-security-ssl { left:24.25%; width:9.72%; }
+#donaciones .lldb-donation-security-privacy { left:38.4%; width:11.1%; }
+#donaciones button.lldb-pay-label { font-family:inherit; cursor:pointer; }
+#donaciones button.lldb-pay-label:focus-visible,
+#donaciones .lldb-donation-dialog button:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+#donaciones .lldb-donation-dialog {
+  box-sizing:border-box; width:min(92vw,28rem); max-height:calc(100dvh - 2rem);
+  padding:1rem; overflow:auto; color:#fff4dc; background:#0a1426;
+  border:1px solid #c39b53; border-radius:12px; text-align:center;
+  box-shadow:0 16px 64px #000b;
+}
+#donaciones .lldb-donation-dialog::backdrop { background:#000c; }
+#donaciones .lldb-donation-dialog h2 { margin:0 0 .65rem; font-size:1.3rem; }
+#donaciones .lldb-donation-dialog img {
+  display:block; width:auto; height:auto; max-width:100%;
+  max-height:calc(100dvh - 10rem); object-fit:contain;
+  margin:0 auto .75rem;
+}
+#donaciones .lldb-donation-dialog button {
+  min-height:44px; padding:.4rem 1.2rem; color:#fff4dc;
+  background:#1b2a42; border:1px solid #c39b53; border-radius:6px; cursor:pointer;
+}
+</style><style id="lldb-affiliates-reset">#afiliados .lldb-afiliados-reset{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 20px;background:#07101d;color:#f6e5bd}#afiliados .lldb-afiliados-reset h2{font-size:clamp(26px,3vw,48px);color:#e9b75e;margin:0 0 16px}#afiliados .lldb-afiliados-reset p{max-width:580px;font-size:clamp(15px,1.3vw,20px)}</style><style id="lldb-affiliates-carousel-v1">
 #afiliados .lldb-aff-stage{position:relative}
 #afiliados .lldb-aff-carousel{position:absolute;left:21.7%;top:48.1%;width:59.6%;height:19.5%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:0;padding:.35% .2%;background:#0b1424;border:3px solid #e3b95f;border-radius:5px;box-shadow:0 0 0 1px rgba(255,226,157,.22);z-index:5;color:white;isolation:isolate;overflow:visible;outline:none}
 #afiliados .lldb-aff-carousel:before{content:"";position:absolute;inset:-1.5% -1%;background:#0b1424;z-index:-1;border-radius:3px}
@@ -2570,13 +2576,11 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   <aside class="inicio-participa" aria-label="Participa con Lluvia de Bendición">
    <article class="inicio-card">
     <img src="/assets/corazon-web.jpg" alt="Corazón de acero con una llave" loading="lazy">
-    <h2>Apoya nuestro <strong>ministerio</strong></h2>
-    <button type="button" data-go="donaciones">Quiero apoyar ♥</button>
+    <button type="button" data-go="donaciones">Apoya a nuestro ministerio</button>
    </article>
    <article class="inicio-card">
-    <img src="/assets/afiliados-omar.jpg" alt="Omar de Lluvia de Bendición" loading="lazy">
-    <h2>Conoce cómo participar de nuestro <strong>programa</strong></h2>
-    <button type="button" data-go="afiliados">Afiliados</button>
+    <img src="/assets/afiliados-apreton.webp" alt="Dos personas dándose la mano" loading="lazy">
+    <button type="button" data-go="afiliados">Conoce afiliados</button>
    </article>
    <figure class="inicio-seed">
     <img src="/assets/sembrando-nino.jpg" alt="Niño arrodillado sembrando una planta" loading="lazy">
@@ -2758,20 +2762,42 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   </div>
 </section>
 <section id="donaciones" class="view" style="padding:0!important;background:#050914!important;min-height:0!important;overflow:visible!important">
-<aside class="lldb-donation-guide" aria-labelledby="lldb-donation-guide-title">
-  <h2 id="lldb-donation-guide-title">Apoya la visión</h2>
-  <h3>Tu apoyo</h3>
-  <p>Ayúdanos a compartir la Palabra de Dios.</p>
-  <h3>Cómo donar</h3>
-  <p>Escanea un código QR o dona con tarjeta.</p>
-  <blockquote>
-    <p>«Dios ama al dador alegre».</p>
-    <cite>2 Corintios 9:7</cite>
-  </blockquote>
-</aside>
+<blockquote class="lldb-donation-banner">
+  «Dios ama al dador alegre».
+  <cite>2 Corintios 9:7</cite>
+</blockquote>
 <div class="lldb-donation-board">
-<img src="/assets/Donaciones_back.jpg" alt="Diseño oficial de Donaciones" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain;filter:none;opacity:1;image-rendering:auto" /><div class="lldb-donation-panel" aria-label="Métodos para donar"><article class="lldb-pay-card lldb-pay-zelle"><h3>Zelle</h3><p>Una manera segura y directa de apoyar.</p><img src="/assets/Screenshot_20261029_143952_USAA.jpg" alt="Código QR oficial de Zelle"><div class="lldb-pay-label">Donar con Zelle</div></article><article class="lldb-pay-card lldb-pay-cash"><h3>Cash App</h3><p>Tu apoyo hace la diferencia.</p><img src="/assets/Screenshot_20261029_143524_Cash%20App.jpg" alt="Código QR oficial de Cash App"><div class="lldb-pay-label">Donar con Cash App</div></article><article class="lldb-pay-card lldb-pay-venmo"><h3>Venmo</h3><p>Juntos podemos llegar más lejos.</p><img src="/assets/Screenshot_20261029_143657_Print%20Spooler.jpg" alt="Código QR oficial de Venmo"><div class="lldb-pay-label">Donar con Venmo</div></article><article class="lldb-pay-card lldb-pay-paypal"><h3>PayPal</h3><p>Apoya de forma segura desde cualquier lugar.</p><img src="/assets/Screenshot_20261029_143841_PayPal.jpg" alt="Código QR oficial de PayPal"><div class="lldb-pay-label">Donar con PayPal</div></article><article class="lldb-pay-card lldb-pay-card"><h3>Tarjeta</h3><p>Crédito o débito</p><div class="lldb-card-symbol">💳</div><div class="lldb-card-brands"><span class="pay-brand"><img src="https://cdn.simpleicons.org/visa/1434CB" alt="Visa"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/mastercard" alt="Mastercard"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/americanexpress/006FCF" alt="American Express"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/discover" alt="Discover"></span></div><a class="lldb-pay-label lldb-stripe-pay-link" href="https://buy.stripe.com/28EeVe7TU55B17Y8wbawo00" target="_blank" rel="noopener noreferrer" aria-label="Donar con tarjeta de forma segura a través de Stripe">Donar con tarjeta</a><small>Enlace seguro por conectar</small></article></div>
+<img src="/assets/Donaciones_back.jpg" alt="Diseño oficial de Donaciones" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain;filter:none;opacity:1;image-rendering:auto" />
+<aside class="lldb-donation-art">
+  <img class="lldb-donation-retouch" src="/assets/donaciones-retoque.webp" alt="">
+  <div class="lldb-donation-security lldb-donation-security-ssl"><span>100% seguro<br>Conexión encriptada (SSL)</span></div>
+  <div class="lldb-donation-security lldb-donation-security-privacy"><span>No guardamos información de tu tarjeta</span></div>
+</aside>
+<div class="lldb-donation-panel" aria-label="Métodos para donar"><article class="lldb-pay-card lldb-pay-zelle"><h3>Zelle</h3><p>Una manera segura y directa de apoyar.</p><img src="/assets/Screenshot_20261029_143952_USAA.jpg" alt="Código QR oficial de Zelle"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Zelle</button></article><article class="lldb-pay-card lldb-pay-cash"><h3>Cash App</h3><p>Tu apoyo hace la diferencia.</p><img src="/assets/Screenshot_20261029_143524_Cash%20App.jpg" alt="Código QR oficial de Cash App"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Cash App</button></article><article class="lldb-pay-card lldb-pay-venmo"><h3>Venmo</h3><p>Juntos podemos llegar más lejos.</p><img src="/assets/Screenshot_20261029_143657_Print%20Spooler.jpg" alt="Código QR oficial de Venmo"><div class="lldb-pay-label">Donar con Venmo</div></article><article class="lldb-pay-card lldb-pay-paypal"><h3>PayPal</h3><p>Apoya de forma segura desde cualquier lugar.</p><img src="/assets/Screenshot_20261029_143841_PayPal.jpg" alt="Código QR oficial de PayPal"><div class="lldb-pay-label">Donar con PayPal</div></article><article class="lldb-pay-card lldb-pay-card"><h3>Tarjeta</h3><p>Crédito o débito</p><div class="lldb-card-symbol">💳</div><div class="lldb-card-brands"><span class="pay-brand"><img src="https://cdn.simpleicons.org/visa/1434CB" alt="Visa"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/mastercard" alt="Mastercard"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/americanexpress/006FCF" alt="American Express"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/discover" alt="Discover"></span></div><a class="lldb-pay-label lldb-stripe-pay-link" href="https://buy.stripe.com/28EeVe7TU55B17Y8wbawo00" target="_blank" rel="noopener noreferrer" aria-label="Donar con tarjeta de forma segura a través de Stripe">Donar con tarjeta</a><small>Enlace seguro por conectar</small></article></div>
 </div>
+
+<dialog class="lldb-donation-dialog" aria-labelledby="donation-qr-title">
+  <h2 id="donation-qr-title"></h2>
+  <img alt="">
+  <form method="dialog"><button type="submit" autofocus>Cerrar</button></form>
+</dialog>
+<script>
+(() => {
+  const donations = document.getElementById('donaciones');
+  const dialog = donations.querySelector('.lldb-donation-dialog');
+  const title = dialog.querySelector('h2');
+  const image = dialog.querySelector('img');
+  for (const button of donations.querySelectorAll('button[aria-haspopup="dialog"]')) {
+    button.addEventListener('click', () => {
+      const original = button.closest('article').querySelector('img');
+      title.textContent = button.textContent;
+      image.src = original.currentSrc || original.src;
+      image.alt = original.alt;
+      dialog.showModal();
+    });
+  }
+})();
+</script>
 </section>
 <section id="estudios" class="view" aria-labelledby="resources-title">
   <div class="resources-library">
