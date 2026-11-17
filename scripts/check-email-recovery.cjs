@@ -52,11 +52,14 @@ async function run() {
   const emergency = randomBytes(32).toString('base64url');
   const { hash } = require('../lib/prayer-domain.cjs');
   const once = `${Date.now() + 60000}.${hash(emergency)}`;
-  const bootstrap = { user:'omar-rivera',code:emergency,newPassword:original };
+  const shortPassword = randomBytes(6).toString('base64url');
+  const bootstrap = { user:'omar-rivera',code:emergency,newPassword:shortPassword };
   assert.equal(auth.recoverOmarOnce(state,users(),once,{ ...bootstrap,user:'ever-caraballo' },'local'),false);
+  assert.throws(() => auth.recoverOmarOnce(state,users(),once,{ ...bootstrap,newPassword:shortPassword.slice(1) },'local'),
+    /entre 8 y 256/);
   assert.equal(auth.recoverOmarOnce(state,users(),once,bootstrap,'local'),true);
   assert.equal(auth.recoverOmarOnce(state,users(),once,bootstrap,'local'),false);
-  assert.ok(auth.login(state,users(),{user:'omar',password:original},'local').token);
+  assert.ok(auth.login(state,users(),{user:'omar',password:shortPassword},'local').token);
   console.log('Omar y Ever: inicio de sesión, entrega simulada, activación por correo, vencimiento, uso único y revocación.');
 }
 

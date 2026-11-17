@@ -80,6 +80,7 @@
     else if (opts.long) { element.rows = 4; holder.classList.add('wide'); }
     else element.type = opts.type || 'text';
     if (opts.autocomplete) element.autocomplete = opts.autocomplete;
+    if (opts.minlength) element.minLength = opts.minlength;
     if (opts.value !== undefined) element.value = opts.value;
     if (opts.check) { element.type = 'checkbox'; element.checked = Boolean(opts.value); element.required = false; }
     holder.append(element);
@@ -121,7 +122,7 @@
     form('Restablecer contraseña', [
       input('user','Usuario',{autocomplete:'username'}),
       input('code','Código de recuperación',{type:'password',autocomplete:'off'}),
-      input('newPassword','Nueva contraseña (mínimo 15 caracteres)',{type:'password',autocomplete:'new-password'}),
+      input('newPassword','Nueva contraseña (mínimo 8 caracteres)',{type:'password',autocomplete:'new-password',minlength:8}),
       input('confirmation','Confirmar nueva contraseña',{type:'password',autocomplete:'new-password'})
     ], async ({ confirmation, ...values }) => {
       recoveryStatus.textContent = '';
@@ -515,7 +516,7 @@
     if (section === 'profile') {
       content.append(card('Cambiar contraseña', form('Guardar contraseña', [
         input('currentPassword','Contraseña actual',{type:'password',autocomplete:'current-password'}),
-        input('newPassword','Nueva contraseña (mínimo 15 caracteres)',{type:'password',autocomplete:'new-password'}),
+        input('newPassword','Nueva contraseña (mínimo 8 caracteres)',{type:'password',autocomplete:'new-password',minlength:8}),
         input('confirmation','Confirmar nueva contraseña',{type:'password',autocomplete:'new-password'})
       ], async ({ confirmation, ...values }) => {
         if (confirmation !== values.newPassword) throw new Error('Las contraseñas nuevas no coinciden.');
