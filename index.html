@@ -1967,28 +1967,13 @@ body:has(#inicio.active) footer #secret-admin-trigger{
   clip-path:inset(50%);
   white-space:nowrap;
 }
-#media .media-feature,
-#media .media-side button{
-  position:absolute;
-  border:0;
-  border-radius:6px;
-  background:transparent;
-  cursor:pointer;
-}
-#media .media-feature{top:22%;width:19%;height:54%}
+#media .media-feature{position:absolute;top:22%;width:19%;height:54%;border:0;border-radius:6px;background:transparent;cursor:pointer}
 #media .media-videos{left:17.7%;width:20.1%}
 #media .media-wallpapers{left:38.5%;width:18.3%}
 #media .media-originals{left:57.6%;width:19.4%}
 #media .media-podcasts{left:77.7%;width:19.4%}
-#media .media-side button{left:1.6%;width:15%;height:7.4%}
-#media .media-side button:nth-child(1){top:10%}
-#media .media-side button:nth-child(2){top:18.8%}
-#media .media-side button:nth-child(3){top:25%}
-#media .media-side button:nth-child(4){top:32.5%}
-#media .media-feature:hover,
-#media .media-side button:hover{background:#ffd28517}
-#media .media-feature:focus-visible,
-#media .media-side button:focus-visible{outline:3px solid #ffe09b;outline-offset:-3px}
+#media .media-feature:hover{background:#ffd28517}
+#media .media-feature:focus-visible{outline:3px solid #ffe09b;outline-offset:-3px}
 #media #podcast-room{position:relative;margin-top:20px}
 @media(max-width:660px){
   #media .media-scene{
@@ -1997,8 +1982,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
     border-radius:12px;
     background:radial-gradient(ellipse at 50% 0,#263c57,#080f1d 65%);
   }
-  #media .media-scene>img,
-  #media .media-side{display:none}
+  #media .media-scene>img{display:none}
   #media .media-scene h2{
     position:static;
     width:auto;
@@ -2028,12 +2012,13 @@ body:has(#inicio.active) footer #secret-admin-trigger{
     display:block;
     aspect-ratio:114/121;
     border-radius:4px;
-    background:url('/assets/media-nitida.jpg') var(--media-art-x) 35% / 526% auto no-repeat;
+    background:url('/assets/media-escena-limpia.webp') var(--media-art-x) 35% / 526% auto no-repeat;
   }
   #media .media-videos{--media-art-x:23%}
   #media .media-wallpapers{--media-art-x:47.1%}
   #media .media-originals{--media-art-x:71.1%}
   #media .media-podcasts{--media-art-x:96%}
+  #media .media-feature small{display:block;margin-top:3px;color:#ffcf79;font-size:.8em}
   #media .media-feature span{
     position:static;
     width:auto;
@@ -2126,6 +2111,19 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 .media-back:focus-visible{outline:2px solid #ffe1a5;outline-offset:2px}
 </style>
 <style id="lldb-media-projector">
+.media-video-backdrop>img.media-cinema-originals,
+.media-video-art.showing-originals .media-video-backdrop>img.media-cinema-standard{display:none}
+.media-video-art.showing-originals .media-video-backdrop>img.media-cinema-originals{display:block}
+@media(min-width:701px){
+  .media-video-sources :is([data-video-source="originals"],[data-video-source="affiliates"]){display:grid;place-items:center;padding:0}
+  .media-video-sources :is([data-video-source="originals"],[data-video-source="affiliates"]) span{
+    position:static;width:90%;height:auto;overflow:visible;clip-path:none;white-space:normal;
+    color:#fff3da;font:700 clamp(11px,1.4vw,21px)/1.12 "Archivo Narrow",system-ui,sans-serif;
+    text-align:center;text-shadow:0 2px 3px #000;
+  }
+  .media-video-sources [data-video-source="originals"] span{transform:translateY(4%) rotate(2deg)}
+}
+
 .media-video-art{isolation:isolate}
 .media-video-room{position:relative}
 .media-video-exit-light{
@@ -2280,7 +2278,7 @@ body:has(#inicio.active) footer #secret-admin-trigger{
   .media-video-placeholder img{aspect-ratio:1}
 }
 </style>
-<link rel="stylesheet" href="/assets/media-rooms.css?v=assistant">
+<link rel="stylesheet" href="/assets/media-rooms.css?v=escenarios">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap">
 <link rel="stylesheet" href="/assets/testimonios.css?v=firma-en-linea">
@@ -2450,6 +2448,29 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 #donaciones .lldb-donation-panel .pay-brand img{display:block!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important}
 </style><style id="lldb-donations-slightly-slimmer">#donaciones .lldb-donation-panel{left:20.0%!important;right:3.0%!important;gap:.85%!important}</style><style id="lldb-donations-align-board-edge">#donaciones .lldb-donation-panel{left:18.7%!important;right:4.3%!important}</style><style id="lldb-donations-card-emphasis">#donaciones .lldb-donation-panel{grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.16fr)!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child{border-width:2px!important;box-shadow:0 0 13px #e6b75a77,inset 0 0 14px #ffffff16!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child .lldb-pay-label{background:linear-gradient(90deg,#b77b24,#e0a849)!important;border-color:#ffe1a0!important;color:#15223a!important}</style><style id="lldb-donation-card-final-cover">#donaciones .lldb-donation-panel{right:0!important;background:#07152a!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child{position:relative!important;overflow:visible!important}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child:after{content:"";position:absolute;left:100%;top:-3px;width:16px;height:calc(100% + 6px);background:#07152a;z-index:-1}#donaciones .lldb-donation-panel>.lldb-pay-card:last-child .lldb-pay-label{background:linear-gradient(90deg,#bd801f,#ffd166)!important;color:#241b0b!important;border:1px solid #ffe5a0!important;box-shadow:0 0 8px #ffd16666!important}</style><style id="lldb-donation-symmetry-tweak">#donaciones .lldb-donation-panel{left:18.2%!important;right:.5%!important}</style><style id="lldb-stripe-payment-link">#donaciones .lldb-stripe-pay-link{display:block!important;text-decoration:none!important;cursor:pointer!important;pointer-events:auto!important;position:relative!important;z-index:20!important}#donaciones .lldb-stripe-pay-link:hover{filter:brightness(1.12)!important}#donaciones .lldb-stripe-pay-link:focus-visible{outline:3px solid #fff!important;outline-offset:2px!important}</style>
 <style id="lldb-donation-qr-style">
+#donaciones .lldb-donation-board{container-type:inline-size}
+#donaciones .lldb-donation-message,
+#donaciones .lldb-donation-scripture{position:absolute;margin:0;color:#fff4df}
+#donaciones .lldb-donation-message{
+  left:21%;right:19%;top:14.8%;text-align:center;
+  font:700 clamp(8px,2.34cqw,38px)/1.11 Georgia,serif;
+  text-shadow:0 2px 5px #02060c;
+}
+#donaciones .lldb-donation-scripture{
+  right:3%;top:5%;width:14.5%;text-align:right;
+  font:600 italic clamp(5.7px,1.21cqw,22px)/1.13 Georgia,serif;
+}
+#donaciones .lldb-donation-scripture cite{
+  display:block;margin-top:.45em;color:#f1d391;font-size:.83em;font-style:normal;
+}
+#donaciones .lldb-donation-panel .lldb-pay-card:has(>button)>img{max-height:60%!important}
+#donaciones .lldb-donation-panel .lldb-pay-card:last-child h3{
+  color:#fff2d5;font-size:clamp(9px,1.72cqw,26px)!important
+}
+#donaciones .lldb-donation-panel .lldb-pay-card:last-child p{
+  min-height:0;font-size:clamp(8px,1.05cqw,16px)!important
+}
+
 #donaciones .lldb-donation-art {
   position:absolute; inset:0 0 auto; width:100%; max-width:none!important;
   display:block!important; margin:0!important; padding:0!important; aspect-ratio:3616/2152;
@@ -2616,18 +2637,12 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <section id="media" class="view">
 <div class="media-scene">
   <h2>Media</h2>
-  <img src="/assets/media-nitida.jpg" alt="" width="1628" height="966" decoding="async" loading="lazy">
+  <img src="/assets/media-escena-limpia.webp" alt="" width="1628" height="966" decoding="async" loading="lazy">
   <div class="media-feature-grid">
-    <button type="button" class="media-feature media-videos" data-go="videos"><span>Videos</span></button>
-    <button type="button" class="media-feature media-wallpapers" data-go="wallpapers"><span>Wallpapers</span></button>
-    <button type="button" class="media-feature media-originals" data-go="originales"><span>LLDB Originales</span></button>
-    <button type="button" class="media-feature media-podcasts" data-go="podcasts"><span>Podcasts</span></button>
-  </div>
-  <div class="media-side" role="group" aria-label="Accesos de Media">
-    <button type="button" data-go="videos" aria-label="Videos"></button>
-    <button type="button" data-go="wallpapers" aria-label="Wallpapers"></button>
-    <button type="button" data-go="originales" aria-label="LLDB Originales"></button>
-    <button type="button" data-go="podcasts" aria-label="Podcasts"></button>
+    <button type="button" class="media-feature media-videos" data-go="videos"><span>Videos <small aria-hidden="true">Entrar</small></span></button>
+    <button type="button" class="media-feature media-wallpapers" data-go="wallpapers"><span>Wallpapers <small aria-hidden="true">Entrar</small></span></button>
+    <button type="button" class="media-feature media-originals" data-go="originales"><span>LLDB Originales <small aria-hidden="true">Entrar</small></span></button>
+    <button type="button" class="media-feature media-podcasts" data-go="podcasts"><span>Podcast <small aria-hidden="true">Entrar</small></span></button>
   </div>
 </div>
 </section>
@@ -2636,7 +2651,8 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   <div class="media-video-art">
     <div class="media-video-room">
       <div class="media-video-backdrop">
-        <img src="/assets/videos-nitida.jpg" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
+        <img class="media-cinema-standard" src="/assets/videos-escena-limpia.webp" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
+        <img class="media-cinema-originals" src="/assets/originales-escena-limpia.webp" alt="Sala de cine de Producciones LLDB" width="1536" height="1024" decoding="async" loading="lazy">
         <span class="media-video-arrow-mask" aria-hidden="true"></span>
       </div>
       <span class="media-video-exit-light" aria-hidden="true"></span>
@@ -2644,8 +2660,8 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     <div class="media-video-sources" role="group" aria-label="Fuentes de video">
       <button type="button" data-go="youtube" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
       <button type="button" data-go="facebook" data-video-source="facebook" aria-pressed="false"><span>Facebook</span></button>
-      <button type="button" data-go="originales" data-video-source="originals" aria-pressed="false"><span>LLDB Producciones</span></button>
-      <button type="button" data-go="videos-afiliados" data-video-source="affiliates" aria-pressed="false"><span>Videos de afiliados</span></button>
+      <button type="button" data-go="originales" data-video-source="originals" aria-pressed="false"><span>Producciones LLDB</span></button>
+      <button type="button" data-go="videos-afiliados" data-video-source="affiliates" aria-pressed="false"><span>Videos de nuestros afiliados</span></button>
     </div>
     <div id="media-projector" aria-label="Pantalla del cine"></div>
     <form class="media-video-search" role="search" aria-label="Buscar videos del cine">
@@ -2670,7 +2686,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   <h2 id="media-wallpapers-title" class="sr-only">Wallpapers</h2>
   <div class="wallpaper-stage">
     <div class="wallpaper-scene">
-      <img class="media-gallery-art" src="/assets/wallpapers-nitida.jpg" alt="Galería de Wallpapers de LLDB con un teléfono central" width="1536" height="1024" decoding="async" loading="lazy">
+      <img class="media-gallery-art" src="/assets/wallpapers-escena-limpia.webp" alt="Galería de Wallpapers de LLDB con un teléfono central" width="1536" height="1024" decoding="async" loading="lazy">
       <div class="wallpaper-covers" aria-hidden="true">
         <span data-wallpaper-board="christian"></span>
         <span data-wallpaper-board="originals"></span>
@@ -2708,7 +2724,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   <div class="podcast-stage">
     <div class="podcast-heading">
       <p>Lluvia de Bendición .Com</p>
-      <h2 id="media-podcasts-title">Podcasts</h2>
+      <h2 id="media-podcasts-title">Podcast</h2>
       <p>Un espacio para escuchar y reflexionar.</p>
     </div>
     <button type="button" class="podcast-light-toggle" data-podcast-lights aria-pressed="false" aria-label="Atenuar las luces" title="Atenuar las luces">
@@ -2769,11 +2785,16 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
 <div class="lldb-donation-board">
 <img src="/assets/Donaciones_back.jpg" alt="Diseño oficial de Donaciones" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain;filter:none;opacity:1;image-rendering:auto" />
 <aside class="lldb-donation-art">
-  <img class="lldb-donation-retouch" src="/assets/donaciones-retoque.webp" alt="">
+  <img class="lldb-donation-retouch" src="/assets/donaciones-retoque-final.webp" alt="">
+  <p class="lldb-donation-message">Tu generosidad nos ayuda a seguir<br>llevando la palabra de Dios a más corazones.</p>
+  <blockquote class="lldb-donation-scripture">
+    «Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre.»
+    <cite>2 Corintios 9:7</cite>
+  </blockquote>
   <div class="lldb-donation-security lldb-donation-security-ssl"><span>100% seguro<br>Conexión encriptada (SSL)</span></div>
   <div class="lldb-donation-security lldb-donation-security-privacy"><span>No guardamos información de tu tarjeta</span></div>
 </aside>
-<div class="lldb-donation-panel" aria-label="Métodos para donar"><article class="lldb-pay-card lldb-pay-zelle"><h3>Zelle</h3><p>Una manera segura y directa de apoyar.</p><img src="/assets/Screenshot_20261029_143952_USAA.jpg" alt="Código QR oficial de Zelle"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Zelle</button></article><article class="lldb-pay-card lldb-pay-cash"><h3>Cash App</h3><p>Tu apoyo hace la diferencia.</p><img src="/assets/Screenshot_20261029_143524_Cash%20App.jpg" alt="Código QR oficial de Cash App"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Cash App</button></article><article class="lldb-pay-card lldb-pay-venmo"><h3>Venmo</h3><p>Juntos podemos llegar más lejos.</p><img src="/assets/Screenshot_20261029_143657_Print%20Spooler.jpg" alt="Código QR oficial de Venmo"><div class="lldb-pay-label">Donar con Venmo</div></article><article class="lldb-pay-card lldb-pay-paypal"><h3>PayPal</h3><p>Apoya de forma segura desde cualquier lugar.</p><img src="/assets/Screenshot_20261029_143841_PayPal.jpg" alt="Código QR oficial de PayPal"><div class="lldb-pay-label">Donar con PayPal</div></article><article class="lldb-pay-card lldb-pay-card"><h3>Tarjeta</h3><p>Crédito o débito</p><div class="lldb-card-symbol">💳</div><div class="lldb-card-brands"><span class="pay-brand"><img src="https://cdn.simpleicons.org/visa/1434CB" alt="Visa"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/mastercard" alt="Mastercard"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/americanexpress/006FCF" alt="American Express"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/discover" alt="Discover"></span></div><a class="lldb-pay-label lldb-stripe-pay-link" href="https://buy.stripe.com/28EeVe7TU55B17Y8wbawo00" target="_blank" rel="noopener noreferrer" aria-label="Donar con tarjeta de forma segura a través de Stripe">Donar con tarjeta</a><small>Enlace seguro por conectar</small></article></div>
+<div class="lldb-donation-panel" aria-label="Métodos para donar"><article class="lldb-pay-card lldb-pay-zelle"><h3>Zelle</h3><img src="/assets/Screenshot_20261029_143952_USAA.jpg" alt="Código QR oficial de Zelle"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Zelle</button></article><article class="lldb-pay-card lldb-pay-cash"><h3>Cash App</h3><img src="/assets/Screenshot_20261029_143524_Cash%20App.jpg" alt="Código QR oficial de Cash App"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Cash App</button></article><article class="lldb-pay-card lldb-pay-venmo"><h3>Venmo</h3><img src="/assets/Screenshot_20261029_143657_Print%20Spooler.jpg" alt="Código QR oficial de Venmo"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con Venmo</button></article><article class="lldb-pay-card lldb-pay-paypal"><h3>PayPal</h3><img src="/assets/Screenshot_20261029_143841_PayPal.jpg" alt="Código QR oficial de PayPal"><button type="button" class="lldb-pay-label" aria-haspopup="dialog">Donar con PayPal</button></article><article class="lldb-pay-card lldb-pay-card"><h3>Donar con Tarjeta</h3><p>Crédito o Débito</p><div class="lldb-card-symbol">💳</div><div class="lldb-card-brands"><span class="pay-brand"><img src="https://cdn.simpleicons.org/visa/1434CB" alt="Visa"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/mastercard" alt="Mastercard"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/americanexpress/006FCF" alt="American Express"></span><span class="pay-brand"><img src="https://cdn.simpleicons.org/discover" alt="Discover"></span></div><a class="lldb-pay-label lldb-stripe-pay-link" href="https://buy.stripe.com/28EeVe7TU55B17Y8wbawo00" target="_blank" rel="noopener noreferrer" aria-label="Donar con tarjeta de forma segura a través de Stripe">Donar con tarjeta</a><small>Enlace seguro por conectar</small></article></div>
 </div>
 
 <dialog class="lldb-donation-dialog" aria-labelledby="donation-qr-title">
@@ -3410,6 +3431,7 @@ function renderCinemaCatalog() {
 }
 
 function showCinemaCatalog(key) {
+ cinemaArt.classList.toggle('showing-originals', key==='originals');
  selectedCinemaSource=key;
  selectedCinemaVideo=null;
  cinemaSearchInput.value='';
