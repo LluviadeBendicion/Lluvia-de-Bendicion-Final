@@ -2110,6 +2110,34 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 .media-video-exit:focus-visible,
 .media-back:focus-visible{outline:2px solid #ffe1a5;outline-offset:2px}
 </style>
+
+<style id="lldb-video-source-branding">
+#videos .media-video-sources :is([data-video-source="originals"],[data-video-source="affiliates"]){
+  display:flex;align-items:center;justify-content:center;gap:4%;padding:4%;
+}
+#videos .media-video-sources :is([data-video-source="originals"],[data-video-source="affiliates"])>span{
+  position:static;clip-path:none;overflow:visible;white-space:normal;
+  width:auto;height:auto;flex:1;min-width:0;transform:none;
+  font:600 clamp(16px,2vw,29px)/.95 'Caveat','Segoe Print',cursive;
+  color:#efd07b;text-shadow:0 1px 2px #000;text-align:left;
+}
+#videos .media-video-sources [data-video-source="originals"]>span{font-size:clamp(13px,1.6vw,24px)}
+#videos .media-source-mark{
+  display:block;flex:0 0 26%;width:26%;height:auto;aspect-ratio:1;
+  object-fit:contain;pointer-events:none;
+}
+#videos .media-source-popcorn{
+  aspect-ratio:46/53;clip-path:inset(0 0 14% 0);
+  background:url('/assets/videos-nitida.jpg') 36.1074% 92.173% / 3339.1304% 1932.0755% no-repeat;
+}
+@media(min-width:701px){
+  #videos .media-video-sources :is([data-video-source="originals"],[data-video-source="affiliates"]){padding:1% .8%}
+}
+@media(max-width:700px){
+  #videos .media-video-sources .media-source-mark{max-width:45px}
+  #videos .media-video-sources :is([data-video-source="originals"],[data-video-source="affiliates"])>span{font-size:21px}
+}
+</style>
 <style id="lldb-media-projector">
 .media-video-backdrop>img.media-cinema-originals,
 .media-video-art.showing-originals .media-video-backdrop>img.media-cinema-standard{display:none}
@@ -2651,7 +2679,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   <div class="media-video-art">
     <div class="media-video-room">
       <div class="media-video-backdrop">
-        <img class="media-cinema-standard" src="/assets/videos-escena-limpia.webp" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
+        <img class="media-cinema-standard" src="/assets/originales-escena-limpia.webp" alt="Sala de cine de LLDB" width="1536" height="1024" decoding="async" loading="lazy">
         <img class="media-cinema-originals" src="/assets/originales-escena-limpia.webp" alt="Sala de cine de Producciones LLDB" width="1536" height="1024" decoding="async" loading="lazy">
         <span class="media-video-arrow-mask" aria-hidden="true"></span>
       </div>
@@ -2660,8 +2688,8 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     <div class="media-video-sources" role="group" aria-label="Fuentes de video">
       <button type="button" data-go="youtube" data-video-source="youtube" aria-pressed="false"><span>YouTube</span></button>
       <button type="button" data-go="facebook" data-video-source="facebook" aria-pressed="false"><span>Facebook</span></button>
-      <button type="button" data-go="originales" data-video-source="originals" aria-pressed="false"><span>Producciones LLDB</span></button>
-      <button type="button" data-go="videos-afiliados" data-video-source="affiliates" aria-pressed="false"><span>Videos de nuestros afiliados</span></button>
+      <button type="button" data-go="originales" data-video-source="originals" aria-pressed="false"><img class="media-source-mark" src="/assets/logo-oficial-definitivo.png" alt="" aria-hidden="true"><span>Producciones LLDB</span></button>
+      <button type="button" data-go="videos-afiliados" data-video-source="affiliates" aria-pressed="false"><i class="media-source-mark media-source-popcorn" aria-hidden="true"></i><span>Videos de nuestros afiliados</span></button>
     </div>
     <div id="media-projector" aria-label="Pantalla del cine"></div>
     <form class="media-video-search" role="search" aria-label="Buscar videos del cine">
