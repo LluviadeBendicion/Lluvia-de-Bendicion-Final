@@ -2536,6 +2536,49 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
   background:#1b2a42; border:1px solid #c39b53; border-radius:6px; cursor:pointer;
 }
 </style><style id="lldb-affiliates-reset">#afiliados .lldb-afiliados-reset{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 20px;background:#07101d;color:#f6e5bd}#afiliados .lldb-afiliados-reset h2{font-size:clamp(26px,3vw,48px);color:#e9b75e;margin:0 0 16px}#afiliados .lldb-afiliados-reset p{max-width:580px;font-size:clamp(15px,1.3vw,20px)}</style><style id="lldb-affiliates-carousel-v1">
+#afiliados .aff-surface-repair{
+  position:absolute;inset:0;width:100%;height:100%;max-width:none;
+  pointer-events:none;display:block;
+}
+#afiliados .aff-menu{
+  position:absolute;left:2%;top:5.4%;width:15.5%;height:41%;
+  display:grid;grid-template-rows:repeat(6,minmax(0,1fr));gap:2%;
+  padding:0;margin:0;z-index:6;
+}
+#afiliados .aff-menu button{
+  display:flex;align-items:center;gap:6%;min-width:0;min-height:0;width:100%;
+  border:1px solid transparent;border-radius:6px;padding:2% 3%;
+  background:transparent;color:#fff4e4;text-align:left;cursor:pointer;white-space:normal;
+  font:600 clamp(12px,1.38vw,22px)/1.04 "Cormorant Garamond",Georgia,serif;
+}
+#afiliados .aff-menu button>span{display:block;flex:1;min-width:0;white-space:normal;overflow-wrap:normal}
+#afiliados .aff-menu button[aria-current="location"]{
+  background:linear-gradient(135deg,#f6cd77,#ba7b26 70%,#75501f);
+  border-color:#ffdda0;color:#21170a;box-shadow:inset 0 1px 4px #fff7c745,0 3px 8px #0004;
+}
+#afiliados .aff-menu button:focus-visible{outline:2px solid #a0dbff;outline-offset:1px}
+#afiliados .aff-menu-icon{
+  flex:0 0 22%;aspect-ratio:1;display:block;
+  background:url('/assets/Afiliados%20back.jpg') 2.75% var(--aff-icon-y) / 3135.7143% 1925% no-repeat;
+  filter:grayscale(1);border-radius:3px;pointer-events:none;
+}
+#afiliados .aff-menu button[aria-current="location"] .aff-menu-icon{filter:sepia(1) saturate(1.4)}
+#afiliados .lldb-aff-stage [data-aff-scroll-region]{position:absolute;left:21%;width:58%;pointer-events:none}
+#afiliados [data-aff-scroll-region="overview"]{top:0;height:33%}
+#afiliados [data-aff-scroll-region="benefits"]{top:34%;height:10%}
+#afiliados [data-aff-scroll-region="businesses"]{top:48%;height:20%}
+@media(max-width:700px){
+  #afiliados .aff-menu{
+    position:relative;inset:auto;width:auto;height:auto;margin:12px;
+    grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:5px;
+  }
+  #afiliados .aff-menu button{
+    min-height:40px;padding:7px 10px;border-color:#665134;background:#091423;
+    font-size:17px;
+  }
+  #afiliados .aff-menu-icon{flex-basis:25px;max-width:25px}
+}
+
 #afiliados .lldb-aff-stage{position:relative}
 #afiliados .lldb-aff-carousel{position:absolute;left:21.7%;top:48.1%;width:59.6%;height:19.5%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:0;padding:.35% .2%;background:#0b1424;border:3px solid #e3b95f;border-radius:5px;box-shadow:0 0 0 1px rgba(255,226,157,.22);z-index:5;color:white;isolation:isolate;overflow:visible;outline:none}
 #afiliados .lldb-aff-carousel:before{content:"";position:absolute;inset:-1.5% -1%;background:#0b1424;z-index:-1;border-radius:3px}
@@ -2943,7 +2986,20 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
     </div>
   </div>
 </section>
-<section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" /><div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div><div class="contacto-afiliados"><a class="contacto-button" href="#contacto" data-contact-affiliate>Solicitar más información</a></div></section>
+<section id="afiliados" class="view" style="padding:0!important;background:#050914!important;min-height:0!important"><div class="lldb-aff-stage"><button type="button" class="lldb-aff-prev-v2" aria-label="Anuncios anteriores">‹</button><img src="/assets/Afiliados%20back.jpg" alt="Diseño oficial de la sección Afiliados" style="display:block;width:100%;height:auto;max-width:none;object-fit:contain" />
+<nav class="aff-menu" aria-label="Opciones de Afiliados">
+  <button type="button" data-aff-section="overview" aria-current="location"><i class="aff-menu-icon" style="--aff-icon-y:4.6%" aria-hidden="true"></i><span>Afiliados</span></button>
+  <button type="button" data-aff-section="benefits"><i class="aff-menu-icon" style="--aff-icon-y:12.4%" aria-hidden="true"></i><span>Por qué anunciar</span></button>
+  <button type="button" data-aff-section="how"><i class="aff-menu-icon" style="--aff-icon-y:19.4%" aria-hidden="true"></i><span>Cómo funciona</span></button>
+  <button type="button" data-aff-section="businesses"><i class="aff-menu-icon" style="--aff-icon-y:26%" aria-hidden="true"></i><span>Tipos de negocio</span></button>
+  <button type="button" data-aff-section="questions"><i class="aff-menu-icon" style="--aff-icon-y:39%" aria-hidden="true"></i><span>Preguntas frecuentes</span></button>
+  <button type="button" data-aff-section="contact"><i class="aff-menu-icon" style="--aff-icon-y:45.5%" aria-hidden="true"></i><span>Contáctanos</span></button>
+</nav>
+<img class="aff-surface-repair" src="/assets/afiliados-retoque.webp" alt="">
+<span data-aff-scroll-region="overview" aria-hidden="true"></span>
+<span data-aff-scroll-region="benefits" aria-hidden="true"></span>
+<span data-aff-scroll-region="businesses" aria-hidden="true"></span>
+<div class="lldb-aff-carousel" aria-label="Carrusel de seis afiliados"><button type="button" class="lldb-aff-card" data-slot="0" aria-label="Anuncio 1"></button><button type="button" class="lldb-aff-card" data-slot="1" aria-label="Anuncio 2"></button><button type="button" class="lldb-aff-card" data-slot="2" aria-label="Anuncio 3"></button><button type="button" class="lldb-aff-card" data-slot="3" aria-label="Anuncio 4"></button><button type="button" class="lldb-aff-card" data-slot="4" aria-label="Anuncio 5"></button><button type="button" class="lldb-aff-card" data-slot="5" aria-label="Anuncio 6"></button><button type="button" class="lldb-aff-next" aria-label="Anuncios siguientes">›</button><div class="lldb-aff-dots"></div></div></div><div class="lldb-aff-modal" hidden role="dialog" aria-modal="true" aria-label="Anuncio del afiliado"><button type="button" class="lldb-aff-close" aria-label="Cerrar anuncio">×</button><img class="lldb-aff-full" alt="Flyer del afiliado"/></div><div class="contacto-afiliados" data-aff-scroll-region="contact"><a class="contacto-button" href="#contacto" data-contact-affiliate>Solicitar más información</a></div></section>
 <section id="peticiones" class="view" aria-labelledby="peticion-titulo">
   <div class="peticion-escena">
     <div class="peticion-panel">
@@ -3575,4 +3631,5 @@ const lldbStartupVideo=document.getElementById('lldb-radio-startup-video');if(ll
 })();
 </script><script src="/assets/media-wallpapers.js?v=wallpaper-verses" defer></script><script src="/assets/wallpaper-admin.js?v=acceso-permisos" defer></script>
 <script src="/assets/podcast-room.js" defer></script>
+<script src="/assets/afiliados-menu.js" defer></script>
 </body></html>
