@@ -5,10 +5,10 @@
 ## Arquitectura
 - `scripts/zararadio_now_playing.py`: extrae el último evento `start` del log diario.
 - `scripts/zararadio_sender.py`: consulta cada 15 segundos y envía cambios por HTTPS con un Bearer token.
-- `api/now-playing.js`: POST autenticado y GET público; persiste el estado en Vercel Blob y deja de mostrar información caducada a los 20 minutos.
+- `api/now-playing.js`: POST autenticado y GET público; persiste el estado en Vercel Blob y renueva el registro cada cinco minutos y deja de mostrar información caducada a los 20 minutos.
 
 ## Antes de desplegar
-1. Verificar que Vercel Blob esté conectado y exista `BLOB_READ_WRITE_TOKEN`.
+1. Conectar exclusivamente el almacén `lldb-zararadio-metadata-2026` al proyecto de Vercel con una variable de conexión específica `LLDB_RADIO_BLOB_READ_WRITE_TOKEN`. **No sustituir ni reutilizar `BLOB_READ_WRITE_TOKEN` ni el almacén privado de peticiones.** El almacén está creado, pero aún no está conectado al proyecto.
 2. Generar un token aleatorio independiente y configurarlo en Vercel como `LLDB_NOW_PLAYING_TOKEN`. Nunca guardarlo en GitHub ni enviarlo por chat.
 3. Desplegar únicamente a Preview; probar POST 401 sin token, POST 200 con token, GET con canción y GET con estado caducado.
 4. Confirmar formato de logs y caracteres con canciones reales.
