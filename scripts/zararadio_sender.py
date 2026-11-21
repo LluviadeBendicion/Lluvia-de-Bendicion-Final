@@ -30,10 +30,11 @@ def main():
     if not endpoint.startswith("https://") or not token:
         raise SystemExit("Set LLDB_NOW_PLAYING_URL (https) and LLDB_NOW_PLAYING_TOKEN first")
     previous = None
+    last_sent = 0.0
     while True:
         try:
             song = latest_song(sys.argv[1])
-            if song and song != previous:
+            if song and (song != previous or time.monotonic() - last_sent >= 300):
                 payload = json.dumps({"title": song["title"], "artist": song["artist"],
                                       "time": song["time"], "date": song["date"]},
                                      ensure_ascii=False).encode("utf-8")
@@ -45,6 +46,7 @@ def main():
                     if not 200 <= response.status < 300:
                         raise RuntimeError("HTTP " + str(response.status))
                 previous = song
+                last_sent = time.monotonic()
                 print("Updated:", song["artist"], "-", song["title"], flush=True)
         except Exception as exc:
             print("Retry after error:", exc, flush=True)
