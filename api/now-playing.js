@@ -20,7 +20,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  if (!process.env.LLDB_RADIO_BLOB_READ_WRITE_TOKEN) {
     return res.status(503).json({ status: 'unconfigured' });
   }
   if (req.method === 'POST') {
@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
       await put(PATH, JSON.stringify(data), {
         access: 'public', allowOverwrite: true,
         contentType: 'application/json', addRandomSuffix: false,
-        cacheControlMaxAge: 60
+        cacheControlMaxAge: 60, token: process.env.LLDB_RADIO_BLOB_READ_WRITE_TOKEN
       });
       return res.status(200).json({ ok: true });
     } catch (error) {
@@ -51,7 +51,7 @@ module.exports = async function handler(req, res) {
     }
   }
   try {
-    const { blobs } = await list({ prefix: PATH, limit: 10 });
+    const { blobs } = await list({ prefix: PATH, limit: 10, token: process.env.LLDB_RADIO_BLOB_READ_WRITE_TOKEN });
     const entry = blobs.find(b => b.pathname === PATH);
     if (!entry) return res.status(200).json({ status: 'unavailable' });
     const response = await fetch(entry.downloadUrl || entry.url, { cache: 'no-store' });
