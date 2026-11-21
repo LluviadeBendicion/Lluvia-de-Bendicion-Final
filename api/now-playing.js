@@ -30,7 +30,12 @@ module.exports = async function handler(req, res) {
     if (Number(req.headers['content-length'] || 0) > 2048) {
       return res.status(413).json({ error: 'Too large' });
     }
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    let body;
+    try {
+      body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    } catch {
+      return res.status(400).json({ error: 'Invalid JSON' });
+    }
     if (!body || !validString(body.title, 160) || typeof body.artist !== 'string' ||
         body.artist.length > 160 || !validString(body.date, 10) ||
         !/^\d{4}-\d{2}-\d{2}$/.test(body.date) ||
