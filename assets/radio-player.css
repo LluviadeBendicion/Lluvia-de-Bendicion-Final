@@ -1,0 +1,58 @@
+/* Keep the approved 16:9 artwork intact. The full provider widget follows it. */
+body:has(#radio.active) #radio.lldb-radio-fullscreen {
+  display: block !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+#radio .lldb-radio-stage {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#radio .lldb-radio-controls-open {
+  position: absolute;
+  left: 83.5%;
+  top: 70%;
+  width: 4%;
+  height: 5.5%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  z-index: 4;
+  cursor: pointer;
+}
+#radio .lldb-radio-controls-open:focus-visible {
+  outline: 3px solid #ffe3a3;
+  outline-offset: 3px;
+}
+#radio .lldb-radio-controls {
+  width: min(100% - 24px, 760px);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px 0 max(24px, env(safe-area-inset-bottom));
+  color: #f4e6cc;
+  font: 14px/1.5 system-ui, sans-serif;
+  overflow-wrap: anywhere;
+}
+#radio .lldb-radio-controls p { margin: 0 0 12px; }
+#radio #lldb-casterfm-player { width: 100%; margin-bottom: 16px; }
+#radio #lldb-casterfm-player iframe { display: block; min-height: 260px; }
+#radio .lldb-radio-controls button {
+  margin: 0 8px 8px 0;
+  padding: 10px 14px;
+  border: 1px solid #b9974c;
+  border-radius: 6px;
+  background: #16212a;
+  color: #ffe3a3;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  #radio .lldb-radio-controls-open {
+    left: 79%;
+    top: 68.5%;
+    width: 13%;
+    height: 14%;
+  }
+}
