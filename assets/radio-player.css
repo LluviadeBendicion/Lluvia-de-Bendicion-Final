@@ -37,7 +37,7 @@ body:has(#radio.active) #radio.lldb-radio-fullscreen {
   overflow-wrap: anywhere;
 }
 #radio .lldb-radio-controls p { margin: 0 0 12px; }
-#radio #lldb-casterfm-player { width: 100%; margin-bottom: 16px; }
+#radio #lldb-casterfm-player { width: 100%; min-height: 260px; margin-bottom: 16px; }
 #radio #lldb-casterfm-player iframe { display: block; min-height: 260px; }
 #radio .lldb-radio-controls button {
   margin: 0 8px 8px 0;
@@ -56,3 +56,24 @@ body:has(#radio.active) #radio.lldb-radio-fullscreen {
     height: 14%;
   }
 }
+
+
+/* Replace the example song printed on the display with an honest availability message. */
+body:has(#radio.active) #radio .lldb-radio-art .lldb-radio-next-screen {
+  display: flex !important;
+  left: 43% !important;
+  top: 40% !important;
+  width: 26.5% !important;
+  height: 9.5% !important;
+  box-sizing: border-box;
+  padding: .4% !important;
+  background: linear-gradient(155deg,#080807,#17110b 60%,#090806) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 5px;
+}
+#radio .lldb-radio-next-screen small { display: none; }
+body:has(#radio.active) #radio .lldb-radio-art .lldb-radio-next-screen strong {
+  font-size: clamp(7px,1.15vw,16px) !important;
+}
+#radio .lldb-radio-next-screen .lldb-radio-mode { display: none; }

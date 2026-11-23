@@ -101,6 +101,16 @@
     radio.scrollTo({ top: 0, behavior: 'instant' });
     open.focus({ preventScroll: true });
   });
+  document.getElementById('lldb-radio-stop').addEventListener('click', () => {
+    clearPlayer();
+    ledLabel.textContent = 'AUDIO';
+    report('Audio detenido. Pulsa Recargar reproductor y después PLAY para volver a escuchar.');
+  });
+  window.addEventListener('pagehide', () => {
+    clearPlayer();
+    active = false;
+  });
+  window.addEventListener('pageshow', syncView);
   document.getElementById('lldb-radio-retry').addEventListener('click', () => {
     if (active) loadPlayer();
   });
