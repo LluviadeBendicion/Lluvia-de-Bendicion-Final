@@ -18,6 +18,7 @@
   };
   const defaultPrayer = 'Señor, gracias por este nuevo día. Guía mis pasos, fortalece mi fe y enséñame a compartir tu amor con quienes me rodean. Dame sabiduría para mis decisiones, paz para mi corazón y un espíritu dispuesto a servir. En el nombre de Jesús, amén.';
   let selected = null;
+  let renderRevision = 0;
   let fullText = '';
   let pages = [];
   let page = 0;
@@ -59,13 +60,29 @@
     showPage(Math.min(page, pages.length - 1));
   }
 
-  function renderChoice() {
+  async function renderChoice() {
+    const revision = ++renderRevision;
     const key = selected.dataset.resource;
     const entry = officialContent[keys[key]] || {};
     const text = entry.text || entry.content || (key === 'oracion' ? defaultPrayer : '');
-    fullText = entry.enabled !== false && text
-      ? [entry.title, text, entry.reference, entry.note].filter(Boolean).join('\n\n')
-      : 'Contenido en preparación.';
+    if (entry.enabled === false) {
+      fullText = 'Contenido en preparación.';
+    } else if (key !== 'oracion' && entry.reference) {
+      fullText = 'Consultando lectura NVI…';
+      paginate();
+      try {
+        const data = await window.LLDBBible.passage(entry.reference);
+        if (revision !== renderRevision || !selected) return;
+        fullText = [entry.title, key === 'versiculo' || key === 'memorizar' ? '' : text,
+          data.reference + ' · NVI', data.text, data.credit, entry.note].filter(Boolean).join('\n\n');
+      } catch (error) {
+        if (revision !== renderRevision || !selected) return;
+        fullText = [entry.title, key === 'versiculo' || key === 'memorizar' ? '' : text,
+          entry.reference + ' · NVI', error.message, entry.note].filter(Boolean).join('\n\n');
+      }
+    } else {
+      fullText = text ? [entry.title, text, entry.reference, entry.note].filter(Boolean).join('\n\n') : 'Contenido en preparación.';
+    }
     paginate();
   }
 
@@ -86,6 +103,7 @@
     if (!selected) return;
     const lastChoice = selected;
     selected = null;
+    ++renderRevision;
     delete classroom.dataset.reading;
     board.hidden = true;
     back.hidden = true;
@@ -100,5 +118,6 @@
   next.addEventListener('click', () => showPage(page + 1));
   window.addEventListener('resize', paginate);
   document.fonts.load('20px Kalam').then(paginate, paginate);
+  window.addEventListener('officialcontentchange', () => { if (selected) { page = 0; renderChoice(); } });
   officialContentReady.then(() => { if (selected) renderChoice(); });
 })();

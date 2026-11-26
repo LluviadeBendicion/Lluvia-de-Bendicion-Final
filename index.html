@@ -2316,9 +2316,10 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="/assets/panel-maestro.css?v=acceso-permisos">
 <script src="/assets/testimonios.js?v=firma-en-linea" defer></script>
 <link rel="stylesheet" href="/assets/especial.css">
-<script src="/assets/especial.js" defer></script>
+<script src="/assets/biblia-nvi.js?v=1" defer></script>
+<script src="/assets/especial.js?v=nvi-1" defer></script>
 <link rel="stylesheet" href="/assets/recursos.css?v=iconos-ilustrados">
-<script src="/assets/recursos.js?v=menu-televisor" defer></script>
+<script src="/assets/recursos.js?v=nvi-search-2" defer></script>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2630,7 +2631,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
      <button type="button" data-go="especial" data-resource-link="oracion">Oración del día</button>
      <button type="button" data-go="especial" data-resource-link="versiculo">Versículo del día</button>
      <button type="button" data-go="especial" data-resource-link="memorizar">Versículo para memorizar</button>
-     <button type="button" data-go="especial" data-resource-link="devocional">Devocional de la semana</button>
+     <button type="button" data-go="especial" data-resource-link="devocional">Devocional del día</button>
     </div>
    </details>
    <details>
@@ -2690,7 +2691,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <button type="button" data-resource="oracion" aria-controls="special-board">Oración del día</button>
       <button type="button" data-resource="versiculo" aria-controls="special-board">Versículo del día</button>
       <button type="button" data-resource="memorizar" aria-controls="special-board">Versículo para memorizar</button>
-      <button type="button" data-resource="devocional" aria-controls="special-board">Devocional de la semana</button>
+      <button type="button" data-resource="devocional" aria-controls="special-board">Devocional del día</button>
     </div>
     <div class="special-card-selected" aria-hidden="true"></div>
     <button class="special-return" type="button" hidden>← Volver</button>
@@ -2926,8 +2927,12 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <button id="resources-back" type="button" hidden>‹ Volver a los iconos</button>
       <div class="resources-panels" hidden>
       <section class="resources-panel" id="library-bible">
-        <h3>Biblia Reina-Valera 1960</h3>
+        <h3>Biblia Nueva Versión Internacional (NVI)</h3>
         <p class="resources-intro">Elige el libro, el capítulo y los versículos que quieres leer.</p>
+        <form id="resources-bible-search" method="get">
+          <label>Buscar en la NVI <input type="search" name="query" placeholder="Ej. Juan 3:16, esperanza o una frase" maxlength="160" required></label>
+          <button type="submit">Buscar</button>
+        </form>
         <form id="resources-reading" method="post">
           <div class="resources-fields">
             <label>Libro <select name="book"><option value="GEN">Génesis</option><option value="EXO">Éxodo</option><option value="LEV">Levítico</option><option value="NUM">Números</option><option value="DEU">Deuteronomio</option><option value="JOS">Josué</option><option value="JDG">Jueces</option><option value="RUT">Rut</option><option value="1SA">1 Samuel</option><option value="2SA">2 Samuel</option><option value="1KI">1 Reyes</option><option value="2KI">2 Reyes</option><option value="1CH">1 Crónicas</option><option value="2CH">2 Crónicas</option><option value="EZR">Esdras</option><option value="NEH">Nehemías</option><option value="EST">Ester</option><option value="JOB">Job</option><option value="PSA">Salmos</option><option value="PRO">Proverbios</option><option value="ECC">Eclesiastés</option><option value="SNG">Cantares</option><option value="ISA">Isaías</option><option value="JER">Jeremías</option><option value="LAM">Lamentaciones</option><option value="EZK">Ezequiel</option><option value="DAN">Daniel</option><option value="HOS">Oseas</option><option value="JOL">Joel</option><option value="AMO">Amós</option><option value="OBA">Abdías</option><option value="JON">Jonás</option><option value="MIC">Miqueas</option><option value="NAM">Nahúm</option><option value="HAB">Habacuc</option><option value="ZEP">Sofonías</option><option value="HAG">Hageo</option><option value="ZEC">Zacarías</option><option value="MAL">Malaquías</option><option value="MAT">Mateo</option><option value="MRK">Marcos</option><option value="LUK">Lucas</option><option value="JHN">Juan</option><option value="ACT">Hechos</option><option value="ROM">Romanos</option><option value="1CO">1 Corintios</option><option value="2CO">2 Corintios</option><option value="GAL">Gálatas</option><option value="EPH">Efesios</option><option value="PHP">Filipenses</option><option value="COL">Colosenses</option><option value="1TH">1 Tesalonicenses</option><option value="2TH">2 Tesalonicenses</option><option value="1TI">1 Timoteo</option><option value="2TI">2 Timoteo</option><option value="TIT">Tito</option><option value="PHM">Filemón</option><option value="HEB">Hebreos</option><option value="JAS">Santiago</option><option value="1PE">1 Pedro</option><option value="2PE">2 Pedro</option><option value="1JN">1 Juan</option><option value="2JN">2 Juan</option><option value="3JN">3 Juan</option><option value="JUD">Judas</option><option value="REV">Apocalipsis</option></select></label>
@@ -2938,7 +2943,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
         </form>
         <div class="resources-passage">
           <h4 id="resources-results-title">Génesis 1:1</h4>
-          <div id="resources-output" aria-live="polite">En el principio creó Dios los cielos y la tierra.</div>
+          <div id="resources-output" aria-live="polite">Selecciona un pasaje para leerlo en la NVI.</div>
         </div>
         <div class="resources-actions" aria-label="Acciones del pasaje">
           <button type="button" data-passage-action="copy">Copiar</button>
@@ -2950,7 +2955,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
           <label>Nota personal <textarea name="note" rows="3" maxlength="3000"></textarea></label>
           <button type="submit">Guardar nota</button>
         </form>
-        <p id="resources-credit">Reina-Valera 1960® © 1960 Sociedades Bíblicas en América Latina; © renovado 1988 Sociedades Bíblicas Unidas.</p>
+        <p id="resources-credit">Nueva Versión Internacional (NVI) · Biblica, Inc.</p>
         <p id="resources-passage-status" class="resources-status" role="status"></p>
       </section>
       <section class="resources-panel" id="library-search">
@@ -2967,6 +2972,11 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
           <button type="button" data-bible-ref="PSA.33.6">Salmos 33:6</button>
         </div>
         <p id="resources-search-credit" class="resources-credit"></p>
+        <div class="resources-search-pages" aria-label="Páginas de la concordancia">
+          <button type="button" id="resources-search-previous" disabled>Anterior</button>
+          <span id="resources-search-page" role="status"></span>
+          <button type="button" id="resources-search-next" disabled>Siguiente</button>
+        </div>
       </section>
       <section class="resources-panel" id="library-studies" data-library-content="studies">
         <h3>Estudios bíblicos</h3>
@@ -3335,13 +3345,32 @@ function selectAbout(section){
 }
 document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.addEventListener('click',()=>{selectAbout(btn.dataset.nosotrosChoice);aboutPanel.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>aboutPanel.scrollIntoView({behavior:'smooth',block:'start'}),100);}));
 document.getElementById('about-close').onclick=()=>{aboutPanel.classList.add('hidden');document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
-let officialContent={};const officialContentReady=fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{officialContent=c;renderLibrary()}).catch(()=>renderLibrary());
+let officialContent={};
+let contentRefreshPending=false;
+async function refreshOfficialContent(){
+  if(contentRefreshPending) return;
+  contentRefreshPending=true;
+  try{
+    const response=await fetch('/api/content-config.json',{cache:'no-store'});
+    if(!response.ok) throw new Error('Contenido no disponible');
+    const content=await response.json();
+    const changed=!officialContent.resourcesSchedule || content.resourcesSchedule?.periodId!==officialContent.resourcesSchedule.periodId;
+    officialContent=content;
+    if(changed){renderLibrary();window.dispatchEvent(new Event('officialcontentchange'));}
+  }catch{if(!officialContent.resourcesSchedule) renderLibrary();}
+  finally{contentRefreshPending=false;}
+}
+const officialContentReady=refreshOfficialContent();
+window.setInterval(()=>{if(!document.hidden) refreshOfficialContent();},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden) refreshOfficialContent();});
 function renderLibrary(){
   document.querySelectorAll('[data-library-content]').forEach(panel=>{
     const entry=officialContent[panel.dataset.libraryContent];
     const available=entry?.enabled!==false&&entry?.text;
     panel.querySelector('.resources-content-title').textContent=available ? entry.title||'' : 'Contenido no disponible.';
-    panel.querySelector('.resources-reference').textContent=available ? entry.reference||'' : '';
+    const reference=panel.querySelector('.resources-reference');
+    reference.textContent=available ? entry.reference||'' : '';
+    if(available && entry.reference && window.LLDBBible) window.LLDBBible.appendPassage(reference,entry.reference);
     panel.querySelector('.resources-reading').textContent=available ? entry.text : '';
   });
 }
