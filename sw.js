@@ -1,4 +1,4 @@
-const CACHE='lldb-v15';
+const CACHE='lldb-v16';
 const CORE=['/manifest.webmanifest','/api/radio-config.json','/api/content-config.json','/api/media-config.json','/api/social-config.json','/api/donations-config.json','/api/forms-config.json'];
 
 self.addEventListener('install',event=>{
@@ -35,7 +35,7 @@ self.addEventListener('fetch',event=>{
     return;
   }
 
-  if(url.pathname==='/api/bible') return;
+  if((url.pathname==='/api/bible'||url.pathname==='/api/content-config.json'||(url.pathname==='/api/site-config'&&url.searchParams.get('name')==='content-config'))) return;
 
   if(url.pathname.startsWith('/api/')){
     event.respondWith(

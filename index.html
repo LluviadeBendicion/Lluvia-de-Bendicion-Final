@@ -3336,7 +3336,24 @@ function selectAbout(section){
 }
 document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.addEventListener('click',()=>{selectAbout(btn.dataset.nosotrosChoice);aboutPanel.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>aboutPanel.scrollIntoView({behavior:'smooth',block:'start'}),100);}));
 document.getElementById('about-close').onclick=()=>{aboutPanel.classList.add('hidden');document.querySelectorAll('#nosotros [data-nosotros-choice]').forEach(btn=>btn.setAttribute('aria-expanded','false'))};
-let officialContent={};const officialContentReady=fetch('/api/content-config.json',{cache:'no-store'}).then(r=>r.ok?r.json():{}).then(c=>{officialContent=c;renderLibrary()}).catch(()=>renderLibrary());
+let officialContent={};
+let contentRefreshPending=false;
+async function refreshOfficialContent(){
+  if(contentRefreshPending) return;
+  contentRefreshPending=true;
+  try{
+    const response=await fetch('/api/content-config.json',{cache:'no-store'});
+    if(!response.ok) throw new Error('Contenido no disponible');
+    const content=await response.json();
+    const changed=!officialContent.resourcesSchedule || content.resourcesSchedule?.periodId!==officialContent.resourcesSchedule.periodId;
+    officialContent=content;
+    if(changed){renderLibrary();window.dispatchEvent(new Event('officialcontentchange'));}
+  }catch{if(!officialContent.resourcesSchedule) renderLibrary();}
+  finally{contentRefreshPending=false;}
+}
+const officialContentReady=refreshOfficialContent();
+window.setInterval(()=>{if(!document.hidden) refreshOfficialContent();},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden) refreshOfficialContent();});
 function renderLibrary(){
   document.querySelectorAll('[data-library-content]').forEach(panel=>{
     const entry=officialContent[panel.dataset.libraryContent];

@@ -1,3 +1,5 @@
+const { scheduledContent } = require('../lib/resources-calendar.cjs');
+
 const configs = new Map([
   ['affiliate-status', require('./affiliate-status.json')],
   ['content-config', require('./content-config.json')],
@@ -15,5 +17,9 @@ module.exports = function handler(req, res) {
   }
   const config = configs.get(req.query.name);
   if (!config) return res.status(404).json({ error: 'Configuration not found' });
+  if (req.query.name === 'content-config') {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(200).json(scheduledContent(config));
+  }
   return res.status(200).json(config);
 };

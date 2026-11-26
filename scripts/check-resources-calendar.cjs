@@ -1,0 +1,35 @@
+const assert = require('node:assert/strict');
+const { scheduledContent } = require('../lib/resources-calendar.cjs');
+const config = require('../api/content-config.json');
+const at = value => scheduledContent(config, new Date(value));
+const before = at('2026-11-26T05:59:59Z');
+const after = at('2026-11-26T06:00:00Z');
+assert.notEqual(before.dailyVerse.periodId,after.dailyVerse.periodId);
+assert.notEqual(before.dailyPrayer.text,after.dailyPrayer.text);
+assert.equal(before.memoryVerse.periodId,after.memoryVerse.periodId);
+assert.equal(before.weeklySermons.periodId,after.weeklySermons.periodId);
+const memoryChange = at('2026-11-27T06:00:00Z');
+assert.notEqual(after.memoryVerse.periodId,memoryChange.memoryVerse.periodId);
+assert.notEqual(after.memoryVerse.reference,memoryChange.memoryVerse.reference);
+const sunday = at('2026-11-30T05:59:59Z');
+const monday = at('2026-11-30T06:00:00Z');
+for (const key of ['weeklySermons','weeklyDevotional','studies']) {
+ assert.notEqual(sunday[key].periodId,monday[key].periodId);
+ assert.notEqual(sunday[key].text,monday[key].text);
+ assert.equal(monday[key].reference,monday.weeklyDevotional.reference);
+}
+assert.equal(at('2026-11-26T06:01:00Z').dailyPrayer.text,at('2026-11-27T05:59:59Z').dailyPrayer.text);
+assert.equal(at('2027-03-14T06:01:00Z').resourcesSchedule.date,'2027-03-14');
+assert.equal(at('2027-03-15T04:59:59Z').resourcesSchedule.date,'2027-03-14');
+assert.equal(at('2027-03-15T05:00:00Z').resourcesSchedule.date,'2027-03-15');
+assert.equal(at('2026-12-31T18:00:00Z').resourcesSchedule.date,'2026-12-31');
+assert.equal(at('2027-01-01T06:00:00Z').resourcesSchedule.date,'2027-01-01');
+const custom=scheduledContent({...config,memoryVerse:{enabled:false},dailyPrayer:{automatic:false,text:'Editorial'}},new Date());
+assert.equal(custom.memoryVerse.enabled,false);assert.equal(custom.dailyPrayer.text,'Editorial');
+assert.equal(after.dailyVerse.text,undefined);assert.equal(after.memoryVerse.text,undefined);
+assert.deepEqual(after.testimonies,config.testimonies);
+const handler=require('../api/site-config');
+const headers={};let body;
+handler({method:'GET',query:{name:'content-config'}},{setHeader:(k,v)=>headers[k]=v,status(){return this},json(v){body=v}});
+assert.equal(headers['Cache-Control'],'no-store');assert.equal(body.resourcesSchedule.memoryVerse,'every-2-days');
+console.log('Calendario: renovación diaria, cada 2 días, lunes, estabilidad, cambio de año, horario de verano y endpoint verificados.');

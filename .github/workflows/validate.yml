@@ -26,6 +26,8 @@ jobs:
           node --check /tmp/lldb-inline.js
       - name: Validate NVI Bible integration
         run: node scripts/check-bible.cjs
+      - name: Validate automatic resources calendar
+        run: node scripts/check-resources-calendar.cjs
       - name: Validate LLDB launch invariants
         shell: python
         run: |
