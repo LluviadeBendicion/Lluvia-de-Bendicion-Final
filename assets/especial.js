@@ -117,6 +117,7 @@
   previous.addEventListener('click', () => showPage(page - 1));
   next.addEventListener('click', () => showPage(page + 1));
   window.addEventListener('resize', paginate);
+  window.addEventListener('versefontchange', paginate);
   document.fonts.load('20px Kalam').then(paginate, paginate);
   window.addEventListener('officialcontentchange', () => { if (selected) { page = 0; renderChoice(); } });
   officialContentReady.then(() => { if (selected) renderChoice(); });

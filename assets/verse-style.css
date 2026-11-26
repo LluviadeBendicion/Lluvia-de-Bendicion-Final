@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("/assets/fonts/bodoni-moda/BodoniModa-Italic.ttf") format("truetype");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+.verse-font-control { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: .6rem; padding: .75rem; color: #f5dfb0; font: 400 1rem/1.4 system-ui, sans-serif; }
+.verse-font-control select { max-width: 100%; padding: .45rem .8rem; color: #fff4df; background: #111b2b; border: 1px solid #a98b56; border-radius: .4rem; font: inherit; }
+html[data-verse-font="bodoni"] :is(.special-classroom[data-reading="versiculo"] .special-chalk-text, .special-classroom[data-reading="memorizar"] .special-chalk-text, .wallpaper-verse) {
+  font-family: "Bodoni Moda", Georgia, serif;
+  font-style: italic;
+  font-weight: 900;
+  font-optical-sizing: auto;
+  line-height: 1.35;
+}
