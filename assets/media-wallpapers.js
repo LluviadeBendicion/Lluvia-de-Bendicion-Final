@@ -54,7 +54,7 @@
     });
     status.textContent = item.title + ' · listo para descargar.';
     setVerse(selectedVerse, item);
-    selectedVerse.hidden = !item.verse;
+    selectedVerse.hidden = !item.reference;
   }
 
   function setDownload(link, item) {
@@ -62,13 +62,33 @@
     link.download = decodeURIComponent(item.url.split('/').pop());
   }
 
-  function setVerse(panel, item) {
-    panel.querySelector('.wallpaper-verse').textContent = item.verse || '';
-    panel.querySelector('.wallpaper-reference').textContent = item.reference || '';
+  const verseRequests = new Map();
+  async function setVerse(panel, item) {
+    panel.dataset.nviReference = item.reference || '';
+    const verse = panel.querySelector('.wallpaper-verse');
+    const reference = panel.querySelector('.wallpaper-reference');
+    verse.textContent = item.reference ? 'Consultando versículo NVI…' : '';
+    reference.textContent = item.reference ? item.reference + ' · NVI' : '';
+    if (!item.reference) return;
+    try {
+      if (!verseRequests.has(item.reference)) {
+        verseRequests.set(item.reference, window.LLDBBible.passage(item.reference).catch(error => {
+          verseRequests.delete(item.reference);
+          throw error;
+        }));
+      }
+      const data = await verseRequests.get(item.reference);
+      if (panel.dataset.nviReference !== item.reference) return;
+      verse.textContent = data.text;
+      reference.textContent = [data.reference + ' · NVI', data.credit].filter(Boolean).join(' · ');
+    } catch (error) {
+      if (panel.dataset.nviReference === item.reference) verse.textContent = error.message;
+    }
   }
 
   function hideHover() {
     hover.hidden = true;
+    hover.dataset.nviReference = '';
   }
 
   function showHover(event, item) {
@@ -95,6 +115,7 @@
   function clearSelection() {
     selected = null;
     selectedVerse.hidden = true;
+    selectedVerse.dataset.nviReference = '';
     hideHover();
     phone.replaceChildren();
     download.removeAttribute('href');
