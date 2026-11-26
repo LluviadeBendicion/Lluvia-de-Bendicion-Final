@@ -12,7 +12,7 @@ async function run(query, catalog, result, key='test') {
   return {response,calls};
 }
 (async()=>{
- const catalog=[{id:'rvr',name:'Reina-Valera 1960'},{id:'niv',name:'New International Version'},{id:'nvi',name:'Nueva Versión Internacional (Spanish New International Version) 2015',abbreviation:'NVI-S'}];
+ const catalog=[{id:'other',name:'Otra traducción'},{id:'niv',name:'New International Version'},{id:'nvi',name:'Nueva Versión Internacional (Spanish New International Version) 2015',abbreviation:'NVI-S'}];
  for(const [ref,route] of [['GEN.1.1','verses'],['PSA.46','chapters'],['ISA.40.28-ISA.40.31','passages']]){
   const {response,calls}=await run({ref},catalog,{reference:ref,content:'Texto de prueba',copyright:'Crédito del proveedor'});
   assert.equal(response.code,200);assert.equal(response.data.version,'NVI');assert.equal(response.data.credit,'Crédito del proveedor');

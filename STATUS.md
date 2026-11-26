@@ -31,7 +31,7 @@ La estructura base pasó la validación automática del repositorio. Las validac
 9. Enlaces oficiales de Zelle, Cash App, Venmo y PayPal.
 10. QR oficial de PayPal.
 11. Destino/backend seguro de formularios.
-12. Fuente autorizada para búsqueda/concordancia Reina-Valera 1960.
+12. Confirmar acceso autorizado NVI para lectura, búsqueda y concordancia.
 13. Autenticación y almacenamiento seguro del panel administrativo.
 
 - Logo de marketing/merchandise aprobado: reservado como `assets/logo-marketing-redondo.jpg`; original verificado JPEG 1536×1536, SHA-256 `49763a583c9c415b47f85f0d648ababde1ff2ffaf6df3ef5f91b7ded125f3fe4`; no usar como logo principal de plataforma.

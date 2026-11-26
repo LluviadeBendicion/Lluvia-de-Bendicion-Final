@@ -2,7 +2,7 @@
 
 Biblia, concordancia, versículo del día, memorización, devocionales, estudios y sermones consultan `/api/bible`. No se sustituyen textos por otra traducción cuando la NVI no responde.
 
-El servidor usa `API_BIBLE_KEY`, guardada como variable del entorno de Vercel. Su cuenta de API.Bible debe tener acceso autorizado a una edición española NVI. El identificador se descubre en el catálogo del proveedor; no se usa la NIV inglesa ni otra Reina-Valera. No publicar claves en código ni en el navegador.
+El servidor usa `API_BIBLE_KEY`, guardada como variable del entorno de Vercel. Su cuenta de API.Bible debe tener acceso autorizado a una edición española NVI. El identificador se descubre en el catálogo del proveedor; no se usa ninguna otra traducción. No publicar claves en código ni en el navegador.
 
 Los campos `reference` de `api/content-config.json` eligen las lecturas de cada recurso. El texto de reflexión se mantiene separado del pasaje, que se obtiene de la NVI junto con el crédito del proveedor. Los textos guardados antes para el versículo diario y de memorización se han eliminado para evitar mezclar traducciones. El calendario automático selecciona las referencias y los textos de acompañamiento conforme a las reglas descritas abajo.
 
