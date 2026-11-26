@@ -19,6 +19,14 @@ async function run(query, catalog, result, key='test') {
   assert.ok(calls[1].includes('/nvi/'+route+'/'+ref));
  }
  const search=await run({q:'esperanza'},catalog,{verses:[{id:'ROM.15.13',reference:'Romanos 15:13',text:'Texto de prueba'}]});
+ const page=await run({q:'amor y paz',offset:'20'},catalog,{total:42,verses:[{id:'ROM.15.13',reference:'Romanos 15:13',text:'Texto de prueba'}]});
+ assert.equal(page.response.data.offset,20);assert.equal(page.response.data.total,42);assert.equal(page.response.data.hasMore,true);
+ assert.ok(page.calls[1].includes('offset=20'));assert.ok(page.calls[1].includes('query=amor+y+paz'));
+ const last=await run({q:'amor',offset:'40'},catalog,{total:41,verses:[{id:'ROM.15.13',reference:'Romanos 15:13',text:'Texto de prueba'}]});
+ assert.equal(last.response.data.hasMore,false);
+ const empty=await run({q:'sin coincidencias'},catalog,{total:0,verses:[]});
+ assert.equal(empty.response.data.hasMore,false);assert.equal(empty.response.data.verses.length,0);
+ for(const offset of ['-20','1.5','abc',['20']]) assert.equal((await run({q:'amor',offset},catalog,{})).response.code,400);
  assert.equal(search.response.data.verses.length,1);assert.ok(search.calls[1].includes('/nvi/search?query=esperanza'));
  assert.equal((await run({ref:'GEN.1.1'},catalog,{},'')).response.code,503);
  assert.equal((await run({ref:'GEN.1.1'},catalog.slice(0,2),{})).response.code,503);

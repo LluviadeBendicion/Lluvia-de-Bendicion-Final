@@ -43,7 +43,8 @@ module.exports = async function bible(req, res) {
     res.setHeader('Allow', 'GET');
     return res.status(405).end();
   }
-  const { ref, q } = req.query;
+  const { ref, q, offset = '0' } = req.query;
+  if (typeof offset !== 'string' || !/^(0|[1-9]\d{0,6})$/.test(offset)) return res.status(400).json({ error: 'Página de búsqueda no válida.' });
   if (ref !== undefined && q !== undefined) return res.status(400).json({ error: 'Consulta una referencia o una palabra, no ambas.' });
   const chapterOrVerse = /^[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}(?:\.[1-9]\d{0,2})?$/;
   const passage = /^[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}\.[1-9]\d{0,2}-[1-3]?[A-Z]{2,3}\.[1-9]\d{0,2}\.[1-9]\d{0,2}$/;
@@ -61,7 +62,7 @@ module.exports = async function bible(req, res) {
     if (passage.test(ref)) route = '/passages/' + ref;
     else route = (ref.split('.').length === 3 ? '/verses/' : '/chapters/') + ref;
   }
-  const params = ref ? { 'content-type': 'text', 'include-verse-numbers': 'true' } : { query: q.trim(), limit: '20' };
+  const params = ref ? { 'content-type': 'text', 'include-verse-numbers': 'true' } : { query: q.trim(), limit: '20', offset, 'sort': 'canonical' };
   const copyright = 'Nueva Versión Internacional (NVI) © Biblica, Inc. Usado con permiso. Todos los derechos reservados.';
   try {
     const edition = await getEdition(key);
@@ -82,7 +83,8 @@ module.exports = async function bible(req, res) {
     }
     const verses = (data?.verses || []).filter(verse => typeof verse.id === 'string' && typeof verse.text === 'string')
       .map(({ id, reference, text }) => ({ id, reference, text }));
-    return res.json({ version: 'NVI', verses, credit: data?.copyright || copyright });
+    const total = Number.isSafeInteger(data?.total) && data.total >= 0 ? data.total : null;
+    return res.json({ version: 'NVI', verses, total, offset: Number(offset), hasMore: total === null ? verses.length === 20 : Number(offset) + verses.length < total, credit: data?.copyright || copyright });
   } catch {
     return res.status(502).json({ error: 'El servicio bíblico no está disponible en este momento.' });
   }

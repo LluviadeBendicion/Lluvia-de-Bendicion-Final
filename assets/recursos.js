@@ -173,31 +173,71 @@
     const result = event.target.closest('[data-bible-ref]');
     if (result) read(result.dataset.bibleRef);
   });
-  search.addEventListener('submit', async event => {
-    event.preventDefault();
-    const q = search.elements.quicksearch.value.trim();
+  const previousSearch = document.getElementById('resources-search-previous');
+  const nextSearch = document.getElementById('resources-search-next');
+  const searchPage = document.getElementById('resources-search-page');
+  let currentQuery = '';
+  let searchOffset = 0;
+  let hasMore = false;
+  let searching = false;
+  function searchControls() {
+    previousSearch.disabled = searching || searchOffset === 0;
+    nextSearch.disabled = searching || !hasMore;
+  }
+  async function find(query, offset = 0) {
+    const q = query.trim();
     if (!q) return;
     const current = ++searchRevision;
+    currentQuery = q;
+    search.elements.quicksearch.value = q;
     project(concordance);
-    searchOutput.textContent = 'Buscando…';
+    searching = true;
+    searchControls();
+    searchOutput.textContent = 'Buscando en la NVI…';
     searchCredit.textContent = '';
+    searchPage.textContent = '';
     try {
-      const data = await request({ q });
+      const data = await request({ q, offset: String(offset) });
       if (current !== searchRevision) return;
+      searchOffset = offset;
+      hasMore = data.hasMore;
       searchOutput.textContent = data.verses.length ? '' : 'No encontramos coincidencias.';
       for (const verse of data.verses) {
         const button = document.createElement('button');
         button.type = 'button';
-        button.textContent = verse.reference;
+        button.textContent = verse.reference + ' · NVI';
         button.dataset.bibleRef = verse.id;
         const text = document.createElement('p');
         text.textContent = verse.text;
         searchOutput.append(button, text);
       }
       searchCredit.textContent = data.credit || '';
+      searchPage.textContent = 'Página ' + (offset / 20 + 1) + (data.total === null ? '' : ' · ' + data.total + ' coincidencias');
     } catch (error) {
-      if (current === searchRevision) searchOutput.textContent = error.message || 'Intenta de nuevo.';
+      if (current === searchRevision) {
+        searchOffset = offset;
+        hasMore = false;
+        searchOutput.textContent = error.message || 'Intenta de nuevo.';
+      }
+    } finally {
+      if (current === searchRevision) { searching = false; searchControls(); }
     }
+  }
+  search.addEventListener('submit', event => {
+    event.preventDefault();
+    find(search.elements.quicksearch.value);
+  });
+  previousSearch.addEventListener('click', () => find(currentQuery, Math.max(0, searchOffset - 20)));
+  nextSearch.addEventListener('click', () => find(currentQuery, searchOffset + 20));
+  const bibleSearch = document.getElementById('resources-bible-search');
+  bibleSearch.addEventListener('submit', event => {
+    event.preventDefault();
+    const query = bibleSearch.elements.query.value.trim();
+    if (!query) return;
+    let ref;
+    try { ref = window.LLDBBible.referenceId(query); } catch { /* Buscar palabras y frases en concordancia. */ }
+    if (ref) read(ref);
+    else find(query);
   });
 
   bible.querySelector('.resources-actions').addEventListener('click', async event => {

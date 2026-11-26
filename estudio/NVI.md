@@ -22,3 +22,9 @@ El servidor calcula el período al consultar la configuración. No hace falta de
 La rotación usa los doce temas preparados en api/resources-calendar.json; se repiten después de doce días, veinticuatro días y doce semanas respectivamente. Son oraciones, reflexiones y bosquejos preparados, no textos nuevos generados por IA ni grabaciones de sermones. Las citas bíblicas se obtienen siempre de la NVI. Se puede ampliar el banco sin cambiar el algoritmo. Cada recurso puede desactivarse con enabled:false o conservar selección manual con automatic:false en content-config.json.
 
 Pruebas: node scripts/check-resources-calendar.cjs. Verifican medianoche, períodos de dos días, lunes, cambio de año, horario de verano, contenido estable y configuración sin caché.
+
+## Búsqueda y concordancia
+
+El buscador de la Biblia acepta referencias con nombres completos (por ejemplo, Juan 3:16), palabras y frases. Las referencias abren la lectura; las palabras y frases abren resultados de la concordancia NVI. La concordancia permite avanzar y retroceder en páginas de veinte coincidencias y abrir cada resultado como pasaje. Se controla la respuesta de consultas simultáneas para que una búsqueda antigua no reemplace la más reciente.
+
+Las pruebas de API comprueban paginación, totales, última página, ausencia de coincidencias y rechazo de desplazamientos inválidos. Continúa pendiente la comprobación de búsquedas reales con acceso NVI autorizado.
