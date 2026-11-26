@@ -12,9 +12,9 @@ Si falta acceso a la NVI, la interfaz muestra el error y no presenta otra versi�
 
 ## Renovación automática
 
-- Versículo del día y oración: cada día a medianoche.
+- Versículo del día, oración y devocional: cada día a medianoche.
 - Versículo para memorizar: cada dos días naturales, contando desde el 23 de noviembre de 2026 (23–24, 25–26, 27–28, etc.).
-- Sermón, devocional y estudio: cada lunes a medianoche.
+- Sermón y estudio: cada lunes a medianoche.
 - Zona horaria compartida: America/Chicago, incluyendo horario de verano.
 
 El servidor calcula el período al consultar la configuración. No hace falta dejar una sesión abierta ni programar un cron: la primera visita del período recibe su contenido. La página abierta comprueba cambios cada minuto mientras está visible y al volver a ella. El service worker no conserva la configuración editorial ni las respuestas bíblicas.

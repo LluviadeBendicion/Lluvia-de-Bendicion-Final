@@ -8,15 +8,19 @@ assert.notEqual(before.dailyVerse.periodId,after.dailyVerse.periodId);
 assert.notEqual(before.dailyPrayer.text,after.dailyPrayer.text);
 assert.equal(before.memoryVerse.periodId,after.memoryVerse.periodId);
 assert.equal(before.weeklySermons.periodId,after.weeklySermons.periodId);
+assert.notEqual(before.weeklyDevotional.periodId,after.weeklyDevotional.periodId);
+assert.notEqual(before.weeklyDevotional.text,after.weeklyDevotional.text);
+assert.equal(after.weeklyDevotional.text,at('2026-11-27T05:59:59Z').weeklyDevotional.text);
+assert.equal(after.resourcesSchedule.devotional,'daily');
 const memoryChange = at('2026-11-27T06:00:00Z');
 assert.notEqual(after.memoryVerse.periodId,memoryChange.memoryVerse.periodId);
 assert.notEqual(after.memoryVerse.reference,memoryChange.memoryVerse.reference);
 const sunday = at('2026-11-30T05:59:59Z');
 const monday = at('2026-11-30T06:00:00Z');
-for (const key of ['weeklySermons','weeklyDevotional','studies']) {
+for (const key of ['weeklySermons','studies']) {
  assert.notEqual(sunday[key].periodId,monday[key].periodId);
  assert.notEqual(sunday[key].text,monday[key].text);
- assert.equal(monday[key].reference,monday.weeklyDevotional.reference);
+ assert.equal(monday[key].reference,monday.weeklySermons.reference);
 }
 assert.equal(at('2026-11-26T06:01:00Z').dailyPrayer.text,at('2026-11-27T05:59:59Z').dailyPrayer.text);
 assert.equal(at('2027-03-14T06:01:00Z').resourcesSchedule.date,'2027-03-14');
