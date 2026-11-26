@@ -210,7 +210,7 @@ async function draftContent(body) {
   const result = await openAI('responses', {
     model: 'gpt-5-mini', store: false, reasoning: { effort: 'minimal' }, max_output_tokens: 2600,
     instructions: 'Redacta en español para el ministerio LLDB. Devuelve un borrador de ' + editorial[kind] +
-      '. Para versículos, usa una cita breve de Reina-Valera 1909 y su referencia. Si no estás seguro de la cita, pide que el usuario la proporcione. ' +
+      '. Para lecturas bíblicas usa exclusivamente la Nueva Versión Internacional (NVI). Devuelve la referencia para consultar su texto en el servicio NVI; no inventes ni reconstruyas citas. Para un versículo aislado deja text vacío y conserva la referencia. ' +
       'Para testimonios usa solo hechos narrados por el usuario, sin inventar experiencias, personas ni datos. Si faltan hechos, pide la historia en el campo message y deja text vacío. El texto debe ser de hasta 6000 caracteres.',
     input: prompt,
     text: { format: { type: 'json_schema', name: 'lldb_draft', strict: true, schema: {
