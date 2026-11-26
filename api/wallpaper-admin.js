@@ -190,7 +190,7 @@ async function draftContent(body) {
   if (kind === 'wallpaper') {
     const options = {
       model: 'gpt-image-1.5', size: '1024x1536', quality: 'medium', output_format: 'jpeg',
-      output_compression: 82, prompt: 'Crea un wallpaper vertical siguiendo la solicitud. Usa texto legible y respeta literalmente las palabras que indique. Si hay una foto, conserva el sujeto y composición salvo petición explícita. Solicitud: ' + prompt
+      output_compression: 82, prompt: 'Crea un wallpaper vertical siguiendo la solicitud. Usa texto legible. Para referencias bíblicas, usa exclusivamente Nueva Versión Internacional (NVI). No inventes ni reconstruyas versículos de memoria: si no se aporta el texto NVI verificado, coloca solo la referencia seguida de NVI y deja espacio para añadir el pasaje después. No copies citas bíblicas preexistentes de otra versión en una foto. Si hay una foto, conserva el sujeto y composición salvo petición explícita. Solicitud: ' + prompt
     };
     let result;
     if (body.image) {
