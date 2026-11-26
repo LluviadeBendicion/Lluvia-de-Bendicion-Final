@@ -2316,9 +2316,10 @@ body:has(#inicio.active) footer #secret-admin-trigger{
 <link rel="stylesheet" href="/assets/panel-maestro.css?v=acceso-permisos">
 <script src="/assets/testimonios.js?v=firma-en-linea" defer></script>
 <link rel="stylesheet" href="/assets/especial.css">
-<script src="/assets/especial.js" defer></script>
+<script src="/assets/biblia-nvi.js?v=1" defer></script>
+<script src="/assets/especial.js?v=nvi-1" defer></script>
 <link rel="stylesheet" href="/assets/recursos.css?v=iconos-ilustrados">
-<script src="/assets/recursos.js?v=menu-televisor" defer></script>
+<script src="/assets/recursos.js?v=nvi-1" defer></script>
 </head>
 <body>
 <a id="skip-link" href="#main-content">Saltar al contenido</a>
@@ -2926,7 +2927,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
       <button id="resources-back" type="button" hidden>‹ Volver a los iconos</button>
       <div class="resources-panels" hidden>
       <section class="resources-panel" id="library-bible">
-        <h3>Biblia Reina-Valera 1960</h3>
+        <h3>Biblia Nueva Versión Internacional (NVI)</h3>
         <p class="resources-intro">Elige el libro, el capítulo y los versículos que quieres leer.</p>
         <form id="resources-reading" method="post">
           <div class="resources-fields">
@@ -2938,7 +2939,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
         </form>
         <div class="resources-passage">
           <h4 id="resources-results-title">Génesis 1:1</h4>
-          <div id="resources-output" aria-live="polite">En el principio creó Dios los cielos y la tierra.</div>
+          <div id="resources-output" aria-live="polite">Selecciona un pasaje para leerlo en la NVI.</div>
         </div>
         <div class="resources-actions" aria-label="Acciones del pasaje">
           <button type="button" data-passage-action="copy">Copiar</button>
@@ -2950,7 +2951,7 @@ body:not(:has(#inicio.active,#radio.active)) header #main-nav>button{
           <label>Nota personal <textarea name="note" rows="3" maxlength="3000"></textarea></label>
           <button type="submit">Guardar nota</button>
         </form>
-        <p id="resources-credit">Reina-Valera 1960® © 1960 Sociedades Bíblicas en América Latina; © renovado 1988 Sociedades Bíblicas Unidas.</p>
+        <p id="resources-credit">Nueva Versión Internacional (NVI) · Biblica, Inc.</p>
         <p id="resources-passage-status" class="resources-status" role="status"></p>
       </section>
       <section class="resources-panel" id="library-search">
@@ -3341,7 +3342,9 @@ function renderLibrary(){
     const entry=officialContent[panel.dataset.libraryContent];
     const available=entry?.enabled!==false&&entry?.text;
     panel.querySelector('.resources-content-title').textContent=available ? entry.title||'' : 'Contenido no disponible.';
-    panel.querySelector('.resources-reference').textContent=available ? entry.reference||'' : '';
+    const reference=panel.querySelector('.resources-reference');
+    reference.textContent=available ? entry.reference||'' : '';
+    if(available && entry.reference && window.LLDBBible) window.LLDBBible.appendPassage(reference,entry.reference);
     panel.querySelector('.resources-reading').textContent=available ? entry.text : '';
   });
 }

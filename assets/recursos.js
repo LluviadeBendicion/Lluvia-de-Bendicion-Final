@@ -24,6 +24,7 @@
   const favorite = bible.querySelector('[data-passage-action="favorite"]');
   const actions = [...bible.querySelectorAll('[data-passage-action]')];
   const openingVerse = { reference: heading.textContent, text: output.textContent, credit: credit.textContent };
+  let loaded = false;
   let activePanel = null;
   let welcomeTimer;
   let passageId = 'GEN.1.1';
@@ -41,6 +42,7 @@
     welcome.hidden = true;
     const previous = activePanel;
     activePanel = selected;
+    if (selected === bible && !loaded) { loaded = true; read(passageId); return; }
     if (selected) {
       setPower(true);
       screen.dataset.focused = selected.id;
@@ -104,14 +106,11 @@
   if (view.classList.contains('active')) showWelcome();
 
   async function request(params) {
-    const response = await fetch('/api/bible?' + new URLSearchParams(params), { cache: 'no-store' });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error || 'El servicio bíblico no respondió.');
-    return data;
+    return window.LLDBBible.request(params);
   }
 
   function localKey(kind) {
-    return 'lldb-recursos:' + kind + ':' + passageId;
+    return 'lldb-recursos:NVI:' + kind + ':' + passageId;
   }
 
   function savedValue(kind) {
@@ -134,19 +133,23 @@
   }
 
   async function read(ref) {
+    loaded = true;
     const current = ++readingRevision;
     project(bible);
     passageStatus.textContent = 'Consultando…';
     actions.forEach(button => { button.disabled = true; });
+    let succeeded = false;
     try {
-      const data = ref === 'GEN.1.1' ? openingVerse : await request({ ref });
-      if (current === readingRevision) showPassage(data, ref);
+      const data = await request({ ref });
+      if (current === readingRevision) { showPassage(data, ref); succeeded = true; }
     } catch (error) {
       if (current === readingRevision) {
+        output.textContent = '';
+        credit.textContent = '';
         passageStatus.textContent = error.message || 'Intenta de nuevo.';
       }
     } finally {
-      if (current === readingRevision) actions.forEach(button => { button.disabled = false; });
+      if (current === readingRevision) actions.forEach(button => { button.disabled = !succeeded; });
     }
   }
 
@@ -239,4 +242,5 @@
     }
   });
   showPassage(openingVerse, passageId);
+  actions.forEach(button => { button.disabled = true; });
 })();
